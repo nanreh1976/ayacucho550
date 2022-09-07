@@ -1,0 +1,43 @@
+h1 {padding:2%;}
+
+
+ul > li {
+  display: inline-block;
+  /* You can also add some margins here to make it look prettier */
+  margin: 10px;
+  
+  text-align:center;
+
+}
+
+.card-horizontal {
+  display: flex;
+  flex: 1 1 auto;
+ 
+  
+}
+
+.card-text{
+  font-size:19px;
+  padding: 10px 50px 20px;
+ 
+}
+
+.columna1 {
+	flex-basis: 100px;
+	flex-grow: 0;
+	flex-shrink: 0;
+  background-color: green;
+}
+.columna2 {
+	flex-basis: 100px;
+	flex-grow: 0;
+	flex-shrink: 0;
+  background-color: red;
+}
+
+
+.modal-dialog {
+  width: 600px; 
+  margin: 0 auto; 
+}

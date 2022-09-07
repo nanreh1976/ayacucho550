@@ -1,0 +1,78 @@
+<!-- Titulo -->
+
+
+<ul>
+  <li>
+    <h2>Parking</h2>
+
+
+
+  </li>
+  <li>
+    <div style=" float: right;" *ngIf="$estado | async">
+
+      <app-btn-agregar (click)="openXpForm([],0)"></app-btn-agregar>      
+    </div>
+  </li>
+</ul>
+
+
+<div class="container">
+
+  <div class="form-group mb-4">
+    <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
+  </div>
+
+  <table class="table" *ngIf="(xps | filter: searchText).length > 0; else noResults">
+    <colgroup>
+      <col width="5%">
+      <col width="30%">
+      <col width="35%">
+      <col width="15%">
+    </colgroup>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Patente</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Color</th>
+        <th scope="col">Ingreso</th>
+      </tr>
+    </thead>
+
+
+
+
+    <tbody>
+      <tr *ngFor="let empleo of xps | filter: searchText; let i = index">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{empleo.patente}}</td>
+        <td>{{empleo.marca}}</td>
+        <td>{{empleo.modelo}}</td>
+        <td>{{empleo.color}}</td>
+        <td>{{empleo.ingreso}}</td>
+
+
+
+      
+            <div *ngIf="$estado | async" class="card-footer">
+      
+              <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
+      
+        
+              <app-btn-editar (click)="openXpForm(empleo ,1 )"></app-btn-editar>
+      
+              <app-btn-eliminar (click)="openXpForm(empleo, 2)">X</app-btn-eliminar>
+            </div>
+   
+
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noResults>
+    <p>No results found for "{{searchText}}".</p>
+  </ng-template>
+</div>
+

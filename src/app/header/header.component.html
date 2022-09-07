@@ -1,0 +1,29 @@
+<!-- Cambia el template segun el estado del login (true = logueado) -->
+
+
+
+<div container>
+  <ng-container *ngIf="$estado | async ; then modoLoggedIn; else modoLoggedOut">
+  </ng-container>
+</div>
+
+
+<ng-template #modoLoggedIn>
+  <div class="d-flex justify-content-end"> 
+ <button class="btn btn-primary me-1">/</button>
+  <button class="btn btn-primary me-1" (click)="logOut()">Log-Out</button>
+    
+  </div>
+</ng-template>
+
+<ng-template #modoLoggedOut>
+
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-primary me-2" (click)="openLoginForm()">Login</button>
+  </div>
+</ng-template>
+
+
+
+
+
