@@ -61,7 +61,7 @@ h1 {padding:2%;}
     animation: loading-1 1.8s linear forwards;
 }
 .progress .progress-value{
-    width: 0%;
+    width: 90%;
     height: 90%;
     border-radius: 50%;
     background: #44484b;
