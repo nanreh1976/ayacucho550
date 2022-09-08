@@ -10,32 +10,6 @@ ul > li {
 
 }
 
-.card-horizontal {
-  display: flex;
-  flex: 1 1 auto;
- 
-  
-}
-
-.card-text{
-  font-size:19px;
-  padding: 10px 50px 20px;
- 
-}
-
-.columna1 {
-	flex-basis: 100px;
-	flex-grow: 0;
-	flex-shrink: 0;
-  background-color: green;
-}
-.columna2 {
-	flex-basis: 100px;
-	flex-grow: 0;
-	flex-shrink: 0;
-  background-color: red;
-}
-
 
 .modal-dialog {
   width: 600px; 

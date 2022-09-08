@@ -1,8 +1,13 @@
 <!-- Cambia el template segun el estado del login (true = logueado) -->
 
 
-
 <div container>
+  
+ 
+  
+  <img class="img-1 me-2" src='https://i.ibb.co/kmYdw3H/Pueblada-Factory-2.png'
+    alt=""    height="80"  style='float: left; padding: 3px 3px 0px 3px;' />
+  
   <ng-container *ngIf="$estado | async ; then modoLoggedIn; else modoLoggedOut">
   </ng-container>
 </div>
