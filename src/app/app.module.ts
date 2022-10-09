@@ -23,6 +23,10 @@ import { PlayaComponent } from './playa/playa.component';
 import { ServicioDatosService } from './servicio-datos.service';
 import { PlayaFormComponent } from './playa/playa-form/playa-form.component';
 import { FilterPipe } from './filter.pipe';
+import { TarifasComponent } from './tarifas/tarifas.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 
 
@@ -49,13 +53,26 @@ const appRoutes: Routes = [
     PlayaComponent,
     PlayaFormComponent,
     FilterPipe,
+    TarifasComponent,
+    ClientesComponent,
+    DashboardComponent,
+    PagenotfoundComponent,
 
 
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot([
+      {path: 'home', component: HomeComponent},
+      {path: 'playa', component: PlayaComponent},
+      {path: 'tarifas', component: TarifasComponent},
+      {path: 'clientes', component: ClientesComponent},
+      {path: 'dashboard', component: DashboardComponent},
+      {path: 'ocupacion', component: OcupacionComponent},
+      {path: '', redirectTo: '/playa', pathMatch: 'full'},
+      {path: '**', component: PagenotfoundComponent}
+    ]),
     NgbModule, //se importa la clase RouterModule y se le indica la const donde estan las rutas
     ReactiveFormsModule,
     HttpClientModule,
