@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServicioDatosService } from '../servicio-datos.service';
 
 @Component({
   selector: 'app-tarifas',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TarifasComponent implements OnInit {
 
-  constructor() { }
+  tarifas:any;
+
+  constructor(private servicioDatosService: ServicioDatosService) { }
 
   ngOnInit(): void {
+    this.getTarifas(); 
   }
+
+  getTarifas(): void {
+    this.servicioDatosService.getTarifas().subscribe(tarifas => {
+      this.tarifas = tarifas;
+    });
+  }
+
+  
 
 }

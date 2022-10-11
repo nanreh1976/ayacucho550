@@ -10,6 +10,8 @@ import { Vehiculo } from './vehiculo';
 export class ServicioDatosService {
 
   xpUrl = 'api/xp';    //url de la api, usar la verdadera con el server
+  
+  tarifasUrl = 'api/tarifas';    //url de la api, usar la verdadera con el server
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -80,6 +82,13 @@ getXp(id: number): Observable<any> {
       catchError(this.handleError<Vehiculo>('addXp'))
     );
   }
+
+  getTarifas(): Observable<[]> {
+    return this.http.get<[]>(this.tarifasUrl).pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError<[]>('getTarifas', []))
+    );
+  };
 
 }
 

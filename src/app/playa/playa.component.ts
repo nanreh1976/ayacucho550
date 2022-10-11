@@ -62,7 +62,8 @@ export class PlayaComponent implements OnInit {
   ngOnInit(): void {
     this.$estado.subscribe
     // actualizar las xps
-    this.getXps();
+    this.getXps(); 
+    
   }
 
   //#region CRUD methods
@@ -72,7 +73,7 @@ export class PlayaComponent implements OnInit {
       this.xps = xps;
     });
 
-  }
+  }  
 
   //#endregion Methods
 
