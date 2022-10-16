@@ -3,6 +3,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'
 import { LoggedService } from '../logged.service';
 import { BehaviorSubject } from 'rxjs';
 import { LoginComponent } from '../login/login.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'header',
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnInit {
 
   logOut(): void {
     this.loggedService.LogOut();
+    this.router.navigate(['home'])
   }
 
   logState(): void {
@@ -53,7 +55,7 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  constructor(private modalService: NgbModal, private loggedService: LoggedService) {
+  constructor(private modalService: NgbModal, private loggedService: LoggedService, private router: Router) {
 
     this.$estado = loggedService.logged$
   }

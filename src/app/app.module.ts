@@ -64,12 +64,13 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     RouterModule.forRoot([
-      {path: 'home', component: HomeComponent},
+      {path: 'home', component: AppComponent},
       {path: 'playa', component: PlayaComponent},
       {path: 'tarifas', component: TarifasComponent},
       {path: 'clientes', component: ClientesComponent},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'ocupacion', component: OcupacionComponent},
+      {path: 'login', component: LoginComponent }, // la ruta al login
       {path: '', redirectTo: '/playa', pathMatch: 'full'},
       {path: '**', component: PagenotfoundComponent}
     ]),

@@ -16,25 +16,25 @@ export class LoginComponent implements OnInit {
   hide = true;
 
 // propiedades servicios logged 
-  $estado: BehaviorSubject<boolean>;
+  //$estado: BehaviorSubject<boolean>;
 
   logIn(): void {
     this.loggedService.LogIn();
-    this.closeModal();
+    this.router.navigate(['home']) //se agrega la routa a donde navegar
+    //this.closeModal();
     
   }
 
-  constructor(private router: Router, private loggedService:LoggedService,
-              public activeModal:NgbActiveModal) { 
+  constructor( private router: Router, private loggedService:LoggedService) { 
 
-    this.$estado = loggedService.logged$
+    /* this.$estado = loggedService.logged$ */
   } 
 
   ngOnInit(): void {
-    this.$estado.subscribe
+    //this.$estado.subscribe
   }
-  
-  volverHome(){
+/*   
+  volverHome(){   
     this.router.navigate(['']) //se agrega la routa a donde navegar
   }
 
@@ -42,6 +42,6 @@ export class LoginComponent implements OnInit {
     this.activeModal.close();
   }
 
-
+ */
 
 }
