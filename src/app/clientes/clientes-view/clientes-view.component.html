@@ -1,8 +1,35 @@
-<!-- Titulo -->
+<H1 class="display-1" style="text-align: center;">Clientes </H1>
+
+<div>
+
+
+<style type="text/css">
+    .tftable {font-size:18px;color:#333333;width:100%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;}
+    .tftable th {font-size:12px;background-color:#acc8cc;border-width: 1px;padding: 8px;border-style: solid;border-color: #729ea5;text-align:left;}
+    .tftable tr {background-color:#d4e3e5;}
+    .tftable td {font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color: #729ea5;}
+    .tftable tr:hover {background-color:#ffffff;}
+    </style>
+    
+    <table class="tftable" border="1">
+    <tr><th>Nombre</th><th>telefono</th><th>Direccion</th><th>Comentario</th><</tr>
+    <tr><td>Armando Esteba</td><td>1234 1234 1234</td><td>Nuñez 250</td><td>Renault 4 Verde manzana AA 123 234</td></tr>
+    </table>
+ 
+    
+    <blockquote class="blockquote">
+<p class="mb-0">copidado de la app original</p>
+<p class="mb-0">Usa el campo comentarios para el modelo de auto</p>
 
 
 
-<H1 class="display-1" style="text-align: center;">Playa </H1>
+
+</blockquote>
+
+
+
+
+<H1 class="display-1" style="text-align: center;">Clientes</H1>
 
 
 
@@ -35,11 +62,11 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Telefono</th>
-        <th scope="col">Direccion</th>
-        <th scope="col">Comentario</th>
-
+        <th scope="col">Patente</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Color</th>
+        <th scope="col">Ingreso</th>
       </tr>
     </thead>
 
@@ -47,16 +74,17 @@
 
 
     <tbody>
+        <p>{{data | async}}</p>
       <tr *ngFor="let item of data | filter: searchText; let i = index">
         <th scope="row">{{i + 1}}</th>
-        <td>{{item.id}}</td>
-        <td>{{item.nombre}}</td>
-        <td>{{item.telefono}}</td>
-        <td>{{item.direccion}}</td>
-        <td>{{item.comentario}}</td>
-     
+        <td>{{item.marca}}</td>
+        <td>{{item.modelo}}</td>
+        <td>{{item.color}}</td>
+        <td>{{item.ingreso}}</td>
 
 
+
+      
             <div *ngIf="$estado | async" class="card-footer">
       
               <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->

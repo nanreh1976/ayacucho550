@@ -69,6 +69,16 @@ export class DataService implements InMemoryDbService {
         },     
     ] };
     
+
+    clientes : [
+      { id: 1,
+        nombre:"Jorgelina Sanjuanina",
+        telefono:"4444-5555",
+        direccion:"alameda 2345",
+        comentario:"polo rojo patente 2343323434",
+      
+    },     
+  ] };
+
   }
-}
 

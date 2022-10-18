@@ -23,12 +23,14 @@ import { ServicioDatosService } from './servicio-datos.service';
 import { PlayaFormComponent } from './playa/playa-form/playa-form.component';
 import { FilterPipe } from './filter.pipe';
 import { TarifasComponent } from './tarifas/tarifas.component';
-import { ClientesComponent } from './clientes/clientes.component';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ClientesFormComponent } from './clientes/clientes-form/clientes-form.component';
 import { PlayaViewComponent } from './playa/playa-view/playa-view.component';
 import { PlayaControlComponent } from './playa/playa-control/playa-control.component';
+import { ClientesViewComponent } from './clientes/clientes-view/clientes-view.component';
+import { ClientesControlComponent } from './clientes/clientes-control/clientes-control.component';
 
 
 
@@ -54,12 +56,14 @@ const appRoutes: Routes = [
     PlayaFormComponent,
     FilterPipe,
     TarifasComponent,
-    ClientesComponent,
+  
     DashboardComponent,
     PagenotfoundComponent,
     ClientesFormComponent,
     PlayaViewComponent,
     PlayaControlComponent,
+    ClientesViewComponent,
+    ClientesControlComponent,
 
 
   ],
@@ -70,7 +74,7 @@ const appRoutes: Routes = [
       {path: 'home', component: AppComponent},
       {path: 'playa', component: PlayaControlComponent  },
       {path: 'tarifas', component: TarifasComponent},
-      {path: 'clientes', component: ClientesComponent},
+      {path: 'clientes', component: ClientesControlComponent},
       {path: 'dashboard', component: DashboardComponent},
       {path: 'ocupacion', component: OcupacionComponent},
       {path: 'login', component: LoginComponent }, // la ruta al login

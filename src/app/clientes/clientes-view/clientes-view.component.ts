@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-playa-view',
-  templateUrl: './playa-view.component.html',
-  styleUrls: ['./playa-view.component.scss']
+  selector: 'app-clientes-view',
+  templateUrl: './clientes-view.component.html',
+  styleUrls: ['./clientes-view.component.scss']
 })
-export class PlayaViewComponent implements OnInit {
+export class ClientesViewComponent implements OnInit {
 
-
+  
   @Input() data?: any
   @Input() $estado: any
   @Output() newItemEvent = new EventEmitter<any>();
-  titulo: string = 'Playa'
+  titulo: string = 'clientes'
 
   
   searchText!: string;
