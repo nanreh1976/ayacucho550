@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, } from '@angular/forms';
 import { ServicioDatosService } from 'src/app/servicio-datos.service';
-import { Vehiculo } from 'src/app/vehiculo';
+import { Vehiculo } from 'src/app/interfaces/vehiculo';
 
 @Component({
   selector: 'app-clientes-form',
