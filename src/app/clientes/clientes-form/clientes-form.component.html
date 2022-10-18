@@ -2,9 +2,9 @@
 
 <div class="modal-header">
     <h5 class="modal-title" id="modal-basic-title">{{titulo}} Vehiculo </h5>
-    <button type="button" class="close" data-dismiss="modal" (click)="closeModal('dismiss')">
-        <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 <div class="modal-body">
     <div class="container">
@@ -66,22 +66,9 @@
           </form>
         </div>
         <div class="modal-footer">
-      
-          <div [ngSwitch]="titulo">
-            <div *ngSwitchCase="'Agregar'">
-              <button type="button" class="btn btn-outline-dark" (click)="addXp()">{{titulo}}</button>
-            </div>
-            <div *ngSwitchCase="'Editar'">
-              <button type="button" class="btn btn-outline-dark" (click)="updateXp()">{{titulo}}</button>
-            </div>
-            <div *ngSwitchCase="'Eliminar'">
-              <button type="button" class="btn btn-outline-dark" (click)="deleteXp(); closeModal('dismiss')">{{titulo}}</button>
-            </div>
-    
-            <div *ngSwitchDefault>Nada</div>
-      
-          </div>
-
+          <button class="btn btn-success" (click)="closeModal()">
+            {{titulo}}
+          </button>
         </div>
       </div>
   

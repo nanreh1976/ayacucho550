@@ -7,6 +7,7 @@
 
 
 
+
     <ul>
   <li>
     <div style=" float: right;" *ngIf="$estado | async">
@@ -35,10 +36,11 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Telefono</th>
-        <th scope="col">Direccion</th>
-        <th scope="col">Comentario</th>
+        <th scope="col">Patente/th>
+        <th scope="col">Marca</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Color</th>
+        <th scope="col">Ingreso</th>
 
       </tr>
     </thead>
@@ -49,11 +51,11 @@
     <tbody>
       <tr *ngFor="let item of data | filter: searchText; let i = index">
         <th scope="row">{{i + 1}}</th>
-        <td>{{item.id}}</td>
-        <td>{{item.nombre}}</td>
-        <td>{{item.telefono}}</td>
-        <td>{{item.direccion}}</td>
-        <td>{{item.comentario}}</td>
+        <td>{{item.patente}}</td>
+        <td>{{item.marca}}</td>
+        <td>{{item.modelo}}</td>
+        <td>{{item.color}}</td>
+        <td>{{item.ingreso}}</td>
      
 
 

@@ -14,53 +14,50 @@ export class ClientesFormComponent implements OnInit {
   @Input() fromParent: any;
   editForm!: any;
   titulo!: string;
+  item!: any
 
 
   constructor(public activeModal: NgbActiveModal,
-    private servicioDatosService: ServicioDatosService,
+
     private fb: FormBuilder,
   ) {
-
     this.createForm();
-
   }
+
+
+
+
 
   ngOnInit(): void {
     {
-      console.log(this.fromParent);
-      /* Output:
-       {prop1: "Some Data", prop2: "From Parent Component", prop3: "This Can be anything"}
-      */
-      let xp = this.fromParent.empleo;
-      let modo = this.fromParent.modo;
-      this.configureForm(xp, modo);
-      console.log(modo);
+      // console.log("on init form", this.fromParent);
+      this.titulo = this.fromParent.modo
+      this.item = this.fromParent.item;
+      if(this.item.op === 'Agregar'){ delete this.item.id_experiencia}
+      this.configureForm(this.titulo, this.item);
+
     }
   }
 
-  closeModal(sendData: any) {
-    this.activeModal.close(sendData);
-  }
+  
 
 
-  configureForm(empleo: any, modo: number) {
 
-    switch (modo) {
-      case 0: { this.titulo = "Agregar" }; break;
-      case 1: { this.titulo = "Editar"; }; break;
-      case 2: { this.titulo = "Eliminar" };
-    };
+  configureForm(titulo: string, item: any) {
 
+    // console.log("configure form", titulo, item), (titulo !=='agregar');
     this.editForm.patchValue({
-      patente: empleo.patente,
-      marca: empleo.marca,
-      modelo: empleo.modelo,
-      color: empleo.color,
-      egreso: empleo.egreso,
-      ingreso: empleo.ingreso,    
-      id: empleo.id,
+      patente: item .patente,
+      marca: item .marca,
+      modelo: item .modelo,
+      color: item.color,
+      egreso: item .egreso,
+      ingreso: item .ingreso,    
+      id: item.id,
     });
+
   }
+
 
   createForm() {
     this.editForm = this.fb.group({
@@ -74,31 +71,51 @@ export class ClientesFormComponent implements OnInit {
     });
   }
 
-  deleteXp(): void {
-    const xp = this.editForm.value;
-    this.servicioDatosService.deleteXp(xp)
-      .subscribe(() => {
-      });
-    this.closeModal("deleted xp");
-  }
-
-  addXp(): void {
-    const xp = this.editForm.value
-    console.log(xp);
-    this.servicioDatosService.addXp(xp)
-      .subscribe(xp => {
-       });
-    this.closeModal('added xp');
- }
 
 
-  updateXp(): void {
-    const xp = this.editForm.value;
-    this.servicioDatosService.updateXp(this.editForm.value)
-      .subscribe(() => {  this.activeModal.close});
-    this.closeModal('updated xp');
-  }
+  closeModal() {
+    let value = {
+   op: this.titulo,
+   item: this.editForm.value
+   
+ };
 
+//  console.log("closemodal", value)
+ this.activeModal.close(value);
+
+}
+
+
+
+//   deleteXp(): void {
+//     const vehiculo = this.editForm.value;
+//     this.servicioDatosService.deleteXp(vehiculo)
+//       .subscribe(() => {
+//       });
+//     this.closeModal("deleted xp");
+//   }
+
+  
+
+//   addXp(): void {
+//     const vehiculo = this.editForm.value
+//     console.log(vehiculo);
+//     this.servicioDatosService.addXp(vehiculo)
+//       .subscribe(vehiculo => {
+//        });
+//     this.closeModal('added xp');
+//  }
+
+
+//   updateXp(): void {
+//     const vehiculo = this.editForm.value;
+//     this.servicioDatosService.updateXp(this.editForm.value)
+//       .subscribe(() => {  this.activeModal.close});
+//     this.closeModal('updated xp');
+//   }
+
+
+  
 
   
 }

@@ -78,6 +78,14 @@ export class DataService implements InMemoryDbService {
         comentario:"polo rojo patente 2343323434",
       
     },     
+
+    { id: 2,
+      nombre:"Homero thompson",
+      telefono:"4444-5335",
+      direccion:"siempreviva 4534",
+      comentario:"homero movil patente 2343323434",
+    
+  },   
   ] };
 
   }
