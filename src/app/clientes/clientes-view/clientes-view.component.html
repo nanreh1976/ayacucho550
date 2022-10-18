@@ -12,8 +12,10 @@
     </style>
     
     <table class="tftable" border="1">
-    <tr><th>Nombre</th><th>telefono</th><th>Direccion</th><th>Comentario</th><</tr>
-    <tr><td>Armando Esteba</td><td>1234 1234 1234</td><td>Nuñez 250</td><td>Renault 4 Verde manzana AA 123 234</td></tr>
+    <tr><th>Apellido</th><th>Nombre</th><th>telefono</th><th>Direccion</th><th>Comentario</th><th><i class="bi bi-pencil-fill"></i></th></tr>
+    <tr *ngFor="let item of data | filter: searchText; let i = index">
+      <td>{{item.apellido}}</td><td>{{item.nombre}}</td><td>{{item.telefono}}</td><td>{{item.direccion}}</td><td>{{item.comentario}}</td><td><button><i class="bi bi-pencil-fill"></i></button> </td>
+    </tr>
     </table>
  
     

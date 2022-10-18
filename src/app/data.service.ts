@@ -67,7 +67,7 @@ export class DataService implements InMemoryDbService {
           ut_fraccion:"no",
           descuento:"no"
         },     
-    ] };
+    ] ,
     
 
     clientes : [
@@ -82,3 +82,4 @@ export class DataService implements InMemoryDbService {
 
   }
 
+}

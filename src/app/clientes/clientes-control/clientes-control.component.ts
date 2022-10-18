@@ -128,7 +128,7 @@ selectCrudOp(op: string, item:any) {
 getAll(): void {
   this.servicioDatosService.getAll(this.componente).subscribe (
   datos => {this.data = datos;
- // console.log("get all ", this.componente, this.data)
+  console.log("get all ", this.componente, this.data)
 
   }
 );
