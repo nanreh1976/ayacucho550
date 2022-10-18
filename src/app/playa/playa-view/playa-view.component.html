@@ -11,7 +11,9 @@
   <li>
     <div style=" float: right;" *ngIf="$estado | async">
 
-      <app-btn-agregar (click)="openXpForm([],0)"></app-btn-agregar>      
+        <app-btn-agregar class="right " *ngIf="$estado" (click)="msgBack('Agregar',[])"
+        class="d-flex align-items-center ">
+    </app-btn-agregar>     
     </div>
   </li>
 </ul>
@@ -23,7 +25,7 @@
     <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
   </div>
 
-  <table class="table" *ngIf="(xps | filter: searchText).length > 0; else noResults">
+  <table class="table" *ngIf="(data | filter: searchText).length > 0; else noResults">
     <colgroup>
       <col width="5%">
       <col width="30%">
@@ -45,13 +47,13 @@
 
 
     <tbody>
-      <tr *ngFor="let empleo of xps | filter: searchText; let i = index">
+      <tr *ngFor="let item of data | filter: searchText; let i = index">
         <th scope="row">{{i + 1}}</th>
-        <td>{{empleo.patente}}</td>
-        <td>{{empleo.marca}}</td>
-        <td>{{empleo.modelo}}</td>
-        <td>{{empleo.color}}</td>
-        <td>{{empleo.ingreso}}</td>
+        <td>{{item.patente}}</td>
+        <td>{{item.marca}}</td>
+        <td>{{item.modelo}}</td>
+        <td>{{item.color}}</td>
+        <td>{{item.ingreso}}</td>
 
 
 
@@ -60,10 +62,12 @@
       
               <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
       
-        
-              <app-btn-editar (click)="openXpForm(empleo ,1 )"></app-btn-editar>
-      
-              <app-btn-eliminar (click)="openXpForm(empleo, 2)">X</app-btn-eliminar>
+              <app-btn-editar class="right" *ngIf="$estado"
+              (click)="msgBack('Editar',item)" class="d-flex align-items-center">
+          </app-btn-editar>
+          <app-btn-eliminar class="right" *ngIf="$estado"
+              (click)="msgBack('Eliminar',item)" class="d-flex align-items-center">
+          </app-btn-eliminar>
             </div>
    
 

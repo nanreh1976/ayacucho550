@@ -13,6 +13,8 @@ export class ServicioDatosService {
   
   tarifasUrl = 'api/tarifas';    //url de la api, usar la verdadera con el server
 
+  urlApi:string ='api';
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -40,7 +42,78 @@ export class ServicioDatosService {
     };
   }
 
-  // metodos CRUD
+  // metodos CRUD GENERALES
+
+  getAll(componente: string): Observable<[]> {
+
+
+    let url: string = `${this.urlApi}/${componente}`;
+     console.log("get all service", url)
+    return this.http.get<[]>(url).pipe(
+      // tap(data => console.log(data)),
+      catchError(this.handleError<[]>('getAll', []))
+    );
+  };
+
+
+  //  GET item por id. con 404 si no se encuentra 
+  getItem(componente: string, id: number): Observable<any> {
+    let urla: string = `${this.urlApi}/${componente}`;
+    let urlb = `${urla}/${id}`;
+    return this.http.get<any>(urlb).pipe(
+      // tap(data => console.log(data)),
+      catchError(this.handleError<any>(`getItem id=${id}`))
+    );
+  }
+
+  // PUT: modificar el item en el sserver 
+  updateItem(componente: string, item: any, id: number): Observable<any> {
+
+    let urla: string = `${this.urlApi}/${componente}`;
+    let urlb = `${urla}/${id}`;
+    // console.log("service put", urlb, id)
+    return this.http.put(urlb, item, this.httpOptions).pipe(
+      // tap(_ => console.log(`item id=${item.id}`)),
+      catchError(this.handleError<any>('updateItem'))
+    );
+  }
+
+  deleteItem(componente: string, id: any): Observable<any> {
+    let url: string = `${this.urlApi}/${componente}/${id}`;
+    // let urlb = `${urla}/${id}`;
+    // console.log("delete item from service", url, id)
+    return this.http.delete<any>(url, this.httpOptions).pipe(
+      tap(_ => console.log(`deleted item id=${id}`)),
+      catchError(this.handleError('deleteItem'))
+    );
+  }
+  
+
+
+  // deleteXp(xp: Vehiculo): Observable<any> {
+  //   const url = `${this.xpUrl}/${xp.id}`;
+
+  //   return this.http.delete<Vehiculo>(url, this.httpOptions).pipe(
+  //     tap(_ => console.log(`deleted xp id=${xp.id}`)),
+  //     catchError(this.handleError<Vehiculo>('deleteXp'))
+  //   );
+  // }
+
+  addItem(componente: string, item: any): Observable<any> {
+
+    // persona seteada en uno hasta implementar registro de usuarios
+    let url: string = `${this.urlApi}/${componente}`;
+    // console.log("por enviar a api additem", url, item)
+    return this.http.post<any>(url, item, this.httpOptions).pipe(
+      tap((newitem: any) => console.log('se agrego nuevo item a', componente)),
+      catchError(this.handleError<any>('addItem'))
+    );
+  }
+
+
+  
+
+  //METODOS POR COMPONENTE (reemplazar #!!!)
 
   getXps(): Observable<[]> {
     return this.http.get<[]>(this.xpUrl).pipe(

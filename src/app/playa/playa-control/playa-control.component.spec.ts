@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayaComponent } from './playa.component';
+import { PlayaControlComponent } from './playa-control.component';
 
-describe('PlayaComponent', () => {
-  let component: PlayaComponent;
-  let fixture: ComponentFixture<PlayaComponent>;
+describe('PlayaControlComponent', () => {
+  let component: PlayaControlComponent;
+  let fixture: ComponentFixture<PlayaControlComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlayaComponent ]
+      declarations: [ PlayaControlComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PlayaComponent);
+    fixture = TestBed.createComponent(PlayaControlComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

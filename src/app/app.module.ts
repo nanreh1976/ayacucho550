@@ -19,7 +19,6 @@ import { BtnEliminarComponent } from './shared/btn-eliminar/btn-eliminar.compone
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DataService } from './data.service';
 import { HttpClientModule } from '@angular/common/http';
-import { PlayaComponent } from './playa/playa.component';
 import { ServicioDatosService } from './servicio-datos.service';
 import { PlayaFormComponent } from './playa/playa-form/playa-form.component';
 import { FilterPipe } from './filter.pipe';
@@ -27,6 +26,9 @@ import { TarifasComponent } from './tarifas/tarifas.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { ClientesFormComponent } from './clientes/clientes-form/clientes-form.component';
+import { PlayaViewComponent } from './playa/playa-view/playa-view.component';
+import { PlayaControlComponent } from './playa/playa-control/playa-control.component';
 
 
 
@@ -49,14 +51,15 @@ const appRoutes: Routes = [
     BtnAgregarComponent,
     BtnEditarComponent,
     BtnEliminarComponent,
-
-    PlayaComponent,
     PlayaFormComponent,
     FilterPipe,
     TarifasComponent,
     ClientesComponent,
     DashboardComponent,
     PagenotfoundComponent,
+    ClientesFormComponent,
+    PlayaViewComponent,
+    PlayaControlComponent,
 
 
   ],
@@ -65,7 +68,7 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot([
       {path: 'home', component: AppComponent},
-      {path: 'playa', component: PlayaComponent},
+      {path: 'playa', component: PlayaControlComponent  },
       {path: 'tarifas', component: TarifasComponent},
       {path: 'clientes', component: ClientesComponent},
       {path: 'dashboard', component: DashboardComponent},
