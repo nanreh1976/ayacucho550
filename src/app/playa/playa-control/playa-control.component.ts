@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
 import { LoggedService } from 'src/app/logged.service';
 import { ServicioDatosService } from 'src/app/servicio-datos.service';
-import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { PlayaFormComponent } from '../playa-form/playa-form.component';
 
 
@@ -111,12 +110,7 @@ selectCrudOp(op: string, item:any) {
       this.deleteItem(this.componente, item);
       break;
     }
-    // case 'Eliminar': {
-    //   this.delete( item.id);
-    //   break;
-    // }
-
-  
+    
 
     default: {
       console.log("sin operacion en case crud")
@@ -160,9 +154,6 @@ addItem(componente: string, item: any): void {
 
   }
 
- 
-
-
 updateItem(componente: string, item: any): void {
  
   this.servicioDatosService.updateItem(componente, item, item.id)
@@ -173,7 +164,5 @@ updateItem(componente: string, item: any): void {
   });
 
   }
-
-
 
 }
