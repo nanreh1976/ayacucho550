@@ -48,25 +48,20 @@ export class PlayaFormComponent implements OnInit {
     // console.log("configure form", titulo, item), (titulo !=='agregar');
     this.editForm.patchValue({
       patente: item .patente,
-      marca: item .marca,
-      modelo: item .modelo,
-      color: item.color,
-      egreso: item .egreso,
-      ingreso: item .ingreso,    
+      ingreso: item .ingreso, 
+      idTarifa:item.idTarifa,
+      descripcion:item.descripcion, 
       id: item.id,
     });
-
   }
 
-
+ 
   createForm() {
     this.editForm = this.fb.group({
       patente: [''],
-      marca: [''],
-      modelo: [''],
-      color: [''],
-      egreso: [''],
       ingreso: [''],
+      idTarifa: [''],
+      descripcion: [''],
       id: [''],
     });
   }
@@ -74,7 +69,7 @@ export class PlayaFormComponent implements OnInit {
 
 
   closeModal() {
-    let value = {
+   let value = {
    op: this.titulo,
    item: this.editForm.value
    
@@ -85,34 +80,6 @@ export class PlayaFormComponent implements OnInit {
 
 }
 
-
-
-//   deleteXp(): void {
-//     const vehiculo = this.editForm.value;
-//     this.servicioDatosService.deleteXp(vehiculo)
-//       .subscribe(() => {
-//       });
-//     this.closeModal("deleted xp");
-//   }
-
-  
-
-//   addXp(): void {
-//     const vehiculo = this.editForm.value
-//     console.log(vehiculo);
-//     this.servicioDatosService.addXp(vehiculo)
-//       .subscribe(vehiculo => {
-//        });
-//     this.closeModal('added xp');
-//  }
-
-
-//   updateXp(): void {
-//     const vehiculo = this.editForm.value;
-//     this.servicioDatosService.updateXp(this.editForm.value)
-//       .subscribe(() => {  this.activeModal.close});
-//     this.closeModal('updated xp');
-//   }
 
 validarPatente(){  
   console.log(this.editForm.value.patente);

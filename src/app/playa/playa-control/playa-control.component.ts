@@ -25,7 +25,7 @@ import { PlayaFormComponent } from '../playa-form/playa-form.component';
 export class PlayaControlComponent implements OnInit {
 
  // nombre del crud / componente
- componente: string = 'vehiculos'
+ componente: string = 'playa'
   // reactiveforms, modo edicion, delete etc
   //modo!: string;
 

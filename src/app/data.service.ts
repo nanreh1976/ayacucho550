@@ -66,8 +66,8 @@ export class DataService implements InMemoryDbService {
           fraccion:"no",
           ut_fraccion:"no",
           descuento:"no"
-        },     
-    ] ,
+        },
+      ],
     
 
     clientes : [
@@ -84,9 +84,33 @@ export class DataService implements InMemoryDbService {
       telefono:"4444-5335",
       direccion:"siempreviva 4534",
       comentario:"homero movil patente 2343323434",
-    
-  },   
-  ] };
+    },
+  ],
+
+  playa : [
+    { id: 1,
+      patente: "12343343",
+      ingreso: "24022344",
+      idTarifa: "camion",
+      descripcion: "Scania 1114",
+    },   
+
+    { id: 1,
+      patente: "646445",
+      ingreso: "252343433",
+      idTarifa: "auto",
+      descripcion: "fitito rojo",
+    },   
+
+
+] };
+
+
+
+
+
+
+
 
   }
 
