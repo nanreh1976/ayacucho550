@@ -16,9 +16,15 @@
             </div>
             <div class="form-group">
               <label for="Tarifa">Tarifa</label>
-              <div class="input-group">
+          <!--     <div class="input-group">
                 <input formControlName="idTarifa" class="form-control" required type="text">
-              </div>
+              </div> -->
+              <select class="custom-select mb-3" (change)="changeTarifa($event)" formControlName="idTarifa">
+                <option value="">Elegir Tarifa</option>
+                <option *ngFor="let tarifa of tarifas">
+                  {{ tarifa }}
+                </option>
+              </select>
             </div>
             <div class="form-group">
               <label for="Descripcion">Descripcion</label>
@@ -31,11 +37,21 @@
             <table class="table">
               <tr>
                 <td>
-                  <div class="form-group">
+                  <div class="form-group p-0">
                     <label for="ingreso">Ingreso</label>
-                    <div class="input-group">
-                      <input formControlName="ingreso" class="form-control" required type="date">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text ">Fecha</span>
+                      <input formControlName="fechaIngreso" class="form-control" required type="text" disable>
+                      <span class="input-group-text">Hora</span>
+                      <input formControlName="horaIngreso" class="form-control" required type="text" disable>
                     </div>
+                    
+                    <!-- <div class="input-group">
+                      <input formControlName="fechaIngreso" class="form-control" required type="date" disable >
+                    </div>
+                    <div class="input-group">
+                      <input formControlName="horaIngreso" class="form-control" required type="date" disable >
+                    </div> -->
                   </div>
                 </td>
               </tr>

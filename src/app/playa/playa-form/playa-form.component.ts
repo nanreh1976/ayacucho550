@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, } from '@angular/forms';
 import { ServicioDatosService } from 'src/app/servicio-datos.service';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-playa-form',
@@ -15,9 +16,15 @@ export class PlayaFormComponent implements OnInit {
   editForm!: any;
   titulo!: string;
   item!: any
+  fecha!:Date;
+  fechaIngreso!:any;
+  horaIngreso!:any;
+  tarifas!:[];
+  componenteTarifas: string = "tarifas"
+  puestoEstacionamiento!: string;
 
 
-  constructor(public activeModal: NgbActiveModal,
+  constructor(public activeModal: NgbActiveModal, private servicioDatosService: ServicioDatosService,
 
     private fb: FormBuilder,
   ) {
@@ -37,10 +44,10 @@ export class PlayaFormComponent implements OnInit {
       this.configureForm(this.titulo, this.item);
 
     }
+    this.configurarFecha()
+    this.setearHora();
+    this.getTarifas();
   }
-
-  
-
 
 
   configureForm(titulo: string, item: any) {
@@ -59,13 +66,25 @@ export class PlayaFormComponent implements OnInit {
   createForm() {
     this.editForm = this.fb.group({
       patente: [''],
-      ingreso: [''],
+      fechaIngreso: [''],
+      horaIngreso: [''],
       idTarifa: [''],
       descripcion: [''],
       id: [''],
     });
+   
   }
 
+  setearHora(){
+    this.editForm.setValue( {
+      patente: [''],
+      fechaIngreso: this.fechaIngreso,
+      horaIngreso: this.horaIngreso,
+      idTarifa: [''],
+      descripcion: [''],
+      id: [''],   
+  })
+}
 
 
   closeModal() {
@@ -98,7 +117,36 @@ validarPatente(){
       alert("no es una patente válida");
      }
 }
+
+
+configurarFecha(){
+  moment.locale("es");
+  this.fecha = new Date();
+//  console.log(this.fecha);
+
+  this.fechaIngreso = moment(this.fecha).format('L');
+//  console.log(this.fechaIngreso);
+  this.horaIngreso = moment(this.fecha).format('LTS');
+//  console.log(this.horaIngreso);  
   
+
+} 
+
+getTarifas()  {
+  this.servicioDatosService.getAll(this.componenteTarifas).subscribe (
+    datos => {this.tarifas = datos;
+    console.log("get all tarifas", this.componenteTarifas, this.tarifas)
+  
+    }
+  );
+}
+
+changeTarifa(e: any) {
+  console.log(e.target.value)
+   this.editForm.idTarifa?.setValue(e.target.value, {
+    onlySelf: true,
+  }); 
+}
 
   
 }

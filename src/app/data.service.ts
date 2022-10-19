@@ -12,7 +12,7 @@ export class DataService implements InMemoryDbService {
     vehiculos : [
       {
         id: 1,
-        patente: "AG 759 LH",
+        patente: "AG759LH",
         marca:"Ford",
         modelo:"Sierra",
         color:"blanco",
@@ -21,7 +21,7 @@ export class DataService implements InMemoryDbService {
       },
       {
         id: 2,
-        patente: "AX 512 LH",
+        patente: "AX512LH",
         marca:"Renault",
         modelo:"Fuego",
         color:"rojo",
@@ -30,7 +30,7 @@ export class DataService implements InMemoryDbService {
       },
       {
         id: 3,
-        patente: "UV 349 LH",
+        patente: "UV349LH",
         marca:"Fiat",
         modelo:"128",
         color:"gris",
@@ -89,14 +89,14 @@ export class DataService implements InMemoryDbService {
 
   playa : [
     { id: 1,
-      patente: "12343343",
+      patente: "nhz231",
       ingreso: "24022344",
       idTarifa: "camion",
       descripcion: "Scania 1114",
     },   
 
     { id: 1,
-      patente: "646445",
+      patente: "ad123sa",
       ingreso: "252343433",
       idTarifa: "auto",
       descripcion: "fitito rojo",
