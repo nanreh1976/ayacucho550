@@ -19,10 +19,10 @@
           <!--     <div class="input-group">
                 <input formControlName="idTarifa" class="form-control" required type="text">
               </div> -->
-              <select class="custom-select mb-3" (change)="changeTarifa($event)" formControlName="idTarifa">
+              <select class="form-select form-select-md mb-3" (change)="changeTarifa($event)" formControlName="idTarifa">
                 <option value="">Elegir Tarifa</option>
                 <option *ngFor="let tarifa of tarifas">
-                  {{ tarifa }}
+                  {{tarifa.nombre}}
                 </option>
               </select>
             </div>
@@ -41,17 +41,12 @@
                     <label for="ingreso">Ingreso</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text ">Fecha</span>
-                      <input formControlName="fechaIngreso" class="form-control" required type="text" disable>
+                      <input class="fw-bold" type="text" value="{{fechaIngreso}}" disabled>
+                    </div>
+                    <div class="input-group mb-3">
                       <span class="input-group-text">Hora</span>
-                      <input formControlName="horaIngreso" class="form-control" required type="text" disable>
+                      <input class="fw-bold" type="text" value="{{horaIngreso}} " disabled>
                     </div>
-                    
-                    <!-- <div class="input-group">
-                      <input formControlName="fechaIngreso" class="form-control" required type="date" disable >
-                    </div>
-                    <div class="input-group">
-                      <input formControlName="horaIngreso" class="form-control" required type="date" disable >
-                    </div> -->
                   </div>
                 </td>
               </tr>

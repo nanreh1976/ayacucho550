@@ -4,6 +4,7 @@ import { FormBuilder, } from '@angular/forms';
 import { ServicioDatosService } from 'src/app/servicio-datos.service';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import * as moment from 'moment';
+import { Tarifas } from 'src/app/interfaces/tarifas';
 
 @Component({
   selector: 'app-playa-form',
@@ -19,7 +20,7 @@ export class PlayaFormComponent implements OnInit {
   fecha!:Date;
   fechaIngreso!:any;
   horaIngreso!:any;
-  tarifas!:[];
+  tarifas!: Tarifas [];
   componenteTarifas: string = "tarifas"
   puestoEstacionamiento!: string;
 
@@ -45,7 +46,7 @@ export class PlayaFormComponent implements OnInit {
 
     }
     this.configurarFecha()
-    this.setearHora();
+    //this.setearHora();
     this.getTarifas();
   }
 
@@ -65,9 +66,7 @@ export class PlayaFormComponent implements OnInit {
  
   createForm() {
     this.editForm = this.fb.group({
-      patente: [''],
-      fechaIngreso: [''],
-      horaIngreso: [''],
+      patente: [''],      
       idTarifa: [''],
       descripcion: [''],
       id: [''],
@@ -75,16 +74,14 @@ export class PlayaFormComponent implements OnInit {
    
   }
 
-  setearHora(){
+/*   setearHora(){
     this.editForm.setValue( {
-      patente: [''],
-      fechaIngreso: this.fechaIngreso,
-      horaIngreso: this.horaIngreso,
+      patente: [''],      
       idTarifa: [''],
       descripcion: [''],
       id: [''],   
   })
-}
+} */
 
 
   closeModal() {
