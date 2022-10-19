@@ -8,13 +8,19 @@
 
 
 
-    <ul>
+<ul class="d-flex justify-content-evenly">
   <li>
     <div style=" float: right;" *ngIf="$estado | async">
-
-        <app-btn-agregar class="right " *ngIf="$estado" (click)="msgBack('Agregar',[])"
-        class="d-flex align-items-center ">
-    </app-btn-agregar>     
+      <app-btn-agregar class="right " *ngIf="$estado" (click)="msgBack('Agregar',[])"
+      class="d-flex align-items-center ">
+      </app-btn-agregar> 
+    </div>
+  </li>
+  <li>
+    <div style=" float: left;">           
+      <app-btn-eliminar class="left" *ngIf="$estado" (click)="msgBack('Salida',[])"
+      class="d-flex align-items-center ">
+      </app-btn-eliminar>
     </div>
   </li>
 </ul>
@@ -36,12 +42,10 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Patente/th>
-        <th scope="col">Marca</th>
-        <th scope="col">Modelo</th>
-        <th scope="col">Color</th>
+        <th scope="col">Patente</th>
         <th scope="col">Ingreso</th>
-
+        <th scope="col">Tarifa</th>
+        <th scope="col">¿Saldo?</th>
       </tr>
     </thead>
 

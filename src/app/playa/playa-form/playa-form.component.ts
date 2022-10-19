@@ -114,7 +114,23 @@ export class PlayaFormComponent implements OnInit {
 //     this.closeModal('updated xp');
 //   }
 
-
+validarPatente(){  
+  console.log(this.editForm.value.patente);
+  const dominios = {
+    patentesViejas : /^[a-zA-Z]{3}[\d]{3}$/,
+    patentesNuevas : /^[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}$/,
+  }
+  
+  if(dominios.patentesViejas.test(this.editForm.value.patente)){
+    alert("es una patente vieja válida");                                 //ventanas de alert solo estan para probar si funciona
+    this.closeModal();
+    } else if (dominios.patentesNuevas.test(this.editForm.value.patente)){
+      alert("es una patente nueva válida");      
+      this.closeModal();
+     }  else {
+      alert("no es una patente válida");
+     }
+}
   
 
   

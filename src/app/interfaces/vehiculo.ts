@@ -1,10 +1,7 @@
 
-export interface Vehiculo {
-    id:number;
+export interface Vehiculo {    
     patente:string;
     marca:string;
     modelo:string;
-    color:string;
-    ingreso:Date;
-    egreso:Date; 
+    color:string;   
   }
