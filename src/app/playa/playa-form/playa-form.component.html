@@ -19,7 +19,7 @@
           <!--     <div class="input-group">
                 <input formControlName="idTarifa" class="form-control" required type="text">
               </div> -->
-              <select class="form-select form-select-md mb-3" (change)="changeTarifa($event)" formControlName="idTarifa">
+              <select class="form-select form-select-md mb-3" (change)="changeTarifa($event)">
                 <option value="">Elegir Tarifa</option>
                 <option *ngFor="let tarifa of tarifas">
                   {{tarifa.nombre}}
@@ -60,7 +60,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-success" (click)="validarPatente()">
+          <button class="btn btn-success" (click)="guardarDatos()">
             {{titulo}}
           </button>
         </div>

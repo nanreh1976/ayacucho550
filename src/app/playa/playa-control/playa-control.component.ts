@@ -144,7 +144,7 @@ deleteItem(componente: string, item: any): void {
 
 addItem(componente: string, item: any): void {
 
-  // console.log("add itemcomponent", item, )
+  console.log("add itemcomponent", item, )
   this.servicioDatosService.addItem(componente, item) 
   .subscribe
   (data => { 

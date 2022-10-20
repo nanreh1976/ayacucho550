@@ -89,16 +89,16 @@ export class DataService implements InMemoryDbService {
 
   playa : [
     { id: 1,
-      patente: "nhz231",
+      patente: "fht231",
       ingreso: "24022344",
-      idTarifa: "camion",
+      tarifa: "camion",
       descripcion: "Scania 1114",
     },   
 
-    { id: 1,
+    { id: 2,
       patente: "ad123sa",
       ingreso: "252343433",
-      idTarifa: "auto",
+      tarifa: "auto",
       descripcion: "fitito rojo",
     },   
 
