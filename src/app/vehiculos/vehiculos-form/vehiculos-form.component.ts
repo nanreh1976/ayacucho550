@@ -52,8 +52,8 @@ export class VehiculosFormComponent implements OnInit {
       marca: item .marca,
       modelo: item .modelo,
       color: item.color,
-      egreso: item .egreso,
-      ingreso: item .ingreso,    
+      // egreso: item .egreso,
+      // ingreso: item .ingreso,    
       id: item.id,
     });
 
@@ -66,8 +66,8 @@ export class VehiculosFormComponent implements OnInit {
       marca: [''],
       modelo: [''],
       color: [''],
-      egreso: [''],
-      ingreso: [''],
+      // egreso: [''],
+      // ingreso: [''],
       id: [''],
     });
   }
@@ -87,34 +87,6 @@ export class VehiculosFormComponent implements OnInit {
 }
 
 
-
-//   deleteXp(): void {
-//     const vehiculo = this.editForm.value;
-//     this.servicioDatosService.deleteXp(vehiculo)
-//       .subscribe(() => {
-//       });
-//     this.closeModal("deleted xp");
-//   }
-
-  
-
-//   addXp(): void {
-//     const vehiculo = this.editForm.value
-//     console.log(vehiculo);
-//     this.servicioDatosService.addXp(vehiculo)
-//       .subscribe(vehiculo => {
-//        });
-//     this.closeModal('added xp');
-//  }
-
-
-//   updateXp(): void {
-//     const vehiculo = this.editForm.value;
-//     this.servicioDatosService.updateXp(this.editForm.value)
-//       .subscribe(() => {  this.activeModal.close});
-//     this.closeModal('updated xp');
-//   }
-
 validarPatente(){  
   console.log(this.editForm.value.patente);
   const dominios = {
@@ -133,6 +105,5 @@ validarPatente(){
      }
 }
   
-
-  
+ 
 }

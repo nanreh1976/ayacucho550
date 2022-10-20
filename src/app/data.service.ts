@@ -16,8 +16,8 @@ export class DataService implements InMemoryDbService {
           marca: "Ford",
           modelo: "Sierra",
           color: "blanco",
-          ingreso: "00",
-          egreso: "00"
+          // ingreso: "00",
+          // egreso: "00"
         },
         {
           id: 2,
@@ -25,8 +25,8 @@ export class DataService implements InMemoryDbService {
           marca: "Renault",
           modelo: "Fuego",
           color: "rojo",
-          ingreso: "00",
-          egreso: "00",
+          // ingreso: "00",
+          // egreso: "00",
         },
         {
           id: 3,
@@ -34,8 +34,8 @@ export class DataService implements InMemoryDbService {
           marca: "Fiat",
           modelo: "128",
           color: "gris",
-          ingreso: "00",
-          egreso: "00"
+          // ingreso: "00",
+          // egreso: "00"
         },
       ],
 

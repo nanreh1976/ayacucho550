@@ -31,7 +31,7 @@ import { PlayaViewComponent } from './playa/playa-view/playa-view.component';
 import { PlayaControlComponent } from './playa/playa-control/playa-control.component';
 import { ClientesViewComponent } from './clientes/clientes-view/clientes-view.component';
 import { ClientesControlComponent } from './clientes/clientes-control/clientes-control.component';
-import { VehiculosComponent } from './vehiculos/vehiculos.component';
+
 import { VehiculosControlComponent } from './vehiculos/vehiculos-control/vehiculos-control.component';
 import { VehiculosFormComponent } from './vehiculos/vehiculos-form/vehiculos-form.component';
 import { VehiculosViewComponent } from './vehiculos/vehiculos-view/vehiculos-view.component';
@@ -72,7 +72,7 @@ const appRoutes: Routes = [
     PlayaControlComponent,
     ClientesViewComponent,
     ClientesControlComponent,
-    VehiculosComponent,
+ 
     VehiculosControlComponent,
     VehiculosFormComponent,
     VehiculosViewComponent,
