@@ -47,13 +47,13 @@ export class ClientesFormComponent implements OnInit {
 
     // console.log("configure form", titulo, item), (titulo !=='agregar');
     this.editForm.patchValue({
-      patente: item .patente,
-      marca: item .marca,
-      modelo: item .modelo,
-      color: item.color,
-      egreso: item .egreso,
-      ingreso: item .ingreso,    
-      id: item.id,
+      
+      apellido: item .apellido,
+      nombre: item .nombre,
+      telefono: item .telefono,
+      direccion: item.direccion,
+      comentario: item .comentario,
+       id: item.id,
     });
 
   }
@@ -61,12 +61,11 @@ export class ClientesFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      patente: [''],
-      marca: [''],
-      modelo: [''],
-      color: [''],
-      egreso: [''],
-      ingreso: [''],
+      apellido: [''],
+      nombre: [''],
+      telefono: [''],
+      direccion: [''],
+      comentario: [''],
       id: [''],
     });
   }
@@ -84,38 +83,5 @@ export class ClientesFormComponent implements OnInit {
  this.activeModal.close(value);
 
 }
-
-
-
-//   deleteXp(): void {
-//     const vehiculo = this.editForm.value;
-//     this.servicioDatosService.deleteXp(vehiculo)
-//       .subscribe(() => {
-//       });
-//     this.closeModal("deleted xp");
-//   }
-
-  
-
-//   addXp(): void {
-//     const vehiculo = this.editForm.value
-//     console.log(vehiculo);
-//     this.servicioDatosService.addXp(vehiculo)
-//       .subscribe(vehiculo => {
-//        });
-//     this.closeModal('added xp');
-//  }
-
-
-//   updateXp(): void {
-//     const vehiculo = this.editForm.value;
-//     this.servicioDatosService.updateXp(this.editForm.value)
-//       .subscribe(() => {  this.activeModal.close});
-//     this.closeModal('updated xp');
-//   }
-
-
-  
-
   
 }
