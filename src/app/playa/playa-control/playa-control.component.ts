@@ -18,6 +18,7 @@ import { PlayaFormComponent } from '../playa-form/playa-form.component';
  (newItemEvent)="getMsg($event)"
   ></app-playa-view>
   
+  
               `,
 
   styleUrls: ['./playa-control.component.scss']

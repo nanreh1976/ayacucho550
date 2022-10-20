@@ -1,7 +1,7 @@
 
-export interface Vehiculo {    
-    patente:string;
-    marca:string;
-    modelo:string;
-    color:string;   
-  }
+export interface Vehiculo {
+  patente: string;
+  marca: string;
+  modelo: string;
+  color: string;
+}

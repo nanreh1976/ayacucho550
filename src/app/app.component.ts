@@ -10,29 +10,29 @@ import { LoggedService } from './logged.service';
 export class AppComponent implements OnInit {
   title = 'proyecto-final-7380';
   $estado;
-  
 
-  constructor( private loggedService: LoggedService, private router: Router,){
+
+  constructor(private loggedService: LoggedService, private router: Router,) {
     this.$estado = loggedService.logged$;
   }
   ngOnInit(): void {
     this.$estado.subscribe;
-    
-    this.comprobarEstado();    
+
+    this.comprobarEstado();
   }
 
   comprobarEstado(): void {
-  if(this.$estado.value){
-      
-      this.router.navigate(['playa'])  
+    if (this.$estado.value) {
+
+      this.router.navigate(['playa'])
       console.log("logueado");
       console.log(this.$estado);
-      
-      
-    } else{      
+
+
+    } else {
       console.log("no logueado");
-      
-      this.router.navigate(['login']) 
-    } 
+
+      this.router.navigate(['login'])
+    }
   }
 }

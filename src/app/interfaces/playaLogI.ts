@@ -1,12 +1,12 @@
 export interface PlayaLogI {
 
-    id:number;
+    id: number;
     patente: string;
     ingreso: Date;
     egreso: Date;
-    idtarifa: number;
+    idTarifa: number;
     saldo: number;
-    descripcion:string;
+    descripcion: string;
 
 
 }

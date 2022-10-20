@@ -36,6 +36,10 @@ import { VehiculosControlComponent } from './vehiculos/vehiculos-control/vehicul
 import { VehiculosFormComponent } from './vehiculos/vehiculos-form/vehiculos-form.component';
 import { VehiculosViewComponent } from './vehiculos/vehiculos-view/vehiculos-view.component';
 
+import { PlayaLogControlComponent } from './playa-log/playa-log-control/playa-log-control.component';
+import { PlayaLogViewComponent } from './playa-log/playa-log-view/playa-log-view.component';
+import { PlayaLogFormComponent } from './playa-log/playa-log-form/playa-log-form.component';
+
 
 
 
@@ -73,6 +77,10 @@ const appRoutes: Routes = [
     VehiculosFormComponent,
     VehiculosViewComponent,
 
+    PlayaLogControlComponent,
+    PlayaLogViewComponent,
+    PlayaLogFormComponent,
+
 
   ],
   imports: [
@@ -81,6 +89,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot([
       {path: 'home', component: AppComponent},
       {path: 'playa', component: PlayaControlComponent  },
+      {path: 'playaLog', component: PlayaLogControlComponent },
       {path: 'tarifas', component: TarifasComponent},
       {path: 'clientes', component: ClientesControlComponent},
       {path: 'vehiculos', component: VehiculosControlComponent},
