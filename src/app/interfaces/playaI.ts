@@ -1,9 +1,9 @@
 export interface PlayaI {
 
-    id:number;
+    id: number;
     patente: string;
     ingreso: Date;
     tarifa: string;
-    descripcion:string;
+    descripcion: string;
 
 }
