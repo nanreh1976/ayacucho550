@@ -1,70 +1,70 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">{{titulo}} Vehiculo </h5>
-    <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-    </button>
+  <h5 class="modal-title" id="modal-basic-title">{{titulo}} Vehiculo </h5>
+  <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 <div class="modal-body">
-    <div class="container">
-        <div class="modal-body">
-          <form [formGroup]="editForm" novalidate>
-            <div class="form-group">
-              <label for="Patente">Patente</label>
-              <div class="input-group">
-                <input formControlName="patente" class="form-control" required type="text">
-              </div>
+  <div class="container">
+      <div class="modal-body">
+        <form [formGroup]="editForm" novalidate>
+          <div class="form-group">
+            <label for="Patente">Patente</label>
+            <div class="input-group">
+              <input formControlName="patente" class="form-control" required type="text">
             </div>
-            <div class="form-group">
-              <label for="Tarifa">Tarifa</label>
-          <!--     <div class="input-group">
-                <input formControlName="idTarifa" class="form-control" required type="text">
-              </div> -->
-              <select class="form-select form-select-md mb-3" (change)="changeTarifa($event)">
-                <option value="">Elegir Tarifa</option>
-                <option *ngFor="let tarifa of tarifas">
-                  {{tarifa.nombre}}
-                </option>
-              </select>
+          </div>
+          <div class="form-group">
+            <label for="Tarifa">Tarifa</label>
+        <!--     <div class="input-group">
+              <input formControlName="idTarifa" class="form-control" required type="text">
+            </div> -->
+            <select class="form-select form-select-md mb-3" (change)="changeTarifa($event)">
+              <option value="">Elegir Tarifa</option>
+              <option *ngFor="let tarifa of tarifas">
+                {{tarifa.nombre}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="Descripcion">Descripcion</label>
+            <div class="input-group">
+              <input formControlName="descripcion" class="form-control" required type="text">
             </div>
-            <div class="form-group">
-              <label for="Descripcion">Descripcion</label>
-              <div class="input-group">
-                <input formControlName="descripcion" class="form-control" required type="text">
-              </div>
-            </div>
+          </div>
 
-      
-            <table class="table">
-              <tr>
-                <td>
-                  <div class="form-group p-0">
-                    <label for="ingreso">Ingreso</label>
-                    <div class="input-group mb-3">
-                      <span class="input-group-text ">Fecha</span>
-                      <input class="fw-bold" type="text" value="{{fechaIngreso}}" disabled>
-                    </div>
-                    <div class="input-group mb-3">
-                      <span class="input-group-text">Hora</span>
-                      <input class="fw-bold" type="text" value="{{horaIngreso}} " disabled>
-                    </div>
+    
+          <table class="table">
+            <tr>
+              <td>
+                <div class="form-group p-0">
+                  <label for="ingreso">Ingreso</label>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text ">Fecha</span>
+                    <input class="fw-bold" type="text" value="{{fechaIngreso}}" disabled>
                   </div>
-                </td>
-              </tr>
-            </table>
-            <div class="form-group">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text">Hora</span>
+                    <input class="fw-bold" type="text" value="{{horaIngreso}} " disabled>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <!-- <div class="form-group">
 
-              <div class="input-group">
-                <input formControlName="id" class="form-control" type="hidden">
-              </div>
+            <div class="input-group">
+              <input formControlName="id" class="form-control" type="hidden">
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-success" (click)="guardarDatos()">
-            {{titulo}}
-          </button>
-        </div>
+          </div> -->
+        </form>
       </div>
-  
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="guardarDatos()">
+          {{titulo}}
+        </button>
+      </div>
+    </div>
+
 </div>
 

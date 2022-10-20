@@ -1,8 +1,6 @@
-import { Tarifas } from "./tarifas";
-
 export interface PlayaI {
 
-    //id:number;
+    id:number;
     patente: string;
     ingreso: Date;
     tarifa: string;

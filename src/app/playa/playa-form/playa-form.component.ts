@@ -35,67 +35,47 @@ export class PlayaFormComponent implements OnInit {
     this.createForm();
   }
 
-
-
-
-
   ngOnInit(): void {
     {
-      //console.log("on init form", this.fromParent);
+      console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
       this.item = this.fromParent.item;
-      if(this.titulo === 'Agregar'){ 
+      if(this.titulo === 'Agregar'){                                  //si es un ingreso nuevo, se llama a la funcion para configurar la fecha
         this.configurarFecha()
 
-      } else{
-       // this.configureForm();
+      } else if (this.titulo === 'Editar'){                           //si es una edicion, se guardan las fechas y las tarifas y se llama a la funcion para configurar form
+        this.tarifaSeleccionada = this.item.tarifa;
+        this.fecha = this.item.fecha;
+        this.configurarForm();
       }
-      //this.configureForm(this.titulo, this.item);
+     
 
-    }
+    }    
     
-    //this.setearHora();
-    this.getTarifas();
+    this.getTarifas();                                                //se traen las tarifas
   }
 
-
-//  configureForm() {
-
-//     // console.log("configure form", titulo, item), (titulo !=='agregar');
-//     this.editForm.patchValue({
-//       patente: this.item.patente,
-//       /* ingreso: this.item.ingreso, 
-//       tarifa:item.tarifa,
-//       descripcion:item.descripcion, 
-//       id: item.id, */
-//     });
-//     this.fecha = this.item.ingreso
-//     this.fechaIngreso = moment(this.fecha).format('L');
-//     //  console.log(this.fechaIngreso);
-//       this.horaIngreso = moment(this.fecha).format('LTS');
-//     this.tarifaSeleccionada = this.item.tarifa; 
-//   }
- 
- 
-  createForm() {
+  createForm() {                                               
     this.editForm = this.fb.group({
-      patente: [''],      
-      /* idTarifa: [''],
-      descripcion: [''],
-      id: [''], */
-    });
-   
+      patente: [''],  
+      descripcion: [''],          
+    });   
   }
 
-/*   setearHora(){
-    this.editForm.setValue( {
-      patente: [''],      
-      idTarifa: [''],
-      descripcion: [''],
-      id: [''],   
-  })
-} */
+  configurarForm(){                                                          //se configura el form con los datos del objeto
+    this.editForm.patchValue({ 
+      patente: this.item.patente,
+      descripcion: this.item.descripcion,
+    })
+  }
 
+  guardarDatos(){
+    if(this.titulo === 'Agregar'){                                      //si es un ingreso nuevo, valida la patente
+      this.validarPatente();
+    }else if (this.titulo === "Editar"){                                //si es una edicion, se arma el puesto con los nuevos datos
+      this.armarPuestoEstacionamiento()      
+    }
+}
 
 closeModal() {
    let value = {
@@ -103,30 +83,19 @@ closeModal() {
    item: this.puestoEstacionamiento,
    
  };
-
 //  console.log("closemodal", value)
  this.activeModal.close(value);
-
 } 
 
-guardarDatos(){
-    if(this.titulo === 'Agregar'){ 
-      this.validarPatente();
-    }else{
-      /* this.armarPuestoEstacionamiento()
-      this.closeModal(); */
-    }
-}
 
-
-validarPatente(){                                                        //para el ingreso, el form primero valida la patente   
+validarPatente(){                                                        
   console.log(this.editForm.value.patente);
   const dominios = {
     patentesViejas : /^[a-zA-Z]{3}[\d]{3}$/,
     patentesNuevas : /^[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}$/,
   }  
   if(dominios.patentesViejas.test(this.editForm.value.patente)){
-    alert("es una patente vieja válida");                                 //ventanas de alert solo estan para probar si funciona
+    alert("es una patente vieja válida");                                 
     this.armarPuestoEstacionamiento();                                             //si todo esta bien, llama la funcion para arma el puesto     
     } else if (dominios.patentesNuevas.test(this.editForm.value.patente)){
       alert("es una patente nueva válida");      
@@ -152,40 +121,33 @@ configurarFecha(){
 getTarifas()  {
   this.servicioDatosService.getAll(this.componenteTarifas).subscribe (
     datos => {this.tarifas = datos;
-    console.log("get all tarifas", this.componenteTarifas, this.tarifas)
-  
+    console.log("get all tarifas", this.componenteTarifas, this.tarifas)  
     }
   );
 }
 
 changeTarifa(e: any) {
-  console.log(e.target.value)
-  
-  let tarifaForm
+  //console.log(e.target.value)  
+  let tarifaForm   //crea una variable para usarlo con la funcion filter
 
-  tarifaForm = this.tarifas.filter(function(tarifas:any){
+  tarifaForm = this.tarifas.filter(function(tarifas:any){       //filter recorre el array tarifas y devuelve otro array con lo que sea q coincida con el parametro
     return tarifas.nombre === e.target.value
   })
-
-  console.log(tarifaForm); 
   
-
-  this.tarifaSeleccionada = tarifaForm[0].nombre;
-  
+  this.tarifaSeleccionada = tarifaForm[0].nombre;               //se guarda el nombre de la tarifa seleccionada en la variable
 }
 
-armarPuestoEstacionamiento() {                                      //la funcion crea el puesto
+armarPuestoEstacionamiento() {     
+  //la funcion arma el puesto
   this.puestoEstacionamiento = {
-    
+    id: this.item.id,
     patente: this.editForm.value.patente,
     ingreso: this.fecha,
     tarifa : this.tarifaSeleccionada,
-    descripcion:"",
+    descripcion:this.editForm.value.descripcion,
   } 
 
-  console.log(this.puestoEstacionamiento)
-  this.titulo="Agregar";
-  this.item= this.puestoEstacionamiento;;
+  this.item= this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
   console.log(this.item)
   this.closeModal();
 }
