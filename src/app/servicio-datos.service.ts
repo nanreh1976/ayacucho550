@@ -105,48 +105,7 @@ export class ServicioDatosService {
 
   
 
-//   //METODOS POR COMPONENTE (reemplazar #!!!)
 
-//   getXps(): Observable<[]> {
-//     return this.http.get<[]>(this.xpUrl).pipe(
-//       tap(data => console.log(data)),
-//       catchError(this.handleError<[]>('getXps', []))
-//     );
-//   };
-
-
-//   /** GET xp por id. con 404 si no se encuentra */
-// getXp(id: number): Observable<any> {
-//   const url = `${this.xpUrl}/${id}`;
-//    return this.http.get<Vehiculo>(url).pipe(
-//     tap(data => console.log(data)),
-//     catchError(this.handleError<any>(`getXp id=${id}`))
-//   );
-// }
-
-//   // PUT: modificar la xp en el sserver 
-//   updateXp(xp: Vehiculo): Observable<any> {
-//     return this.http.put(this.xpUrl, xp, this.httpOptions).pipe(
-//       tap(_ => console.log(`xp id=${xp.id}`)),
-//       catchError(this.handleError<any>('updateHero'))
-//     );
-//   }
-
-//   deleteXp(xp: Vehiculo): Observable<any> {
-//     const url = `${this.xpUrl}/${xp.id}`;
-
-//     return this.http.delete<Vehiculo>(url, this.httpOptions).pipe(
-//       tap(_ => console.log(`deleted xp id=${xp.id}`)),
-//       catchError(this.handleError<Vehiculo>('deleteXp'))
-//     );
-//   }
-
-//   addXp(xp: Vehiculo): Observable<any> {
-//     return this.http.post<Vehiculo>(this.xpUrl, xp, this.httpOptions).pipe(
-//       tap((newXp: Vehiculo) => console.log(`se agrego xp con id=${newXp.id}`)),
-//       catchError(this.handleError<Vehiculo>('addXp'))
-//     );
-//   }
 
   getTarifas(): Observable<[]> {
     return this.http.get<[]>(this.tarifasUrl).pipe(
