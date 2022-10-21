@@ -43,7 +43,10 @@ export class PlayaFormComponent implements OnInit {
       if(this.titulo === 'Agregar'){                                  //si es un ingreso nuevo, se llama a la funcion para configurar la fecha
         this.configurarFecha()
 
-      } else if (this.titulo === 'Editar'){                           //si es una edicion, se guardan las fechas y las tarifas y se llama a la funcion para configurar form
+      } 
+      //else if (this.titulo === 'Editar')
+      else
+      {                           //si es una edicion, se guardan las fechas y las tarifas y se llama a la funcion para configurar form
         this.tarifaSeleccionada = this.item.tarifa;
         this.fecha = this.item.fecha;
         this.configurarForm();
