@@ -21,7 +21,7 @@
             </div> -->
             
             <select class="form-select form-select-md mb-3" (change)="changeTarifa($event)">
-              <option value="">Elegir Tarifa</option>
+              <option value={{tarifaSeleccionada}}>Elegir Tarifa</option>
               <option *ngFor="let tarifa of tarifas">
                 {{tarifa.nombre}}
               </option>
@@ -35,18 +35,18 @@
           </div>
 
     
-          <table class="table">
+          <table class="table" *ngIf='titulo==="Agregar"'>
             <tr>
               <td>
                 <div class="form-group p-0">
                   <label for="ingreso">Ingreso</label>
                   <div class="input-group mb-3">
                     <span class="input-group-text ">Fecha</span>
-                    <input class="fw-bold" type="text" value="{{fechaIngreso}}" disabled>
+                    <input class="fw-bold" type="text" value="{{fechas.fechaIngreso}}" disabled>
                   </div>
                   <div class="input-group mb-3">
                     <span class="input-group-text">Hora</span>
-                    <input class="fw-bold" type="text" value="{{horaIngreso}} " disabled>
+                    <input class="fw-bold" type="text" value="{{fechas.horaIngreso}} " disabled>
                   </div>
                 </div>
               </td>

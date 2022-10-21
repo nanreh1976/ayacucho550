@@ -1,8 +1,10 @@
+import { Fechas } from "./fechas";
+
 export interface PlayaI {
 
     id: number;
     patente: string;
-    ingreso: Date;
+    fechas: Fechas;
     tarifa: string;
     descripcion: string;
 

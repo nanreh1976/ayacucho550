@@ -95,7 +95,11 @@ export class DataService implements InMemoryDbService {
         {
           id: 1,
           patente: "fht231",
-          ingreso: "24022344",
+          fechas: {
+            fechaDate: "",
+            fechaIngreso: "21-10-2022",
+            horaIngreso: "15:17:23",
+          },
           tarifa: "camion",
           descripcion: "Scania 1114",
         },
@@ -103,7 +107,11 @@ export class DataService implements InMemoryDbService {
         {
           id: 2,
           patente: "ad123sa",
-          ingreso: "252343433",
+          fechas: {
+            fechaDate: "",
+            fechaIngreso: "21-10-2022",
+            horaIngreso: "14:24:23",            
+          },
           tarifa: "auto",
           descripcion: "fitito rojo",
         },

@@ -6,6 +6,7 @@ import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { PlayaI } from 'src/app/interfaces/playaI'
 import * as moment from 'moment';
 import { Tarifas } from 'src/app/interfaces/tarifas';
+import { Fechas } from 'src/app/interfaces/fechas';
 
 @Component({
   selector: 'app-playa-form',
@@ -19,6 +20,11 @@ export class PlayaFormComponent implements OnInit {
   titulo!: string;
   item!: any
   fecha!:Date;
+  fechas: Fechas = {
+    fechaDate : "",
+    fechaIngreso: "",
+    horaIngreso: "",
+};  
   fechaIngreso!:any;
   horaIngreso!:any;
   tarifas!: Tarifas [];
@@ -40,16 +46,18 @@ export class PlayaFormComponent implements OnInit {
       console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
       this.item = this.fromParent.item;
+      console.log(this.item);
+      
       if(this.titulo === 'Agregar'){                                  //si es un ingreso nuevo, se llama a la funcion para configurar la fecha
         this.configurarFecha()
-
       } 
       //else if (this.titulo === 'Editar')
       else
       {                           //si es una edicion, se guardan las fechas y las tarifas y se llama a la funcion para configurar form
         this.tarifaSeleccionada = this.item.tarifa;
-        this.fecha = this.item.fecha;
+        this.fechas = this.item.fechas;
         this.configurarForm();
+        this.pruebaCierreHora();
       }
      
 
@@ -74,8 +82,7 @@ export class PlayaFormComponent implements OnInit {
 
   guardarDatos(){
     if(this.titulo === 'Agregar'){                                      //si es un ingreso nuevo, valida la patente
-     this.validarPatente() 
-     this.validarTarifa()
+     this.validarPatente() ;     
     } else 
     // if (this.titulo === "Editar")
     {                                //si es una edicion, se arma el puesto con los nuevos datos
@@ -104,44 +111,64 @@ validarPatente(){
     
   }  
   if(dominios.patentesViejas.test(this.editForm.value.patente)){
-    alert("es una patente vieja válida");                                 
-    this.armarPuestoEstacionamiento();                                             //si todo esta bien, llama la funcion para arma el puesto     
+    alert("es una patente vieja válida");
+    this.validarTarifa()                                 
+    //this.armarPuestoEstacionamiento();                                             //si todo esta bien, llama la funcion para arma el puesto     
     } else if (dominios.patentesNuevas.test(this.editForm.value.patente)){
-      alert("es una patente nueva válida");      
-      this.armarPuestoEstacionamiento();                                          //si todo esta bien, llama la funcion para arma el puesto  
+      alert("es una patente nueva válida"); 
+      this.validarTarifa()     
+      //this.armarPuestoEstacionamiento();                                          //si todo esta bien, llama la funcion para arma el puesto  
     } else if (dominios.patentesMotosViejas.test(this.editForm.value.patente)){
-      alert("es una patente vieja válida");      
-      this.armarPuestoEstacionamiento();
+      alert("es una patente de moto vieja válida");      
+      this.validarTarifa()
+      //this.armarPuestoEstacionamiento();
     } else if (dominios.patentesMotosNuevas.test(this.editForm.value.patente)){
-      alert("es una patente nueva válida");      
-      this.armarPuestoEstacionamiento();
+      alert("es una patente de moto nueva válida");      
+      this.validarTarifa()
+      //this.armarPuestoEstacionamiento();
       
     }  else {
       alert("no es una patente válida");
      }
 }
+
  validarTarifa(){
-  console.log(this.editForm.value.tarifa);
-  const tarifa1 = {
-    tarifass : /^[undefined]{9}/,
-    
-}
-if(tarifa1.tarifass.test(this.editForm.value.tarifa)){
+
+ if(this.tarifaSeleccionada !== undefined){
+  this.armarPuestoEstacionamiento();
+ } else {
   alert("no elegiste la tarifa");
-} else                                  
-  this.armarPuestoEstacionamiento();                                             //si todo esta bien, llama la funcion para arma el puesto     
  }
+ }
+
 configurarFecha(){
-  moment.locale("es");
-  this.fecha = new Date();
+  moment.locale("es");                                                                     
+  this.fecha = new Date();                                                        // toma la fecha actual    
   console.log(this.fecha);
 
-  this.fechaIngreso = moment(this.fecha).format('L');
-//  console.log(this.fechaIngreso);
-  this.horaIngreso = moment(this.fecha).format('LTS');
-//  console.log(this.horaIngreso);
+  this.fechas.fechaIngreso = moment(this.fecha).format('L');                      // desgloza la fecha en formato (DD/MM/YYYY) y la guarda en el objeto fechas
+  console.log(this.fechas.fechaIngreso);
+  this.fechas.horaIngreso = moment(this.fecha).format('LTS');                     // desgloza la fecha en formato (hh:mm:ss) y la guarda en el objeto fechas
+  console.log(this.fechas.horaIngreso);
+  this.fechas.fechaDate = this.fecha.toString()
+  console.log(this.fechas.fechaDate);
+  this.fechas.fechaDate
 
 } 
+
+pruebaCierreHora(){  
+  // pruebas para ver como obtener la diferencia entre ingreso y Salida
+  
+  /* let fecha1= "20/10/2022"
+  let fecha2= "10:34:57"
+  let fechaCierre = new Date()  
+  let fechaDePrueba= moment(`${fecha1}${fecha2}`, "DDTMMTYYYYhhmmss").diff(fechaCierre, "minutes");   // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
+  console.log(fechaDePrueba); */
+  
+  let pruebaCierreHora= moment(this.fechas.fechaDate).diff(new Date(),"minutes");   // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
+  console.log(pruebaCierreHora);
+  
+}
 
 getTarifas()  {
   this.servicioDatosService.getAll(this.componenteTarifas).subscribe (
@@ -152,7 +179,7 @@ getTarifas()  {
 }
 
 changeTarifa(e: any) {
-  //console.log(e.target.value)  
+  console.log(e.target.value)  
   let tarifaForm   //crea una variable para usarlo con la funcion filter
 
   tarifaForm = this.tarifas.filter(function(tarifas:any){       //filter recorre el array tarifas y devuelve otro array con lo que sea q coincida con el parametro
@@ -167,7 +194,7 @@ armarPuestoEstacionamiento() {
   this.puestoEstacionamiento = {
     id: this.item.id,
     patente: this.editForm.value.patente,
-    ingreso: this.fecha,
+    fechas: this.fechas,
     tarifa : this.tarifaSeleccionada,
     descripcion:this.editForm.value.descripcion,
   } 
