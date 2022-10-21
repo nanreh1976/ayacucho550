@@ -71,7 +71,8 @@ export class PlayaFormComponent implements OnInit {
 
   guardarDatos(){
     if(this.titulo === 'Agregar'){                                      //si es un ingreso nuevo, valida la patente
-      this.validarPatente();
+     this.validarPatente() 
+     this.validarTarifa()
     } else 
     // if (this.titulo === "Editar")
     {                                //si es una edicion, se arma el puesto con los nuevos datos
@@ -97,6 +98,7 @@ validarPatente(){
     patentesNuevas : /^[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}$/,
     patentesMotosViejas : /^[0-9]{3}[a-zA-Z]{3}$/,
     patentesMotosNuevas : /^[a-zA-Z]{1}[0-9]{3}[a-zA-Z]{3}$/,
+    
   }  
   if(dominios.patentesViejas.test(this.editForm.value.patente)){
     alert("es una patente vieja válida");                                 
@@ -110,15 +112,22 @@ validarPatente(){
     } else if (dominios.patentesMotosNuevas.test(this.editForm.value.patente)){
       alert("es una patente nueva válida");      
       this.armarPuestoEstacionamiento();
-     
-    
-    
+      
     }  else {
       alert("no es una patente válida");
      }
 }
-
-
+ validarTarifa(){
+  console.log(this.editForm.value.tarifa);
+  const tarifa1 = {
+    tarifass : /^[undefined]{9}/,
+    
+}
+if(tarifa1.tarifass.test(this.editForm.value.tarifa)){
+  alert("no elegiste la tarifa");
+} else                                  
+  this.armarPuestoEstacionamiento();                                             //si todo esta bien, llama la funcion para arma el puesto     
+ }
 configurarFecha(){
   moment.locale("es");
   this.fecha = new Date();
@@ -159,7 +168,10 @@ armarPuestoEstacionamiento() {
     tarifa : this.tarifaSeleccionada,
     descripcion:this.editForm.value.descripcion,
   } 
+  //if (tarifa="undifined"){
 
+
+  
   this.item= this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
   console.log(this.item)
   this.closeModal();
