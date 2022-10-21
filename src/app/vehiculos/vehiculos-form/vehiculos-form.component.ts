@@ -92,6 +92,8 @@ validarPatente(){
   const dominios = {
     patentesViejas : /^[a-zA-Z]{3}[\d]{3}$/,
     patentesNuevas : /^[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}$/,
+    patentesMotosViejas : /^[0-9]{3}[a-zA-Z]{3}$/,
+    patentesMotosNuevas : /^[a-zA-Z]{1}[0-9]{3}[a-zA-Z]{3}$/,
   }
   
   if(dominios.patentesViejas.test(this.editForm.value.patente)){
@@ -100,6 +102,13 @@ validarPatente(){
     } else if (dominios.patentesNuevas.test(this.editForm.value.patente)){
       alert("es una patente nueva válida");      
       this.closeModal();
+    } else if (dominios.patentesMotosViejas.test(this.editForm.value.patente)){
+      alert("es una patente vieja válida");      
+      this.closeModal();
+    } else if (dominios.patentesMotosNuevas.test(this.editForm.value.patente)){
+      alert("es una patente nueva válida");      
+      this.closeModal();// pantentes de motos de todos estilos viejas y nuevas
+    
      }  else {
       alert("no es una patente válida");
      }

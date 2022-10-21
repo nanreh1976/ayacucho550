@@ -95,6 +95,8 @@ validarPatente(){
   const dominios = {
     patentesViejas : /^[a-zA-Z]{3}[\d]{3}$/,
     patentesNuevas : /^[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}$/,
+    patentesMotosViejas : /^[0-9]{3}[a-zA-Z]{3}$/,
+    patentesMotosNuevas : /^[a-zA-Z]{1}[0-9]{3}[a-zA-Z]{3}$/,
   }  
   if(dominios.patentesViejas.test(this.editForm.value.patente)){
     alert("es una patente vieja válida");                                 
@@ -102,7 +104,16 @@ validarPatente(){
     } else if (dominios.patentesNuevas.test(this.editForm.value.patente)){
       alert("es una patente nueva válida");      
       this.armarPuestoEstacionamiento();                                          //si todo esta bien, llama la funcion para arma el puesto  
-     }  else {
+    } else if (dominios.patentesMotosViejas.test(this.editForm.value.patente)){
+      alert("es una patente vieja válida");      
+      this.armarPuestoEstacionamiento();
+    } else if (dominios.patentesMotosNuevas.test(this.editForm.value.patente)){
+      alert("es una patente nueva válida");      
+      this.armarPuestoEstacionamiento();
+     
+    
+    
+    }  else {
       alert("no es una patente válida");
      }
 }
