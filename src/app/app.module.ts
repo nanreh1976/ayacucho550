@@ -12,16 +12,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoggedService } from './logged.service';
+import { LoggedService } from './servicios/logged.service';
 import { BtnAgregarComponent } from './shared/btn-agregar/btn-agregar.component';
 import { BtnEditarComponent } from './shared/btn-editar/btn-editar.component';
 import { BtnEliminarComponent } from './shared/btn-eliminar/btn-eliminar.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { DataService } from './data.service';
+import { DataService } from './servicios/data.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ServicioDatosService } from './servicio-datos.service';
+import { ServicioDatosService } from './servicios/servicio-datos.service';
 import { PlayaFormComponent } from './playa/playa-form/playa-form.component';
-import { FilterPipe } from './filter.pipe';
+import { FilterPipe } from './servicios/filter.pipe';
 import { TarifasComponent } from './tarifas/tarifas.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -64,7 +64,7 @@ const appRoutes: Routes = [
     PlayaFormComponent,
     FilterPipe,
     TarifasComponent,
-  
+      
     DashboardComponent,
     PagenotfoundComponent,
     ClientesFormComponent,

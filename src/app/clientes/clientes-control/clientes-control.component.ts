@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
-import { LoggedService } from 'src/app/logged.service';
-import { ServicioDatosService } from 'src/app/servicio-datos.service';
+import { LoggedService } from 'src/app/servicios/logged.service';
+import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
 import { ClientesFormComponent } from '../clientes-form/clientes-form.component';
 import { ClientesViewComponent } from '../clientes-view/clientes-view.component';
 

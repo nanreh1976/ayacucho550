@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'
-import { LoggedService } from '../logged.service';
+import { LoggedService } from '../servicios/logged.service';
 import { BehaviorSubject } from 'rxjs';
 import { LoginComponent } from '../login/login.component';
 import { Router } from '@angular/router';

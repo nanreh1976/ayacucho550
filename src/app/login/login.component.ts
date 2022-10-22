@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoggedService } from '../logged.service';
+import { LoggedService } from '../servicios/logged.service';
 import { BehaviorSubject } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
