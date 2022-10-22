@@ -39,6 +39,7 @@ import { VehiculosViewComponent } from './vehiculos/vehiculos-view/vehiculos-vie
 import { PlayaLogControlComponent } from './playa-log/playa-log-control/playa-log-control.component';
 import { PlayaLogViewComponent } from './playa-log/playa-log-view/playa-log-view.component';
 import { PlayaLogFormComponent } from './playa-log/playa-log-form/playa-log-form.component';
+import { TicketEntradaComponent } from './ticket-entrada/ticket-entrada.component';
 
 
 
@@ -80,6 +81,7 @@ const appRoutes: Routes = [
     PlayaLogControlComponent,
     PlayaLogViewComponent,
     PlayaLogFormComponent,
+    TicketEntradaComponent,
 
 
   ],
@@ -90,6 +92,7 @@ const appRoutes: Routes = [
       {path: 'home', component: AppComponent},
       {path: 'playa', component: PlayaControlComponent  },
       {path: 'playaLog', component: PlayaLogControlComponent },
+      {path: 'ticketE', component: TicketEntradaComponent },
       {path: 'tarifas', component: TarifasComponent},
       {path: 'clientes', component: ClientesControlComponent},
       {path: 'vehiculos', component: VehiculosControlComponent},
