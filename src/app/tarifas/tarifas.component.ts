@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicioDatosService } from '../servicio-datos.service';
+import { ServicioDatosService } from '../servicios/servicio-datos.service';
 
 @Component({
   selector: 'app-tarifas',

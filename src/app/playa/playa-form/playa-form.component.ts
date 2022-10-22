@@ -1,12 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, } from '@angular/forms';
-import { ServicioDatosService } from 'src/app/servicio-datos.service';
+import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { PlayaI } from 'src/app/interfaces/playaI'
 import * as moment from 'moment';
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Fechas } from 'src/app/interfaces/fechas';
+import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
+import { CalculoFechasService } from 'src/app/servicios/Fechas/calculo-fechas.service';
 
 @Component({
   selector: 'app-playa-form',
@@ -34,9 +36,7 @@ export class PlayaFormComponent implements OnInit {
   
 
 
-  constructor(public activeModal: NgbActiveModal, private servicioDatosService: ServicioDatosService,
-
-    private fb: FormBuilder,
+  constructor(public activeModal: NgbActiveModal, private servicioDatosService: ServicioDatosService, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService,
   ) {
     this.createForm();
   }
@@ -101,71 +101,48 @@ closeModal() {
 } 
 
 
-validarPatente(){                                                        
-  console.log(this.editForm.value.patente);
-  const dominios = {
-    patentesViejas : /^[a-zA-Z]{3}[\d]{3}$/,
-    patentesNuevas : /^[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}$/,
-    patentesMotosViejas : /^[0-9]{3}[a-zA-Z]{3}$/,
-    patentesMotosNuevas : /^[a-zA-Z]{1}[0-9]{3}[a-zA-Z]{3}$/,
-    
-  }  
-  if(dominios.patentesViejas.test(this.editForm.value.patente)){
-    alert("es una patente vieja válida");
-    this.validarTarifa()                                 
-    //this.armarPuestoEstacionamiento();                                             //si todo esta bien, llama la funcion para arma el puesto     
-    } else if (dominios.patentesNuevas.test(this.editForm.value.patente)){
-      alert("es una patente nueva válida"); 
-      this.validarTarifa()     
-      //this.armarPuestoEstacionamiento();                                          //si todo esta bien, llama la funcion para arma el puesto  
-    } else if (dominios.patentesMotosViejas.test(this.editForm.value.patente)){
-      alert("es una patente de moto vieja válida");      
-      this.validarTarifa()
-      //this.armarPuestoEstacionamiento();
-    } else if (dominios.patentesMotosNuevas.test(this.editForm.value.patente)){
-      alert("es una patente de moto nueva válida");      
-      this.validarTarifa()
-      //this.armarPuestoEstacionamiento();
-      
-    }  else {
-      alert("no es una patente válida");
-     }
+validarPatente(){   
+  
+  let patenteValida = this.validacionPatente.validarPatente(this.editForm.value.patente);
+
+  if(patenteValida){
+    alert("es una patente valida")
+    this.validarTarifa()
+  }else{
+    alert("no es una patente valida")
+  }
+
 }
 
  validarTarifa(){
 
- if(this.tarifaSeleccionada !== undefined){
-  this.armarPuestoEstacionamiento();
- } else {
-  alert("no elegiste la tarifa");
- }
+    if(this.tarifaSeleccionada !== undefined){
+      this.armarPuestoEstacionamiento();
+    } else {
+      alert("no elegiste la tarifa");
+    }
  }
 
 configurarFecha(){
-  moment.locale("es");                                                                     
-  this.fecha = new Date();                                                        // toma la fecha actual    
+                                                                       
+  this.fecha = this.fechaService.fechaActual();                                                        // toma la fecha actual    
   console.log(this.fecha);
 
-  this.fechas.fechaIngreso = moment(this.fecha).format('L');                      // desgloza la fecha en formato (DD/MM/YYYY) y la guarda en el objeto fechas
+  this.fechas.fechaIngreso = this.fechaService.fechaDia(this.fecha);                      // desgloza la fecha en formato (DD/MM/YYYY) y la guarda en el objeto fechas
   console.log(this.fechas.fechaIngreso);
-  this.fechas.horaIngreso = moment(this.fecha).format('LTS');                     // desgloza la fecha en formato (hh:mm:ss) y la guarda en el objeto fechas
+
+  this.fechas.horaIngreso = this.fechaService.fechaHora(this.fecha);                     // desgloza la fecha en formato (hh:mm:ss) y la guarda en el objeto fechas
   console.log(this.fechas.horaIngreso);
+
   this.fechas.fechaDate = this.fecha.toString()
   console.log(this.fechas.fechaDate);
-  this.fechas.fechaDate
+  
 
 } 
 
 pruebaCierreHora(){  
-  // pruebas para ver como obtener la diferencia entre ingreso y Salida
   
-  /* let fecha1= "20/10/2022"
-  let fecha2= "10:34:57"
-  let fechaCierre = new Date()  
-  let fechaDePrueba= moment(`${fecha1}${fecha2}`, "DDTMMTYYYYhhmmss").diff(fechaCierre, "minutes");   // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
-  console.log(fechaDePrueba); */
-  
-  let pruebaCierreHora= moment(this.fechas.fechaDate).diff(new Date(),"minutes");   // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
+  let pruebaCierreHora = this.fechaService.pruebaCierreHora(this.fechas.fechaDate); // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
   console.log(pruebaCierreHora);
   
 }
