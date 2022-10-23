@@ -34,7 +34,15 @@
     <hr>
 
     <!-- Cod Barras / QR -->
-    <p class="headerSubTitle"> aca va el cod de barras</p>
+    <div style="text-align:center">
+  <ngx-barcode6
+    [bc-format]="'MSI'"
+    [bc-value]="'12345678901231'"
+    [bc-display-value]="true"
+  >
+  </ngx-barcode6>
+</div>
+   
     <p class="headerSubTitle"> aca va el qr</p>
 
     <div class="keepIt">
