@@ -41,6 +41,7 @@ import { PlayaLogViewComponent } from './playa-log/playa-log-view/playa-log-view
 import { PlayaLogFormComponent } from './playa-log/playa-log-form/playa-log-form.component';
 import { TicketEntradaComponent } from './ticket-entrada/ticket-entrada.component';
 import { NgxPrintElementModule } from 'ngx-print-element';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 
 
 
@@ -90,6 +91,7 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     NgxPrintElementModule,
+    NgxBarcode6Module,
     RouterModule.forRoot([
       {path: 'home', component: AppComponent},
       {path: 'playa', component: PlayaControlComponent  },
