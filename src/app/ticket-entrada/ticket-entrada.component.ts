@@ -44,7 +44,7 @@ export class TicketEntradaComponent implements OnInit {
     return this.value.split("\n");
   }
 
-
+*/
   
   public config = {
     printMode: 'template-popup',
