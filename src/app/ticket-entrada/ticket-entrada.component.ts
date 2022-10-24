@@ -12,6 +12,37 @@ export class TicketEntradaComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
+  format = 'MSI';
+  value = "24102022000001";
+  width = 1.5;
+  height = 100;
+  displayValue = true;
+
+
+  /////// estas son los atributos con los que se pueden configurar ngx-barcode6
+  /* elementType = "svg";
+  value = "241022000001";
+  format = "CODE128B";
+  lineColor = "#000000";
+  width = 1.5;
+  height = 100;
+  displayValue = true;
+  fontOptions = "";
+  font = "monospace";
+  textAlign = "center";
+  textPosition = "bottom";
+  textMargin = 2;
+  fontSize = 20;
+  background = "#ffffff";
+  margin = 10;
+  marginTop = 10;
+  marginBottom = 10;
+  marginLeft = 10;
+  marginRight = 10;
+  get values(): string[] {
+    return this.value.split("\n");
+  }
 
 
   
