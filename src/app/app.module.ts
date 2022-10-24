@@ -42,6 +42,7 @@ import { PlayaLogFormComponent } from './playa-log/playa-log-form/playa-log-form
 import { TicketEntradaComponent } from './ticket-entrada/ticket-entrada.component';
 import { NgxPrintElementModule } from 'ngx-print-element';
 import { NgxBarcode6Module } from 'ngx-barcode6';
+import { BtnReimpresionComponent } from './shared/btn-reimpresion/btn-reimpresion.component';
 
 
 
@@ -84,6 +85,7 @@ const appRoutes: Routes = [
     PlayaLogViewComponent,
     PlayaLogFormComponent,
     TicketEntradaComponent,
+    BtnReimpresionComponent,
 
 
   ],

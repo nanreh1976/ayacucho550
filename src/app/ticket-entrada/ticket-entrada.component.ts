@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPrintElementService } from 'ngx-print-element';
 
 @Component({
@@ -8,9 +9,25 @@ import { NgxPrintElementService } from 'ngx-print-element';
 })
 export class TicketEntradaComponent implements OnInit {
 
-  constructor(public print: NgxPrintElementService) {}
+  @Input() fromParent: any;  
+  item!: any    
+  fechaIngreso!:string;
+  horaIngreso!:string;
+  patente!: string;
+  modo!: string;
+
+
+  constructor(public print: NgxPrintElementService, public activeModal: NgbActiveModal) {}
 
   ngOnInit(): void {
+    console.log("on init form", this.fromParent);
+    this.modo = this.fromParent.modo
+    this.item = this.fromParent.item;
+
+    if(this.modo === "Agregar" || this.modo === "Reimprimir"){
+      this.ticketIngreso();
+    }
+
   }
   
   format = 'MSI';
@@ -54,6 +71,17 @@ export class TicketEntradaComponent implements OnInit {
     stylesheets: [{ rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' }],
     styles: ['td { border: 1px solid black; color: green; }', 'table { border: 1px solid black; color: red }', 'header, table, footer { margin: auto; text-align: center; }']
   }
+
+  ticketIngreso(){
+    this.fechaIngreso =  this.item.fechas.fechaIngreso;
+    this.horaIngreso = this.item.fechas.horaIngreso;
+    this.patente = this.item.patente
+  }
+
+  closeModal() {
+   
+  this.activeModal.close();
+ } 
 
   
 }

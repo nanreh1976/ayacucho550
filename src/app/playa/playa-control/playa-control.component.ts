@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
 import { LoggedService } from 'src/app/servicios/logged.service';
 import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
+import { TicketEntradaComponent } from 'src/app/ticket-entrada/ticket-entrada.component';
 import { PlayaFormComponent } from '../playa-form/playa-form.component';
 
 
@@ -100,6 +101,7 @@ selectCrudOp(op: string, item:any) {
     case 'Agregar': {
 
       this.addItem(this.componente, item);
+      this.openTicket("Agregar", item)
       break;
     }
  
@@ -112,6 +114,10 @@ selectCrudOp(op: string, item:any) {
       break;
     }
     
+    case 'Reimprimir':{
+      this.openTicket("Reimprimir", item);
+      break;
+    }
 
     default: {
       console.log("sin operacion en case crud")
@@ -164,6 +170,34 @@ updateItem(componente: string, item: any): void {
     this.ngOnInit();
   });
 
+  }
+
+  openTicket(modo: string, item: any) {
+    {
+      const modalRef = this.modalService.open(TicketEntradaComponent,
+        {
+          // scrollable: false,
+          windowClass: 'myCustomModalClass',
+          // keyboard: false,
+          // backdrop: 'static'
+        })
+
+        let info = {
+          modo: modo,
+          item: item
+  
+        }
+
+
+      modalRef.componentInstance.fromParent = info;
+      modalRef.result.then((result) => {
+            // console.log("result from control","op", result.op,"item", result.item);
+     
+        // this.getXps();  
+        this.selectCrudOp(result.op, result.item)
+        ;
+      }, (reason) => { });
+    }
   }
 
 }

@@ -74,11 +74,14 @@
               <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
       
               <app-btn-editar class="right" *ngIf="$estado"
-              (click)="msgBack('Editar',item)" class="d-flex align-items-center">
-          </app-btn-editar>
-          <app-btn-eliminar class="right" *ngIf="$estado"
-              (click)="msgBack('Eliminar',item)" class="d-flex align-items-center">
-          </app-btn-eliminar>
+                  (click)="msgBack('Editar',item)" class="d-flex align-items-center">
+              </app-btn-editar>
+              <app-btn-eliminar class="right" *ngIf="$estado"
+                  (click)="msgBack('Eliminar',item)" class="d-flex align-items-center">
+              </app-btn-eliminar>
+              <app-btn-reimpresion class="right" *ngIf="$estado"
+                  (click)="msgBack('Reimprimir',item)" class="d-flex align-items-center">
+              </app-btn-reimpresion>
             </div>
    
 

@@ -1,57 +1,59 @@
 <!-- START RECEIPT -->
 
-<p> Aparece como modal en playa?</p>
+<!-- <p> Aparece como modal en playa?</p>
 <p> ticket de salida con el saldo ? </p>
-<p> los tickets deberian estar relacionados a un numero de operacion en facturacion/playa log? (control empleados)</p>
+<p> los tickets deberian estar relacionados a un numero de operacion en facturacion/playa log? (control empleados)</p> -->
+
+<div class="d-flex justify-content-center">
+
+    <div id="ticket" class="receipt">
+        <i class="fa fa-car" ></i>
+        <div class="orderNo">
+            Estacionamiento <span id="Cochera">71</span>
+        </div>
+        <div class="headerSubTitle">
+            TICKET RETIRO
+        </div>
+        <div class="headerTitle">
+            LINKIN PARK
+        </div>
+        <div class="headerSubTitle">
+            Siempreviva 2687
+        </div>
+        <div id="location">
+            Datos Vehiculo
+        </div>
+        <div id="location">
+            {{patente}}
+        </div>
+        <div id="date">
+            {{fechaIngreso}}
+            {{horaIngreso}} hs
+        </div>
 
 
-<div id="ticket" class="receipt">
-    <i class="fa fa-car" ></i>
-    <div class="orderNo">
-        Estacionamiento <span id="Cochera">71</span>
-    </div>
-    <div class="headerSubTitle">
-        TICKET RETIRO
-    </div>
-    <div class="headerTitle">
-        LINKIN PARK
-    </div>
-    <div class="headerSubTitle">
-        Siempreviva 2687
-    </div>
-    <div id="location">
-        Datos Vehiculo
-    </div>
-    <div id="location">
-        AP 7553 CH
-    </div>
-    <div id="date">
-        Sabado 13 de Junio 2022
-        15:45 hs
-    </div>
+        <hr>
 
-
-    <hr>
-
-    <!-- Cod Barras / QR -->
-    <div style="text-align:center">
-  <ngx-barcode6
-    [bc-format]="format"
-    [bc-value]="value"
-    [bc-display-value]="displayValue"
-    [bc-width]="width"
-  >
-  </ngx-barcode6>
-</div>
-   
-    <p class="headerSubTitle"> aca va el qr</p>
-
-    <div class="keepIt">
-        No pierda este ticket
+        <!-- Cod Barras / QR -->
+        <div style="text-align:center">
+    <ngx-barcode6
+        [bc-format]="format"
+        [bc-value]="value"
+        [bc-display-value]="displayValue"
+        [bc-width]="width"
+    >
+    </ngx-barcode6>
     </div>
-    <div class="keepItBody">
-        Este recibo original es necesario para retirar su vehiculo.
+    
+        <p class="headerSubTitle"> aca va el qr</p>
+
+        <div class="keepIt">
+            No pierda este ticket
+        </div>
+        <div class="keepItBody">
+            Este recibo original es necesario para retirar su vehiculo.
+        </div>
     </div>
 </div>
 <button [print]="['ticket']">Print</button>
-
+<button (click)="closeModal()">Cerrar</button>
