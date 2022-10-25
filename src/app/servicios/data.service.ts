@@ -55,7 +55,7 @@ export class DataService implements InMemoryDbService {
           unidad_tiempo: "mes",
           valor: 7000,
           fraccion: "no",
-          ut_fraccion: "no",
+          ut_fraccion: "30 dias",
           descuento: "no"
         },
         {
@@ -64,7 +64,7 @@ export class DataService implements InMemoryDbService {
           unidad_tiempo: "dia",
           valor: 1500,
           fraccion: "no",
-          ut_fraccion: "no",
+          ut_fraccion: "6 horas",
           descuento: "no"
         },
       ],

@@ -43,6 +43,9 @@ import { TicketEntradaComponent } from './ticket-entrada/ticket-entrada.componen
 import { NgxPrintElementModule } from 'ngx-print-element';
 import { NgxBarcode6Module } from 'ngx-barcode6';
 import { BtnReimpresionComponent } from './shared/btn-reimpresion/btn-reimpresion.component';
+import { TarifasControlComponent } from './tarifas/tarifas-control/tarifas-control.component';
+import { TarifasViewComponent } from './tarifas/tarifas-view/tarifas-view.component';
+import { TarifasFormComponent } from './tarifas/tarifas-form/tarifas-form.component';
 
 
 
@@ -86,6 +89,9 @@ const appRoutes: Routes = [
     PlayaLogFormComponent,
     TicketEntradaComponent,
     BtnReimpresionComponent,
+    TarifasControlComponent,
+    TarifasViewComponent,
+    TarifasFormComponent,
 
 
   ],
@@ -99,7 +105,7 @@ const appRoutes: Routes = [
       {path: 'playa', component: PlayaControlComponent  },
       {path: 'playaLog', component: PlayaLogControlComponent },
       {path: 'ticketE', component: TicketEntradaComponent },
-      {path: 'tarifas', component: TarifasComponent},
+      {path: 'tarifas', component: TarifasControlComponent},
       {path: 'clientes', component: ClientesControlComponent},
       {path: 'vehiculos', component: VehiculosControlComponent},
       {path: 'dashboard', component: DashboardComponent},
