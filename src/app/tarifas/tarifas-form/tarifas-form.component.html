@@ -1,7 +1,7 @@
 
 
 <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">{{titulo}} tarifas </h5>
+    <h5 class="modal-title" id="modal-basic-title">{{titulo.tarifas}} Tarifas <Form></Form> </h5>
     <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
   </button>
@@ -13,7 +13,7 @@
             <div class="form-group">
               <label for="Nombre">Nombre</label>
               <div class="input-group">
-                <input formControlName="Nombre" class="form-control" required type="text">
+                <input formControlName="nombre" class="form-control" required type="text">
               </div>
             </div>
             <!--<div class="form-group">
@@ -26,30 +26,35 @@
             <div class="form-group">
               <label for="Telefono">unidad tiempo</label>
               <div class="input-group">
-                <input formControlName="telefono" class="form-control" required type="text">
+                <input formControlName="unidad_tiempo" class="form-control" required type="text">
               </div>
             </div>
 
             <div class="form-group">
-              <label for="Direccion">ut_fraccion</label>
+              <label for="Direccion">valor</label>
               <div class="input-group">
-                <input formControlName="direccion" class="form-control" required type="text">
+                <input formControlName="valor" class="form-control" required type="text">
               </div>
             </div>
 
             <div class="form-group">
-              <label for="Comentario">valor</label>
+              <label for="Comentario">fraccion</label>
               <div class="input-group">
-                <input formControlName="comentario" class="form-control" required type="text">
+                <input formControlName="fraccion" class="form-control" required type="text">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Comentario">unidad de fraccion</label>
+              <div class="input-group">
+                <input formControlName="ut_fraccion" class="form-control" required type="text">
               </div>
             </div>
             <div class="form-group">
               <label for="Comentario">descuento</label>
               <div class="input-group">
-                <input formControlName="comentario" class="form-control" required type="text">
+                <input formControlName="descuento" class="form-control" required type="text">
               </div>
             </div>
-      
             <!-- Ingreso egreso lado a lado  -->
             <!-- <table class="table">
               <tr>

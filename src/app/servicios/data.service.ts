@@ -61,7 +61,6 @@ export class DataService implements InMemoryDbService {
         {
           id: 3,
           nombre: "moto-estadia",
-          unidad_tiempo: "dia",
           valor: 1500,
           fraccion: "30",
           ut_fraccion: "6 horas",
