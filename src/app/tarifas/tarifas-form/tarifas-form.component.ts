@@ -54,6 +54,7 @@ export class TarifasFormComponent implements OnInit {
         fraccion: item.fraccion,
         ut_fraccion: item.ut_fraccion,
          descuento: item.descuento,
+         id: item.id,
       });
   
     }
