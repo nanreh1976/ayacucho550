@@ -3,30 +3,31 @@ import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
 import { LoggedService } from 'src/app/servicios/logged.service';
 import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
-import { PlayaLogFormComponent } from '../playa-log-form/playa-log-form.component';
+import { FacturacionFormComponent } from '../facturacion-form/facturacion-form.component';
 
 @Component({
-  selector: 'app-playa-log-control',
+  selector: 'app-facturacion-control',
   template: `
 
 
-<app-playa-log-view
+<app-facturacion-view
 
   [data]=data 
   [$estado]=$estado   
   (newItemEvent)="getMsg($event)"  >
- </app-playa-log-view>
+ </app-facturacion-view>
   
   
               `,
 
 
-  styleUrls: ['./playa-log-control.component.scss']
+  styleUrls: ['./facturacion-control.component.scss']
 })
-export class PlayaLogControlComponent implements OnInit {
+export class FacturacionControlComponent implements OnInit {
 
+  
 // nombre del crud / componente
-componente: string = 'playaLog'
+componente: string = 'facturacion'
 // reactiveforms, modo edicion, delete etc
 //modo!: string;
 
@@ -64,7 +65,7 @@ getMsg(msg: any) {
 
 openForm(modo: string, item: any) {
   {
-    const modalRef = this.modalService.open(PlayaLogFormComponent,
+    const modalRef = this.modalService.open(FacturacionFormComponent,
       {
         // scrollable: false,
         windowClass: 'myCustomModalClass',
