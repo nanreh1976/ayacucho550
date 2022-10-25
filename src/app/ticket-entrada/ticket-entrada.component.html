@@ -20,40 +20,77 @@
         <div class="headerSubTitle">
             Siempreviva 2687
         </div>
-        <div id="location">
+        <div class="location">
             Datos Vehiculo
         </div>
-        <div id="location">
+        <div class="location">
             {{patente}}
-        </div>
+        </div>    
+        <div class="date">
+            Ingreso:
+        </div>    
         <div id="date">
             {{fechaIngreso}}
             {{horaIngreso}} hs
         </div>
-
+        <div *ngIf="modo === 'Salida'">
+            <div class="date">
+                Salida:
+            </div>    
+            <div>
+                Fecha:
+                {{fechaSalida}}                
+            </div>
+            <div>                
+                Hora:
+                {{horaSalida}} hs
+            </div>
+            <div>
+                Estadia:
+                {{estadiaHoras}} hs
+            </div>
+            <div class="saldo">
+                Importe:
+            </div> 
+            <div>
+                ${{saldo}}
+            </div>   
+        </div>
 
         <hr>
 
+        <div *ngIf="modo !== 'Salida'" else salida>
         <!-- Cod Barras / QR -->
-        <div style="text-align:center">
-    <ngx-barcode6
-        [bc-format]="format"
-        [bc-value]="value"
-        [bc-display-value]="displayValue"
-        [bc-width]="width"
-    >
-    </ngx-barcode6>
-    </div>
-    
-        <p class="headerSubTitle"> aca va el qr</p>
+            <div style="text-align:center">
+                <ngx-barcode6
+                    [bc-format]="format"
+                    [bc-value]="value"
+                    [bc-display-value]="displayValue"
+                    [bc-width]="width"
+                >
+                </ngx-barcode6>
+            </div>
+        
+            <p class="headerSubTitle"> aca va el qr</p>
 
-        <div class="keepIt">
-            No pierda este ticket
-        </div>
-        <div class="keepItBody">
-            Este recibo original es necesario para retirar su vehiculo.
-        </div>
+            <div class="keepIt">
+                No pierda este ticket
+            </div>
+            <div class="keepItBody">
+                Este recibo original es necesario para retirar su vehiculo.
+            </div>
+        </div>       
     </div>
 </div>
 <button [print]="['ticket']">Print</button>
 <button (click)="closeModal()">Cerrar</button>
+
+<!-- 
+<ng-template #salida>
+    <div>
+        Salida:
+        {{fechaSalida}}
+        Hora:
+        {{horaSalida}}
+    </div>
+</ng-template> -->

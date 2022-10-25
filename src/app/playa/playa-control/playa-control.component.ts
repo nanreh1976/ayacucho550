@@ -111,6 +111,7 @@ selectCrudOp(op: string, item:any) {
     }
     case 'Eliminar': {
       this.deleteItem(this.componente, item);
+      this.openTicket("Salida", item)
       break;
     }
     
@@ -140,11 +141,12 @@ getAll(): void {
 
 
 deleteItem(componente: string, item: any): void {
+
    console.log("delete component", item, item.id)
   this.servicioDatosService.deleteItem(componente, item.id)
   .subscribe 
   (data => { 
-    this.data = data; 
+    this.data = data;    
     this.ngOnInit();
   })
 }
