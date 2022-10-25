@@ -1,20 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+
 @Component({
-  selector: 'app-playa-log-view',
-  templateUrl: './playa-log-view.component.html',
-  styleUrls: ['./playa-log-view.component.scss']
+  selector: 'app-facturacion-view',
+  templateUrl: './facturacion-view.component.html',
+  styleUrls: ['./facturacion-view.component.scss']
 })
-
-export class PlayaLogViewComponent implements OnInit {
-
+export class FacturacionViewComponent implements OnInit {
 
 
 
   @Input() data?: any
   @Input() $estado: any
   @Output() newItemEvent = new EventEmitter<any>();
-  titulo: string = 'Playa'
+  titulo: string = 'facturacion'
 
   
   searchText!: string;
