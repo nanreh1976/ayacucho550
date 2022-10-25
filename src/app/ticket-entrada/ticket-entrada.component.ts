@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPrintElementService } from 'ngx-print-element';
+import { CalculoFechasService } from '../servicios/Fechas/calculo-fechas.service';
 
 @Component({
   selector: 'app-ticket-entrada',
@@ -13,19 +14,26 @@ export class TicketEntradaComponent implements OnInit {
   item!: any    
   fechaIngreso!:string;
   horaIngreso!:string;
+  fechaSalida!:string;
+  horaSalida!:string;
   patente!: string;
   modo!: string;
+  saldo:number = 1000;
+  estadia!: number;
+  estadiaHoras:any = ""
 
 
-  constructor(public print: NgxPrintElementService, public activeModal: NgbActiveModal) {}
+  constructor(public print: NgxPrintElementService, public activeModal: NgbActiveModal, private fechaService: CalculoFechasService) {}
 
   ngOnInit(): void {
     console.log("on init form", this.fromParent);
     this.modo = this.fromParent.modo
-    this.item = this.fromParent.item;
+    this.item = this.fromParent.item;    
 
-    if(this.modo === "Agregar" || this.modo === "Reimprimir"){
-      this.ticketIngreso();
+    this.ticket();
+
+    if(this.modo === "Salida"){
+      this.tiempoEstadia();
     }
 
   }
@@ -72,16 +80,23 @@ export class TicketEntradaComponent implements OnInit {
     styles: ['td { border: 1px solid black; color: green; }', 'table { border: 1px solid black; color: red }', 'header, table, footer { margin: auto; text-align: center; }']
   }
 
-  ticketIngreso(){
+
+  ticket(){
     this.fechaIngreso =  this.item.fechas.fechaIngreso;
     this.horaIngreso = this.item.fechas.horaIngreso;
-    this.patente = this.item.patente
+    this.fechaSalida =  this.item.fechas.fechaSalida;
+    this.horaSalida = this.item.fechas.horaSalida;
+    this.patente = this.item.patente;
+    this.estadia = this.item.fechas.estadia;
   }
 
-  closeModal() {
-   
-  this.activeModal.close();
+  closeModal() {   
+    this.activeModal.close();
  } 
+
+  tiempoEstadia(){    
+    this.estadiaHoras = this.fechaService.tiempoEstadia(this.estadia);
+ }
 
   
 }

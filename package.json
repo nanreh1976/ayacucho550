@@ -26,6 +26,7 @@
     "font-awesome": "^4.7.0",
     "jsbarcode": "^3.11.5",
     "moment": "^2.29.4",
+    "moment-duration-format": "^2.3.2",
     "ngx-barcode6": "^1.0.21",
     "ngx-print-element": "^2.0.16",
     "rxjs": "~7.5.0",

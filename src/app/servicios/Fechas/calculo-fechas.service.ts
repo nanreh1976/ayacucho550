@@ -33,8 +33,26 @@ export class CalculoFechasService {
     let fechaDePrueba= moment(`${fecha1}${fecha2}`, "DDTMMTYYYYhhmmss").diff(fechaCierre, "minutes");   // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
     console.log(fechaDePrueba); */
     
-    let pruebaCierreHora= moment(fecha).diff(new Date(),"minutes");   // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
+    let pruebaCierreHora= moment(new Date()).diff(fecha,"minutes");   // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
     console.log(pruebaCierreHora);
+    return pruebaCierreHora
+  }
+
+  tiempoEstadia(minutosEstadia:number){
+    /* let estadia = moment.duration(minutos, "minutes").format(); */ // no funciona, no lo toma como valido
+    let estadia:any;
+
+    let hora:any = Math.floor(minutosEstadia / 60);
+    hora = (hora < 10)? '0' + hora : hora;
+    //console.log(hora);    
+    let minutos:any = Math.floor(minutosEstadia % 60);
+    minutos = (minutos < 10)? '0' + minutos : minutos;
+    //console.log(minutos);
+
+    estadia = `${hora}:${minutos}`
+    console.log(estadia);
+   
+    return estadia
     
   }
 
