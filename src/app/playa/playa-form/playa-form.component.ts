@@ -83,10 +83,11 @@ export class PlayaFormComponent implements OnInit {
   guardarDatos(){
     if(this.titulo === 'Agregar'){                                      //si es un ingreso nuevo, valida la patente
      this.validarPatente() ;     
-    } else 
-    // if (this.titulo === "Editar")
+    } else if (this.titulo === "Editar")
     {                                //si es una edicion, se arma el puesto con los nuevos datos
-      this.armarPuestoEstacionamiento()      
+      this.validarPatente() ;     
+    } else {
+      this.armarPuestoEstacionamiento()
     }
 }
 
