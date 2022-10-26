@@ -36,9 +36,7 @@ import { VehiculosControlComponent } from './vehiculos/vehiculos-control/vehicul
 import { VehiculosFormComponent } from './vehiculos/vehiculos-form/vehiculos-form.component';
 import { VehiculosViewComponent } from './vehiculos/vehiculos-view/vehiculos-view.component';
 
-import { PlayaLogControlComponent } from './playa-log/playa-log-control/playa-log-control.component';
-import { PlayaLogViewComponent } from './playa-log/playa-log-view/playa-log-view.component';
-import { PlayaLogFormComponent } from './playa-log/playa-log-form/playa-log-form.component';
+
 import { TicketEntradaComponent } from './ticket-entrada/ticket-entrada.component';
 import { NgxPrintElementModule } from 'ngx-print-element';
 import { NgxBarcode6Module } from 'ngx-barcode6';
@@ -46,6 +44,10 @@ import { BtnReimpresionComponent } from './shared/btn-reimpresion/btn-reimpresio
 import { TarifasControlComponent } from './tarifas/tarifas-control/tarifas-control.component';
 import { TarifasViewComponent } from './tarifas/tarifas-view/tarifas-view.component';
 import { TarifasFormComponent } from './tarifas/tarifas-form/tarifas-form.component';
+
+import { FacturacionControlComponent } from './facturacion/facturacion-control/facturacion-control.component';
+import { FacturacionViewComponent } from './facturacion/facturacion-view/facturacion-view.component';
+import { FacturacionFormComponent } from './facturacion/facturacion-form/facturacion-form.component';
 
 
 
@@ -84,14 +86,18 @@ const appRoutes: Routes = [
     VehiculosFormComponent,
     VehiculosViewComponent,
 
-    PlayaLogControlComponent,
-    PlayaLogViewComponent,
-    PlayaLogFormComponent,
+
     TicketEntradaComponent,
     BtnReimpresionComponent,
+
     TarifasControlComponent,
     TarifasViewComponent,
     TarifasFormComponent,
+
+    FacturacionControlComponent,
+    FacturacionViewComponent,
+    FacturacionFormComponent,
+
 
 
   ],
@@ -103,9 +109,13 @@ const appRoutes: Routes = [
     RouterModule.forRoot([
       {path: 'home', component: AppComponent},
       {path: 'playa', component: PlayaControlComponent  },
-      {path: 'playaLog', component: PlayaLogControlComponent },
-      {path: 'ticketE', component: TicketEntradaComponent },
-      {path: 'tarifas', component: TarifasControlComponent},
+
+
+
+      {path: 'facturacion', component:FacturacionControlComponent },
+    //  {path: 'ticketE', component: TicketEntradaComponent },
+      {path: 'tarifas', component: TarifasComponent},
+
       {path: 'clientes', component: ClientesControlComponent},
       {path: 'vehiculos', component: VehiculosControlComponent},
       {path: 'dashboard', component: DashboardComponent},

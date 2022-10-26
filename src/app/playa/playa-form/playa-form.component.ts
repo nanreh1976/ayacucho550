@@ -20,12 +20,17 @@ export class PlayaFormComponent implements OnInit {
   @Input() fromParent: any;
   editForm!: any;
   titulo!: string;
-  item!: any
+  item!: any;
   fecha!:Date;
   fechas: Fechas = {
     fechaDate : "",
     fechaIngreso: "",
     horaIngreso: "",
+    fechaSalidaDate: "",
+    fechaSalida: "",
+    horaSalida: "",
+    estadia:0,
+
 };  
   fechaIngreso!:any;
   horaIngreso!:any;
@@ -43,10 +48,10 @@ export class PlayaFormComponent implements OnInit {
 
   ngOnInit(): void {
     {
-      console.log("on init form", this.fromParent);
+      //console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
       this.item = this.fromParent.item;
-      console.log(this.item);
+      //console.log(this.item);
       
       if(this.titulo === 'Agregar'){                                  //si es un ingreso nuevo, se llama a la funcion para configurar la fecha
         this.configurarFecha()
@@ -57,7 +62,7 @@ export class PlayaFormComponent implements OnInit {
         this.tarifaSeleccionada = this.item.tarifa;
         this.fechas = this.item.fechas;
         this.configurarForm();
-        this.pruebaCierreHora();
+        
       }
      
 
@@ -81,13 +86,37 @@ export class PlayaFormComponent implements OnInit {
   }
 
   guardarDatos(){
-    if(this.titulo === 'Agregar'){                                      //si es un ingreso nuevo, valida la patente
+    /* if(this.titulo === 'Agregar'){                                      //si es un ingreso nuevo, valida la patente
      this.validarPatente() ;     
     } else 
     // if (this.titulo === "Editar")
-    {                                //si es una edicion, se arma el puesto con los nuevos datos
+    { 
+                                     //si es una edicion, se arma el puesto con los nuevos datos
       this.armarPuestoEstacionamiento()      
-    }
+    } */
+    switch (this.titulo) {
+      case 'Agregar': {  
+        this.validarPatente() ;  
+        break;
+      }      
+      case 'Editar': {  
+        this.armarPuestoEstacionamiento() ;   
+        break;
+      }
+      case 'Eliminar': {  
+        this.pruebaCierreHora();
+        break;
+      }
+      case 'Reimprimir': {  
+        this.armarPuestoEstacionamiento() ;   
+        break;
+      }
+      default: {
+        //console.log("algo se rompio")
+        break;
+      }
+
+}
 }
 
 closeModal() {
@@ -96,7 +125,7 @@ closeModal() {
    item: this.puestoEstacionamiento,
    
  };
-//  console.log("closemodal", value)
+//  //console.log("closemodal", value)
  this.activeModal.close(value);
 } 
 
@@ -126,37 +155,52 @@ validarPatente(){
 configurarFecha(){
                                                                        
   this.fecha = this.fechaService.fechaActual();                                                        // toma la fecha actual    
-  console.log(this.fecha);
+  //console.log(this.fecha);
 
   this.fechas.fechaIngreso = this.fechaService.fechaDia(this.fecha);                      // desgloza la fecha en formato (DD/MM/YYYY) y la guarda en el objeto fechas
-  console.log(this.fechas.fechaIngreso);
+  //console.log(this.fechas.fechaIngreso);
 
   this.fechas.horaIngreso = this.fechaService.fechaHora(this.fecha);                     // desgloza la fecha en formato (hh:mm:ss) y la guarda en el objeto fechas
-  console.log(this.fechas.horaIngreso);
+  //console.log(this.fechas.horaIngreso);
 
   this.fechas.fechaDate = this.fecha.toString()
-  console.log(this.fechas.fechaDate);
+  ////console.log(this.fechas.fechaDate);
   
 
 } 
 
 pruebaCierreHora(){  
+ 
+  //console.log(this.item);  
+  //console.log(this.titulo);
   
-  let pruebaCierreHora = this.fechaService.pruebaCierreHora(this.fechas.fechaDate); // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
-  console.log(pruebaCierreHora);
+  this.fechas.fechaSalidaDate = this.fechaService.fechaActual(); // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
+  //console.log(`esta es la fecha de salida: ${this.item.fechas.fechaSalidaDate}`);
+
+  this.fechas.fechaSalida = this.fechaService.fechaDia(this.item.fechas.fechaSalidaDate);
+  //console.log(`esta es el dia de la salida: ${this.item.fechas.fechaSalida}`);
+
+  this.fechas.horaSalida = this.fechaService.fechaHora(this.item.fechas.fechaSalidaDate);
+  //console.log(`esta es la de la salida: ${this.item.fechas.horaSalida}`); 
+
+  this.fechas.estadia = this.fechaService.pruebaCierreHora(this.fechas.fechaDate);
+  ////console.log(this.fechas.estadia);
+
+  this.armarPuestoEstacionamiento();
+
   
 }
 
 getTarifas()  {
   this.servicioDatosService.getAll(this.componenteTarifas).subscribe (
     datos => {this.tarifas = datos;
-    console.log("get all tarifas", this.componenteTarifas, this.tarifas)  
+    //console.log("get all tarifas", this.componenteTarifas, this.tarifas)  
     }
   );
 }
 
 changeTarifa(e: any) {
-  console.log(e.target.value)  
+  //console.log(e.target.value)  
   let tarifaForm   //crea una variable para usarlo con la funcion filter
 
   tarifaForm = this.tarifas.filter(function(tarifas:any){       //filter recorre el array tarifas y devuelve otro array con lo que sea q coincida con el parametro
@@ -180,7 +224,7 @@ armarPuestoEstacionamiento() {
 
   
   this.item= this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
-  console.log(this.item)
+  //console.log(`este es el item final: ${this.puestoEstacionamiento}`)
   this.closeModal();
 }
 

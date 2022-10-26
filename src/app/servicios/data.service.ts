@@ -98,6 +98,10 @@ export class DataService implements InMemoryDbService {
             fechaDate: "Fri Oct 21 2022 15:09:31 GMT-0300 (hora estándar de Argentina)",
             fechaIngreso: "21-10-2022",
             horaIngreso: "15:17:23",
+            fechaSalidaDate: "",
+            fechaSalida: "",
+            horaSalida: "",
+            estadia: 0,
           },
           tarifa: "camion",
           descripcion: "Scania 1114",
@@ -109,34 +113,72 @@ export class DataService implements InMemoryDbService {
           fechas: {
             fechaDate: "Fri Oct 21 2022 17:09:31 GMT-0300 (hora estándar de Argentina)",
             fechaIngreso: "21-10-2022",
-            horaIngreso: "14:24:23",            
+            horaIngreso: "14:24:23",
+            fechaSalidaDate: "",
+            fechaSalida: "",
+            horaSalida: "",   
+            estadia: 0,         
           },
           tarifa: "auto",
           descripcion: "fitito rojo",
         },
       ], 
 
-      playaLog: [
+      facturacion: [
         {
-          id:4,
-          patente: "AA234CC",
-          ingreso: 24042015,
-          egreso: 24042099,
-          idTarifa: 4,
-          saldo: 10,
-          descripcion:"servicio lavado Renault fuego azul (?)"
+          id: 1,
+          patente: "fht231",
+          fechas: {
+            fechaDate: "Fri Oct 21 2022 15:09:31 GMT-0300 (hora estándar de Argentina)",
+            fechaIngreso: "21-10-2022",
+            horaIngreso: "15:17:23",
+            fechaSalidaDate: "",
+            fechaSalida: "",
+            horaSalida: "",
+            estadia: 0,
+          },
+          tarifa: "camion",
+          descripcion: "Scania 1114",
         },
 
         {
-          id:4,
-          patente: "AA234CC",
-          ingreso: 24042015,
-          egreso: 24042099,
-          idTarifa: 4,
-          saldo: 10,
-          descripcion:"servicio lavado Renault fuego azul (?)"
+          id: 2,
+          patente: "ad123sa",
+          fechas: {
+            fechaDate: "Fri Oct 21 2022 17:09:31 GMT-0300 (hora estándar de Argentina)",
+            fechaIngreso: "21-10-2022",
+            horaIngreso: "14:24:23",
+            fechaSalidaDate: "",
+            fechaSalida: "",
+            horaSalida: "",   
+            estadia: 0,         
+          },
+          tarifa: "auto",
+          descripcion: "fitito rojo",
         },
       ], 
+
+      // playaLog: [
+      //   {
+      //     id:4,
+      //     patente: "AA234CC",
+      //     ingreso: 24042015,
+      //     egreso: 24042099,
+      //     idTarifa: 4,
+      //     saldo: 10,
+      //     descripcion:"servicio lavado Renault fuego azul (?)"
+      //   },
+
+      //   {
+      //     id:4,
+      //     patente: "AA234CC",
+      //     ingreso: 24042015,
+      //     egreso: 24042099,
+      //     idTarifa: 4,
+      //     saldo: 10,
+      //     descripcion:"servicio lavado Renault fuego azul (?)"
+      //   },
+      // ], 
 
  
 
