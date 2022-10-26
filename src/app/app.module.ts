@@ -41,6 +41,10 @@ import { TicketEntradaComponent } from './ticket-entrada/ticket-entrada.componen
 import { NgxPrintElementModule } from 'ngx-print-element';
 import { NgxBarcode6Module } from 'ngx-barcode6';
 import { BtnReimpresionComponent } from './shared/btn-reimpresion/btn-reimpresion.component';
+import { TarifasControlComponent } from './tarifas/tarifas-control/tarifas-control.component';
+import { TarifasViewComponent } from './tarifas/tarifas-view/tarifas-view.component';
+import { TarifasFormComponent } from './tarifas/tarifas-form/tarifas-form.component';
+
 import { FacturacionControlComponent } from './facturacion/facturacion-control/facturacion-control.component';
 import { FacturacionViewComponent } from './facturacion/facturacion-view/facturacion-view.component';
 import { FacturacionFormComponent } from './facturacion/facturacion-form/facturacion-form.component';
@@ -85,9 +89,15 @@ const appRoutes: Routes = [
 
     TicketEntradaComponent,
     BtnReimpresionComponent,
+
+    TarifasControlComponent,
+    TarifasViewComponent,
+    TarifasFormComponent,
+
     FacturacionControlComponent,
     FacturacionViewComponent,
     FacturacionFormComponent,
+
 
 
   ],
@@ -100,9 +110,12 @@ const appRoutes: Routes = [
       {path: 'home', component: AppComponent},
       {path: 'playa', component: PlayaControlComponent  },
 
+
+
       {path: 'facturacion', component:FacturacionControlComponent },
     //  {path: 'ticketE', component: TicketEntradaComponent },
       {path: 'tarifas', component: TarifasComponent},
+
       {path: 'clientes', component: ClientesControlComponent},
       {path: 'vehiculos', component: VehiculosControlComponent},
       {path: 'dashboard', component: DashboardComponent},
