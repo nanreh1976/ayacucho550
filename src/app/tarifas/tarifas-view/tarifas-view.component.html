@@ -30,15 +30,14 @@
     </div>
 
     <table class="tftable" border="1">
-    <tr><th>nombre</th><th>tarifa</th><th>Unidad de tiempo</th><th>Valor</th><th>fraccion</th><th>descuento</th><th>Modificar<i class="bi bi-pencil-fill"></i></th></tr>
+    <tr><th>nombre</th><th>fraccion</th><th>Unidad de tiempo</th><th>Valor</th><th>tolerancia</th><th>Modificar<i class="bi bi-pencil-fill"></i></th></tr>
     <tr *ngFor="let item of data | filter: searchText; let i = index">
       
-      <td>{{item.nombre}}</td>
-      <td>{{item.unidad_tiempo}}</td>
+      <td>{{item.nombre}}</td>      
       <td>{{item.fraccion}}</td>
-      <td>{{item.valor}}</td>
-      <td>{{item.ut_fraccion}}</td>
-      <td>{{item.descuento}}</td>
+      <td>{{item.unidad_tiempo}}</td>
+      <td>{{item.valor}}</td>      
+      <td>{{item.tolerancia}}</td>
      
 
     

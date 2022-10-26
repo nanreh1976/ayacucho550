@@ -1,11 +1,12 @@
 import { Fechas } from "./fechas";
+import { Tarifas } from "./tarifas";
 
 export interface PlayaI {
 
     id: number;
     patente: string;
     fechas: Fechas;
-    tarifa: string;
+    tarifa: Tarifas;
     descripcion: string;
 
 }

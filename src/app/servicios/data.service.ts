@@ -39,32 +39,32 @@ export class DataService implements InMemoryDbService {
         },
       ],
 
-      tarifas: [
+      tarifas: [{
+        id: 3,
+        nombre: "auto-basico",               // nombre de la tarifa 
+        categoria: "auto",            // tipo de vehiculo
+        fraccion: 30,             // fraccion minima de facturacion
+        unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+        valor: 150,                
+        tolerancia: 5,           // rango de tolerancia
+      },
         {
-          id: 1,
-          nombre: "auto",
-          unidad_tiempo: "hora",
-          valor: 250,
-          fraccion: "30",
-          ut_fraccion: "minutos",
-          descuento: "no"
+          id: 4,
+          nombre: "camioneta-basico",               // nombre de la tarifa 
+          categoria: "camioneta",            // tipo de vehiculo
+          fraccion: 30,             // fraccion minima de facturacion
+          unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+          valor: 180,                
+          tolerancia: 5,           // rango de tolerancia
         },
         {
           id: 2,
-          nombre: "mensual",
-          unidad_tiempo: "mes",
-          valor: 7000,
-          fraccion: "no",
-          ut_fraccion: "30 dias",
-          descuento: "no"
-        },
-        {
-          id: 3,
-          nombre: "moto-estadia",
-          valor: 1500,
-          fraccion: "30",
-          ut_fraccion: "6 horas",
-          descuento: "no"
+          nombre: "moto-basico",               // nombre de la tarifa 
+          categoria: "moto",            // tipo de vehiculo
+          fraccion: 30,             // fraccion minima de facturacion
+          unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+          valor: 120,                
+          tolerancia: 5,           // rango de tolerancia
         },
       ],
 
@@ -103,7 +103,15 @@ export class DataService implements InMemoryDbService {
             horaSalida: "",
             estadia: 0,
           },
-          tarifa: "camion",
+          tarifa:{
+            id: 4,
+            nombre: "camioneta-basico",               // nombre de la tarifa 
+            categoria: "camioneta",            // tipo de vehiculo
+            fraccion: 30,             // fraccion minima de facturacion
+            unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+            valor: 180,                
+            tolerancia: 5,           // rango de tolerancia
+          },
           descripcion: "Scania 1114",
         },
 
@@ -119,7 +127,15 @@ export class DataService implements InMemoryDbService {
             horaSalida: "",   
             estadia: 0,         
           },
-          tarifa: "auto",
+          tarifa: {
+            id: 3,
+            nombre: "auto-basico",               // nombre de la tarifa 
+            categoria: "auto",            // tipo de vehiculo
+            fraccion: 30,             // fraccion minima de facturacion
+            unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+            valor: 150,                
+            tolerancia: 5,           // rango de tolerancia
+          },
           descripcion: "fitito rojo",
         },
       ], 

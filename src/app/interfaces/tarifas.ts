@@ -1,8 +1,9 @@
 export interface Tarifas {
-  nombre: string;
-  unidad_tiempo: string;
-  valor: number;
-  fraccion: string;
-  ut_fraccion: string;
-  descuento: string;
+  id:number;
+  nombre: string;               // nombre de la tarifa 
+  categoria: string;            // tipo de vehiculo
+  fraccion: number;             // fraccion minima de facturacion
+  unidad_tiempo: string;        // minutos, horas, dias, semanas, mes
+  valor: number;                
+  tolerancia: number;           // rango de tolerancia
 }
