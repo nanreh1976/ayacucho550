@@ -37,13 +37,13 @@ export class PlayaFormComponent implements OnInit {
   tarifas!: Tarifas [];
   componenteTarifas: string = "tarifas"
   puestoEstacionamiento!: PlayaI;
-  tarifaSeleccionada!: string;
+  tarifaSeleccionada!: Tarifas;
   
 
 
   constructor(public activeModal: NgbActiveModal, private servicioDatosService: ServicioDatosService, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService,
   ) {
-    this.createForm();
+   this.createForm();
   }
 
   ngOnInit(): void {
@@ -186,6 +186,8 @@ pruebaCierreHora(){
   this.fechas.estadia = this.fechaService.pruebaCierreHora(this.fechas.fechaDate);
   ////console.log(this.fechas.estadia);
 
+
+  
   this.armarPuestoEstacionamiento();
 
   
@@ -207,18 +209,20 @@ changeTarifa(e: any) {
     return tarifas.nombre === e.target.value
   })
   
-  this.tarifaSeleccionada = tarifaForm[0].nombre;               //se guarda el nombre de la tarifa seleccionada en la variable
+  this.tarifaSeleccionada = tarifaForm[0];               //se guarda el nombre de la tarifa seleccionada en la variable
+  console.log(this.tarifaSeleccionada);
+  
 }
 
 armarPuestoEstacionamiento() {     
   //la funcion arma el puesto
-  this.puestoEstacionamiento = {
+    this.puestoEstacionamiento = {
     id: this.item.id,
     patente: this.editForm.value.patente,
     fechas: this.fechas,
     tarifa : this.tarifaSeleccionada,
     descripcion:this.editForm.value.descripcion,
-  } 
+  }  
   //if (tarifa="undifined"){
 
 

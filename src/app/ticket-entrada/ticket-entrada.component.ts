@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPrintElementService } from 'ngx-print-element';
+import { EstadiaService } from '../servicios/facturacion/estadia.service';
 import { CalculoFechasService } from '../servicios/Fechas/calculo-fechas.service';
 
 @Component({
@@ -18,12 +19,15 @@ export class TicketEntradaComponent implements OnInit {
   horaSalida!:string;
   patente!: string;
   modo!: string;
-  saldo:number = 1000;
+  saldo!:number;
   estadia!: number;
   estadiaHoras:any = ""
 
+  tarifaFraccion!:number;
+  tarifaValor!:number; 
 
-  constructor(public print: NgxPrintElementService, public activeModal: NgbActiveModal, private fechaService: CalculoFechasService) {}
+
+  constructor(public print: NgxPrintElementService, public activeModal: NgbActiveModal, private fechaService: CalculoFechasService, private estadiaService :EstadiaService) {}
 
   ngOnInit(): void {
     console.log("on init form", this.fromParent);
@@ -34,6 +38,7 @@ export class TicketEntradaComponent implements OnInit {
 
     if(this.modo === "Salida"){
       this.tiempoEstadia();
+      this.saldoEstadia();
     }
 
   }
@@ -88,6 +93,12 @@ export class TicketEntradaComponent implements OnInit {
     this.horaSalida = this.item.fechas.horaSalida;
     this.patente = this.item.patente;
     this.estadia = this.item.fechas.estadia;
+    this.tarifaFraccion = this.item.tarifa.fraccion;
+    console.log(`esto es la tarifa fraccion: ${this.tarifaFraccion}`);
+    this.tarifaValor = this.item.tarifa.valor;
+    console.log(`esto es la tarifa valor: ${this.tarifaValor}`);
+    
+    
   }
 
   closeModal() {   
@@ -97,6 +108,10 @@ export class TicketEntradaComponent implements OnInit {
   tiempoEstadia(){    
     this.estadiaHoras = this.fechaService.tiempoEstadia(this.estadia);
  }
+
+  saldoEstadia( ){ 
+    this.saldo = this.estadiaService.saldoEstadia(this.item.tarifa, this.estadia )
+  } 
 
   
 }
