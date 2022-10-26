@@ -57,6 +57,7 @@ export class DataService implements InMemoryDbService {
           valor: 180,                
           tolerancia: 5,           // rango de tolerancia
         },
+        
         {
           id: 2,
           nombre: "moto-basico",               // nombre de la tarifa 

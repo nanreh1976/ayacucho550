@@ -96,7 +96,6 @@ componente: string = 'tarifas'
 
       switch (op) {
         case 'Agregar': {
-
           this.addItem(this.componente, item);
           break;
       }
@@ -110,12 +109,7 @@ componente: string = 'tarifas'
         break;
       }
  
-      
-
-
-
-
-      default: {
+       default: {
         console.log("sin operacion en el case crud")
         break;
       }

@@ -33,7 +33,7 @@ export class ClientesFormComponent implements OnInit {
       // console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
       this.item = this.fromParent.item;
-      if(this.item.op === 'Agregar'){ delete this.item.id_experiencia}
+      if(this.item.op === 'Agregar'){ delete this.item.id}
       this.configureForm(this.titulo, this.item);
 
     }

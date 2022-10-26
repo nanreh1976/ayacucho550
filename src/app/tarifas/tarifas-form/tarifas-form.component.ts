@@ -9,79 +9,77 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class TarifasFormComponent implements OnInit {
 
-
-
-  @Input() fromParent : any;
+  @Input() fromParent: any;
   editForm!: any;
-  titulo!: any;
+  titulo!: string;
   item!: any
 
 
   constructor(public activeModal: NgbActiveModal,
-    
+
     private fb: FormBuilder,
-    ) { 
-      this.createForm();
+  ) {
+    this.createForm();
+  }
+
+
+
+
+
+  ngOnInit(): void {
+    {
+      // console.log("on init form", this.fromParent);
+      this.titulo = this.fromParent.modo
+      this.item = this.fromParent.item;
+      if (this.item.op === 'Agregar') { delete this.item.id}
+      this.configureForm(this.titulo, this.item);
+
     }
+  }
 
 
 
 
+  configureForm(titulo: string, item: any) {
 
-    ngOnInit(): void {
-      {
-        // console.log("on init form", this.fromParent);
-        this.titulo = this.fromParent.modo
-        this.item = this.fromParent.item;
-        if(this.item.op === 'Agregar'){ delete this.item.id_experiencia}
-        this.configureForm(this.titulo, this.item);
-  
-      }
-    }
-  
-    
-  
-  
-  
-    configureForm(titulo: string, item: any) {
-  
-      // console.log("configure form", titulo, item), (titulo !=='agregar');
-      this.editForm.patchValue({
-        
-        nombre: item.nombre,
-        unidad_tiempo: item.unidad_tiempo,
-        valor: item.valor,
-        fraccion: item.fraccion,
-        ut_fraccion: item.ut_fraccion,
-         descuento: item.descuento,
-         id: item.id,
-      });
-  
-    }
-  
-  
-    createForm() {
-      this.editForm = this.fb.group({
-        nombre: [''],
-        unidad_tiempo: [''],
-        valor: [''],
-        fraccion: [''],
-        ut_fraccion: [''],
-        descuento: [''],
-      });
-    }
-  
-  
-  
-    closeModal() {
-      let value = {
-     op: this.titulo,
-     item: this.editForm.value
-     
-   };
-  
-  //  console.log("closemodal", value)
-   this.activeModal.close(value);
-  
+    // console.log("configure form", titulo, item), (titulo !=='agregar');
+    this.editForm.patchValue({
+
+      nombre: item.nombre,
+      unidad_tiempo: item.unidad_tiempo,
+      valor: item.valor,
+      fraccion: item.fraccion,
+      ut_fraccion: item.ut_fraccion,
+      descuento: item.descuento,
+      id: item.id,
+    });
+
+  }
+
+
+  createForm() {
+    this.editForm = this.fb.group({
+      nombre: [''],
+      unidad_tiempo: [''],
+      valor: [''],
+      fraccion: [''],
+      ut_fraccion: [''],
+      descuento: [''],
+      id: [''],
+    });
+  }
+
+
+
+  closeModal() {
+    let value = {
+      op: this.titulo,
+      item: this.editForm.value
+
+    };
+
+    //  console.log("closemodal", value)
+    this.activeModal.close(value);
+
   }
 }
