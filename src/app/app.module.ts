@@ -22,7 +22,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServicioDatosService } from './servicios/servicio-datos.service';
 import { PlayaFormComponent } from './playa/playa-form/playa-form.component';
 import { FilterPipe } from './servicios/filter.pipe';
-import { TarifasComponent } from './tarifas/tarifas.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
@@ -72,7 +71,7 @@ const appRoutes: Routes = [
     BtnEliminarComponent,
     PlayaFormComponent,
     FilterPipe,
-    TarifasComponent,
+
       
     DashboardComponent,
     PagenotfoundComponent,
@@ -114,7 +113,7 @@ const appRoutes: Routes = [
 
       {path: 'facturacion', component:FacturacionControlComponent },
     //  {path: 'ticketE', component: TicketEntradaComponent },
-      {path: 'tarifas', component: TarifasComponent},
+      {path: 'tarifas', component: TarifasControlComponent},
 
       {path: 'clientes', component: ClientesControlComponent},
       {path: 'vehiculos', component: VehiculosControlComponent},

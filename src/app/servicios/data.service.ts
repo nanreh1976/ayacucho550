@@ -158,35 +158,7 @@ export class DataService implements InMemoryDbService {
         },
       ], 
 
-      // playaLog: [
-      //   {
-      //     id:4,
-      //     patente: "AA234CC",
-      //     ingreso: 24042015,
-      //     egreso: 24042099,
-      //     idTarifa: 4,
-      //     saldo: 10,
-      //     descripcion:"servicio lavado Renault fuego azul (?)"
-      //   },
-
-      //   {
-      //     id:4,
-      //     patente: "AA234CC",
-      //     ingreso: 24042015,
-      //     egreso: 24042099,
-      //     idTarifa: 4,
-      //     saldo: 10,
-      //     descripcion:"servicio lavado Renault fuego azul (?)"
-      //   },
-      // ], 
-
- 
-
     };
-
-
-
-
 
 
   }
