@@ -26,23 +26,23 @@ import { PlayaFormComponent } from '../playa-form/playa-form.component';
 })
 export class PlayaControlComponent implements OnInit {
 
- // nombre del crud / componente
- componente: string = 'playa'
-  // reactiveforms, modo edicion, delete etc
-  //modo!: string;
 
- // propiedades logged service
+
+  // nombre del crud / componente
+  componente: string = 'playa'
+
+  // propiedades logged service
   $estado;
 
-// data recibida del crud
+  // data recibida del crud
   data!: [];
 
 
 
   constructor(private modalService: NgbModal,
-              private loggedService: LoggedService,
-              private fb: FormBuilder,
-              private servicioDatosService: ServicioDatosService
+    private loggedService: LoggedService,
+    private fb: FormBuilder,
+    private servicioDatosService: ServicioDatosService
   ) {
 
     this.$estado = loggedService.logged$;
@@ -50,18 +50,23 @@ export class PlayaControlComponent implements OnInit {
   }
 
 
-
   ngOnInit(): void {
     this.$estado.subscribe
     this.getAll();  //tomar datos de los vehiculos en playa
-    
+
   }
 
- 
+
+  /// RECIBE MENSAJE DE LA VISTA ///
+
   getMsg(msg: any) {
     // console.log(msg, "from parent");
-     this.openForm(msg.op, msg.item)
+    this.openForm(msg.op, msg.item)
   }
+
+
+  /// MODAL DEL FORM SEGUN INFO DE LA VISTA ////
+
 
   openForm(modo: string, item: any) {
     {
@@ -73,106 +78,138 @@ export class PlayaControlComponent implements OnInit {
           // backdrop: 'static'
         })
 
-        let info = {
-          modo: modo,
-          item: item
-  
-        }
+      let info = {
+        modo: modo,
+        item: item
+
+      }
 
 
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then((result) => {
-            // console.log("result from control","op", result.op,"item", result.item);
-     
+        // console.log("result from control","op", result.op,"item", result.item);
+
         // this.getXps();  
-        this.selectCrudOp(result.op, result.item)
-        ;
+        this.flowOp(result.op, result.item)
+          ;
       }, (reason) => { });
     }
   }
 
 
+  //// FLUJO DE OPERACIONES SEGUN OP FORM /////
 
-// seleccionar operacion CRUD
-
-selectCrudOp(op: string, item:any) {
-
-  switch (op) {
-    case 'Agregar': {
-
-      this.addItem(this.componente, item);
-      this.openTicket("Agregar", item)
-      break;
-    }
- 
-    case 'Editar': {
-      this.updateItem(this.componente, item);
-      break;
-    }
-    case 'Eliminar': {
-      this.deleteItem(this.componente, item);
-      this.openTicket("Salida", item)
-      break;
-    }
-    
-    case 'Reimprimir':{
-      this.openTicket("Reimprimir", item);
-      break;
-    }
-
-    default: {
-      console.log("sin operacion en case crud")
-      break;
-    }
-  }
-};
-
-// CRUD
-
-
-getAll(): void {
-  this.servicioDatosService.getAll(this.componente).subscribe (
-  datos => {this.data = datos;
- // console.log("get all ", this.componente, this.data)
-
-  }
-);
-}
-
-
-deleteItem(componente: string, item: any): void {
-
-   console.log("delete component", item, item.id)
-  this.servicioDatosService.deleteItem(componente, item.id)
-  .subscribe 
-  (data => { 
-    this.data = data;    
-    this.ngOnInit();
-  })
-}
-
-addItem(componente: string, item: any): void {
-
-  console.log("add itemcomponent", item, )
-  this.servicioDatosService.addItem(componente, item) 
-  .subscribe
-  (data => { 
-    this.data = data; 
-    this.ngOnInit();
-  });
-
+  flowOp(op: string, item: any) {
+    this.selectCrudOp(op, item)   // hace el crud
+    this.selectTicketOp(op, item)  // hace operacion de ticket si corresponde
   }
 
-updateItem(componente: string, item: any): void {
- 
-  this.servicioDatosService.updateItem(componente, item, item.id)
-  .subscribe
-  (data => { 
-    this.data = data; 
-    this.ngOnInit();
-  });
+
+  ////// SELECCIONAR OPERACION CRUD  //////
+
+  selectCrudOp(op: string, item: any) {
+
+    switch (op) {
+      case 'Agregar': {
+        this.addItem(this.componente, item);
+        break;
+      }
+
+      case 'Editar': {
+        this.updateItem(this.componente, item);
+        break;
+      }
+      case 'Eliminar': {
+        this.deleteItem(this.componente, item);
+        break;
+      }
+
+      default: {
+        console.log("sin operacion en case crud")
+        break;
+      }
+    }
+  };
+
+
+  ///////////////////////////////
+  ///// OPERACIONES CRUD ////////
+
+  getAll(): void {
+    this.servicioDatosService.getAll(this.componente).subscribe(
+      datos => {
+        this.data = datos;
+        // console.log("get all ", this.componente, this.data)
+
+      }
+    );
+  }
+
+
+  deleteItem(componente: string, item: any): void {
+
+    console.log("delete component", item, item.id)
+    this.servicioDatosService.deleteItem(componente, item.id)
+      .subscribe
+      (data => {
+        this.data = data;
+        this.ngOnInit();
+      })
+  }
+
+  addItem(componente: string, item: any): void {
+
+    console.log("add itemcomponent", item,)
+    this.servicioDatosService.addItem(componente, item)
+      .subscribe
+      (data => {
+        this.data = data;
+        this.ngOnInit();
+      });
 
   }
+
+  updateItem(componente: string, item: any): void {
+
+    this.servicioDatosService.updateItem(componente, item, item.id)
+      .subscribe
+      (data => {
+        this.data = data;
+        this.ngOnInit();
+      });
+
+  }
+
+  /////////////////////////////////////////
+  ///// ELEGIR OPERACION DE TICKET/////////
+
+  selectTicketOp(op: string, item: any) {
+
+    switch (op) {
+      case 'Agregar': {
+        this.openTicket("Ticket Ingreso", item)
+        break;
+      }
+
+      case 'Eliminar': {
+        this.openTicket("Ticket Salida", item)
+        break;
+      }
+      case 'Reimprimir': {
+        this.openTicket("Reimprimir", item);
+        break;
+      }
+
+      default: {
+        console.log("sin operacion en case crud")
+        break;
+      }
+    }
+  };
+
+
+
+  /////  ABRIR FORMULARIO TICKET //////
 
   openTicket(modo: string, item: any) {
     {
@@ -184,22 +221,21 @@ updateItem(componente: string, item: any): void {
           // backdrop: 'static'
         })
 
-        let info = {
-          modo: modo,
-          item: item
-  
-        }
+      let info = {
+        modo: modo,
+        item: item
+
+      }
 
 
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then((result) => {
-            // console.log("result from control","op", result.op,"item", result.item);
-     
-        // this.getXps();  
-        this.selectCrudOp(result.op, result.item)
-        ;
+        // console.log("result from control","op", result.op,"item", result.item);
+        this.selectTicketOp(result.op, result.item)
+          ;
       }, (reason) => { });
     }
   }
+
 
 }
