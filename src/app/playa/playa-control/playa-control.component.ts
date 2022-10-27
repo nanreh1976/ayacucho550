@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
+import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { LoggedService } from 'src/app/servicios/logged.service';
 import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
 import { TicketEntradaComponent } from 'src/app/ticket-entrada/ticket-entrada.component';
@@ -42,7 +43,8 @@ export class PlayaControlComponent implements OnInit {
   constructor(private modalService: NgbModal,
     private loggedService: LoggedService,
     private fb: FormBuilder,
-    private servicioDatosService: ServicioDatosService
+    private servicioDatosService: ServicioDatosService,
+    private interOpService: InterOpService,
   ) {
 
     this.$estado = loggedService.logged$;
@@ -121,6 +123,7 @@ export class PlayaControlComponent implements OnInit {
       }
       case 'Eliminar': {
         this.deleteItem(this.componente, item);
+        this.interOpService.addItem("facturacion", item)
         break;
       }
 
