@@ -144,7 +144,7 @@ export class DataService implements InMemoryDbService {
       facturacion: [
         {
           id: 1,
-          patente: "fht231",
+          patente: "AA123ZZ",
           fechas: {
             fechaDate: "Fri Oct 21 2022 15:09:31 GMT-0300 (hora estándar de Argentina)",
             fechaIngreso: "21-10-2022",
@@ -154,13 +154,13 @@ export class DataService implements InMemoryDbService {
             horaSalida: "",
             estadia: 0,
           },
-          tarifa: "camion",
-          descripcion: "Scania 1114",
+          tarifa: "avioneta",
+          descripcion: "cessna 12343",
         },
 
         {
           id: 2,
-          patente: "ad123sa",
+          patente: "XX234XX",
           fechas: {
             fechaDate: "Fri Oct 21 2022 17:09:31 GMT-0300 (hora estándar de Argentina)",
             fechaIngreso: "21-10-2022",
@@ -170,8 +170,8 @@ export class DataService implements InMemoryDbService {
             horaSalida: "",   
             estadia: 0,         
           },
-          tarifa: "auto",
-          descripcion: "fitito rojo",
+          tarifa: "lancha",
+          descripcion: "cadillac 434",
         },
       ], 
 
