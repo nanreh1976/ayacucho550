@@ -2,28 +2,21 @@
 
 
 
-<H1 class="display-1" style="text-align: center;">Playa </H1>
+<!-- <H1 class="display-1" style="text-align: center;">Playa </H1> -->
 
-<p>Agregar campo barcode</p>
-<p>Setear cocheras (fijas, cant, etc) desde dashboard</p>
-<p>Representa la playa fisicamente (si no hay autos en la playa, esta vacia)</p>
-<p>Cuando los autos salen de playa entran al historial o playa log (ver abajo) y desde ahi se hacen todas las consultas (fact, mov, etc)
-
-</p>
-
+<br>
 
 <ul class="d-flex justify-content-evenly">
   <li>
     <div style=" float: right;" *ngIf="$estado | async">
-      <app-btn-agregar  class="right " *ngIf="$estado" (click)="msgBack('Agregar',[])"
-      class="d-flex align-items-center ">
-      </app-btn-agregar> 
+      <app-btn-agregar class="right " *ngIf="$estado" (click)="msgBack('Agregar',[])"
+        class="d-flex align-items-center ">
+      </app-btn-agregar>
     </div>
   </li>
   <li>
-    <div style=" float: left;">           
-      <app-btn-eliminar class="left" *ngIf="$estado" (click)="msgBack('Salida',[])"
-      class="d-flex align-items-center ">
+    <div style=" float: left;">
+      <app-btn-eliminar class="left" *ngIf="$estado" (click)="msgBack('Salida',[])" class="d-flex align-items-center ">
       </app-btn-eliminar>
     </div>
   </li>
@@ -39,9 +32,9 @@
   <table class="table" *ngIf="(data | filter: searchText).length > 0; else noResults">
     <colgroup>
       <col width="5%">
-      <col width="30%">
-      <col width="35%">
-      <col width="15%">
+      <col width="20%">
+      <col width="20%">
+      <col width="20%">
     </colgroup>
     <thead>
       <tr>
@@ -49,7 +42,8 @@
         <th scope="col">Patente</th>
         <th scope="col">Ingreso</th>
         <th scope="col">Tarifa</th>
-        <th scope="col">Descripcion<th>
+        <th scope="col">Descripcion
+        <th>
       </tr>
     </thead>
 
@@ -58,32 +52,32 @@
 
     <tbody>
       <tr *ngFor="let item of data | filter: searchText; let i = index">
-        <th scope="row">{{i + 1}}</th>
+        <th class="badge"  scope="row">{{i + 1}}</th>
         <td>{{item.patente}}</td>
         <td>{{item.fechas.horaIngreso}}</td>
         <td>{{item.tarifa.nombre}}</td>
         <td>{{item.descripcion}}</td>
+        <!-- <div *ngIf="$estado | async" class="card-footer"> -->
 
-      
-    
-     
+        <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
+        <td>
+          <app-btn-editar class="right" *ngIf="$estado" (click)="msgBack('Editar',item)"
+         >
+          </app-btn-editar>
+        </td>
+        <td>
+          <app-btn-eliminar class="right" *ngIf="$estado" (click)="msgBack('Eliminar',item)"
+         >
+          </app-btn-eliminar>
+        </td>
+        <td>
+          <app-btn-reimpresion class="right" *ngIf="$estado" (click)="msgBack('Reimprimir',item)"
+         >
+          </app-btn-reimpresion>
 
+        </td>
+        <!-- </div> -->
 
-            <div *ngIf="$estado | async" class="card-footer">
-      
-              <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
-      
-              <app-btn-editar class="right" *ngIf="$estado"
-                  (click)="msgBack('Editar',item)" class="d-flex align-items-center">
-              </app-btn-editar>
-              <app-btn-eliminar class="right" *ngIf="$estado"
-                  (click)="msgBack('Eliminar',item)" class="d-flex align-items-center">
-              </app-btn-eliminar>
-              <app-btn-reimpresion class="right" *ngIf="$estado"
-                  (click)="msgBack('Reimprimir',item)" class="d-flex align-items-center">
-              </app-btn-reimpresion>
-            </div>
-   
 
       </tr>
     </tbody>
@@ -92,5 +86,3 @@
   <ng-template #noResults>
     <p>No results found for "{{searchText}}".</p>
   </ng-template>
-
-
