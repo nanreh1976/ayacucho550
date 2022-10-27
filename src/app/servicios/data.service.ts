@@ -96,7 +96,7 @@ export class DataService implements InMemoryDbService {
           id: 1,
           patente: "fht231",
           fechas: {
-            fechaDate: "Fri Oct 21 2022 15:09:31 GMT-0300 (hora estándar de Argentina)",
+            fechaDate: "Tue Oct 25 2022 15:09:31 GMT-0300 (hora estándar de Argentina)",
             fechaIngreso: "25-10-2022",
             horaIngreso: "15:17:23",
             fechaSalidaDate: "",
@@ -120,7 +120,7 @@ export class DataService implements InMemoryDbService {
           id: 2,
           patente: "ad123sa",
           fechas: {
-            fechaDate: "Fri Oct 21 2022 17:09:31 GMT-0300 (hora estándar de Argentina)",
+            fechaDate: "Tue Oct 25 2022 17:09:31 GMT-0300 (hora estándar de Argentina)",
             fechaIngreso: "25-10-2022",
             horaIngreso: "14:24:23",
             fechaSalidaDate: "",
@@ -146,7 +146,7 @@ export class DataService implements InMemoryDbService {
           id: 3,
           patente: "AA123ZZ",
           fechas: {
-            fechaDate: "Fri Oct 21 2022 15:09:31 GMT-0300 (hora estándar de Argentina)",
+            fechaDate: "Fri Oct 25 2022 15:09:31 GMT-0300 (hora estándar de Argentina)",
             fechaIngreso: "21-10-2022",
             horaIngreso: "15:17:23",
             fechaSalidaDate: "",

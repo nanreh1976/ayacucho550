@@ -34,7 +34,7 @@ export class CalculoFechasService {
     console.log(fechaDePrueba); */
     
     let pruebaCierreHora= moment(new Date()).diff(fecha,"minutes");   // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
-    console.log(pruebaCierreHora);
+    console.log(`estos son los minutos de la estadia ${pruebaCierreHora}`);
     return pruebaCierreHora
   }
 
