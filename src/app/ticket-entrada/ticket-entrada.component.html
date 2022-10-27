@@ -36,7 +36,7 @@
             {{fechaIngreso}}
             {{horaIngreso}} hs
         </div>
-        <div *ngIf="modo === 'Salida'">
+        <div *ngIf="modo === 'Ticket Salida'">
             <div class="date">
                 Salida:
             </div>    
@@ -62,7 +62,7 @@
 
         <hr>
 
-        <div *ngIf="modo !== 'Salida'" else salida>
+        <div *ngIf="modo !== 'Ticket Salida'" else salida>
         <!-- Cod Barras / QR -->
             <div style="text-align:center">
                 <ngx-barcode6

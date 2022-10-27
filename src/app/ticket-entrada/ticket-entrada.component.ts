@@ -36,7 +36,7 @@ export class TicketEntradaComponent implements OnInit {
 
     this.ticket();
 
-    if(this.modo === "Salida"){
+    if(this.modo === "Ticket Salida"){
       this.tiempoEstadia();
       this.saldoEstadia();
     }
