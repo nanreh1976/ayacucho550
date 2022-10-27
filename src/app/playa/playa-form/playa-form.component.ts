@@ -100,7 +100,7 @@ export class PlayaFormComponent implements OnInit {
         break;
       }      
       case 'Editar': {  
-        this.armarPuestoEstacionamiento() ;   
+        this.validarPatente() ;   
         break;
       }
       case 'Eliminar': {  
