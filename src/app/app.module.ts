@@ -56,7 +56,23 @@ import { FacturacionFormComponent } from './facturacion/facturacion-form/factura
 //esto importa la clase Routes 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent }, //las '' es la ruta al home
-  { path: 'login', component: LoginComponent } // la ruta al login
+  { path: 'login', component: LoginComponent }, // la ruta al login
+  {path: 'home', component: AppComponent},
+  {path: 'playa', component: PlayaControlComponent  },
+
+
+
+  {path: 'facturacion', component:FacturacionControlComponent },
+//  {path: 'ticketE', component: TicketEntradaComponent },
+  {path: 'tarifas', component: TarifasControlComponent},
+
+  {path: 'clientes', component: ClientesControlComponent},
+  {path: 'vehiculos', component: VehiculosControlComponent},
+  {path: 'dashboard', component: DashboardComponent},
+  {path: 'ocupacion', component: OcupacionComponent},
+  {path: 'login', component: LoginComponent }, // la ruta al login
+  {path: '', redirectTo: '/playa', pathMatch: 'full'},
+  {path: '**', component: PagenotfoundComponent}
 ]
 
 @NgModule({
@@ -105,31 +121,11 @@ const appRoutes: Routes = [
     FormsModule,
     NgxPrintElementModule,
     NgxBarcode6Module,
-    RouterModule.forRoot([
-      {path: 'home', component: AppComponent},
-      {path: 'playa', component: PlayaControlComponent  },
-
-
-
-      {path: 'facturacion', component:FacturacionControlComponent },
-    //  {path: 'ticketE', component: TicketEntradaComponent },
-      {path: 'tarifas', component: TarifasControlComponent},
-
-      {path: 'clientes', component: ClientesControlComponent},
-      {path: 'vehiculos', component: VehiculosControlComponent},
-      {path: 'dashboard', component: DashboardComponent},
-      {path: 'ocupacion', component: OcupacionComponent},
-      {path: 'login', component: LoginComponent }, // la ruta al login
-      {path: '', redirectTo: '/playa', pathMatch: 'full'},
-      {path: '**', component: PagenotfoundComponent}
-    ]),
+    RouterModule.forRoot(appRoutes),
     NgbModule, //se importa la clase RouterModule y se le indica la const donde estan las rutas
     ReactiveFormsModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(DataService),
-
-
-
   ],
   providers: [LoggedService, ServicioDatosService],
   bootstrap: [AppComponent]

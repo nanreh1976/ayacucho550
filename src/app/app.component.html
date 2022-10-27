@@ -1,19 +1,31 @@
+
+<br>
 <div class="container-lg ">
 
     <div *ngIf="$estado.value">
         <header></header>
         <br>
+        <br>
+  
         <nav>
-            <a class="button" routerLink="/playa">Playa</a>
-            <a class="button" routerLink="/facturacion">Facturacion</a>
-            <!-- <a class="button" routerLink="/ticketE">TicketE</a> -->
-            <a class="button" routerLink="/tarifas">Tarifas</a>
-            <a class="button" routerLink="/clientes">Clientes</a>
+
+            <a routerLink="/playa" routerLinkActive="active" ariaCurrentWhenActive="page">Playa</a>
+            <a routerLink="/facturacion" routerLinkActive="active" ariaCurrentWhenActive="page">Facturacion</a>
+            <a routerLink="/tarifas" routerLinkActive="active" ariaCurrentWhenActive="page">Tarifas</a>
+            <a routerLink="/clientes" routerLinkActive="active" ariaCurrentWhenActive="page">Clientes</a>
+            <a routerLink="/dashboard" routerLinkActive="active" ariaCurrentWhenActive="page">Dashboard</a>
+            <a routerLink="/ocupacion" routerLinkActive="active" ariaCurrentWhenActive="page">Disponibilidad</a>
+            <!-- <a class="button" routerLink="/facturacion">Facturacion</a>
+             <a class="button" routerLink="/ticketE">TicketE</a> -->
+            <!-- <a class="button" routerLink="/tarifas">Tarifas</a>
+            <a class="button" routerLink="/clientes">Clientes</a> -->
             <!-- <a class="button" routerLink="/vehiculos">Vehiculos</a> -->
-            <a class="button" routerLink="/dashboard">Dashboard</a>
-            <a class="button" routerLink="/ocupacion">Disponibilidad</a>
+            <!-- <a class="button" routerLink="/dashboard">Dashboard</a>
+            <a class="button" routerLink="/ocupacion">Disponibilidad</a> --> 
 
         </nav>
+
+        
     </div>
 
 
