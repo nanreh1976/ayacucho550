@@ -38,7 +38,7 @@ export class TicketEntradaComponent implements OnInit {
 
     if(this.modo === "Ticket Salida"){
       this.tiempoEstadia();
-      this.saldoEstadia();
+      //this.saldoEstadia();
     }
 
   }
@@ -96,8 +96,8 @@ export class TicketEntradaComponent implements OnInit {
     this.tarifaFraccion = this.item.tarifa.fraccion;
     console.log(`esto es la tarifa fraccion: ${this.tarifaFraccion}`);
     this.tarifaValor = this.item.tarifa.valor;
-    console.log(`esto es la tarifa valor: ${this.tarifaValor}`);
-    
+    console.log(`esto es la tarifa valor: ${this.tarifaValor}`);    
+    this.saldo = this.item.saldo
     
   }
 
@@ -109,9 +109,9 @@ export class TicketEntradaComponent implements OnInit {
     this.estadiaHoras = this.fechaService.tiempoEstadia(this.estadia);
  }
 
-  saldoEstadia( ){ 
+  /* saldoEstadia( ){ 
     this.saldo = this.estadiaService.saldoEstadia(this.item.tarifa, this.estadia )
   } 
-
+ */
   
 }
