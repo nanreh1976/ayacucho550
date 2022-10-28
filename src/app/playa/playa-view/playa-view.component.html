@@ -9,14 +9,20 @@
 <ul class="d-flex justify-content-evenly">
   <li>
     <div style=" float: right;" *ngIf="$estado | async">
-      <app-btn-agregar class="right " *ngIf="$estado" (click)="msgBack('Agregar',[])"
-        class="d-flex align-items-center ">
+      <app-btn-agregar class="right " 
+      name = 'Ingreso'
+      *ngIf="$estado" (click)="msgBack('Agregar',[])"
+        class="d-flex align-items-center "   >
       </app-btn-agregar>
     </div>
   </li>
   <li>
     <div style=" float: left;">
-      <app-btn-eliminar class="left" *ngIf="$estado" (click)="msgBack('Salida',[])" class="d-flex align-items-center ">
+      <app-btn-eliminar class="left" 
+      *ngIf="$estado" (click)="msgBack('Salida',[])" 
+      class="d-flex align-items-center "
+      name = 'Egreso'>
+       
       </app-btn-eliminar>
     </div>
   </li>
@@ -52,7 +58,7 @@
 
     <tbody>
       <tr *ngFor="let item of data | filter: searchText; let i = index">
-        <th class="badge"  scope="row">{{i + 1}}</th>
+        <th class="badge" scope="row">{{i + 1}}</th>
         <td>{{item.patente}}</td>
         <td>{{item.fechas.horaIngreso}}</td>
         <td>{{item.tarifa.nombre}}</td>
@@ -61,18 +67,18 @@
 
         <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
         <td>
-          <app-btn-editar class="right" *ngIf="$estado" (click)="msgBack('Editar',item)"
-         >
+          <app-btn-editar class="right" *ngIf="$estado" (click)="msgBack('Editar',item)">
           </app-btn-editar>
         </td>
         <td>
-          <app-btn-eliminar class="right" *ngIf="$estado" (click)="msgBack('Eliminar',item)"
-         >
+          <app-btn-eliminar class="right" 
+                            *ngIf="$estado" 
+                            (click)="msgBack('Eliminar',item)"
+                            name = 'Egreso'>
           </app-btn-eliminar>
         </td>
         <td>
-          <app-btn-reimpresion class="right" *ngIf="$estado" (click)="msgBack('Reimprimir',item)"
-         >
+          <app-btn-reimpresion class="right" *ngIf="$estado" (click)="msgBack('Reimprimir',item)">
           </app-btn-reimpresion>
 
         </td>

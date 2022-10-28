@@ -1,12 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-btn-eliminar',
-  templateUrl: './btn-eliminar.component.html',
-  styleUrls: ['./btn-eliminar.component.css']
+
+  template: `
+<button class="btn btn-success" style="border-radius: 10%; margin: 10px ; ">
+  <i class="fa fa-minus"> </i>
+  {{name || "Eliminar"}}
+</button>
+  `,
+
+  styles: [
+    `
+
+    `
+  ]
 })
+
 export class BtnEliminarComponent implements OnInit {
 
+  @Input() name?: string;
   constructor() { }
 
   ngOnInit(): void {
