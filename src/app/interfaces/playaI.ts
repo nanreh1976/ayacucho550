@@ -8,5 +8,6 @@ export interface PlayaI {
     fechas: Fechas;
     tarifa: Tarifas;
     descripcion: string;
+    saldo: number;
 
 }

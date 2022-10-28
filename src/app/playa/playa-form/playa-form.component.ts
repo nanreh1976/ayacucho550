@@ -9,6 +9,7 @@ import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Fechas } from 'src/app/interfaces/fechas';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
 import { CalculoFechasService } from 'src/app/servicios/Fechas/calculo-fechas.service';
+import { EstadiaService } from 'src/app/servicios/facturacion/estadia.service';
 
 @Component({
   selector: 'app-playa-form',
@@ -38,10 +39,10 @@ export class PlayaFormComponent implements OnInit {
   componenteTarifas: string = "tarifas"
   puestoEstacionamiento!: PlayaI;
   tarifaSeleccionada!: Tarifas;
-  
+  saldo!:number;
 
 
-  constructor(public activeModal: NgbActiveModal, private servicioDatosService: ServicioDatosService, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService,
+  constructor(public activeModal: NgbActiveModal, private servicioDatosService: ServicioDatosService, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService, private estadiaService :EstadiaService
   ) {
    this.createForm();
   }
@@ -187,8 +188,8 @@ pruebaCierreHora(){
   ////console.log(this.fechas.estadia);
 
 
+  this.saldoEstadia();
   
-  this.armarPuestoEstacionamiento();
 
   
 }
@@ -214,6 +215,12 @@ changeTarifa(e: any) {
   
 }
 
+saldoEstadia( ){ 
+  this.saldo = this.estadiaService.saldoEstadia(this.item.tarifa, this.fechas.estadia );
+
+  this.armarPuestoEstacionamiento();
+} 
+
 armarPuestoEstacionamiento() {     
   //la funcion arma el puesto
     this.puestoEstacionamiento = {
@@ -222,6 +229,7 @@ armarPuestoEstacionamiento() {
     fechas: this.fechas,
     tarifa : this.tarifaSeleccionada,
     descripcion:this.editForm.value.descripcion,
+    saldo: this.saldo,
   }  
   //if (tarifa="undifined"){
 
