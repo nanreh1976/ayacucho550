@@ -230,6 +230,7 @@ armarPuestoEstacionamiento() {
     tarifa : this.tarifaSeleccionada,
     descripcion:this.editForm.value.descripcion,
     saldo: this.saldo,
+    codigoBarras: `${this.editForm.value.patente}-${this.fechas.horaIngreso}`
   }  
   //if (tarifa="undifined"){
 

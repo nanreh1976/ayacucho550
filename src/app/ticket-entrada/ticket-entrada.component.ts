@@ -43,9 +43,9 @@ export class TicketEntradaComponent implements OnInit {
 
   }
   
-  format = 'MSI';
-  value = "24102022000001";
-  width = 1.5;
+  format = 'CODE128B';
+  value = ``;
+  width = 1.25;
   height = 100;
   displayValue = true;
 
@@ -97,7 +97,8 @@ export class TicketEntradaComponent implements OnInit {
     console.log(`esto es la tarifa fraccion: ${this.tarifaFraccion}`);
     this.tarifaValor = this.item.tarifa.valor;
     console.log(`esto es la tarifa valor: ${this.tarifaValor}`);    
-    this.saldo = this.item.saldo
+    this.saldo = this.item.saldo;
+    this.value = this.item.codigoBarras;
     
   }
 
