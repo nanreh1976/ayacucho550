@@ -9,5 +9,6 @@ export interface PlayaI {
     tarifa: Tarifas;
     descripcion: string;
     saldo: number;
+    codigoBarras: string;
 
 }

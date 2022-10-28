@@ -114,6 +114,8 @@ export class DataService implements InMemoryDbService {
             tolerancia: 5,           // rango de tolerancia
           },
           descripcion: "Scania 1114",
+          saldo: 0,
+          codigoBarras: "fht231-15:17:23"
         },
 
         {
@@ -138,6 +140,8 @@ export class DataService implements InMemoryDbService {
             tolerancia: 5,           // rango de tolerancia
           },
           descripcion: "fitito rojo",
+          saldo: 0,
+          codigoBarras: "ad123sa-14:24:23"
         },
       ], 
 
