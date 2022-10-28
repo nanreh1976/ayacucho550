@@ -45,9 +45,10 @@ export class TicketEntradaComponent implements OnInit {
   
   format = 'CODE128B';
   value = ``;
-  width = 1.25;
+  width = .8;
   height = 100;
   displayValue = true;
+  fontSize = 15;
 
 
   /////// estas son los atributos con los que se pueden configurar ngx-barcode6
