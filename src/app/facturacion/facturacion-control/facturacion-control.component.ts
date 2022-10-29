@@ -14,7 +14,8 @@ import { FacturacionFormComponent } from '../facturacion-form/facturacion-form.c
 <app-facturacion-view
 
   [data]=data 
-  [$estado]=$estado   
+  [$estado]=$estado  
+  [totalFacturacion]=totalFacturacion 
   (newItemEvent)="getMsg($event)"  >
  </app-facturacion-view>
   
@@ -38,6 +39,8 @@ $estado;
 // data recibida del crud
 data!: [];
 
+totalFacturacion!:number;
+
 
 
 constructor(private modalService: NgbModal,
@@ -55,7 +58,7 @@ constructor(private modalService: NgbModal,
 ngOnInit(): void {
   this.$estado.subscribe
   this.getAll();  //tomar datos de los vehiculos en playa
-  
+  //this.facturacionTotal();
 }
 
 
@@ -126,10 +129,21 @@ switch (op) {
 
 
 getAll(): void {
+let acumulador:number = 0;
+let dato:any
 this.servicioDatosService.getAll(this.componente).subscribe (
 datos => {this.data = datos;
-// console.log("get all ", this.componente, this.data)
-
+   //console.log("get all ", this.componente, this.data)
+   
+   this.data.forEach((datos) => {                 //por cada data de facturacion
+    dato = datos                                  //lo guarda en una nueva variable (pq sino no lo reconocia) 
+    //console.log(dato);    
+    acumulador = acumulador + dato.saldo;         //saca el saldo y lo guarda en un acumulador
+    //console.log(acumulador);    
+  })  
+  this.totalFacturacion = acumulador;             //guarda el valor del acumulador en una variable para enviar al view
+  //console.log(this.totalFacturacion);
+  
 }
 );
 }
@@ -167,5 +181,6 @@ this.servicioDatosService.updateItem(componente, item, item.id)
 });
 
 }
+
 
 }
