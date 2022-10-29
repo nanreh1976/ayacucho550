@@ -150,34 +150,54 @@ export class DataService implements InMemoryDbService {
           id: 3,
           patente: "AA123ZZ",
           fechas: {
-            fechaDate: "Fri Oct 25 2022 15:09:31 GMT-0300 (hora estándar de Argentina)",
-            fechaIngreso: "21-10-2022",
-            horaIngreso: "15:17:23",
+            fechaDate: "Tue Oct 25 2022 17:09:31 GMT-0300 (hora estándar de Argentina)",
+            fechaIngreso: "25-10-2022",
+            horaIngreso: "14:24:23",
             fechaSalidaDate: "",
-            fechaSalida: "",
-            horaSalida: "",
-            estadia: 0,
+            fechaSalida: "xx-xx-xxxx",
+            horaSalida: "yy:yy:yy",   
+            estadia: 100,         
           },
-          tarifa: "avioneta",
-          descripcion: "cessna 12343",
+          tarifa: {
+            id: 3,
+            nombre: "auto-basico",               // nombre de la tarifa 
+            categoria: "auto",            // tipo de vehiculo
+            fraccion: 30,             // fraccion minima de facturacion
+            unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+            valor: 150,                
+            tolerancia: 5,           // rango de tolerancia
+          },
+          descripcion: "fitito rojo",
+          saldo: 1000,
+          codigoBarras: "AA123ZZ-25-10-2022-14:24:23"
         },
 
         {
           id: 4,
           patente: "XX234XX",
           fechas: {
-            fechaDate: "Fri Oct 21 2022 17:09:31 GMT-0300 (hora estándar de Argentina)",
-            fechaIngreso: "21-10-2022",
+            fechaDate: "Tue Oct 25 2022 17:09:31 GMT-0300 (hora estándar de Argentina)",
+            fechaIngreso: "25-10-2022",
             horaIngreso: "14:24:23",
             fechaSalidaDate: "",
-            fechaSalida: "",
-            horaSalida: "",   
-            estadia: 0,         
+            fechaSalida: "cc-cc-cccc",
+            horaSalida: "zz-zz-zzzz",   
+            estadia: 100,         
           },
-          tarifa: "lancha",
-          descripcion: "cadillac 434",
+          tarifa: {
+            id: 3,
+            nombre: "auto-basico",               // nombre de la tarifa 
+            categoria: "auto",            // tipo de vehiculo
+            fraccion: 30,             // fraccion minima de facturacion
+            unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+            valor: 150,                
+            tolerancia: 5,           // rango de tolerancia
+          },
+          descripcion: "fitito rojo",
+          saldo: 1000,
+          codigoBarras: "XX234XX-25-10-2022-14:24:23"
         },
-      ], 
+      ],  
 
     };
 
