@@ -14,6 +14,7 @@ export class FacturacionViewComponent implements OnInit {
   @Input() $estado: any
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'facturacion'
+  @Input() totalFacturacion?:number;
 
   
   searchText!: string;
