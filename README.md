@@ -9,7 +9,9 @@ App para Gestion de Estacionamientos
 
 
 
+## para test:
 
+git clone y ng serve -o en Angular
 
 
 
