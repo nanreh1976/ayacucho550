@@ -17,5 +17,5 @@ si bien la app funciona  con la tecnologia actual de escanners e impresion termi
 ## A implementar en segunda etapa
 
 - Gestion de usuarios (admin y empleados)
-- Backend y Auth en firebase (sera a ultimo momento, cuando el workflow este aceptado por el cliente)
+- Backend y Auth en firebase (cuando el workflow este aceptado por el cliente)
 - test y log de actividades
