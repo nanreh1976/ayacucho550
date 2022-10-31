@@ -7,10 +7,10 @@ App para Gestion de Estacionamientos
 # Datos generales
 
 ## Tecnologia
-FrontEnd: Angular - TS
-Backend: Firebase
-BBDD: Firebase Realtime Database
-Autenticacion: Auth Firebase
+- FrontEnd: Angular - TS
+- Backend: Firebase
+- BBDD: Firebase Realtime Database
+- Autenticacion: Auth Firebase
 
 ## Primera etapa: (Actual) Front End
 
