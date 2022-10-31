@@ -40,7 +40,8 @@ export class PlayaFormComponent implements OnInit {
   puestoEstacionamiento!: PlayaI;
   tarifaSeleccionada!: Tarifas;
   saldo!:number;
-
+  patenteNueva!: boolean;
+  patentesPlaya!:any;
 
   constructor(public activeModal: NgbActiveModal, private servicioDatosService: ServicioDatosService, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService, private estadiaService :EstadiaService
   ) {
@@ -69,7 +70,8 @@ export class PlayaFormComponent implements OnInit {
 
     }    
     
-    this.getTarifas();                                                //se traen las tarifas
+    this.getTarifas();
+    this.getPlaya();                                                //se traen las tarifas
   }
 
   createForm() {                                               
@@ -97,7 +99,7 @@ export class PlayaFormComponent implements OnInit {
     } */
     switch (this.titulo) {
       case 'Agregar': {  
-        this.validarPatente() ;  
+        this.buscarPatente() ;  
         break;
       }      
       case 'Editar': {  
@@ -151,6 +153,15 @@ validarPatente(){
     } else {
       alert("no elegiste la tarifa");
     }
+ }
+
+ buscarPatente(){
+  this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.value.patente, this.patentesPlaya);
+  if(this.patenteNueva){
+    this.validarPatente()
+  }else{
+    alert("esta patente ya fue ingresada")
+  }
  }
 
 configurarFecha(){
@@ -241,5 +252,12 @@ armarPuestoEstacionamiento() {
   this.closeModal();
 }
 
+getPlaya()  {
+  this.servicioDatosService.getAll("playa").subscribe (
+    datos => {this.patentesPlaya = datos;
+    //console.log("get all tarifas", this.componenteTarifas, this.tarifas)  
+    }      
+  );
+}
   
 }

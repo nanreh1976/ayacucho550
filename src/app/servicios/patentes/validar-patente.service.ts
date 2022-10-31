@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ServicioDatosService } from '../servicio-datos.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,10 @@ export class ValidarPatenteService {
     
   }  
 
+  patentesPlaya!:any;
 
-  constructor() { }
+
+  constructor(private servicioDatosService: ServicioDatosService) { }
 
   validarPatente(patente: string) {                                                            
     
@@ -35,6 +38,29 @@ export class ValidarPatenteService {
         //alert("no es una patente válida");
         return false;
        }
+  }
+
+  buscarPatentePlaya(patente:string, playa:any){
+    this.patentesPlaya = playa
+     
+    //la funcion filter recorre el array y devuelve un objeto que coincida con la patente buscada
+    //reescribe el mismo array
+    //si encuentra una coincidencia, el array tiene un objeto
+    //si no encuentra nada, esta vacio
+    this.patentesPlaya = this.patentesPlaya.filter(function(patentesPlaya:any){
+      return patentesPlaya.patente === patente;
+    });
+    //console.log(this.patentesPlaya);
+
+
+    if(this.patentesPlaya.length === 0){
+      //alert("esta patente NO existe en la playa")
+      return true
+    } else{
+      //alert("esta patente ya fue ingresada")
+      return false
+    }
+
   }
   
 }
