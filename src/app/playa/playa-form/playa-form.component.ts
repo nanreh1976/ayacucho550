@@ -250,13 +250,13 @@ saldoEstadia( ){
 armarPuestoEstacionamiento() {     
   //la funcion arma el puesto
     this.puestoEstacionamiento = {
-    id: this.item.id,
-    patente: this.editForm.value.patente,
+    /* id: this.item.id, */
+    patente: this.editForm.patente,
     fechas: this.fechas,
     tarifa : this.tarifaSeleccionada,
-    descripcion:this.editForm.value.descripcion,
+    descripcion:this.editForm.descripcion,
     saldo: this.saldo,
-    codigoBarras: `${this.editForm.value.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
+    codigoBarras: `${this.editForm.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
   }  
   //if (tarifa="undifined"){
 
@@ -289,7 +289,22 @@ buscarCliente(){
     this.tarifaSeleccionada = this.buscarTarifa(this.clienteExiste.idTarifa);
     console.log(this.tarifaSeleccionada);
     
+    /* this.puestoEstacionamiento = {
+      //id: "",
+      patente: this.editForm.patente,
+      fechas: this.fechas,
+      tarifa : this.tarifaSeleccionada,
+      descripcion:this.editForm.descripcion,
+      saldo: this.saldo,
+      codigoBarras: `${this.editForm.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
+    }
+
+    console.log(this.puestoEstacionamiento);
     
+    this.item = this.puestoEstacionamiento;
+    this.closeModal(); */
+
+    this.armarPuestoEstacionamiento()
 
   }else{                                              //este camino es si el cliente NO existe en la base de datos
 

@@ -3,7 +3,7 @@ import { Tarifas } from "./tarifas";
 
 export interface PlayaI {
 
-    id: number;
+    /* id: any; */
     patente: string;
     fechas: Fechas;
     tarifa: Tarifas;
