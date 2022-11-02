@@ -16,23 +16,29 @@ export class InicioComponent implements OnInit {
   titulo: string = 'Playa'
   // propiedades logged service
   $estado;
-  
+
+  patenteForm:any
   searchText!: string;
 
-  msgBack(op: string, item: any) {
+  msgBack(op: string) {
     let value = {
       op: op,
-      item: item,
+      item: this.patenteForm.value,
     }
+    console.log(value);
+    
     this.newItemEvent.emit(value);
   }
 
 
 
   constructor(
-    private loggedService: LoggedService,
+    private loggedService: LoggedService,  private fb: FormBuilder,
   ) { 
     this.$estado = loggedService.logged$;
+    this.patenteForm = this.fb.group({
+      patente: ['']        
+    });   
   }
   msg: any
   ngOnInit(): void {

@@ -1,37 +1,24 @@
+<form [formGroup]="patenteForm">
+    
+    <label for="patente">Ingresar Patente</label><br>
+    
+    <input type="text" formControlName="patente" class="form-control mt-3" required type="text">
+    <div class="d-flex justify-content-evenly mt-2">        
+        <div *ngIf="$estado | async">
+            <app-btn-agregar 
+            name = 'Ingreso'
+            *ngIf="$estado" (click)="msgBack('Agregar')"
+              class="d-flex align-items-center "   >
+            </app-btn-agregar>
+        </div>
+        <div>
+            <app-btn-eliminar 
+            *ngIf="$estado" (click)="msgBack('Salida')" 
+            class="d-flex align-items-center "
+            name = 'Egreso'>
+            
+            </app-btn-eliminar>
+        </div>        
+    </div>
 
-<br>
-<br>
-
-<form action="/action_page.php">
-    <br>
-    <label for="fname">Ingresar Patente</label><br>
-    <br>
-    <input type="text" id="fname" name="fname" value="AA123BB"><br>
-  
-
-
-
-
-
-<ul class="d-flex justify-content-evenly">
-    <li>
-      <div style=" float: right;" *ngIf="$estado | async">
-        <app-btn-agregar class="right " 
-        name = 'Ingreso'
-        *ngIf="$estado" (click)="msgBack('Agregar',[])"
-          class="d-flex align-items-center "   >
-        </app-btn-agregar>
-      </div>
-    </li>
-    <li>
-      <div style=" float: left;">
-        <app-btn-eliminar class="left" 
-        *ngIf="$estado" (click)="msgBack('Salida',[])" 
-        class="d-flex align-items-center "
-        name = 'Egreso'>
-         
-        </app-btn-eliminar>
-      </div>
-    </li>
-  </ul>
 </form>

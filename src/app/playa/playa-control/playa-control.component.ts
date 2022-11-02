@@ -13,6 +13,9 @@ import { PlayaFormComponent } from '../playa-form/playa-form.component';
   selector: 'app-playa-control',
   template: `
 
+<app-inicio class="d-flex justify-content-center mt-5"  
+ (newItemEvent)="getMsg($event)"
+></app-inicio>
 
 <app-playa-view
   [data]=data 

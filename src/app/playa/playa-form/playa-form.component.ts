@@ -10,6 +10,7 @@ import { Fechas } from 'src/app/interfaces/fechas';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
 import { CalculoFechasService } from 'src/app/servicios/Fechas/calculo-fechas.service';
 import { EstadiaService } from 'src/app/servicios/facturacion/estadia.service';
+import { ClientesService } from 'src/app/servicios/clientes.service';
 
 @Component({
   selector: 'app-playa-form',
@@ -42,36 +43,48 @@ export class PlayaFormComponent implements OnInit {
   saldo!:number;
   patenteNueva!: boolean;
   patentesPlaya!:any;
+  clienteExiste:any;  
 
-  constructor(public activeModal: NgbActiveModal, private servicioDatosService: ServicioDatosService, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService, private estadiaService :EstadiaService
+  constructor(public activeModal: NgbActiveModal, private servicioDatosService: ServicioDatosService, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService, private estadiaService :EstadiaService, private clientesService: ClientesService
   ) {
    this.createForm();
   }
 
   ngOnInit(): void {
+    this.getTarifas();
+    this.getPlaya();                                                //se traen las tarifas
+    
     {
       //console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
-      this.item = this.fromParent.item;
-      //console.log(this.item);
+      //this.item = this.fromParent.item;
+      this.editForm.patente = this.fromParent.item.patente;
+      //console.log(`esto es el item que recibe: ${this.fromParent.item.patente}`);
+      //console.log(`esto es el form patente: ${this.editForm.patente}`);
       
-      if(this.titulo === 'Agregar'){                                  //si es un ingreso nuevo, se llama a la funcion para configurar la fecha
-        this.configurarFecha()
+      if(this.titulo === 'Agregar'){  
+                                        //si es un ingreso nuevo, se llama a la funcion para configurar la fecha       
+        /* this.getClientes();
+        this.getVehiculos();  */
+        this.configurarFecha();
+        this.validarPatente();
+        //this.buscarPatente()
+        this.buscarCliente();         
       } 
       //else if (this.titulo === 'Editar')
       else
       {                           //si es una edicion, se guardan las fechas y las tarifas y se llama a la funcion para configurar form
+        this.item = this.fromParent.item;
         this.tarifaSeleccionada = this.item.tarifa;
         this.fechas = this.item.fechas;
         this.configurarForm();
-        
+        this.validarPatente();
       }
      
 
     }    
     
-    this.getTarifas();
-    this.getPlaya();                                                //se traen las tarifas
+   
   }
 
   createForm() {                                               
@@ -135,11 +148,13 @@ closeModal() {
 
 validarPatente(){   
   
-  let patenteValida = this.validacionPatente.validarPatente(this.editForm.value.patente);
+  console.log(`esto es dentro de validarPatente: ${this.editForm.patente}`);
+  
+  let patenteValida = this.validacionPatente.validarPatente(this.editForm.patente);
 
   if(patenteValida){
     alert("es una patente valida")
-    this.validarTarifa()
+    //this.validarTarifa()
   }else{
     alert("no es una patente valida")
   }
@@ -214,7 +229,7 @@ getTarifas()  {
 }
 
 changeTarifa(e: any) {
-  //console.log(e.target.value)  
+  console.log(e.target.value)  
   let tarifaForm   //crea una variable para usarlo con la funcion filter
 
   tarifaForm = this.tarifas.filter(function(tarifas:any){       //filter recorre el array tarifas y devuelve otro array con lo que sea q coincida con el parametro
@@ -255,9 +270,44 @@ armarPuestoEstacionamiento() {
 getPlaya()  {
   this.servicioDatosService.getAll("playa").subscribe (
     datos => {this.patentesPlaya = datos;
-    //console.log("get all tarifas", this.componenteTarifas, this.tarifas)  
+    console.log("get all tarifas", this.componenteTarifas, this.tarifas)  
     }      
   );
+}
+
+buscarCliente(){
+  /* console.log(this.vehiculos);
+  console.log(this.clientes); */
+  let consulta = this.clientesService.buscarPatente(this.editForm.patente); 
+  console.log(consulta);
+
+  if(consulta.clienteExiste){                         //este camino es si el cliente existe en la base de datos
+    //console.log(consulta.datosCliente);
+    this.clienteExiste = consulta.datosVehiculo;
+    //console.log(this.clienteExiste);
+    
+    this.tarifaSeleccionada = this.buscarTarifa(this.clienteExiste.idTarifa);
+    console.log(this.tarifaSeleccionada);
+    
+    
+
+  }else{                                              //este camino es si el cliente NO existe en la base de datos
+
+  }
+
+  
+  
+}
+
+buscarTarifa(id:number){
+  let tarifas = JSON.parse(localStorage.getItem("tarifas")||`{}`)
+
+  tarifas = tarifas.filter(function(tarifa:any){
+    return tarifa.id === id;
+  }); 
+  //console.log(tarifas[0]);
+  
+  return tarifas[0]
 }
   
 }
