@@ -1,33 +1,3 @@
-<!-- Titulo -->
-
-
-
-<!-- <H1 class="display-1" style="text-align: center;">Playa </H1> -->
-
-<br>
-
-<ul class="d-flex justify-content-evenly">
-  <li>
-    <div style=" float: right;" *ngIf="$estado | async">
-      <app-btn-agregar class="right " 
-      name = 'Ingreso'
-      *ngIf="$estado" (click)="msgBack('Agregar',[])"
-        class="d-flex align-items-center "   >
-      </app-btn-agregar>
-    </div>
-  </li>
-  <li>
-    <div style=" float: left;">
-      <app-btn-eliminar class="left" 
-      *ngIf="$estado" (click)="msgBack('Salida',[])" 
-      class="d-flex align-items-center "
-      name = 'Egreso'>
-       
-      </app-btn-eliminar>
-    </div>
-  </li>
-</ul>
-
 
 <div class="container">
 

@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   comprobarEstado(): void {
     if (this.$estado.value) {
 
-      this.router.navigate(['playa'])
+      this.router.navigate(['inicio'])
       console.log("logueado");
       console.log(this.$estado);
 
