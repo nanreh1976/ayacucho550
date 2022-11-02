@@ -55,10 +55,12 @@ export class PlayaFormComponent implements OnInit {
     this.getPlaya();                                                //se traen las tarifas
     
     {
-      //console.log("on init form", this.fromParent);
+      console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
       //this.item = this.fromParent.item;
       this.editForm.patente = this.fromParent.item.patente;
+      //console.log(this.editForm.patente);
+      
       //console.log(`esto es el item que recibe: ${this.fromParent.item.patente}`);
       //console.log(`esto es el form patente: ${this.editForm.patente}`);
       
@@ -112,7 +114,7 @@ export class PlayaFormComponent implements OnInit {
     } */
     switch (this.titulo) {
       case 'Agregar': {  
-        this.buscarPatente() ;  
+        this.validarTarifa() ;  
         break;
       }      
       case 'Editar': {  
@@ -173,7 +175,7 @@ validarPatente(){
  buscarPatente(){
   this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.value.patente, this.patentesPlaya);
   if(this.patenteNueva){
-    this.validarPatente()
+    //this.validarPatente()
   }else{
     alert("esta patente ya fue ingresada")
   }
@@ -288,26 +290,14 @@ buscarCliente(){
     
     this.tarifaSeleccionada = this.buscarTarifa(this.clienteExiste.idTarifa);
     console.log(this.tarifaSeleccionada);
-    
-    /* this.puestoEstacionamiento = {
-      //id: "",
-      patente: this.editForm.patente,
-      fechas: this.fechas,
-      tarifa : this.tarifaSeleccionada,
-      descripcion:this.editForm.descripcion,
-      saldo: this.saldo,
-      codigoBarras: `${this.editForm.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
-    }
-
-    console.log(this.puestoEstacionamiento);
-    
-    this.item = this.puestoEstacionamiento;
-    this.closeModal(); */
-
+  
     this.armarPuestoEstacionamiento()
 
   }else{                                              //este camino es si el cliente NO existe en la base de datos
-
+    this.editForm.patchValue({ 
+      patente: this.fromParent.item.patente,
+      descripcion: "",
+    })
   }
 
   
