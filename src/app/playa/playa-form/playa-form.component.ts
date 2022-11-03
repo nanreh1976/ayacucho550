@@ -38,7 +38,7 @@ export class PlayaFormComponent implements OnInit {
   horaIngreso!:any;
   tarifas!: Tarifas [];
   componenteTarifas: string = "tarifas"
-  puestoEstacionamiento!: PlayaI;
+  puestoEstacionamiento!: any;
   tarifaSeleccionada!: Tarifas;
   saldo!:number;
   patenteNueva!: boolean;
@@ -52,12 +52,11 @@ export class PlayaFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTarifas();
-    this.getPlaya();                                                //se traen las tarifas
-    
+    //this.getPlaya();                                                    //se traen las tarifas    
     {
       console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
-      //this.item = this.fromParent.item;
+      this.item = this.fromParent.item;
       this.editForm.patente = this.fromParent.item.patente;
       //console.log(this.editForm.patente);
       
@@ -68,6 +67,7 @@ export class PlayaFormComponent implements OnInit {
                                         //si es un ingreso nuevo, se llama a la funcion para configurar la fecha       
         /* this.getClientes();
         this.getVehiculos();  */
+        this.getPlaya();
         this.configurarFecha();
         this.validarPatente();
         //this.buscarPatente()
@@ -76,16 +76,16 @@ export class PlayaFormComponent implements OnInit {
       //else if (this.titulo === 'Editar')
       else
       {                           //si es una edicion, se guardan las fechas y las tarifas y se llama a la funcion para configurar form
-        this.item = this.fromParent.item;
+        //this.item = this.fromParent.item;
         this.tarifaSeleccionada = this.item.tarifa;
         this.fechas = this.item.fechas;
         this.configurarForm();
-        this.validarPatente();
+        //this.validarPatente();
       }
      
 
     }    
-    
+   
    
   }
 
@@ -118,7 +118,10 @@ export class PlayaFormComponent implements OnInit {
         break;
       }      
       case 'Editar': {  
-        this.validarPatente() ;   
+        this.getPlaya();
+        this.validarPatente() ;  
+        this.validarTarifa();
+        
         break;
       }
       case 'Eliminar': {  
@@ -150,7 +153,7 @@ closeModal() {
 
 validarPatente(){   
   
-  console.log(`esto es dentro de validarPatente: ${this.editForm.patente}`);
+  //console.log(`esto es dentro de validarPatente: ${this.editForm.patente}`);
   
   let patenteValida = this.validacionPatente.validarPatente(this.editForm.patente);
 
@@ -173,11 +176,13 @@ validarPatente(){
  }
 
  buscarPatente(){
-  this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.value.patente, this.patentesPlaya);
+  //console.log(this.patentesPlaya);
+  
+  this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.patente, this.patentesPlaya);
   if(this.patenteNueva){
     //this.validarPatente()
   }else{
-    alert("esta patente ya fue ingresada")
+    alert("esta patente ya fue ingresada")   
   }
  }
 
@@ -223,15 +228,13 @@ pruebaCierreHora(){
 }
 
 getTarifas()  {
-  this.servicioDatosService.getAll(this.componenteTarifas).subscribe (
-    datos => {this.tarifas = datos;
-    //console.log("get all tarifas", this.componenteTarifas, this.tarifas)  
-    }
-  );
+  this.tarifas = JSON.parse(localStorage.getItem("tarifas")||`{}`)
+  console.log(`estas son las tarifas: ${this.tarifas}`);  
+  
 }
 
 changeTarifa(e: any) {
-  console.log(e.target.value)  
+  console.log(e.target.value)    
   let tarifaForm   //crea una variable para usarlo con la funcion filter
 
   tarifaForm = this.tarifas.filter(function(tarifas:any){       //filter recorre el array tarifas y devuelve otro array con lo que sea q coincida con el parametro
@@ -252,8 +255,8 @@ saldoEstadia( ){
 armarPuestoEstacionamiento() {     
   //la funcion arma el puesto
     this.puestoEstacionamiento = {
-    /* id: this.item.id, */
-    patente: this.editForm.patente,
+    id: this.item.id, 
+    patente: this.editForm.value.patente,
     fechas: this.fechas,
     tarifa : this.tarifaSeleccionada,
     descripcion:this.editForm.descripcion,
@@ -265,16 +268,20 @@ armarPuestoEstacionamiento() {
 
   
   this.item= this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
-  //console.log(`este es el item final: ${this.puestoEstacionamiento}`)
+  console.log(`este es el item final: ${this.puestoEstacionamiento}`)
   this.closeModal();
 }
 
 getPlaya()  {
+  console.log("pasa por aca?");
+  
   this.servicioDatosService.getAll("playa").subscribe (
     datos => {this.patentesPlaya = datos;
-    console.log("get all tarifas", this.componenteTarifas, this.tarifas)  
+    console.log("get all Playa", this.patentesPlaya)  
+    this.buscarPatente()
     }      
   );
+  
 }
 
 buscarCliente(){
@@ -295,7 +302,7 @@ buscarCliente(){
 
   }else{                                              //este camino es si el cliente NO existe en la base de datos
     this.editForm.patchValue({ 
-      patente: this.fromParent.item.patente,
+      patente: this.editForm.patente,
       descripcion: "",
     })
   }

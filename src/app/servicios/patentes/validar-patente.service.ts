@@ -43,6 +43,9 @@ export class ValidarPatenteService {
   buscarPatentePlaya(patente:string, playa:any){
     this.patentesPlaya = playa
      
+    console.log(playa);
+    console.log(patente)
+
     //la funcion filter recorre el array y devuelve un objeto que coincida con la patente buscada
     //reescribe el mismo array
     //si encuentra una coincidencia, el array tiene un objeto
