@@ -69,7 +69,7 @@ const appRoutes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'ocupacion', component: OcupacionComponent},
   {path: 'login', component: LoginComponent }, // la ruta al login
-  {path: '', redirectTo: '/inicio', pathMatch: 'full'},
+  {path: '', redirectTo: '/playa', pathMatch: 'full'},
   {path: '**', component: PagenotfoundComponent}
 ]
 

@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.$estado.subscribe;
-    console.log("esta pasando por el app component!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+   // console.log("esta pasando por el app component!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     this.getClientes();
     this.getVehiculos();
     this.getTarifas();
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   comprobarEstado(): void {
     if (this.$estado.value) {
 
-      this.router.navigate(['inicio'])
+      this.router.navigate(['playa'])
       //console.log("logueado");
       //console.log(this.$estado);
 

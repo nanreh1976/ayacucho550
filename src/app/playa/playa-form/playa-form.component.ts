@@ -54,7 +54,7 @@ export class PlayaFormComponent implements OnInit {
     this.getTarifas();
     //this.getPlaya();                                                    //se traen las tarifas    
     {
-      console.log("on init form", this.fromParent);
+      //console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
       this.item = this.fromParent.item;
       this.editForm.value.patente = this.fromParent.item.patente;
@@ -141,14 +141,14 @@ export class PlayaFormComponent implements OnInit {
 }
 
 closeModal() {
-    console.log(this.puestoEstacionamiento);
+    //console.log(this.puestoEstacionamiento);
     
    let value = {
    op: this.titulo,
    item: this.puestoEstacionamiento,
    
  };
-  console.log("closemodal", value)
+  //console.log("closemodal", value)
  this.activeModal.close(value);
 } 
 
@@ -187,8 +187,8 @@ validarPatente(){
   }else{
     alert("esta patente ya fue ingresada")   
     //this.titulo = "";
-    this.puestoEstacionamiento.patente = this.fromParent.item.patente
-    console.log(this.puestoEstacionamiento);
+    //this.puestoEstacionamiento.patente = this.fromParent.item.patente
+    //console.log(this.puestoEstacionamiento);
     
     this.activeModal.dismiss()
 

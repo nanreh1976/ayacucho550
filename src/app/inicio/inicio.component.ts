@@ -29,10 +29,11 @@ export class InicioComponent implements OnInit {
       }
       //console.log(value);
       
-      this.newItemEvent.emit(value);
+      this.newItemEvent.emit(value);      
     }else{
       alert("la patente no puede ser vacia")
     }
+    this.patenteForm.reset();
   }
 
 

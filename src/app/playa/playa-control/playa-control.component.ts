@@ -92,7 +92,7 @@ export class PlayaControlComponent implements OnInit {
 
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then((result) => {
-        console.log("result from control","op", result.op,"item", result.item);
+        //console.log("result from control","op", result.op,"item", result.item);
 
         // this.getXps();  
         this.flowOp(result.op, result.item)
