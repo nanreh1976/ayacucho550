@@ -57,7 +57,7 @@ export class PlayaFormComponent implements OnInit {
       console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
       this.item = this.fromParent.item;
-      this.editForm.patente = this.fromParent.item.patente;
+      this.editForm.value.patente = this.fromParent.item.patente;
       //console.log(this.editForm.patente);
       
       //console.log(`esto es el item que recibe: ${this.fromParent.item.patente}`);
@@ -67,9 +67,9 @@ export class PlayaFormComponent implements OnInit {
                                         //si es un ingreso nuevo, se llama a la funcion para configurar la fecha       
         /* this.getClientes();
         this.getVehiculos();  */
-        this.getPlaya();
-        this.configurarFecha();
         this.validarPatente();
+        this.getPlaya();
+        this.configurarFecha();       
         //this.buscarPatente()
         this.buscarCliente();         
       } 
@@ -118,8 +118,8 @@ export class PlayaFormComponent implements OnInit {
         break;
       }      
       case 'Editar': {  
-        this.getPlaya();
-        this.validarPatente() ;  
+        this.validarPatente() ;
+        this.getPlaya();          
         this.validarTarifa();
         
         break;
@@ -141,12 +141,14 @@ export class PlayaFormComponent implements OnInit {
 }
 
 closeModal() {
+    console.log(this.puestoEstacionamiento);
+    
    let value = {
    op: this.titulo,
    item: this.puestoEstacionamiento,
    
  };
-//  //console.log("closemodal", value)
+  console.log("closemodal", value)
  this.activeModal.close(value);
 } 
 
@@ -155,13 +157,14 @@ validarPatente(){
   
   //console.log(`esto es dentro de validarPatente: ${this.editForm.patente}`);
   
-  let patenteValida = this.validacionPatente.validarPatente(this.editForm.patente);
+  let patenteValida = this.validacionPatente.validarPatente(this.editForm.value.patente);
 
   if(patenteValida){
     alert("es una patente valida")
     //this.validarTarifa()
   }else{
     alert("no es una patente valida")
+    this.activeModal.dismiss()
   }
 
 }
@@ -178,11 +181,17 @@ validarPatente(){
  buscarPatente(){
   //console.log(this.patentesPlaya);
   
-  this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.patente, this.patentesPlaya);
+  this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.value.patente, this.patentesPlaya);
   if(this.patenteNueva){
     //this.validarPatente()
   }else{
     alert("esta patente ya fue ingresada")   
+    //this.titulo = "";
+    this.puestoEstacionamiento.patente = this.fromParent.item.patente
+    console.log(this.puestoEstacionamiento);
+    
+    this.activeModal.dismiss()
+
   }
  }
 
@@ -261,7 +270,7 @@ armarPuestoEstacionamiento() {
     tarifa : this.tarifaSeleccionada,
     descripcion:this.editForm.descripcion,
     saldo: this.saldo,
-    codigoBarras: `${this.editForm.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
+    codigoBarras: `${ this.fromParent.item.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
   }  
   //if (tarifa="undifined"){
 
@@ -287,7 +296,7 @@ getPlaya()  {
 buscarCliente(){
   /* console.log(this.vehiculos);
   console.log(this.clientes); */
-  let consulta = this.clientesService.buscarPatente(this.editForm.patente); 
+  let consulta = this.clientesService.buscarPatente(this.fromParent.item.patente); 
   console.log(consulta);
 
   if(consulta.clienteExiste){                         //este camino es si el cliente existe en la base de datos
@@ -297,12 +306,14 @@ buscarCliente(){
     
     this.tarifaSeleccionada = this.buscarTarifa(this.clienteExiste.idTarifa);
     console.log(this.tarifaSeleccionada);
+
+    
   
     this.armarPuestoEstacionamiento()
 
   }else{                                              //este camino es si el cliente NO existe en la base de datos
     this.editForm.patchValue({ 
-      patente: this.editForm.patente,
+      patente: this.fromParent.item.patente,
       descripcion: "",
     })
   }

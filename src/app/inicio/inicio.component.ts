@@ -21,13 +21,18 @@ export class InicioComponent implements OnInit {
   searchText!: string;
 
   msgBack(op: string) {
-    let value = {
-      op: op,
-      item: this.patenteForm.value,
+    if(this.patenteForm.value.patente !== ""){
+      
+      let value = {
+        op: op,
+        item: this.patenteForm.value,
+      }
+      //console.log(value);
+      
+      this.newItemEvent.emit(value);
+    }else{
+      alert("la patente no puede ser vacia")
     }
-    console.log(value);
-    
-    this.newItemEvent.emit(value);
   }
 
 
