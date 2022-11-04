@@ -47,6 +47,7 @@ import { TarifasFormComponent } from './tarifas/tarifas-form/tarifas-form.compon
 import { FacturacionControlComponent } from './facturacion/facturacion-control/facturacion-control.component';
 import { FacturacionViewComponent } from './facturacion/facturacion-view/facturacion-view.component';
 import { FacturacionFormComponent } from './facturacion/facturacion-form/facturacion-form.component';
+import { InicioComponent } from './inicio/inicio.component';
 
 
 
@@ -58,14 +59,11 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent }, //las '' es la ruta al home
   { path: 'login', component: LoginComponent }, // la ruta al login
   {path: 'home', component: AppComponent},
+  {path: 'inicio', component: InicioComponent},
   {path: 'playa', component: PlayaControlComponent  },
-
-
-
   {path: 'facturacion', component:FacturacionControlComponent },
 //  {path: 'ticketE', component: TicketEntradaComponent },
   {path: 'tarifas', component: TarifasControlComponent},
-
   {path: 'clientes', component: ClientesControlComponent},
   {path: 'vehiculos', component: VehiculosControlComponent},
   {path: 'dashboard', component: DashboardComponent},
@@ -112,6 +110,7 @@ const appRoutes: Routes = [
     FacturacionControlComponent,
     FacturacionViewComponent,
     FacturacionFormComponent,
+    InicioComponent,
 
 
 

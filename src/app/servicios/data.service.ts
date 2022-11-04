@@ -16,6 +16,9 @@ export class DataService implements InMemoryDbService {
           marca: "Ford",
           modelo: "Sierra",
           color: "blanco",
+          idCliente:1,
+          idTarifa: 7,
+          estado:1,          
           // ingreso: "00",
           // egreso: "00"
         },
@@ -25,6 +28,9 @@ export class DataService implements InMemoryDbService {
           marca: "Renault",
           modelo: "Fuego",
           color: "rojo",
+          idCliente:2,
+          idTarifa: 7,
+          estado:0,
           // ingreso: "00",
           // egreso: "00",
         },
@@ -34,6 +40,9 @@ export class DataService implements InMemoryDbService {
           marca: "Fiat",
           modelo: "128",
           color: "gris",
+          idCliente:2,
+          idTarifa: 7,
+          estado:1,
           // ingreso: "00",
           // egreso: "00"
         },
@@ -67,6 +76,15 @@ export class DataService implements InMemoryDbService {
           valor: 120,                
           tolerancia: 5,           // rango de tolerancia
         },
+        {
+          id: 7,
+          nombre: "auto-mes",               // nombre de la tarifa 
+          categoria: "auto",            // tipo de vehiculo
+          fraccion: 1,             // fraccion minima de facturacion
+          unidad_tiempo: "mes",        // minutos, horas, dias, semanas, mes
+          valor: 8500,                
+          tolerancia: 0,           // rango de tolerancia
+        },
       ],
 
 
@@ -77,7 +95,7 @@ export class DataService implements InMemoryDbService {
           nombre: "Jorgelina",
           telefono: "4444-5555",
           direccion: "alameda 2345",
-          comentario: "polo rojo patente 2343323434",
+          comentario: "polo rojo patente 2343323434",                   
 
         },
 
@@ -87,7 +105,7 @@ export class DataService implements InMemoryDbService {
           nombre: "Homero ",
           telefono: "4444-5335",
           direccion: "siempreviva 4534",
-          comentario: "homero movil patente 2343323434",
+          comentario: "homero movil patente 2343323434",         
         },
       ],
 

@@ -1,0 +1,24 @@
+<form [formGroup]="patenteForm">
+    
+    <label for="patente">Ingresar Patente</label><br>
+    
+    <input type="text" formControlName="patente" class="form-control mt-3" required type="text">
+    <div class="d-flex justify-content-evenly mt-2">        
+        <div *ngIf="$estado | async">
+            <app-btn-agregar 
+            name = 'Ingreso'
+            *ngIf="$estado" (click)="msgBack('Agregar')"
+              class="d-flex align-items-center "   >
+            </app-btn-agregar>
+        </div>
+        <div>
+            <app-btn-eliminar 
+            *ngIf="$estado" (click)="msgBack('Salida')" 
+            class="d-flex align-items-center "
+            name = 'Egreso'>
+            
+            </app-btn-eliminar>
+        </div>        
+    </div>
+
+</form>

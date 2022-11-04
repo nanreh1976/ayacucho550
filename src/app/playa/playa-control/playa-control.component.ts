@@ -13,6 +13,9 @@ import { PlayaFormComponent } from '../playa-form/playa-form.component';
   selector: 'app-playa-control',
   template: `
 
+<app-inicio class="d-flex justify-content-center mt-5"  
+ (newItemEvent)="getMsg($event)"
+></app-inicio>
 
 <app-playa-view
   [data]=data 
@@ -89,7 +92,7 @@ export class PlayaControlComponent implements OnInit {
 
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then((result) => {
-        // console.log("result from control","op", result.op,"item", result.item);
+        //console.log("result from control","op", result.op,"item", result.item);
 
         // this.getXps();  
         this.flowOp(result.op, result.item)
@@ -173,7 +176,8 @@ export class PlayaControlComponent implements OnInit {
   }
 
   updateItem(componente: string, item: any): void {
-
+    console.log(`update item!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! = ${item}`);
+    
     this.servicioDatosService.updateItem(componente, item, item.id)
       .subscribe
       (data => {
