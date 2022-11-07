@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, } from '@angular/forms';
+import { FormBuilder, Validators, } from '@angular/forms';
 import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 
@@ -14,7 +14,7 @@ export class ClientesFormComponent implements OnInit {
   @Input() fromParent: any;
   editForm!: any;
   titulo!: string;
-  item!: any
+  item!: any;
 
 
   constructor(public activeModal: NgbActiveModal,
@@ -53,7 +53,8 @@ export class ClientesFormComponent implements OnInit {
       telefono: item .telefono,
       direccion: item.direccion,
       comentario: item .comentario,
-       id: item.id,
+      email: item.email,
+      id: item.id,
     });
 
   }
@@ -66,6 +67,7 @@ export class ClientesFormComponent implements OnInit {
       telefono: [''],
       direccion: [''],
       comentario: [''],
+      email: ['', [Validators.required, Validators.email]],
       id: [''],
     });
   }
@@ -83,5 +85,23 @@ export class ClientesFormComponent implements OnInit {
  this.activeModal.close(value);
 
 }
+
+get Email(){
+  return this.editForm.get("email"); 
+}
+
+getMsg(msg: any) {
+  console.log(msg, "from vehiculos-form");
+  /* let value = {
+    op: msg.op,
+    item: msg.item
+    
+  }; */
+ 
+  console.log("closemodal", msg)
+  this.activeModal.close(msg);
+  
+}
+
   
 }

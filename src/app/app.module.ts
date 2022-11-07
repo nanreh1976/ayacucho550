@@ -31,10 +31,6 @@ import { PlayaControlComponent } from './playa/playa-control/playa-control.compo
 import { ClientesViewComponent } from './clientes/clientes-view/clientes-view.component';
 import { ClientesControlComponent } from './clientes/clientes-control/clientes-control.component';
 
-import { VehiculosControlComponent } from './vehiculos/vehiculos-control/vehiculos-control.component';
-import { VehiculosFormComponent } from './vehiculos/vehiculos-form/vehiculos-form.component';
-import { VehiculosViewComponent } from './vehiculos/vehiculos-view/vehiculos-view.component';
-
 
 import { TicketEntradaComponent } from './ticket-entrada/ticket-entrada.component';
 import { NgxPrintElementModule } from 'ngx-print-element';
@@ -48,6 +44,7 @@ import { FacturacionControlComponent } from './facturacion/facturacion-control/f
 import { FacturacionViewComponent } from './facturacion/facturacion-view/facturacion-view.component';
 import { FacturacionFormComponent } from './facturacion/facturacion-form/facturacion-form.component';
 import { InicioComponent } from './inicio/inicio.component';
+import { VehiculosFormComponent } from './clientes/vehiculos-form/vehiculos-form.component';
 
 
 
@@ -65,7 +62,7 @@ const appRoutes: Routes = [
 //  {path: 'ticketE', component: TicketEntradaComponent },
   {path: 'tarifas', component: TarifasControlComponent},
   {path: 'clientes', component: ClientesControlComponent},
-  {path: 'vehiculos', component: VehiculosControlComponent},
+  
   {path: 'dashboard', component: DashboardComponent},
   {path: 'ocupacion', component: OcupacionComponent},
   {path: 'login', component: LoginComponent }, // la ruta al login
@@ -95,11 +92,7 @@ const appRoutes: Routes = [
     ClientesViewComponent,
     ClientesControlComponent,
  
-    VehiculosControlComponent,
-    VehiculosFormComponent,
-    VehiculosViewComponent,
-
-
+   
     TicketEntradaComponent,
     BtnReimpresionComponent,
 
@@ -111,6 +104,7 @@ const appRoutes: Routes = [
     FacturacionViewComponent,
     FacturacionFormComponent,
     InicioComponent,
+    VehiculosFormComponent,
 
 
 

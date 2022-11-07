@@ -4,7 +4,7 @@
 
 
 
-    <ul>
+<ul>
   <li>
     <div style=" float: right;" *ngIf="$estado | async">
 
@@ -30,27 +30,41 @@
     </div>
 
     <table class="tftable" border="1">
-    <tr><th>Apellido</th><th>Nombre</th><th>telefono</th><th>Direccion</th><th>Comentario</th><th><i class="bi bi-pencil-fill"></i></th></tr>
+      <colgroup>
+        <col width="15%">
+        <col width="15%">
+        <col width="15%">
+        <col width="15%">
+        <col width="15%">
+        <col width="15%">
+        <col width="10%">
+      </colgroup>
+    <tr><th>Apellido</th><th>Nombre</th><th>telefono</th><th>Direccion</th><th>email</th><th>Comentario</th><th><i class="bi bi-pencil-fill"></i></th></tr>
     <tr *ngFor="let item of data | filter: searchText; let i = index">
       <td>{{item.apellido}}</td>
       <td>{{item.nombre}}</td>
       <td>{{item.telefono}}</td>
       <td>{{item.direccion}}</td>
+      <td>{{item.email}}</td>
       <td>{{item.comentario}}</td>
      
     
           
-      <div *ngIf="$estado | async" class="card-footer">
+      <td class="d-flex">
       
         <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
 
         <app-btn-editar class="right" *ngIf="$estado"
         (click)="msgBack('Editar',item)" class="d-flex align-items-center">
-    </app-btn-editar>
-    <app-btn-eliminar class="right" *ngIf="$estado"
-        (click)="msgBack('Eliminar',item)" class="d-flex align-items-center">
-    </app-btn-eliminar>
-      </div>
+        </app-btn-editar>
+        <app-btn-eliminar class="right" *ngIf="$estado"
+            (click)="msgBack('Eliminar',item)" class="d-flex align-items-center">
+        </app-btn-eliminar>
+        
+        <app-btn-agregar class="right" *ngIf="$estado" (click)="msgBack('Vehiculo',item)" [name]="vehiculo">
+        </app-btn-agregar>
+        
+      </td >
     </tr>
     </table>
  
