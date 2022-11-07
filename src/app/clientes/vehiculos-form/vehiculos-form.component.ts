@@ -29,7 +29,9 @@ export class VehiculosFormComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    //console.log(this.item);
+    console.log(this.item);
+    console.log(this.titulo);
+    
     this.createForm();
     this.getVehiculos();
     this.getTarifas();   
@@ -93,9 +95,11 @@ export class VehiculosFormComponent implements OnInit {
 
   guardarVehiculo(){
     //console.log(this.editForm.value);
-    //console.log(this.item);
-    let vehiculoAgregado={
-      //id: number;
+    //console.log(this.item);    
+    if(this.titulo === undefined){
+      this.titulo = "Vehiculo Agregar";
+      let vehiculoAgregado={
+        //id: this.item.id,
         patente: this.editForm.value.patente,
         marca: this.editForm.value.marca,
         modelo: this.editForm.value.modelo,
@@ -103,10 +107,25 @@ export class VehiculosFormComponent implements OnInit {
         idCliente: this.item.id,
         tarifa: this.tarifaSeleccionada,
         estado: 1,
-    }    
-    //console.log(vehiculoAgregado);
-    this.titulo = "Vehiculo Agregar"
-    this.msgBack(this.titulo, vehiculoAgregado)
+      }    
+      //console.log(vehiculoAgregado);      
+      this.msgBack(this.titulo, vehiculoAgregado);
+    } else {
+      let vehiculoEditado={
+        id: this.editForm.value.id,
+        patente: this.editForm.value.patente,
+        marca: this.editForm.value.marca,
+        modelo: this.editForm.value.modelo,
+        color: this.editForm.value.color,
+        idCliente: this.item.id,
+        tarifa: this.tarifaSeleccionada,
+        estado: 1,
+      }
+      this.msgBack(this.titulo, vehiculoEditado);
+
+    }
+    
+   
   }
 
   eliminarVehiculo(vehiculo: Vehiculo){
@@ -118,7 +137,7 @@ export class VehiculosFormComponent implements OnInit {
   editarVehiculo(vehiculo: Vehiculo){
     console.log(vehiculo);
     this.editForm.patchValue({
-      //id: number;
+        id: vehiculo.id,
         patente: vehiculo.patente,
         marca: vehiculo.marca,
         modelo: vehiculo.modelo,
@@ -129,7 +148,7 @@ export class VehiculosFormComponent implements OnInit {
     });    
     //console.log(vehiculoAgregado);
     this.tarifaSeleccionada = vehiculo.tarifa
-    this.titulo = "Vehiculo Agregar"
+    this.titulo = "Vehiculo Editar"
     //this.msgBack(this.titulo, vehiculoEditado)
   }
 

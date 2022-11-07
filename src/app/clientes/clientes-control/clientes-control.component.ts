@@ -120,7 +120,7 @@ selectCrudOp(op: string, item:any) {
       break;
     }
     case 'Vehiculo Editar': {
-      //this.updateItem(this.componente, item);
+      this.updateItem("vehiculos", item);
       break;
     }
     case 'Vehiculo Eliminar': {
