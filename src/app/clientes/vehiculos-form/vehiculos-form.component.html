@@ -47,7 +47,10 @@
                 
                 <td class="d-flex">
             
-                <app-btn-editar class="right" class="d-flex align-items-center" (click)="editarVehiculo(vehiculo)"></app-btn-editar>
+                <app-btn-editar class="right" class="d-flex align-items-center" (click)="editarVehiculo(vehiculo)"
+                data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+
+                </app-btn-editar>
                 <app-btn-eliminar class="right" class="d-flex align-items-center" (click)="eliminarVehiculo(vehiculo)"></app-btn-eliminar>                
                 
                 </td >

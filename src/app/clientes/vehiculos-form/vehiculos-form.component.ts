@@ -117,6 +117,20 @@ export class VehiculosFormComponent implements OnInit {
 
   editarVehiculo(vehiculo: Vehiculo){
     console.log(vehiculo);
+    this.editForm.patchValue({
+      //id: number;
+        patente: vehiculo.patente,
+        marca: vehiculo.marca,
+        modelo: vehiculo.modelo,
+        color: vehiculo.color,
+        idCliente: vehiculo.idCliente, 
+        tarifa: vehiculo.tarifa.nombre,
+        estado: 1,
+    });    
+    //console.log(vehiculoAgregado);
+    this.tarifaSeleccionada = vehiculo.tarifa
+    this.titulo = "Vehiculo Agregar"
+    //this.msgBack(this.titulo, vehiculoEditado)
   }
 
   msgBack(op: string, item: any) {
