@@ -11,7 +11,8 @@ export class ClientesViewComponent implements OnInit {
   @Input() data?: any
   @Input() $estado: any
   @Output() newItemEvent = new EventEmitter<any>();
-  titulo: string = 'clientes'
+  titulo: string = 'clientes';
+  vehiculo: string = 'Vehiculo';
 
   
   searchText!: string;

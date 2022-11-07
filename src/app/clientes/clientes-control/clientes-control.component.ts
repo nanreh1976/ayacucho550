@@ -55,18 +55,20 @@ export class ClientesControlComponent implements OnInit {
 
  
   getMsg(msg: any) {
-    // console.log(msg, "from parent");
+     console.log(msg, "from parent");
      this.openForm(msg.op, msg.item)
   }
 
   openForm(modo: string, item: any) {
     {
-      const modalRef = this.modalService.open(ClientesFormComponent,
+      const modalRef = this.modalService.open(ClientesFormComponent, 
         {
           // scrollable: false,
           windowClass: 'myCustomModalClass',
           // keyboard: false,
           // backdrop: 'static'
+          centered: true,
+          size: 'lg',
         })
 
         let info = {
@@ -78,7 +80,7 @@ export class ClientesControlComponent implements OnInit {
 
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then((result) => {
-            // console.log("result from control","op", result.op,"item", result.item);
+             console.log("result from control","op", result.op,"item", result.item);
      
         // this.getXps();  
         this.selectCrudOp(result.op, result.item)
@@ -108,10 +110,25 @@ selectCrudOp(op: string, item:any) {
       this.deleteItem(this.componente, item);
       break;
     }
-    // case 'Eliminar': {
-    //   this.delete( item.id);
-    //   break;
-    // }
+    case 'Vehiculo': {
+      //this.delete( item.id);
+      break;
+    }
+    case 'Vehiculo Agregar': {
+      //console.log("llega aca?");
+      this.addItem("vehiculos", item);
+      break;
+    }
+    case 'Vehiculo Editar': {
+      //this.updateItem(this.componente, item);
+      break;
+    }
+    case 'Vehiculo Eliminar': {
+      this.deleteItem("vehiculos", item);
+      break;
+    }
+
+
 
   
 

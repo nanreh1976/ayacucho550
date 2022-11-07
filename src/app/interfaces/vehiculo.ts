@@ -1,3 +1,4 @@
+import { Tarifas } from "./tarifas";
 
 export interface Vehiculo {
   id: number;
@@ -6,6 +7,6 @@ export interface Vehiculo {
   modelo: string;
   color: string;
   idCliente: number,
-  idTarifa: number;
+  tarifa: Tarifas;
   estado: number;
 }
