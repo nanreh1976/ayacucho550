@@ -45,7 +45,7 @@ export class PlayaFormComponent implements OnInit {
   patentesPlaya!:any;
   clienteExiste:any;  
 
-  constructor(public activeModal: NgbActiveModal, private servicioDatosService: ServicioDatosService, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService, private estadiaService :EstadiaService, private clientesService: ClientesService
+  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService, private estadiaService :EstadiaService, private clientesService: ClientesService
   ) {
    this.createForm();
   }
@@ -282,14 +282,17 @@ armarPuestoEstacionamiento() {
 }
 
 getPlaya()  {
-  console.log("pasa por aca?");
+  //console.log("pasa por aca?");
   
-  this.servicioDatosService.getAll("playa").subscribe (
+  /* this.servicioDatosService.getAll("playa").subscribe (
     datos => {this.patentesPlaya = datos;
     console.log("get all Playa", this.patentesPlaya)  
     this.buscarPatente()
     }      
-  );
+  ); */
+  this.patentesPlaya = JSON.parse(localStorage.getItem("playa")||`{}`)
+  //console.log(this.patentesPlaya);  
+  this.buscarPatente()
   
 }
 

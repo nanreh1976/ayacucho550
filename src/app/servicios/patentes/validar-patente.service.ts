@@ -17,7 +17,7 @@ export class ValidarPatenteService {
   patentesPlaya!:any;
 
 
-  constructor(private servicioDatosService: ServicioDatosService) { }
+  constructor() { }
 
   validarPatente(patente: string) {                                                            
     

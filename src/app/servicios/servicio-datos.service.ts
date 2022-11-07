@@ -50,7 +50,7 @@ export class ServicioDatosService {
     let url: string = `${this.urlApi}/${componente}`;
      console.log("get all service", url)
     return this.http.get<[]>(url).pipe(
-      // tap(data => console.log(data)),
+      tap(data => localStorage.setItem(`${componente}`, JSON.stringify(data))    ),
       catchError(this.handleError<[]>('getAll', []))
     );
   };

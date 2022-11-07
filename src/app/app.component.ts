@@ -46,8 +46,8 @@ export class AppComponent implements OnInit {
   getClientes(){
     this.servicioDatosService.getAll("clientes").subscribe (
       datos => {this.clientes = datos;    
-        console.log("get all clientes",  this.clientes);
-        localStorage.setItem('clientes', JSON.stringify(this.clientes));  
+        /* console.log("get all clientes",  this.clientes);
+        localStorage.setItem('clientes', JSON.stringify(this.clientes));   */
       }      
     );    
   }
@@ -55,8 +55,8 @@ export class AppComponent implements OnInit {
   getVehiculos(){
     this.servicioDatosService.getAll("vehiculos").subscribe (
       datos => {this.vehiculos = datos;    
-        console.log("get all vehiculos",  this.vehiculos)
-        localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));    
+        /* console.log("get all vehiculos",  this.vehiculos)
+        localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));     */
       }      
     );
     
@@ -66,8 +66,8 @@ export class AppComponent implements OnInit {
   getTarifas(){
     this.servicioDatosService.getAll("tarifas").subscribe (
       datos => {this.tarifas = datos;    
-        console.log("get all tarifas",  this.tarifas)
-        localStorage.setItem('tarifas', JSON.stringify(this.tarifas));    
+        //console.log("get all tarifas",  this.tarifas)
+        //localStorage.setItem('tarifas', JSON.stringify(this.tarifas));    
       }      
     );
     

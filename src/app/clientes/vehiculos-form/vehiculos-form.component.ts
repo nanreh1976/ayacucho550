@@ -40,8 +40,8 @@ export class VehiculosFormComponent implements OnInit {
   getVehiculos(){
     this.servicioDatosService.getAll("vehiculos").subscribe (
       datos => {this.vehiculos = datos;    
-        console.log("get all vehiculos",  this.vehiculos)
-        localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));    
+        /* console.log("get all vehiculos",  this.vehiculos)
+        localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));     */
         this.armarTabla();
       }      
     );
