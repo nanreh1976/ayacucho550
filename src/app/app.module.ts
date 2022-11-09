@@ -46,6 +46,19 @@ import { FacturacionFormComponent } from './facturacion/facturacion-form/factura
 import { InicioComponent } from './inicio/inicio.component';
 import { VehiculosFormComponent } from './clientes/vehiculos-form/vehiculos-form.component';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { environment } from '../environments/environment';
+import { SignInComponent } from './login/sign-in/sign-in.component';
+import { SignUpComponent } from './login/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './login/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './login/verify-email/verify-email.component';
+import { AuthService } from './servicios/autentificacion/auth.service';
+import { AuthGuard } from './servicios/guard/auth.guard';
+
 
 
 
@@ -53,21 +66,26 @@ import { VehiculosFormComponent } from './clientes/vehiculos-form/vehiculos-form
 //se crea una const del tipo Routes para guardar todas las rutas
 //esto importa la clase Routes 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent }, //las '' es la ruta al home
-  { path: 'login', component: LoginComponent }, // la ruta al login
-  {path: 'home', component: AppComponent},
-  {path: 'inicio', component: InicioComponent},
-  {path: 'playa', component: PlayaControlComponent  },
-  {path: 'facturacion', component:FacturacionControlComponent },
+  { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
+  {path: 'home', component: AppComponent, canActivate: [AuthGuard]},
+  {path: 'inicio', component: InicioComponent, canActivate: [AuthGuard]},
+  {path: 'playa', component: PlayaControlComponent, canActivate: [AuthGuard]  },
+  {path: 'facturacion', component:FacturacionControlComponent, canActivate: [AuthGuard] },
 //  {path: 'ticketE', component: TicketEntradaComponent },
-  {path: 'tarifas', component: TarifasControlComponent},
-  {path: 'clientes', component: ClientesControlComponent},
+  {path: 'tarifas', component: TarifasControlComponent, canActivate: [AuthGuard]},
+  {path: 'clientes', component: ClientesControlComponent, canActivate: [AuthGuard]},
   
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'ocupacion', component: OcupacionComponent},
-  {path: 'login', component: LoginComponent }, // la ruta al login
-  {path: '', redirectTo: '/playa', pathMatch: 'full'},
-  {path: '**', component: PagenotfoundComponent}
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path: 'ocupacion', component: OcupacionComponent, canActivate: [AuthGuard]},
+  //{path: 'login', component: LoginComponent }, // la ruta al login
+ // {path: '', redirectTo: '/playa', pathMatch: 'full', canActivate: [AuthGuard]}, 
+
+  
+  { path: 'sign-in', component: SignInComponent },
+  { path: 'register-user', component: SignUpComponent },
+  
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'verify-email-address', component: VerifyEmailComponent },
 ]
 
 @NgModule({
@@ -105,6 +123,10 @@ const appRoutes: Routes = [
     FacturacionFormComponent,
     InicioComponent,
     VehiculosFormComponent,
+    SignInComponent,
+    SignUpComponent,
+    ForgotPasswordComponent,
+    VerifyEmailComponent,
 
 
 
@@ -119,8 +141,13 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(DataService),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
   ],
-  providers: [LoggedService, ServicioDatosService],
+  providers: [LoggedService, ServicioDatosService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

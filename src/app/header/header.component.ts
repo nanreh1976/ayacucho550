@@ -4,6 +4,7 @@ import { LoggedService } from '../servicios/logged.service';
 import { BehaviorSubject } from 'rxjs';
 import { LoginComponent } from '../login/login.component';
 import { Router } from '@angular/router';
+import { AuthService } from '../servicios/autentificacion/auth.service';
 
 @Component({
   selector: 'header',
@@ -55,7 +56,7 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  constructor(private modalService: NgbModal, private loggedService: LoggedService, private router: Router) {
+  constructor(private modalService: NgbModal, private loggedService: LoggedService, private router: Router,  public authService: AuthService) {
 
     this.$estado = loggedService.logged$
   }

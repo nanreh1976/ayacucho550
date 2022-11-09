@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './servicios/autentificacion/auth.service';
 import { LoggedService } from './servicios/logged.service';
 import { ServicioDatosService } from './servicios/servicio-datos.service';
+
 
 @Component({
   selector: 'app-root',
@@ -16,8 +18,8 @@ export class AppComponent implements OnInit {
   vehiculos!:any;
   tarifas!:any;
 
-  constructor(private loggedService: LoggedService, private router: Router, private servicioDatosService: ServicioDatosService) {
-    this.$estado = loggedService.logged$;
+  constructor(private loggedService: LoggedService, private router: Router, private servicioDatosService: ServicioDatosService, public authService: AuthService) {
+    this.$estado = authService.logged$;
   }
   ngOnInit(): void {
     this.$estado.subscribe;
@@ -26,9 +28,11 @@ export class AppComponent implements OnInit {
     this.getVehiculos();
     this.getTarifas();
     this.comprobarEstado();
+    console.log(this.$estado.value);
   }
 
-  comprobarEstado(): void {
+   comprobarEstado(): void {
+   console.log(this.$estado);
     if (this.$estado.value) {
 
       this.router.navigate(['playa'])
@@ -39,9 +43,9 @@ export class AppComponent implements OnInit {
     } else {
      //console.log("no logueado");
 
-      this.router.navigate(['login'])
+      //this.router.navigate(['login'])
     }
-  }
+  } 
 
   getClientes(){
     this.servicioDatosService.getAll("clientes").subscribe (
