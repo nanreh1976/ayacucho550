@@ -6,9 +6,9 @@
 
 <ul>
   <li>
-    <div style=" float: right;" *ngIf="$estado | async">
+    <div style=" float: right;" >
 
-      <app-btn-agregar class="right " *ngIf="$estado" (click)="msgBack('Agregar',[])"
+      <app-btn-agregar class="right " (click)="msgBack('Agregar',[])"
         class="d-flex align-items-center ">
       </app-btn-agregar>
     </div>
@@ -65,14 +65,14 @@
 
 
 
-      <div *ngIf="$estado | async" class="card-footer">
+      <div class="card-footer">
 
         <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
 
-        <app-btn-editar class="right" *ngIf="$estado" (click)="msgBack('Editar',item)"
+        <app-btn-editar class="right"  (click)="msgBack('Editar',item)"
           class="d-flex align-items-center">
         </app-btn-editar>
-        <app-btn-eliminar class="right" *ngIf="$estado" (click)="msgBack('Eliminar',item)"
+        <app-btn-eliminar class="right"  (click)="msgBack('Eliminar',item)"
           class="d-flex align-items-center">
         </app-btn-eliminar>
       </div>
