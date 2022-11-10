@@ -2,7 +2,14 @@
     
     <label for="patente">Ingresar Patente</label><br>
     
-    <input type="text" formControlName="patente" class="form-control mt-3" required type="text">
+    <input type="text" formControlName="patente" class="form-control mt-3" required type="text"     
+    [ngClass]="{'is-invalid':Patente?.errors && Patente?.touched, 'is-valid': !Patente?.errors && !Patente?.touched }">    
+    <div *ngIf="Patente?.errors?.required && Patente?.touched" class="text-danger fs-6">
+        Ingrese la patente por favor
+    </div>
+    <div *ngIf="Patente?.errors && Patente?.touched" class="text-danger fs-6">
+        Patente no valida
+    </div>  
     <div class="d-flex justify-content-evenly mt-2">        
         <div >
             <app-btn-agregar 
