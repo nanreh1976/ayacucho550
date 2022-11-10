@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+
 
 
 @Component({
@@ -16,7 +18,9 @@ export class FacturacionViewComponent implements OnInit {
   titulo: string = 'facturacion'
   @Input() totalFacturacion?:number;
 
-  
+  consultaForm!:any;
+  minDateTime: Date;
+  maxDateTime: Date;
   searchText!: string;
 
   msgBack(op: string, item: any) {
@@ -29,7 +33,14 @@ export class FacturacionViewComponent implements OnInit {
 
 
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {
+    this.consultaForm = this.fb.group({
+      desde: [''],
+      hasta: [''],        
+    });   
+    this.minDateTime = new Date("11/1/2016 10:00 AM");
+    this.maxDateTime = new Date("11/27/2016 10:00 PM");
+   }
   msg: any
   ngOnInit(): void {
   }

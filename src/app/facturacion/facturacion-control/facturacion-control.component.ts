@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
+import { ConsultaFacturacion } from 'src/app/interfaces/consulta-facturacion';
+import { ConsultaFacturacionService } from 'src/app/servicios/facturacion/consultaFacturacion/consulta-facturacion.service';
 import { LoggedService } from 'src/app/servicios/logged.service';
 import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
+import { ConsultaFacturacionComponent } from '../consulta-facturacion/consulta-facturacion.component';
 import { FacturacionFormComponent } from '../facturacion-form/facturacion-form.component';
 
 
 @Component({
   selector: 'app-facturacion-control',
   template: `
-
+<app-consulta-facturacion (newItemEvent)="getMsg($event)"  ></app-consulta-facturacion>
 
 <app-facturacion-view
 
@@ -27,6 +30,7 @@ import { FacturacionFormComponent } from '../facturacion-form/facturacion-form.c
 })
 export class FacturacionControlComponent implements OnInit {
 
+  //@ViewChild('enviarConsulta', { static: false }) enviarConsulta!: ConsultaFacturacionComponent; 
   
 // nombre del crud / componente
 componente: string = 'facturacion'
@@ -42,11 +46,15 @@ data!: [];
 totalFacturacion!:number;
 
 
+consultaFacturacion!:any;
+
+
 
 constructor(private modalService: NgbModal,
             private loggedService: LoggedService,
             private fb: FormBuilder,
-            private servicioDatosService: ServicioDatosService
+            private servicioDatosService: ServicioDatosService,
+            private consultaFacturacionService: ConsultaFacturacionService,
 ) {
 
   this.$estado = loggedService.logged$;
@@ -64,7 +72,17 @@ ngOnInit(): void {
 
 getMsg(msg: any) {
   // console.log(msg, "from parent");
+  /* if(msg.op === "consultaFecha"){
+    //console.log(msg);
+    this.consultaFacturacion = this.consultaFacturacionService.calcularFacturacion(msg.item, this.data);
+    
+    console.log("esto es facturacion-control: ", this.consultaFacturacion);
+    this.ngOnInit()
+    
+  }else{
    this.openForm(msg.op, msg.item)
+  } */
+  this.openForm(msg.op, msg.item)
 }
 
 openForm(modo: string, item: any) {
@@ -181,6 +199,9 @@ this.servicioDatosService.updateItem(componente, item, item.id)
 });
 
 }
+
+
+
 
 
 }

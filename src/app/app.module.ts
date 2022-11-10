@@ -58,6 +58,10 @@ import { ForgotPasswordComponent } from './login/forgot-password/forgot-password
 import { VerifyEmailComponent } from './login/verify-email/verify-email.component';
 import { AuthService } from './servicios/autentificacion/auth.service';
 import { AuthGuard } from './servicios/guard/auth.guard';
+import { ConsultaFacturacionComponent } from './facturacion/consulta-facturacion/consulta-facturacion.component';
+import { CustomAdapterService } from './servicios/Fechas/calendario/custom-adapter.service';
+import { CustomDateParserFormatterService } from './servicios/Fechas/calendario/custom-date-parser-formatter.service';
+import { NgbTimeStringAdapterService } from './servicios/Fechas/calendario/ngb-time-string-adapter.service';
 
 
 
@@ -127,6 +131,7 @@ const appRoutes: Routes = [
     SignUpComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
+    ConsultaFacturacionComponent,
 
 
 
@@ -147,7 +152,7 @@ const appRoutes: Routes = [
     AngularFireStorageModule,
     AngularFireDatabaseModule,
   ],
-  providers: [LoggedService, ServicioDatosService, AuthService],
+  providers: [LoggedService, ServicioDatosService, AuthService, CustomAdapterService, CustomDateParserFormatterService, NgbTimeStringAdapterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
