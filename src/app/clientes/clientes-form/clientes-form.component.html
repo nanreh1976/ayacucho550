@@ -89,7 +89,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" (click)="closeModal()">
+            <button class="btn btn-success" [disabled]="editForm.invalid"(click)="closeModal()">
               {{titulo}}
             </button>
           </div>

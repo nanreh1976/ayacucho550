@@ -1,8 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, } from '@angular/forms';
 import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
+
+
+
 
 @Component({
   selector: 'app-clientes-form',
@@ -43,7 +46,7 @@ export class ClientesFormComponent implements OnInit {
 
 
 
-  configureForm(titulo: string, item: any) {
+  configureForm(_titulo: string, item: any) {
 
     // console.log("configure form", titulo, item), (titulo !=='agregar');
     this.editForm.patchValue({
@@ -65,8 +68,8 @@ export class ClientesFormComponent implements OnInit {
       apellido: [''],
       nombre: [''],
       telefono: [''],
-      direccion: [''],
-      comentario: [''],
+     /* direccion: [''],
+      comentario: [''],*/
       email: ['', [Validators.required, Validators.email]],
       id: [''],
     });
