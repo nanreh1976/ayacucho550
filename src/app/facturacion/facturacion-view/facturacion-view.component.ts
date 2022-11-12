@@ -17,6 +17,7 @@ export class FacturacionViewComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'facturacion'
   @Input() totalFacturacion?:number;
+  @Input() respuestaFacturacion:any;
 
   consultaForm!:any;
   minDateTime: Date;
