@@ -12,6 +12,7 @@ export class ConsultaFacturacionComponent implements OnInit {
 
   //@Input() consultaFacturacion!:any;
   @Output() newItemEvent = new EventEmitter<any>();
+  @Input() respuestaFacturacion:any;
 
   titulo: string ="consultaFecha"
   model1!: any;
@@ -23,7 +24,8 @@ export class ConsultaFacturacionComponent implements OnInit {
     fechaHasta: 0,
   }
   facturacion!:any;
-  consultaFacturacion!:ConsultaFacturacion
+  //consultaFacturacion!:consultaFacturacion
+  consultaFacturacion!:any;
 
 	constructor(private ngbCalendar: NgbCalendar, private dateAdapter: NgbDateAdapter<string>, private cfService: ConsultaFacturacionService) {}
 
@@ -32,7 +34,7 @@ export class ConsultaFacturacionComponent implements OnInit {
 	}
 
   ngOnInit(): void {
-    console.log(this.consultaFacturacion);
+    //console.log(this.consultaFacturacion);   
     
   }
 
@@ -49,11 +51,15 @@ export class ConsultaFacturacionComponent implements OnInit {
     this.fechasConsulta.fechaHasta = new Date (this.model2.year, this.model2.month -1, this.model2.day, this.time2.hour, this.time2.minute ).getTime()
     console.log(this.fechasConsulta.fechaHasta);
    
-    this.getFacturacion()
+    this.titulo = "consulta facturacion";
+    this.msgBack(this.titulo, this.fechasConsulta)
 
-    this.consultaFacturacion = this.cfService.calcularFacturacion(this.fechasConsulta, this.facturacion);
+
+    //Esto es cuando se consultaba todos desde este mismo componente
+    //this.getFacturacion()
+    //this.consultaFacturacion = this.cfService.calcularFacturacion(this.fechasConsulta, this.facturacion);
     //console.log(this.consultaFacturacion);
-    this.ngOnInit()
+    //this.ngOnInit()
     
 
   }
@@ -69,8 +75,10 @@ export class ConsultaFacturacionComponent implements OnInit {
       op: op,
       item: item,
     }
+    console.log(value);
+    
     this.newItemEvent.emit(value);
-    this.ngOnInit();
+    //this.ngOnInit();
   }
 
   

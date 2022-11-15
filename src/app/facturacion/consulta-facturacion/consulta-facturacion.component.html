@@ -74,14 +74,14 @@
 		<button class="btn btn-lg btn-outline-primary" (click)="buscarFacturacion()" >Buscar</button>
 	</div>
 	<h2 class="mt-3">Resultado: </h2>
-	<table *ngIf="consultaFacturacion !== undefined" class="tftable w-100" border="1">
+	<table *ngIf="respuestaFacturacion !== undefined" class="tftable w-100" border="1">
 		<tr><th>Desde</th><th>Hasta</th><th>Cantidad de Operaciones</th><th>Total</th><th><i class="bi bi-pencil-fill"></i></th></tr>
 		<tr>
 		  
-			<td>{{consultaFacturacion.fechaDesde}}</td>      
-			<td>{{consultaFacturacion.fechaHasta}}</td>
-			<td>{{consultaFacturacion.cantidadOperacion}}</td>
-			<td>$ {{consultaFacturacion.total}}</td>      
+			<td>{{respuestaFacturacion.consultaFacturacion.fechaDesde}}</td>      
+			<td>{{respuestaFacturacion.consultaFacturacion.fechaHasta}}</td>
+			<td>{{respuestaFacturacion.consultaFacturacion.cantidadOperacion}}</td>
+			<td>$ {{respuestaFacturacion.consultaFacturacion.total}}</td>      
 			<td>				
 				<button class="btn btn-outline-secondary">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-down" viewBox="0 0 16 16">

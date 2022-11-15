@@ -12,13 +12,14 @@ import { FacturacionFormComponent } from '../facturacion-form/facturacion-form.c
 @Component({
   selector: 'app-facturacion-control',
   template: `
-<app-consulta-facturacion (newItemEvent)="getMsg($event)"  ></app-consulta-facturacion>
+<app-consulta-facturacion (newItemEvent)="getMsg($event)" [respuestaFacturacion]=consultaFacturacion  ></app-consulta-facturacion>
 
 <app-facturacion-view
 
   [data]=data 
   [$estado]=$estado  
-  [totalFacturacion]=totalFacturacion 
+  [totalFacturacion]=totalFacturacion
+  [respuestaFacturacion]=consultaFacturacion 
   (newItemEvent)="getMsg($event)"  >
  </app-facturacion-view>
   
@@ -72,17 +73,19 @@ ngOnInit(): void {
 
 getMsg(msg: any) {
   // console.log(msg, "from parent");
-  /* if(msg.op === "consultaFecha"){
+  if(msg.op === "consulta facturacion"){
     //console.log(msg);
     this.consultaFacturacion = this.consultaFacturacionService.calcularFacturacion(msg.item, this.data);
     
     console.log("esto es facturacion-control: ", this.consultaFacturacion);
+    console.log(this.consultaFacturacion);
+    
     this.ngOnInit()
     
   }else{
    this.openForm(msg.op, msg.item)
-  } */
-  this.openForm(msg.op, msg.item)
+  } 
+  //this.openForm(msg.op, msg.item)
 }
 
 openForm(modo: string, item: any) {

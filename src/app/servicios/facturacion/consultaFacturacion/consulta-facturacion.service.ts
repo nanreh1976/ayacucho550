@@ -15,6 +15,8 @@ export class ConsultaFacturacionService {
   } 
    //consultaFacturacion!:ConsultaFacturacion
 
+  
+
   constructor() { }
 
   calcularFacturacion(fechas: any, facturacion: any) {
@@ -31,8 +33,16 @@ export class ConsultaFacturacionService {
     this.consultaFacturacion.fechaHasta = this.convertirMilisegundosAFecha(fechas.fechaHasta)
     this.consultaFacturacion.cantidadOperacion = facturacionFiltrada.length;
     this.consultaFacturacion.total = this.calularTotal(facturacionFiltrada);
-    //console.log(this.consultaFacturacion); 
-    return this.consultaFacturacion
+    console.log(this.consultaFacturacion); 
+    //return this.ConsultaFacturacion
+
+    let respuestaFacturacion = {
+      consultaFacturacion: this.consultaFacturacion,
+      facturacion : facturacionFiltrada,
+    }
+
+    console.log(respuestaFacturacion);
+    return respuestaFacturacion;
     
   }
 
