@@ -11,7 +11,14 @@
           <div class="form-group">
             <label for="Patente">Patente</label>
             <div class="input-group">
-              <input formControlName="patente" class="form-control" required type="text">
+              <input formControlName="patente" class="form-control" required type="text"
+              [ngClass]="{'is-invalid':Patente?.errors && Patente?.touched, 'is-valid': !Patente?.errors && !Patente?.touched }">    
+              <div *ngIf="Patente?.errors?.required && Patente?.touched" class="text-danger fs-6">
+                  Ingrese la patente por favor
+              </div>
+              <div *ngIf="Patente?.errors && Patente?.touched" class="text-danger fs-6">
+                  Patente no valida
+              </div>  
             </div>
           </div>
           <div class="form-group">

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, } from '@angular/forms';
+import { FormBuilder, Validators, } from '@angular/forms';
 import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { PlayaI } from 'src/app/interfaces/playaI'
@@ -67,7 +67,7 @@ export class PlayaFormComponent implements OnInit {
                                         //si es un ingreso nuevo, se llama a la funcion para configurar la fecha       
         /* this.getClientes();
         this.getVehiculos();  */
-        this.validarPatente();
+        //this.validarPatente();
         this.getPlaya();
         this.configurarFecha();       
         //this.buscarPatente()
@@ -91,9 +91,13 @@ export class PlayaFormComponent implements OnInit {
 
   createForm() {                                               
     this.editForm = this.fb.group({
-      patente: [''],  
+      patente: ['',  [Validators.required, Validators.minLength(6), this.validacionPatente.evaluarPatente()]],  
       descripcion: [''],          
     });   
+  }
+
+  get Patente(){
+    return this.editForm.get("patente")
   }
 
   configurarForm(){                                                          //se configura el form con los datos del objeto
@@ -118,7 +122,7 @@ export class PlayaFormComponent implements OnInit {
         break;
       }      
       case 'Editar': {  
-        this.validarPatente() ;
+        //this.validarPatente() ;
         this.getPlaya();          
         this.validarTarifa();
         

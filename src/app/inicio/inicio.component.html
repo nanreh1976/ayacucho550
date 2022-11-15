@@ -1,4 +1,4 @@
-<form [formGroup]="patenteForm">
+<form [formGroup]="patenteForm" (ngSubmit)="onSubmit()" >
     
     <label for="patente">Ingresar Patente</label><br>
     
@@ -13,14 +13,16 @@
     <div class="d-flex justify-content-evenly mt-2">        
         <div >
             <app-btn-agregar 
+            type="submit"
             name = 'Ingreso'
-            (click)="msgBack('Agregar')"
+           
               class="d-flex align-items-center "   >
             </app-btn-agregar>
         </div>
         <div>
             <app-btn-eliminar 
-            (click)="msgBack('Salida')" 
+            type="submit"
+            
             class="d-flex align-items-center "
             name = 'Egreso'>
             

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { AbstractControl, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
 import { ServicioDatosService } from '../servicio-datos.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ValidarPatenteService {
+export class ValidarPatenteService implements Validator {
 
   dominios: any = {
     patentesViejas : /^[a-zA-Z]{3}[\d]{3}$/,
@@ -18,10 +19,22 @@ export class ValidarPatenteService {
 
 
   constructor() { }
+  validate(control: AbstractControl<any, any>): ValidationErrors | null {
+    throw new Error('Method not implemented.');
+  }
+  registerOnValidatorChange?(fn: () => void): void {
+    throw new Error('Method not implemented.');
+  }
 
-  validarPatente(patente: string) {                                                            
+  evaluarPatente(): ValidatorFn{
+    return (control: AbstractControl): { [key: string]: any } | null =>  
+    this.validarPatente(control.value)?
     
-    if(this.dominios.patentesViejas.test(patente)){
+         null : {"patenteErronea": control.value};
+  }
+
+  validarPatente(patente:string) {                                                            
+      if(this.dominios.patentesViejas.test(patente)){
       //alert("es una patente vieja válida");                      
       return true;
       } else if (this.dominios.patentesNuevas.test(patente)){
@@ -37,7 +50,7 @@ export class ValidarPatenteService {
       }  else {
         //alert("no es una patente válida");
         return false;
-       }
+       } 
   }
 
   buscarPatentePlaya(patente:string, playa:any){
