@@ -61,6 +61,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { AuthGuard, canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { AuthService } from './servicios/autentificacion/auth.service';
+import { ScannerComponent } from './scanner/scanner.component';
 
 
 
@@ -75,6 +76,7 @@ const appRoutes: Routes = [
   {path: 'home', component: AppComponent, ...canActivate(redirectUnauthorizedToLogin) },
   {path: 'inicio', component: InicioComponent, ...canActivate(redirectUnauthorizedToLogin)},
   {path: 'playa', component: PlayaControlComponent, ...canActivate(redirectUnauthorizedToLogin)  },
+  {path: 'scanner', component: ScannerComponent, ...canActivate(redirectUnauthorizedToLogin)  },
   {path: 'facturacion', component:FacturacionControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
 //  {path: 'ticketE', component: TicketEntradaComponent },
   {path: 'tarifas', component: TarifasControlComponent, ...canActivate(redirectUnauthorizedToLogin)},
@@ -124,6 +126,7 @@ const appRoutes: Routes = [
     VehiculosFormComponent,
    
     ConsultaFacturacionComponent,
+         ScannerComponent,
 
 
 
