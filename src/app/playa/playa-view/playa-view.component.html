@@ -37,18 +37,17 @@
 
         <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
         <td>
-          <app-btn-editar class="right" *ngIf="$estado" (click)="msgBack('Editar',item)">
+          <app-btn-editar class="right" (click)="msgBack('Editar',item)">
           </app-btn-editar>
         </td>
         <td>
           <app-btn-eliminar class="right" 
-                            *ngIf="$estado" 
                             (click)="msgBack('Eliminar',item)"
                             name = 'Egreso'>
           </app-btn-eliminar>
         </td>
         <td>
-          <app-btn-reimpresion class="right" *ngIf="$estado" (click)="msgBack('Reimprimir',item)">
+          <app-btn-reimpresion class="right" (click)="msgBack('Reimprimir',item)">
           </app-btn-reimpresion>
 
         </td>

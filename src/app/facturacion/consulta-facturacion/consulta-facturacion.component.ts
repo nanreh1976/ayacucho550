@@ -35,6 +35,7 @@ export class ConsultaFacturacionComponent implements OnInit {
 
   ngOnInit(): void {
     //console.log(this.consultaFacturacion);   
+    console.log(this.facturacion);
     
   }
 

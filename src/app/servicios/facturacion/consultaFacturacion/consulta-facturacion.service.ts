@@ -21,10 +21,17 @@ export class ConsultaFacturacionService {
 
   calcularFacturacion(fechas: any, facturacion: any) {
   
+    console.log("servicio del facturacion, facturacion: ", facturacion);
    
     let facturacionFiltrada = facturacion.filter((factura: any) => {
+
+      factura.fechas.fechaSalidaDate = factura.fechas.fechaSalidaDate.toString();
+      console.log("esto es la fecha de salida: ", factura.fechas.fechaSalidaDate);
+      
+
+
       let fechaSalidaMilisegundos = new Date(factura.fechas.fechaSalidaDate).getTime()
-      //console.log(fechaSalidaMilisegundos);
+      console.log("servicio del facturacion, fecha salida: ", fechaSalidaMilisegundos);
       
       return fechaSalidaMilisegundos > fechas.fechaDesde && fechaSalidaMilisegundos < fechas.fechaHasta
     })  

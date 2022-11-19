@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { ServicioDatosService } from './servicio-datos.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -8,29 +8,15 @@ export class ClientesService implements OnInit {
 
   clientes!:any;
   vehiculos!:any; 
-  constructor(private servicioDatosService: ServicioDatosService) { }
+  constructor() { }
 
+ 
 
   ngOnInit(): void {
-    /* this.getVehiculos();*/
-    //this.getClientes();       
+     
   }
 
-  getClientes(){
-    this.servicioDatosService.getAll("clientes").subscribe (
-      datos => {this.clientes = datos;    
-        console.log("get all clientes",  this.clientes)  
-      }      
-    );
-  }
-
-  getVehiculos(){
-    this.servicioDatosService.getAll("vehiculos").subscribe (
-      datos => {this.vehiculos = datos;    
-        console.log("get all vehiculos",  this.vehiculos)  
-      }      
-    );
-  }
+ 
 
   buscarPatente(patente:string){
     let vehiculos = JSON.parse(localStorage.getItem("vehiculos")||`{}`)

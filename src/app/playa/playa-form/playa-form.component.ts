@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, } from '@angular/forms';
-import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
+
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { PlayaI } from 'src/app/interfaces/playaI'
 import * as moment from 'moment';
@@ -50,6 +50,32 @@ export class PlayaFormComponent implements OnInit {
    this.createForm();
   }
 
+  puestoPlaya: PlayaI = {
+    id: 1,
+    patente: "fht231",
+    fechas: {
+      fechaDate: "Tue Oct 25 2022 15:09:31 GMT-0300 (hora estándar de Argentina)",
+      fechaIngreso: "25-10-2022",
+      horaIngreso: "15:17:23",
+      fechaSalidaDate: "",
+      fechaSalida: "",
+      horaSalida: "",
+      estadia: 0,
+    },
+    tarifa:{
+      id: 4,
+      nombre: "camioneta-basico",               // nombre de la tarifa 
+      categoria: "camioneta",            // tipo de vehiculo
+      fraccion: 30,             // fraccion minima de facturacion
+      unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+      valor: 180,                
+      tolerancia: 5,           // rango de tolerancia
+    },
+    descripcion: "Scania 1114",
+    saldo: 0,
+    codigoBarras: "fht231-15:17:23"
+  };
+
   ngOnInit(): void {
     this.getTarifas();
     //this.getPlaya();                                                    //se traen las tarifas    
@@ -68,6 +94,8 @@ export class PlayaFormComponent implements OnInit {
         /* this.getClientes();
         this.getVehiculos();  */
         //this.validarPatente();
+        this.saldo = 0;
+        this.item.id = "";
         this.getPlaya();
         this.configurarFecha();       
         //this.buscarPatente()
@@ -77,6 +105,7 @@ export class PlayaFormComponent implements OnInit {
       else
       {                           //si es una edicion, se guardan las fechas y las tarifas y se llama a la funcion para configurar form
         //this.item = this.fromParent.item;
+        this.saldo = 0;
         this.tarifaSeleccionada = this.item.tarifa;
         this.fechas = this.item.fechas;
         this.configurarForm();
@@ -144,6 +173,16 @@ export class PlayaFormComponent implements OnInit {
 }
 }
 
+Automatico(){
+  let value = {
+    op: "Agregar",
+    item: this.puestoPlaya
+    
+  };
+   //console.log("closemodal", value)
+  this.activeModal.close(value);
+}
+
 closeModal() {
     //console.log(this.puestoEstacionamiento);
     
@@ -152,7 +191,7 @@ closeModal() {
    item: this.puestoEstacionamiento,
    
  };
-  //console.log("closemodal", value)
+  console.log("closemodal", value)
  this.activeModal.close(value);
 } 
 
@@ -221,17 +260,17 @@ pruebaCierreHora(){
   //console.log(this.item);  
   //console.log(this.titulo);
   
-  this.fechas.fechaSalidaDate = this.fechaService.fechaActual(); // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
-  //console.log(`esta es la fecha de salida: ${this.item.fechas.fechaSalidaDate}`);
+  this.fechas.fechaSalidaDate = this.fechaService.fechaActual().toString(); // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
+  console.log("esta es la fecha de salida: ", this.item.fechas.fechaSalidaDate);
 
   this.fechas.fechaSalida = this.fechaService.fechaDia(this.item.fechas.fechaSalidaDate);
-  //console.log(`esta es el dia de la salida: ${this.item.fechas.fechaSalida}`);
+  console.log("esta es el dia de la salida: ", this.item.fechas.fechaSalida);
 
   this.fechas.horaSalida = this.fechaService.fechaHora(this.item.fechas.fechaSalidaDate);
-  //console.log(`esta es la de la salida: ${this.item.fechas.horaSalida}`); 
+  console.log("esta es la de la salida: ", this.item.fechas.horaSalida); 
 
   this.fechas.estadia = this.fechaService.pruebaCierreHora(this.fechas.fechaDate);
-  ////console.log(this.fechas.estadia);
+  console.log("esta es la fecha.estadia: ", this.fechas.estadia);
 
 
   this.saldoEstadia();
@@ -242,7 +281,7 @@ pruebaCierreHora(){
 
 getTarifas()  {
   this.tarifas = JSON.parse(localStorage.getItem("tarifas")||`{}`)
-  console.log(`estas son las tarifas: ${this.tarifas}`);  
+  console.log("estas son las tarifas: ", this.tarifas);  
   
 }
 
@@ -272,7 +311,7 @@ armarPuestoEstacionamiento() {
     patente: this.editForm.value.patente,
     fechas: this.fechas,
     tarifa : this.tarifaSeleccionada,
-    descripcion:this.editForm.descripcion,
+    descripcion:this.editForm.value.descripcion,
     saldo: this.saldo,
     codigoBarras: `${ this.fromParent.item.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
   }  
@@ -281,7 +320,7 @@ armarPuestoEstacionamiento() {
 
   
   this.item= this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
-  console.log(`este es el item final: ${this.puestoEstacionamiento}`)
+  //console.log("este es el item final: ", this.puestoEstacionamiento)
   this.closeModal();
 }
 

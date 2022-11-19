@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
-import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
+import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
+
 
 @Component({
   selector: 'app-vehiculos-form',
@@ -14,7 +15,7 @@ export class VehiculosFormComponent implements OnInit {
   @Input() item!:any;
   @Output() newItemEvent = new EventEmitter<any>();
   
-  vehiculos!: Vehiculo [];
+  //vehiculos!: Vehiculo [];
   vehiculosPorCliente: Vehiculo [] =[];
   editForm!:any;
   tarifas!: Tarifas[];
@@ -23,8 +24,9 @@ export class VehiculosFormComponent implements OnInit {
   componente: string = 'vehiculos'
 
   
+  vehiculos: Vehiculo [];
 
-  constructor(private fb: FormBuilder, private servicioDatosService: ServicioDatosService) {
+  constructor(private fb: FormBuilder, private dbFirebase: DbFirestoreService,) {
     
    }
 
@@ -33,21 +35,18 @@ export class VehiculosFormComponent implements OnInit {
     console.log(this.titulo);
     
     this.createForm();
-    this.getVehiculos();
+    this.getAllVehiculos();
     this.getTarifas();   
   }
 
-  getVehiculos(){
-    this.servicioDatosService.getAll("vehiculos").subscribe (
-      datos => {this.vehiculos = datos;    
-        /* console.log("get all vehiculos",  this.vehiculos)
-        localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));     */
-        this.armarTabla();
-      }      
-    );
-    
-    
-  }
+  getAllVehiculos(): void {
+  this.dbFirebase.getAll(this.componente).subscribe(data => {
+    this.vehiculos = data;
+    localStorage.setItem(`${this.componente}`, JSON.stringify(data))
+    console.log(this.vehiculos); 
+    this.armarTabla()     
+  })
+}
 
   getTarifas()  {
     this.tarifas = JSON.parse(localStorage.getItem("tarifas")||`{}`)

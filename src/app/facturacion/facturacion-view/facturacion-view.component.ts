@@ -12,8 +12,7 @@ export class FacturacionViewComponent implements OnInit {
 
 
 
-  @Input() data?: any
-  @Input() $estado: any
+  @Input() data?: any 
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'facturacion'
   @Input() totalFacturacion?:number;

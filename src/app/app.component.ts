@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './servicios/autentificacion/auth.service';
+import { DbFirestoreService } from './servicios/database/db-firestore.service';
+
 import { LoggedService } from './servicios/logged.service';
-import { ServicioDatosService } from './servicios/servicio-datos.service';
+
 
 
 @Component({
@@ -18,7 +20,7 @@ export class AppComponent implements OnInit {
   vehiculos!:any;
   tarifas!:any;
 
-  constructor(private loggedService: LoggedService, private router: Router, private servicioDatosService: ServicioDatosService, public authService: AuthService) {
+  constructor(private loggedService: LoggedService, private router: Router,private dbFirebase: DbFirestoreService, private authService: AuthService) {
     this.$estado = authService.logged$;
   }
   ngOnInit(): void {
@@ -28,11 +30,11 @@ export class AppComponent implements OnInit {
     this.getVehiculos();
     this.getTarifas();
     this.comprobarEstado();
-    console.log(this.$estado.value);
+    //console.log(this.$estado.value);
   }
 
    comprobarEstado(): void {
-   console.log(this.$estado);
+   console.log(this.$estado.value);
     if (this.$estado.value) {
 
       this.router.navigate(['playa'])
@@ -48,34 +50,27 @@ export class AppComponent implements OnInit {
   } 
 
   getClientes(){
-    this.servicioDatosService.getAll("clientes").subscribe (
-      datos => {this.clientes = datos;    
-        /* console.log("get all clientes",  this.clientes);
-        localStorage.setItem('clientes', JSON.stringify(this.clientes));   */
-      }      
-    );    
+    this.dbFirebase.getAll("clientes").subscribe(data => {
+      this.clientes = data;
+      localStorage.setItem(`${"clientes"}`, JSON.stringify(this.clientes))
+      console.log(this.clientes);      
+    })
   }
 
   getVehiculos(){
-    this.servicioDatosService.getAll("vehiculos").subscribe (
-      datos => {this.vehiculos = datos;    
-        /* console.log("get all vehiculos",  this.vehiculos)
-        localStorage.setItem('vehiculos', JSON.stringify(this.vehiculos));     */
-      }      
-    );
-    
-    
+    this.dbFirebase.getAll("vehiculos").subscribe(data => {
+      this.vehiculos = data;
+      localStorage.setItem(`${"vehiculos"}`, JSON.stringify(this.vehiculos))
+      console.log(this.vehiculos);      
+    })
   }
 
   getTarifas(){
-    this.servicioDatosService.getAll("tarifas").subscribe (
-      datos => {this.tarifas = datos;    
-        //console.log("get all tarifas",  this.tarifas)
-        //localStorage.setItem('tarifas', JSON.stringify(this.tarifas));    
-      }      
-    );
-    
-    
+    this.dbFirebase.getAll("tarifas").subscribe(data => {
+      this.tarifas = data;
+      localStorage.setItem(`${"tarifas"}`, JSON.stringify(this.tarifas))
+      console.log(this.tarifas);      
+    })
   }
 
 

@@ -8,8 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class ClientesViewComponent implements OnInit {
 
   
-  @Input() data?: any
-  @Input() $estado: any
+  @Input() data?: any 
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'clientes';
   vehiculo: string = 'Vehiculo';

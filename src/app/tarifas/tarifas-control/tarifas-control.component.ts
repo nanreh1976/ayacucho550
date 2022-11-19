@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { LoggedService } from 'src/app/servicios/logged.service';
-import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
+
+
 import { TarifasFormComponent } from '../tarifas-form/tarifas-form.component';
 import { TarifasViewComponent } from '../tarifas-view/tarifas-view.component';
 
@@ -11,8 +11,7 @@ import { TarifasViewComponent } from '../tarifas-view/tarifas-view.component';
   selector: 'app-tarifas-control',
   template: `
   <app-tarifas-view
-  [data]=data 
-  [$estado]=$estado   
+  [data]=data   
  (newItemEvent)="getMsg($event)"
   ></app-tarifas-view>
   
@@ -28,27 +27,59 @@ componente: string = 'tarifas'
 
 
 
-  $estado;
+ 
+  //data!: [];
+  //esto reemplaza in memory api
+  data: any = [{
+    id: 3,
+    nombre: "auto-basico",               // nombre de la tarifa 
+    categoria: "auto",            // tipo de vehiculo
+    fraccion: 30,             // fraccion minima de facturacion
+    unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+    valor: 150,                
+    tolerancia: 5,           // rango de tolerancia
+  },
+    {
+      id: 4,
+      nombre: "camioneta-basico",               // nombre de la tarifa 
+      categoria: "camioneta",            // tipo de vehiculo
+      fraccion: 30,             // fraccion minima de facturacion
+      unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+      valor: 180,                
+      tolerancia: 5,           // rango de tolerancia
+    },
+    
+    {
+      id: 2,
+      nombre: "moto-basico",               // nombre de la tarifa 
+      categoria: "moto",            // tipo de vehiculo
+      fraccion: 30,             // fraccion minima de facturacion
+      unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
+      valor: 120,                
+      tolerancia: 5,           // rango de tolerancia
+    },
+    {
+      id: 7,
+      nombre: "auto-mes",               // nombre de la tarifa 
+      categoria: "auto",            // tipo de vehiculo
+      fraccion: 1,             // fraccion minima de facturacion
+      unidad_tiempo: "mes",        // minutos, horas, dias, semanas, mes
+      valor: 8500,                
+      tolerancia: 0,           // rango de tolerancia
+    },
+  ];
 
 
-  data!: [];
 
 
 
-  constructor(private modalService: NgbModal,
-              private loggedService: LoggedService,
-              private fb: FormBuilder,
-              private servicioDatosService: ServicioDatosService
-  ) {
-
-    this.$estado = loggedService.logged$;
-
-    }
+  constructor(private modalService: NgbModal,             
+              private fb: FormBuilder,              
+  ) {}
 
 
 
     ngOnInit(): void {
-      this.$estado.subscribe
       this.getAll(); //tomar datos de las tarifas
   }
 
@@ -120,34 +151,34 @@ componente: string = 'tarifas'
 
 
 getAll(): void {
-  this.servicioDatosService.getAll(this.componente).subscribe (
+ /*  this.servicioDatosService.getAll(this.componente).subscribe (
   datos => {this.data = datos;
   console.log("get all ", this.componente, this.data)
 
   }
-);
+); */
 }
 
 
 deleteItem(componente: string, item: any): void {
-   console.log("delete component", item, item.id)
+   /* console.log("delete component", item, item.id)
   this.servicioDatosService.deleteItem(componente, item.id)
   .subscribe 
   (data => { 
     this.data = data; 
     this.ngOnInit();
-  })
+  }) */
 }
 
 addItem(componente: string, item: any): void {
 
   // console.log("add itemcomponent", item, )
-  this.servicioDatosService.addItem(componente, item) 
+  /* this.servicioDatosService.addItem(componente, item) 
   .subscribe
   (data => { 
     this.data = data; 
     this.ngOnInit();
-  });
+  }); */
 
   }
 
@@ -156,12 +187,12 @@ addItem(componente: string, item: any): void {
 
 updateItem(componente: string, item: any): void {
  
-  this.servicioDatosService.updateItem(componente, item, item.id)
+/*   this.servicioDatosService.updateItem(componente, item, item.id)
   .subscribe
   (data => { 
     this.data = data; 
     this.ngOnInit();
-  });
+  }); */
 
   }
 

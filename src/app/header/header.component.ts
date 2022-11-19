@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'
-import { LoggedService } from '../servicios/logged.service';
 import { BehaviorSubject } from 'rxjs';
 import { LoginComponent } from '../login/login.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../servicios/autentificacion/auth.service';
+
 
 @Component({
   selector: 'header',
@@ -13,24 +13,7 @@ import { AuthService } from '../servicios/autentificacion/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  // Propiedades del logged Service
-
-
-  $estado: BehaviorSubject<boolean>;
-
-  logIn(): void {
-    this.loggedService.LogIn()
-
-  }
-
-  logOut(): void {
-    this.loggedService.LogOut();
-    this.router.navigate(['home'])
-  }
-
-  logState(): void {
-    this.loggedService.LogState();
-  }
+  
 
   // propiedades NgbModal
 
@@ -56,15 +39,15 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  constructor(private modalService: NgbModal, private loggedService: LoggedService, private router: Router,  public authService: AuthService) {
+  constructor(private modalService: NgbModal, private router: Router, private authService: AuthService ) {
 
-    this.$estado = loggedService.logged$
+   
   }
 
 
 
   ngOnInit(): void {
-    this.$estado.subscribe
+   
   }
 
 
@@ -87,6 +70,13 @@ export class HeaderComponent implements OnInit {
        
       }, (reason) => { });
     }
+  }
+
+  logout() {
+    this.authService
+      .logout()      
+      .then(() => this.router.navigate(['/']))
+      .catch((e) => console.log(e.message));
   }
 
 }

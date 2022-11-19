@@ -1,8 +1,9 @@
 import { Component, Input, OnInit,} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, } from '@angular/forms';
-import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
+
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
+import { Clientes } from 'src/app/interfaces/clientes';
 
 
 
@@ -17,7 +18,7 @@ export class ClientesFormComponent implements OnInit {
   @Input() fromParent: any;
   editForm!: any;
   titulo!: string;
-  item!: any;
+  item: Clientes;
 
 
   constructor(public activeModal: NgbActiveModal,
@@ -33,11 +34,17 @@ export class ClientesFormComponent implements OnInit {
 
   ngOnInit(): void {
     {
-      // console.log("on init form", this.fromParent);
+      console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
-      this.item = this.fromParent.item;
-      if(this.item.op === 'Agregar'){ delete this.item.id}
-      this.configureForm(this.titulo, this.item);
+
+      if(this.titulo === 'Agregar'){ 
+        //this.item.id = ""
+      } else{
+        this.item = this.fromParent.item;      
+        this.configureForm(this.titulo, this.item);
+      }
+
+      
 
     }
   }
@@ -68,8 +75,8 @@ export class ClientesFormComponent implements OnInit {
       apellido: [''],
       nombre: [''],
       telefono: [''],
-     /* direccion: [''],
-      comentario: [''],*/
+      direccion: [''],
+      comentario: [''],
       email: ['', [Validators.required, Validators.email]],
       id: [''],
     });
@@ -77,14 +84,15 @@ export class ClientesFormComponent implements OnInit {
 
 
 
-  closeModal() {
+  closeModal() {  
+
     let value = {
    op: this.titulo,
    item: this.editForm.value
    
  };
 
-//  console.log("closemodal", value)
+ console.log("closemodal", value)
  this.activeModal.close(value);
 
 }

@@ -19,5 +19,13 @@ export class LoggedService {
   LogState() {
     return this.logged$.asObservable();
   }
+
+  mantenerseLogueado(){
+    if(sessionStorage.getItem('user')){
+      this.LogIn();
+      console.log("prueba")
+    }
+  }
+
   constructor() { }
 }

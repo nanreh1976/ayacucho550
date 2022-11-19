@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
-import { LoggedService } from 'src/app/servicios/logged.service';
-import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
+import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
+
+
 import { ClientesFormComponent } from '../clientes-form/clientes-form.component';
 import { ClientesViewComponent } from '../clientes-view/clientes-view.component';
 
@@ -11,8 +12,7 @@ import { ClientesViewComponent } from '../clientes-view/clientes-view.component'
   selector: 'app-clientes-control',
   template: `
   <app-clientes-view
-  [data]=data 
-  [$estado]=$estado   
+  [data]=data   
  (newItemEvent)="getMsg($event)"
   ></app-clientes-view>
   
@@ -27,30 +27,23 @@ export class ClientesControlComponent implements OnInit {
   // reactiveforms, modo edicion, delete etc
   //modo!: string;
 
- // propiedades logged service
-  $estado;
 
 // data recibida del crud
-  data!: [];
+  data!: any; 
 
-
-
-  constructor(private modalService: NgbModal,
-              private loggedService: LoggedService,
+  constructor(private modalService: NgbModal,              
               private fb: FormBuilder,
-              private servicioDatosService: ServicioDatosService
+              private dbFirebase: DbFirestoreService,
   ) {
 
-    this.$estado = loggedService.logged$;
+   
 
   }
 
 
 
-  ngOnInit(): void {
-    this.$estado.subscribe
-    this.getAll();  //tomar datos de los vehiculos en playa
-    
+  ngOnInit(): void {   
+    this.getAll();  //tomar datos de los vehiculos en playa    
   }
 
  
@@ -143,50 +136,51 @@ selectCrudOp(op: string, item:any) {
 
 
 getAll(): void {
-  this.servicioDatosService.getAll(this.componente).subscribe (
-  datos => {this.data = datos;
-  console.log("get all ", this.componente, this.data)
-
-  }
-);
+  this.dbFirebase.getAll(this.componente).subscribe(data => {
+    this.data = data;
+    localStorage.setItem(`${this.componente}`, JSON.stringify(data))
+    console.log(this.data);      
+  })
 }
 
 
 deleteItem(componente: string, item: any): void {
-   console.log("delete component", item, item.id)
-  this.servicioDatosService.deleteItem(componente, item.id)
-  .subscribe 
-  (data => { 
-    this.data = data; 
-    this.ngOnInit();
-  })
+
+  console.log("delete itemcomponent", item,)
+ 
+    this.dbFirebase.delete(componente, item.id)
+    .then((data) => console.log(data))      
+    .then(() => this.ngOnInit())
+    .then(() => console.log("pasa por delete metodo?")   )
+    .catch((e) => console.log(e.message));
+    
 }
 
 addItem(componente: string, item: any): void {
 
-  // console.log("add itemcomponent", item, )
-  this.servicioDatosService.addItem(componente, item) 
-  .subscribe
-  (data => { 
-    this.data = data; 
-    this.ngOnInit();
-  });
+  console.log("add itemcomponent", item,)
 
-  }
+   this.dbFirebase.create(componente, item)
+   .then((data) => console.log(data))
+   .then(() => this.ngOnInit())
+   .catch((e) => console.log(e.message));
+    
+   
+
+}
 
  
 
 
 updateItem(componente: string, item: any): void {
- 
-  this.servicioDatosService.updateItem(componente, item, item.id)
-  .subscribe
-  (data => { 
-    this.data = data; 
-    this.ngOnInit();
-  });
+  console.log("update itemcomponent", item,)
+  
+      this.dbFirebase.update(componente, item)
+      .then((data) => console.log(data))
+      .then(() => this.ngOnInit())
+      .catch((e) => console.log(e.message));
 
-  }
+}
 
 
 
