@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
+import { PlayaI } from 'src/app/interfaces/playaI';
+import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { InterOpService } from 'src/app/servicios/inter-op.service';
-import { LoggedService } from 'src/app/servicios/logged.service';
-import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
+
+
 import { TicketEntradaComponent } from 'src/app/ticket-entrada/ticket-entrada.component';
 import { PlayaFormComponent } from '../playa-form/playa-form.component';
 
@@ -18,8 +20,7 @@ import { PlayaFormComponent } from '../playa-form/playa-form.component';
 ></app-inicio>
 
 <app-playa-view
-  [data]=data 
-  [$estado]=$estado   
+  [data]=data  
  (newItemEvent)="getMsg($event)"
   ></app-playa-view>
   
@@ -34,29 +35,18 @@ export class PlayaControlComponent implements OnInit {
 
   // nombre del crud / componente
   componente: string = 'playa'
-
-  // propiedades logged service
-  $estado;
-
+  
   // data recibida del crud
-  data!: [];
-
-
-
-  constructor(private modalService: NgbModal,
-    private loggedService: LoggedService,
+  data!: any;
+  
+  constructor(private modalService: NgbModal,   
     private fb: FormBuilder,
-    private servicioDatosService: ServicioDatosService,
+    private dbFirebase: DbFirestoreService,
     private interOpService: InterOpService,
-  ) {
-
-    this.$estado = loggedService.logged$;
-
-  }
+  ) {}
 
 
-  ngOnInit(): void {
-    this.$estado.subscribe
+  ngOnInit(): void {    
     this.getAll();  //tomar datos de los vehiculos en playa
 
   }
@@ -142,48 +132,46 @@ export class PlayaControlComponent implements OnInit {
   ///// OPERACIONES CRUD ////////
 
   getAll(): void {
-    this.servicioDatosService.getAll(this.componente).subscribe(
-      datos => {
-        this.data = datos;
-        // console.log("get all ", this.componente, this.data)
-
-      }
-    );
+    this.dbFirebase.getAll(this.componente).subscribe(data => {
+      this.data = data;
+      localStorage.setItem(`${this.componente}`, JSON.stringify(data))
+      console.log(this.data);      
+    })
   }
 
 
   deleteItem(componente: string, item: any): void {
 
-    console.log("delete component", item, item.id)
-    this.servicioDatosService.deleteItem(componente, item.id)
-      .subscribe
-      (data => {
-        this.data = data;
-        this.ngOnInit();
-      })
+    console.log("delete itemcomponent", item,)
+   
+      this.dbFirebase.delete(componente, item.id)
+      .then((data) => console.log(data))      
+      .then(() => this.ngOnInit())
+      .then(() => console.log("pasa por delete metodo?")   )
+      .catch((e) => console.log(e.message));
+      
   }
 
   addItem(componente: string, item: any): void {
 
-    console.log("add itemcomponent", item,)
-    this.servicioDatosService.addItem(componente, item)
-      .subscribe
-      (data => {
-        this.data = data;
-        this.ngOnInit();
-      });
+     console.log("add itemcomponent", item,)
+   
+      this.dbFirebase.create(componente, item)
+      .then((data) => console.log(data))
+      .then(() => this.ngOnInit())
+      .catch((e) => console.log(e.message));
+       
+      
 
   }
 
   updateItem(componente: string, item: any): void {
-    console.log(`update item!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! = ${item}`);
+    console.log("update itemcomponent", item,)
     
-    this.servicioDatosService.updateItem(componente, item, item.id)
-      .subscribe
-      (data => {
-        this.data = data;
-        this.ngOnInit();
-      });
+        this.dbFirebase.update(componente, item)
+        .then((data) => console.log(data))
+        .then(() => this.ngOnInit())
+        .catch((e) => console.log(e.message));
 
   }
 
@@ -243,6 +231,5 @@ export class PlayaControlComponent implements OnInit {
       }, (reason) => { });
     }
   }
-
-
+  
 }

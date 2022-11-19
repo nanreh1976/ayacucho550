@@ -16,10 +16,10 @@ import { LoggedService } from './servicios/logged.service';
 import { BtnAgregarComponent } from './shared/btn-agregar/btn-agregar.component';
 import { BtnEditarComponent } from './shared/btn-editar/btn-editar.component';
 import { BtnEliminarComponent } from './shared/btn-eliminar/btn-eliminar.component';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+
 import { DataService } from './servicios/data.service';
 import { HttpClientModule } from '@angular/common/http';
-import { ServicioDatosService } from './servicios/servicio-datos.service';
+
 import { PlayaFormComponent } from './playa/playa-form/playa-form.component';
 import { FilterPipe } from './servicios/filter.pipe';
 
@@ -52,44 +52,39 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
-import { SignInComponent } from './login/sign-in/sign-in.component';
-import { SignUpComponent } from './login/sign-up/sign-up.component';
-import { ForgotPasswordComponent } from './login/forgot-password/forgot-password.component';
-import { VerifyEmailComponent } from './login/verify-email/verify-email.component';
-import { AuthService } from './servicios/autentificacion/auth.service';
-import { AuthGuard } from './servicios/guard/auth.guard';
 import { ConsultaFacturacionComponent } from './facturacion/consulta-facturacion/consulta-facturacion.component';
 import { CustomAdapterService } from './servicios/Fechas/calendario/custom-adapter.service';
 import { CustomDateParserFormatterService } from './servicios/Fechas/calendario/custom-date-parser-formatter.service';
 import { NgbTimeStringAdapterService } from './servicios/Fechas/calendario/ngb-time-string-adapter.service';
-
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { AuthGuard, canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { AuthService } from './servicios/autentificacion/auth.service';
 
 
 
 
 //se crea una const del tipo Routes para guardar todas las rutas
 //esto importa la clase Routes 
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
+const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
+
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
-  {path: 'home', component: AppComponent, canActivate: [AuthGuard]},
-  {path: 'inicio', component: InicioComponent, canActivate: [AuthGuard]},
-  {path: 'playa', component: PlayaControlComponent, canActivate: [AuthGuard]  },
-  {path: 'facturacion', component:FacturacionControlComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/login', pathMatch: 'full', },
+  {path: 'home', component: AppComponent, ...canActivate(redirectUnauthorizedToLogin) },
+  {path: 'inicio', component: InicioComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'playa', component: PlayaControlComponent, ...canActivate(redirectUnauthorizedToLogin)  },
+  {path: 'facturacion', component:FacturacionControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
 //  {path: 'ticketE', component: TicketEntradaComponent },
-  {path: 'tarifas', component: TarifasControlComponent, canActivate: [AuthGuard]},
-  {path: 'clientes', component: ClientesControlComponent, canActivate: [AuthGuard]},
+  {path: 'tarifas', component: TarifasControlComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  {path: 'clientes', component: ClientesControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
   
-  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
-  {path: 'ocupacion', component: OcupacionComponent, canActivate: [AuthGuard]},
-  //{path: 'login', component: LoginComponent }, // la ruta al login
+  {path: 'dashboard', component: DashboardComponent, ...canActivate(redirectUnauthorizedToLogin) },
+  {path: 'ocupacion', component: OcupacionComponent, ...canActivate(redirectUnauthorizedToLogin) },
+  {path: 'login', component: LoginComponent,   }, // la ruta al login
  // {path: '', redirectTo: '/playa', pathMatch: 'full', canActivate: [AuthGuard]}, 
 
-  
-  { path: 'sign-in', component: SignInComponent },
-  { path: 'register-user', component: SignUpComponent },
-  
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'verify-email-address', component: VerifyEmailComponent },
 ]
 
 @NgModule({
@@ -127,10 +122,7 @@ const appRoutes: Routes = [
     FacturacionFormComponent,
     InicioComponent,
     VehiculosFormComponent,
-    SignInComponent,
-    SignUpComponent,
-    ForgotPasswordComponent,
-    VerifyEmailComponent,
+   
     ConsultaFacturacionComponent,
 
 
@@ -145,14 +137,12 @@ const appRoutes: Routes = [
     NgbModule, //se importa la clase RouterModule y se le indica la const donde estan las rutas
     ReactiveFormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(DataService),
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    AngularFireStorageModule,
-    AngularFireDatabaseModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
+
   ],
-  providers: [LoggedService, ServicioDatosService, AuthService, CustomAdapterService, CustomDateParserFormatterService, NgbTimeStringAdapterService],
+  providers: [LoggedService, CustomAdapterService, CustomDateParserFormatterService, NgbTimeStringAdapterService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

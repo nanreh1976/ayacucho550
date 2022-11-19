@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoggedService } from '../servicios/logged.service';
 import { BehaviorSubject } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../servicios/autentificacion/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,14 +18,14 @@ export class LoginComponent implements OnInit {
 // propiedades servicios logged 
   //$estado: BehaviorSubject<boolean>;
 
-  logIn(): void {
+ /*  logIn(): void {
     this.loggedService.LogIn();
     this.router.navigate(['home']) //se agrega la routa a donde navegar
     //this.closeModal();
     
-  }
+  } */
 
-  constructor( private router: Router, private loggedService:LoggedService) { 
+  constructor( private router: Router, private readonly authService: AuthService) { 
 
     /* this.$estado = loggedService.logged$ */
   } 
@@ -43,5 +43,12 @@ export class LoginComponent implements OnInit {
   }
 
  */
+
+  loginWithGoogle() {
+    this.authService
+      .loginWithGoogle()     
+      .then(() => this.router.navigate(['/home']))
+      .catch((e) => console.log(e.message));
+  }
 
 }

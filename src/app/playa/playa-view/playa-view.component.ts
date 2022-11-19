@@ -9,7 +9,6 @@ export class PlayaViewComponent implements OnInit {
 
 
   @Input() data?: any
-  @Input() $estado: any
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'Playa'
 

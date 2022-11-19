@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
 import { ConsultaFacturacion } from 'src/app/interfaces/consulta-facturacion';
+import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { ConsultaFacturacionService } from 'src/app/servicios/facturacion/consultaFacturacion/consulta-facturacion.service';
-import { LoggedService } from 'src/app/servicios/logged.service';
-import { ServicioDatosService } from 'src/app/servicios/servicio-datos.service';
+
+
 import { ConsultaFacturacionComponent } from '../consulta-facturacion/consulta-facturacion.component';
 import { FacturacionFormComponent } from '../facturacion-form/facturacion-form.component';
 
@@ -16,8 +17,7 @@ import { FacturacionFormComponent } from '../facturacion-form/facturacion-form.c
 
 <app-facturacion-view
 
-  [data]=data 
-  [$estado]=$estado  
+  [data]=data   
   [totalFacturacion]=totalFacturacion
   [respuestaFacturacion]=consultaFacturacion 
   (newItemEvent)="getMsg($event)"  >
@@ -38,11 +38,10 @@ componente: string = 'facturacion'
 // reactiveforms, modo edicion, delete etc
 //modo!: string;
 
-// propiedades logged service
-$estado;
+
 
 // data recibida del crud
-data!: [];
+data!: any;
 
 totalFacturacion!:number;
 
@@ -51,30 +50,26 @@ consultaFacturacion!:any;
 
 
 
-constructor(private modalService: NgbModal,
-            private loggedService: LoggedService,
+constructor(private modalService: NgbModal,           
             private fb: FormBuilder,
-            private servicioDatosService: ServicioDatosService,
+            private dbFirebase: DbFirestoreService,
             private consultaFacturacionService: ConsultaFacturacionService,
 ) {
-
-  this.$estado = loggedService.logged$;
 
 }
 
 
 
-ngOnInit(): void {
-  this.$estado.subscribe
+ngOnInit(): void { 
   this.getAll();  //tomar datos de los vehiculos en playa
   //this.facturacionTotal();
 }
 
 
 getMsg(msg: any) {
-  // console.log(msg, "from parent");
+  console.log(msg, "from parent");
   if(msg.op === "consulta facturacion"){
-    //console.log(msg);
+    console.log("esto es facturacion", this.data);
     this.consultaFacturacion = this.consultaFacturacionService.calcularFacturacion(msg.item, this.data);
     
     console.log("esto es facturacion-control: ", this.consultaFacturacion);
@@ -152,11 +147,13 @@ switch (op) {
 getAll(): void {
 let acumulador:number = 0;
 let dato:any
-this.servicioDatosService.getAll(this.componente).subscribe (
-datos => {this.data = datos;
-   //console.log("get all ", this.componente, this.data)
-   
-   this.data.forEach((datos) => {                 //por cada data de facturacion
+
+this.dbFirebase.getAll(this.componente).subscribe(data => {
+  this.data = data;
+  localStorage.setItem(`${this.componente}`, JSON.stringify(data))
+  console.log(this.data);      
+
+  this.data.forEach((datos: any) => {                 //por cada data de facturacion
     dato = datos                                  //lo guarda en una nueva variable (pq sino no lo reconocia) 
     //console.log(dato);    
     acumulador = acumulador + dato.saldo;         //saca el saldo y lo guarda en un acumulador
@@ -164,24 +161,24 @@ datos => {this.data = datos;
   })  
   this.totalFacturacion = acumulador;             //guarda el valor del acumulador en una variable para enviar al view
   //console.log(this.totalFacturacion);
-  
+
 }
-);
+); 
 }
 
 
 deleteItem(componente: string, item: any): void {
- console.log("delete component", item, item.id)
+ /* console.log("delete component", item, item.id)
 this.servicioDatosService.deleteItem(componente, item.id)
 .subscribe 
 (data => { 
   this.data = data; 
   this.ngOnInit();
-})
+}) */
 }
 
 addItem(componente: string, item: any): void {
-
+/* 
 console.log("add itemcomponent", item, )
 this.servicioDatosService.addItem(componente, item) 
 .subscribe
@@ -189,18 +186,18 @@ this.servicioDatosService.addItem(componente, item)
   this.data = data; 
   this.ngOnInit();
 });
-
+ */
 }
 
 updateItem(componente: string, item: any): void {
-
+/* 
 this.servicioDatosService.updateItem(componente, item, item.id)
 .subscribe
 (data => { 
   this.data = data; 
   this.ngOnInit();
 });
-
+ */
 }
 
 
