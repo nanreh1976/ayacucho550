@@ -15,14 +15,14 @@
             <app-btn-agregar 
             type="submit"
             name = 'Ingreso'
-           
+            (click)="setTitulo('Agregar')"
               class="d-flex align-items-center "   >
             </app-btn-agregar>
         </div>
         <div>
             <app-btn-eliminar 
             type="submit"
-            
+            (click)="setTitulo('Eliminar')"
             class="d-flex align-items-center "
             name = 'Egreso'>
             

@@ -48,6 +48,8 @@ export class InicioComponent implements OnInit {
 
 
   ngOnInit(): void {
+   
+    
   }
 
   get Patente(){
@@ -55,9 +57,17 @@ export class InicioComponent implements OnInit {
   }
 
   onSubmit(){   
-    this.titulo = "Agregar";    
-    this.msgBack(this.titulo, this.patenteForm.value.patente);
     
+    if(this.patenteForm.valid){
+      this.msgBack(this.titulo, this.patenteForm.value.patente);
+      }else {
+        console.log("form is invalid")
+        }
+    
+  }
+
+  setTitulo(titulo: string){
+    this.titulo = titulo;  
   }
 
 }
