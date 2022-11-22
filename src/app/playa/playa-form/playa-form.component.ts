@@ -34,7 +34,7 @@ export class PlayaFormComponent implements OnInit {
     estadia:0,
 
 };  
-  fechaIngreso!:any;
+  fechaSalida!:Date;
   horaIngreso!:any;
   tarifas!: Tarifas [];
   componenteTarifas: string = "tarifas"
@@ -44,78 +44,64 @@ export class PlayaFormComponent implements OnInit {
   patenteNueva!: boolean;
   patentesPlaya!:any;
   clienteExiste:any;  
+  sinEdicion:boolean = true;
+  vehiculoEliminar!: any;
+  tarifaEliminar: Tarifas;
 
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService, private estadiaService :EstadiaService, private clientesService: ClientesService
   ) {
    this.createForm();
   }
 
-  puestoPlaya: PlayaI = {
-    id: 1,
-    patente: "fht231",
-    fechas: {
-      fechaDate: "Tue Oct 25 2022 15:09:31 GMT-0300 (hora estándar de Argentina)",
-      fechaIngreso: "25-10-2022",
-      horaIngreso: "15:17:23",
-      fechaSalidaDate: "",
-      fechaSalida: "",
-      horaSalida: "",
-      estadia: 0,
-    },
-    tarifa:{
-      id: 4,
-      nombre: "camioneta-basico",               // nombre de la tarifa 
-      categoria: "camioneta",            // tipo de vehiculo
-      fraccion: 30,             // fraccion minima de facturacion
-      unidad_tiempo: "min",        // minutos, horas, dias, semanas, mes
-      valor: 180,                
-      tolerancia: 5,           // rango de tolerancia
-    },
-    descripcion: "Scania 1114",
-    saldo: 0,
-    codigoBarras: "fht231-15:17:23"
-  };
-
   ngOnInit(): void {
     this.getTarifas();
-    //this.getPlaya();                                                    //se traen las tarifas    
+    this.getPlaya();                                                    //se traen las tarifas    
     {
       //console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
       this.item = this.fromParent.item;
-      this.editForm.value.patente = this.fromParent.item.patente;
-      //console.log(this.editForm.patente);
-      
-      //console.log(`esto es el item que recibe: ${this.fromParent.item.patente}`);
-      //console.log(`esto es el form patente: ${this.editForm.patente}`);
-      
-      if(this.titulo === 'Agregar'){  
-                                        //si es un ingreso nuevo, se llama a la funcion para configurar la fecha       
-        /* this.getClientes();
-        this.getVehiculos();  */
-        //this.validarPatente();
-        this.saldo = 0;
-        this.item.id = "";
-        this.getPlaya();
-        this.configurarFecha();       
-        //this.buscarPatente()
-        this.buscarCliente();         
-      } 
-      //else if (this.titulo === 'Editar')
-      else
-      {                           //si es una edicion, se guardan las fechas y las tarifas y se llama a la funcion para configurar form
-        //this.item = this.fromParent.item;
-        this.saldo = 0;
-        this.tarifaSeleccionada = this.item.tarifa;
-        this.fechas = this.item.fechas;
-        this.configurarForm();
-        //this.validarPatente();
-      }
-     
+      this.editForm.patchValue({ 
+        patente: this.fromParent.item.patente,        
+      })
 
-    }    
-   
-   
+      switch (this.titulo) {
+        case 'Agregar': {
+          this.saldo = 0;
+          this.item.id = "";
+          this.buscarPatente();
+          this.configurarFecha();                 
+          this.buscarCliente();  
+          break;
+        }
+  
+        case 'Editar': {
+          this.sinEdicion = false;
+          this.saldo = 0;
+          this.tarifaSeleccionada = this.item.tarifa;
+          this.fechas = this.item.fechas;
+          this.configurarForm();
+          break;
+        }
+        case 'Eliminar': {          
+          this.eliminarVehiculo();
+          this.pruebaCierreHora();
+          break;
+        }
+
+        case 'Reimprimir': {
+          this.saldo = 0;
+          this.tarifaSeleccionada = this.item.tarifa;
+          this.fechas = this.item.fechas;
+          this.armarPuestoEstacionamiento();
+          break;
+        }
+  
+        default: {
+          
+          break;
+        }
+      }
+    }          
   }
 
   createForm() {                                               
@@ -136,15 +122,19 @@ export class PlayaFormComponent implements OnInit {
     })
   }
 
+  onSubmit(){   
+      this.guardarDatos();
+     /* if(this.editForm.valid){                                        //esto no funciona y no se pq
+      this.guardarDatos();
+      }else {
+        console.log("form is invalid")
+        }  */    
+  }
+
+
+  
   guardarDatos(){
-    /* if(this.titulo === 'Agregar'){                                      //si es un ingreso nuevo, valida la patente
-     this.validarPatente() ;     
-    } else 
-    // if (this.titulo === "Editar")
-    { 
-                                     //si es una edicion, se arma el puesto con los nuevos datos
-      this.armarPuestoEstacionamiento()      
-    } */
+    
     switch (this.titulo) {
       case 'Agregar': {  
         this.validarTarifa() ;  
@@ -156,31 +146,12 @@ export class PlayaFormComponent implements OnInit {
         this.validarTarifa();
         
         break;
-      }
-      case 'Eliminar': {  
-        this.pruebaCierreHora();
-        break;
-      }
-      case 'Reimprimir': {  
-        this.armarPuestoEstacionamiento() ;   
-        break;
-      }
+      }      
       default: {
         //console.log("algo se rompio")
         break;
       }
-
-}
-}
-
-Automatico(){
-  let value = {
-    op: "Agregar",
-    item: this.puestoPlaya
-    
-  };
-   //console.log("closemodal", value)
-  this.activeModal.close(value);
+    }
 }
 
 closeModal() {
@@ -222,19 +193,16 @@ validarPatente(){
  }
 
  buscarPatente(){
-  //console.log(this.patentesPlaya);
+  //console.log("metodo buscar patente. playa: ", this.patentesPlaya);
   
   this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.value.patente, this.patentesPlaya);
-  if(this.patenteNueva){
-    //this.validarPatente()
-  }else{
+  if(this.patenteNueva === false){
     alert("esta patente ya fue ingresada")   
     //this.titulo = "";
     //this.puestoEstacionamiento.patente = this.fromParent.item.patente
-    //console.log(this.puestoEstacionamiento);
-    
+    //console.log(this.puestoEstacionamiento);    
     this.activeModal.dismiss()
-
+    //this.validarPatente()
   }
  }
 
@@ -260,18 +228,22 @@ pruebaCierreHora(){
   //console.log(this.item);  
   //console.log(this.titulo);
   
-  this.fechas.fechaSalidaDate = this.fechaService.fechaActual().toString(); // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
-  console.log("esta es la fecha de salida: ", this.item.fechas.fechaSalidaDate);
+  this.fechaSalida = this.fechaService.fechaActual(); // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
+  //console.log("esta es la fecha de salida: ", this.fechaSalida);
 
-  this.fechas.fechaSalida = this.fechaService.fechaDia(this.item.fechas.fechaSalidaDate);
-  console.log("esta es el dia de la salida: ", this.item.fechas.fechaSalida);
+  this.fechas.fechaSalida = this.fechaService.fechaDia(this.fechaSalida);
+  //console.log("esta es el dia de la salida: ", this.fechas.fechaSalida);
 
-  this.fechas.horaSalida = this.fechaService.fechaHora(this.item.fechas.fechaSalidaDate);
-  console.log("esta es la de la salida: ", this.item.fechas.horaSalida); 
+  this.fechas.horaSalida = this.fechaService.fechaHora(this.fechaSalida);
+  //console.log("esta es la de la salida: ", this.fechas.horaSalida); 
 
   this.fechas.estadia = this.fechaService.pruebaCierreHora(this.fechas.fechaDate);
-  console.log("esta es la fecha.estadia: ", this.fechas.estadia);
+ //console.log("esta es la fecha de ingreso date: ", this.fechas.fechaDate)
+  //console.log("esta es la fecha.estadia: ", this.fechas.estadia);
 
+  this.fechas.fechaSalidaDate = this.fechaSalida.toString();
+ // console.log("esta es la fecha salida to string: ", this.fechas.fechaSalidaDate);
+  
 
   this.saldoEstadia();
   
@@ -299,7 +271,8 @@ changeTarifa(e: any) {
 }
 
 saldoEstadia( ){ 
-  this.saldo = this.estadiaService.saldoEstadia(this.item.tarifa, this.fechas.estadia );
+
+  this.saldo = this.estadiaService.saldoEstadia(this.tarifaSeleccionada, this.fechas.estadia );
 
   this.armarPuestoEstacionamiento();
 } 
@@ -315,27 +288,16 @@ armarPuestoEstacionamiento() {
     saldo: this.saldo,
     codigoBarras: `${ this.fromParent.item.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
   }  
-  //if (tarifa="undifined"){
 
-
-  
   this.item= this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
   //console.log("este es el item final: ", this.puestoEstacionamiento)
   this.closeModal();
 }
 
 getPlaya()  {
-  //console.log("pasa por aca?");
   
-  /* this.servicioDatosService.getAll("playa").subscribe (
-    datos => {this.patentesPlaya = datos;
-    console.log("get all Playa", this.patentesPlaya)  
-    this.buscarPatente()
-    }      
-  ); */
-  this.patentesPlaya = JSON.parse(localStorage.getItem("playa")||`{}`)
-  //console.log(this.patentesPlaya);  
-  this.buscarPatente()
+  this.patentesPlaya = JSON.parse(localStorage.getItem("playa")||`{}`)  
+  
   
 }
 
@@ -343,27 +305,20 @@ buscarCliente(){
   /* console.log(this.vehiculos);
   console.log(this.clientes); */
   let consulta = this.clientesService.buscarPatente(this.fromParent.item.patente); 
-  console.log(consulta);
+  console.log("esto es buscar cliente. respuesta a la consulta: ", consulta);
 
   if(consulta.clienteExiste){                         //este camino es si el cliente existe en la base de datos
     //console.log(consulta.datosCliente);
     this.clienteExiste = consulta.datosVehiculo;
-    //console.log(this.clienteExiste);
+    //console.log("esto es clienteExiste: ",this.clienteExiste);
     
-    this.tarifaSeleccionada = this.buscarTarifa(this.clienteExiste.idTarifa);
-    console.log(this.tarifaSeleccionada);
-
-    
+    //this.tarifaSeleccionada = this.buscarTarifa(this.clienteExiste.idTarifa);
+    this.tarifaSeleccionada = this.clienteExiste.tarifa;
+    //console.log(this.tarifaSeleccionada);
   
     this.armarPuestoEstacionamiento()
 
-  }else{                                              //este camino es si el cliente NO existe en la base de datos
-    this.editForm.patchValue({ 
-      patente: this.fromParent.item.patente,
-      descripcion: "",
-    })
   }
-
   
   
 }
@@ -377,6 +332,25 @@ buscarTarifa(id:number){
   //console.log(tarifas[0]);
   
   return tarifas[0]
+}
+
+eliminarVehiculo(){
+  /* console.log("esto es eliminar vehiculo. patente: ", this.editForm.value.patente );
+  console.log("esto es eliminar vehiculo. playa: ", this.patentesPlaya); */
+  
+  this.vehiculoEliminar = this.validacionPatente.eliminarVehiculo(this.editForm.value.patente, this.patentesPlaya);
+  //console.log("esto es eliminar vehiculo. vehiculo: ", this.vehiculoEliminar); 
+    
+  this.fechas = this.vehiculoEliminar.fechas;
+ // console.log("esta es las fechas del vehiulo a eliminar. Fechas: ", this.fechas);
+
+  this.tarifaSeleccionada = this.vehiculoEliminar.tarifa;
+  //console.log("este es la tarifa del vehiculo a eliminar: ", this.tarifaSeleccionada);
+  
+  this.item= this.vehiculoEliminar;;                         //gurda el puesto en "item" para poder enviarlo
+  //console.log("esto es eliminar vehiculo. item: ", this.item);
+  
+
 }
   
 }

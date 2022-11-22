@@ -7,12 +7,13 @@
 <div class="modal-body">
   <div class="container">
       <div class="modal-body">
-        <form [formGroup]="editForm" novalidate>
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label for="Patente">Patente</label>
             <div class="input-group">
               <input formControlName="patente" class="form-control" required type="text"
-              [ngClass]="{'is-invalid':Patente?.errors && Patente?.touched, 'is-valid': !Patente?.errors && !Patente?.touched }">    
+              [ngClass]="{'is-invalid':Patente?.errors && Patente?.touched, 'is-valid': !Patente?.errors && !Patente?.touched }"
+              [readonly]="sinEdicion">    
               <div *ngIf="Patente?.errors?.required && Patente?.touched" class="text-danger fs-6">
                   Ingrese la patente por favor
               </div>
@@ -22,11 +23,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="Tarifa">Tarifa</label>
-        <!--     <div class="input-group">
-              <input formControlName="idTarifa" class="form-control" required type="text">
-            </div> -->
-            
+            <label for="Tarifa">Tarifa</label>        
             <select class="form-select form-select-md mb-3" (change)="changeTarifa($event)">
               <option value={{tarifaSeleccionada}}>Elegir Tarifa</option>
               <option *ngFor="let tarifa of tarifas">
@@ -40,8 +37,6 @@
               <input formControlName="descripcion" class="form-control" required type="text">
             </div>
           </div>
-
-    
           <table class="table" *ngIf='titulo==="Agregar"'>
             <tr>
               <td>
@@ -59,24 +54,14 @@
               </td>
             </tr>
           </table>
-          <!-- <div class="form-group">
-
-            <div class="input-group">
-              <input formControlName="id" class="form-control" type="hidden">
-            </div>
-          </div> -->
+          <div class="modal-footer">
+            <button type="submit"class="btn btn-success">
+              {{titulo}}
+            </button>
+          </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-success" (click)="guardarDatos()">
-          {{titulo}}
-        </button>
-      </div>
-    </div>
-    <div>
-      <button class="btn btn-outline-primary" (click)="Automatico()">
-        boton playa
-      </button>
-    </div>
+      
+    </div> 
 </div>
 

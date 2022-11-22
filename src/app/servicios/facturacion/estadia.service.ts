@@ -10,6 +10,9 @@ export class EstadiaService {
 
   saldoEstadia(tarifas:Tarifas, minutosEstadia:number){
 
+    console.log("este es el servicio tarifas. tarifas: ", tarifas);
+    
+
     let saldo:number; 
     let valorTarifa: number = tarifas.valor;  
 
@@ -41,7 +44,7 @@ export class EstadiaService {
       
 //        break;      
       default:
-        return saldo=1
+        return saldo=0
 
     }
     
