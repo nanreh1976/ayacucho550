@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors, Validator, ValidatorFn } from '@angular/forms';
+import { PlayaI } from 'src/app/interfaces/playaI';
+
 
 
 @Injectable({
@@ -16,7 +18,7 @@ export class ValidarPatenteService implements Validator {
   }  
 
   patentesPlaya!:any;
-
+  vehiculo: PlayaI [];
 
   constructor() { }
   validate(control: AbstractControl<any, any>): ValidationErrors | null {
@@ -56,8 +58,8 @@ export class ValidarPatenteService implements Validator {
   buscarPatentePlaya(patente:string, playa:any){
     this.patentesPlaya = playa
      
-    console.log(playa);
-    console.log(patente)
+    console.log("servicio validar patente: playa", playa);
+    console.log("servicio validar patente: ", patente)
 
     //la funcion filter recorre el array y devuelve un objeto que coincida con la patente buscada
     //reescribe el mismo array
@@ -77,6 +79,17 @@ export class ValidarPatenteService implements Validator {
       return false
     }
 
+  }
+
+  eliminarVehiculo(patente:string, playa:any){
+  
+    this.patentesPlaya = playa;
+
+    this.patentesPlaya = this.patentesPlaya.filter(function(patentesPlaya:any){
+      return patentesPlaya.patente === patente;
+    });
+    console.log(this.patentesPlaya);
+    return this.patentesPlaya[0];
   }
   
 }

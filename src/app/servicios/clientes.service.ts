@@ -26,7 +26,7 @@ export class ClientesService implements OnInit {
       datosVehiculo:"",
       /* datosTarifa:"", */    }
     
-    console.log(vehiculos);
+    //console.log(vehiculos);
     
     //la funcion filter recorre el array y devuelve un objeto que coincida con la patente buscada
     //reescribe el mismo array
@@ -35,7 +35,7 @@ export class ClientesService implements OnInit {
     vehiculos = vehiculos.filter(function(vehiculo:any){
       return vehiculo.patente === patente;
     }); 
-    console.log(vehiculos[0]);
+    console.log("esto es el servicio cliente. vehiculo: ", vehiculos[0]);
 
 
     if(vehiculos.length === 0){
