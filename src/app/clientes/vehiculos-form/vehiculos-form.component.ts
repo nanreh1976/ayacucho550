@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
+import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
 
 
 @Component({
@@ -26,7 +28,7 @@ export class VehiculosFormComponent implements OnInit {
   
   vehiculos: Vehiculo [];
 
-  constructor(private fb: FormBuilder, private dbFirebase: DbFirestoreService,) {
+  constructor(private fb: FormBuilder, private dbFirebase: DbFirestoreService, public activeModal: NgbActiveModal, public vpService: ValidarPatenteService) {
     
    }
 
@@ -69,7 +71,7 @@ export class VehiculosFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      patente: [''],
+      patente: ['',  [Validators.required, Validators.minLength(6), this.vpService.evaluarPatente()]],  
       marca: [''],
       modelo: [''],
       color: [''],
@@ -159,6 +161,10 @@ export class VehiculosFormComponent implements OnInit {
     this.newItemEvent.emit(value);
     console.log(value);
     
+  }
+
+  get Patente(){
+    return this.editForm.get("patente"); 
   }
 
 

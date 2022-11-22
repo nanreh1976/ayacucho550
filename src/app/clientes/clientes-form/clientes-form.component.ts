@@ -72,9 +72,9 @@ export class ClientesFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      apellido: [''],
-      nombre: [''],
-      telefono: [''],
+      apellido: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
+      nombre: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
+      telefono: ['', Validators.pattern(/^[0-9]{5,10}$/)],
       direccion: [''],
       comentario: [''],
       email: ['', [Validators.required, Validators.email]],
@@ -101,6 +101,18 @@ get Email(){
   return this.editForm.get("email"); 
 }
 
+get Telefono(){
+  return this.editForm.get("telefono"); 
+}
+
+get Nombre(){
+  return this.editForm.get("nombre"); 
+}
+
+get Apellido(){
+  return this.editForm.get("apellido"); 
+}
+
 getMsg(msg: any) {
   console.log(msg, "from vehiculos-form");
   /* let value = {
@@ -113,6 +125,8 @@ getMsg(msg: any) {
   this.activeModal.close(msg);
   
 }
+
+
 
   
 }
