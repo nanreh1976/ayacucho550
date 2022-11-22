@@ -21,17 +21,17 @@ export class ConsultaFacturacionService {
 
   calcularFacturacion(fechas: any, facturacion: any) {
   
-    console.log("servicio del facturacion, facturacion: ", facturacion);
+    //console.log("servicio del facturacion, facturacion: ", facturacion);
    
     let facturacionFiltrada = facturacion.filter((factura: any) => {
 
       factura.fechas.fechaSalidaDate = factura.fechas.fechaSalidaDate.toString();
-      console.log("esto es la fecha de salida: ", factura.fechas.fechaSalidaDate);
+      //console.log("esto es la fecha de salida: ", factura.fechas.fechaSalidaDate);
       
 
 
       let fechaSalidaMilisegundos = new Date(factura.fechas.fechaSalidaDate).getTime()
-      console.log("servicio del facturacion, fecha salida: ", fechaSalidaMilisegundos);
+      //console.log("servicio del facturacion, fecha salida: ", fechaSalidaMilisegundos);
       
       return fechaSalidaMilisegundos > fechas.fechaDesde && fechaSalidaMilisegundos < fechas.fechaHasta
     })  
@@ -40,7 +40,7 @@ export class ConsultaFacturacionService {
     this.consultaFacturacion.fechaHasta = this.convertirMilisegundosAFecha(fechas.fechaHasta)
     this.consultaFacturacion.cantidadOperacion = facturacionFiltrada.length;
     this.consultaFacturacion.total = this.calularTotal(facturacionFiltrada);
-    console.log(this.consultaFacturacion); 
+    //console.log(this.consultaFacturacion); 
     //return this.ConsultaFacturacion
 
     let respuestaFacturacion = {
@@ -48,7 +48,7 @@ export class ConsultaFacturacionService {
       facturacion : facturacionFiltrada,
     }
 
-    console.log(respuestaFacturacion);
+    //console.log(respuestaFacturacion);
     return respuestaFacturacion;
     
   }

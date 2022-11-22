@@ -1,11 +1,17 @@
 <!-- <H1 class="display-1" style="text-align: center;">Facturacion </H1> -->
 
 
-
 <div class="container">
     <div class="form-group mb-4">
         <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
+    <div *ngIf="respuestaFacturacion !== undefined else tituloFacturacionDelDia">
+        <h2>Detallde de Consulta</h2>
     </div>
+    <ng-template #tituloFacturacionDelDia>
+        <div>
+            <h2>Facturacion del dia {{facturacionDeldia.consultaFacturacion.fechaDesde}} </h2>
+        </div>
+    </ng-template>    
 
     <table class="table" *ngIf="(data | filter: searchText).length > 0; else noResults">
         <colgroup>
@@ -30,7 +36,7 @@
 
 
 
-        <tbody *ngIf="respuestaFacturacion !== undefined">
+        <tbody *ngIf="respuestaFacturacion !== undefined else facturacionDia">
             <tr *ngFor="let item of respuestaFacturacion.facturacion | filter: searchText; let i = index">
                 <th scope="row">{{i + 1}}</th>
                 <td>{{item.patente}}</td>
@@ -50,10 +56,10 @@
 
             </tr>
         </tbody>
-        <tfoot>
+        <tfoot *ngIf="respuestaFacturacion !== undefined">
             <tr>
                 <td>Total:</td>
-                <td *ngIf="respuestaFacturacion !== undefined"> {{respuestaFacturacion.consultaFacturacion.total}} </td>
+                <td> {{respuestaFacturacion.consultaFacturacion.total}} </td>
             </tr>
         </tfoot>
         
@@ -62,3 +68,33 @@
     <ng-template #noResults>
         <p>Sin resultados para: "{{searchText}}".</p>
     </ng-template>
+</div>
+
+<ng-template #facturacionDia>
+    <tbody >
+        <tr *ngFor="let item of facturacionDeldia.facturacion | filter: searchText; let i = index">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{item.patente}}</td>
+            <td>{{item.fechas.fechaIngreso}} {{item.fechas.horaIngreso}} </td>
+            <td>{{item.fechas.fechaSalida}} {{item.fechas.horaSalida}}</td>
+            <td>{{item.tarifa.nombre}}</td>
+            <td>{{item.saldo}}</td>
+            <td>{{item.descripcion}}</td>
+
+
+
+
+
+
+          
+
+
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>Total:</td>
+            <td>$ {{facturacionDeldia.consultaFacturacion.total}} </td>
+        </tr>
+    </tfoot>
+</ng-template>
