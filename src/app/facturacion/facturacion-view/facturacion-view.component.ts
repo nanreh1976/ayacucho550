@@ -16,7 +16,8 @@ export class FacturacionViewComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'facturacion'
   @Input() totalFacturacion?:number;
-  @Input() respuestaFacturacion:any;
+  @Input() respuestaFacturacion:any;  
+  @Input() facturacionDeldia:any
 
   consultaForm!:any;
   minDateTime: Date;
@@ -43,5 +44,7 @@ export class FacturacionViewComponent implements OnInit {
    }
   msg: any
   ngOnInit(): void {
+    console.log(this.respuestaFacturacion);
+    
   }
 }

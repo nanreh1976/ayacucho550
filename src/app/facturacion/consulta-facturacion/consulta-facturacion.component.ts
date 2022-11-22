@@ -18,7 +18,7 @@ export class ConsultaFacturacionComponent implements OnInit {
   model1!: any;
 	model2!: any;
   time1:any = { hour: "00", minute: "00" };
-  time2:any = { hour: "00", minute: "00" };
+  time2:any = { hour: "23", minute: "59" };
   fechasConsulta:any = {
     fechaDesde: 0,
     fechaHasta: 0,
@@ -50,7 +50,7 @@ export class ConsultaFacturacionComponent implements OnInit {
     //console.log(this.fechasConsulta.fechaDesde);
 
     this.fechasConsulta.fechaHasta = new Date (this.model2.year, this.model2.month -1, this.model2.day, this.time2.hour, this.time2.minute ).getTime()
-    console.log(this.fechasConsulta.fechaHasta);
+    //console.log(this.fechasConsulta.fechaHasta);
    
     this.titulo = "consulta facturacion";
     this.msgBack(this.titulo, this.fechasConsulta)
@@ -67,7 +67,7 @@ export class ConsultaFacturacionComponent implements OnInit {
    
   getFacturacion(){
     this.facturacion = JSON.parse(localStorage.getItem("facturacion")||`{}`)
-    console.log(`estas es facturacion: `, this.facturacion);  
+    //console.log(`estas es facturacion: `, this.facturacion);  
   }
 
 
@@ -76,7 +76,7 @@ export class ConsultaFacturacionComponent implements OnInit {
       op: op,
       item: item,
     }
-    console.log(value);
+    //console.log(value);
     
     this.newItemEvent.emit(value);
     //this.ngOnInit();
