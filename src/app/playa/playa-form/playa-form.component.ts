@@ -11,6 +11,7 @@ import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patent
 import { CalculoFechasService } from 'src/app/servicios/Fechas/calculo-fechas.service';
 import { EstadiaService } from 'src/app/servicios/facturacion/estadia.service';
 import { ClientesService } from 'src/app/servicios/clientes.service';
+import { LogService } from 'src/app/servicios/log.service';
 
 @Component({
   selector: 'app-playa-form',
@@ -23,34 +24,42 @@ export class PlayaFormComponent implements OnInit {
   editForm!: any;
   titulo!: string;
   item!: any;
-  fecha!:Date;
+  fecha!: Date;
   fechas: Fechas = {
-    fechaDate : "",
+    fechaDate: "",
     fechaIngreso: "",
     horaIngreso: "",
     fechaSalidaDate: "",
     fechaSalida: "",
     horaSalida: "",
-    estadia:0,
+    estadia: 0,
 
-};  
-  fechaSalida!:Date;
-  horaIngreso!:any;
-  tarifas!: Tarifas [];
+  };
+  fechaSalida!: Date;
+  horaIngreso!: any;
+  tarifas!: Tarifas[];
   componenteTarifas: string = "tarifas"
   puestoEstacionamiento!: any;
   tarifaSeleccionada!: Tarifas;
-  saldo!:number;
+  saldo!: number;
   patenteNueva!: boolean;
-  patentesPlaya!:any;
-  clienteExiste:any;  
-  sinEdicion:boolean = true;
+  patentesPlaya!: any;
+  clienteExiste: any;
+  sinEdicion: boolean = true;
   vehiculoEliminar!: any;
   tarifaEliminar: Tarifas;
 
-  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private validacionPatente: ValidarPatenteService, private fechaService: CalculoFechasService, private estadiaService :EstadiaService, private clientesService: ClientesService
+  constructor(
+    public activeModal: NgbActiveModal,
+    private fb: FormBuilder,
+    private validacionPatente: ValidarPatenteService,
+    private fechaService: CalculoFechasService,
+    private estadiaService: EstadiaService,
+    private clientesService: ClientesService,
+    private logger: LogService
+
   ) {
-   this.createForm();
+    this.createForm();
   }
 
   ngOnInit(): void {
@@ -60,8 +69,8 @@ export class PlayaFormComponent implements OnInit {
       //console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
       this.item = this.fromParent.item;
-      this.editForm.patchValue({ 
-        patente: this.fromParent.item.patente,        
+      this.editForm.patchValue({
+        patente: this.fromParent.item.patente,
       })
 
       switch (this.titulo) {
@@ -69,11 +78,11 @@ export class PlayaFormComponent implements OnInit {
           this.saldo = 0;
           this.item.id = "";
           this.buscarPatente();
-          this.configurarFecha();                 
-          this.buscarCliente();  
+          this.configurarFecha();
+          this.buscarCliente();
           break;
         }
-  
+
         case 'Editar': {
           this.sinEdicion = false;
           this.saldo = 0;
@@ -82,7 +91,7 @@ export class PlayaFormComponent implements OnInit {
           this.configurarForm();
           break;
         }
-        case 'Eliminar': {          
+        case 'Eliminar': {
           this.eliminarVehiculo();
           this.pruebaCierreHora();
           break;
@@ -93,264 +102,265 @@ export class PlayaFormComponent implements OnInit {
           this.tarifaSeleccionada = this.item.tarifa;
           this.fechas = this.item.fechas;
           this.armarPuestoEstacionamiento();
+
           break;
         }
-  
+
         default: {
-          
+
           break;
         }
       }
-    }          
+    }
   }
 
-  createForm() {                                               
+  createForm() {
     this.editForm = this.fb.group({
-      patente: ['',  [Validators.required, Validators.minLength(6), this.validacionPatente.evaluarPatente()]],  
-      descripcion: [''],          
-    });   
+      patente: ['', [Validators.required, Validators.minLength(6), this.validacionPatente.evaluarPatente()]],
+      descripcion: [''],
+    });
   }
 
-  get Patente(){
+  get Patente() {
     return this.editForm.get("patente")
   }
 
-  configurarForm(){                                                          //se configura el form con los datos del objeto
-    this.editForm.patchValue({ 
+  configurarForm() {                                                          //se configura el form con los datos del objeto
+    this.editForm.patchValue({
       patente: this.item.patente,
       descripcion: this.item.descripcion,
     })
   }
 
-  onSubmit(){   
-      this.guardarDatos();
-     /* if(this.editForm.valid){                                        //esto no funciona y no se pq
-      this.guardarDatos();
-      }else {
-        console.log("form is invalid")
-        }  */    
+  onSubmit() {
+    this.guardarDatos();
+    /* if(this.editForm.valid){                                        //esto no funciona y no se pq
+     this.guardarDatos();
+     }else {
+       console.log("form is invalid")
+       }  */
   }
 
 
-  
-  guardarDatos(){
-    
+
+  guardarDatos() {
+
     switch (this.titulo) {
-      case 'Agregar': {  
-        this.validarTarifa() ;  
-        break;
-      }      
-      case 'Editar': {  
-        //this.validarPatente() ;
-        this.getPlaya();          
+      case 'Agregar': {
         this.validarTarifa();
-        
         break;
-      }      
+      }
+      case 'Editar': {
+        //this.validarPatente() ;
+        this.getPlaya();
+        this.validarTarifa();
+
+        break;
+      }
       default: {
         //console.log("algo se rompio")
         break;
       }
     }
-}
-
-closeModal() {
-    //console.log(this.puestoEstacionamiento);
-    
-   let value = {
-   op: this.titulo,
-   item: this.puestoEstacionamiento,
-   
- };
-  console.log("closemodal", value)
- this.activeModal.close(value);
-} 
-
-
-validarPatente(){   
-  
-  //console.log(`esto es dentro de validarPatente: ${this.editForm.patente}`);
-  
-  let patenteValida = this.validacionPatente.validarPatente(this.editForm.value.patente);
-
-  if(patenteValida){
-    alert("es una patente valida")
-    //this.validarTarifa()
-  }else{
-    alert("no es una patente valida")
-    this.activeModal.dismiss()
   }
 
-}
+  closeModal() {
+    //console.log(this.puestoEstacionamiento);
 
- validarTarifa(){
+    let value = {
+      op: this.titulo,
+      item: this.puestoEstacionamiento,
 
-    if(this.tarifaSeleccionada !== undefined){
+    };
+    console.log("closemodal", value)
+    this.activeModal.close(value);
+  }
+
+
+  validarPatente() {
+
+    //console.log(`esto es dentro de validarPatente: ${this.editForm.patente}`);
+
+    let patenteValida = this.validacionPatente.validarPatente(this.editForm.value.patente);
+
+    if (patenteValida) {
+      alert("es una patente valida")
+      //this.validarTarifa()
+    } else {
+      alert("no es una patente valida")
+      this.activeModal.dismiss()
+    }
+
+  }
+
+  validarTarifa() {
+
+    if (this.tarifaSeleccionada !== undefined) {
       this.armarPuestoEstacionamiento();
     } else {
       alert("no elegiste la tarifa");
     }
- }
-
- buscarPatente(){
-  //console.log("metodo buscar patente. playa: ", this.patentesPlaya);
-  
-  this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.value.patente, this.patentesPlaya);
-  if(this.patenteNueva === false){
-    alert("esta patente ya fue ingresada")   
-    //this.titulo = "";
-    //this.puestoEstacionamiento.patente = this.fromParent.item.patente
-    //console.log(this.puestoEstacionamiento);    
-    this.activeModal.dismiss()
-    //this.validarPatente()
   }
- }
 
-configurarFecha(){
-                                                                       
-  this.fecha = this.fechaService.fechaActual();                                                        // toma la fecha actual    
-  //console.log(this.fecha);
+  buscarPatente() {
+    //console.log("metodo buscar patente. playa: ", this.patentesPlaya);
 
-  this.fechas.fechaIngreso = this.fechaService.fechaDia(this.fecha);                      // desgloza la fecha en formato (DD/MM/YYYY) y la guarda en el objeto fechas
-  //console.log(this.fechas.fechaIngreso);
+    this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.value.patente, this.patentesPlaya);
+    if (this.patenteNueva === false) {
+      alert("esta patente ya fue ingresada")
+      //this.titulo = "";
+      //this.puestoEstacionamiento.patente = this.fromParent.item.patente
+      //console.log(this.puestoEstacionamiento);    
+      this.activeModal.dismiss()
+      //this.validarPatente()
+    }
+  }
 
-  this.fechas.horaIngreso = this.fechaService.fechaHora(this.fecha);                     // desgloza la fecha en formato (hh:mm:ss) y la guarda en el objeto fechas
-  //console.log(this.fechas.horaIngreso);
+  configurarFecha() {
 
-  this.fechas.fechaDate = this.fecha.toString()
-  ////console.log(this.fechas.fechaDate);
-  
+    this.fecha = this.fechaService.fechaActual();                                                        // toma la fecha actual    
+    //console.log(this.fecha);
 
-} 
+    this.fechas.fechaIngreso = this.fechaService.fechaDia(this.fecha);                      // desgloza la fecha en formato (DD/MM/YYYY) y la guarda en el objeto fechas
+    //console.log(this.fechas.fechaIngreso);
 
-pruebaCierreHora(){  
- 
-  //console.log(this.item);  
-  //console.log(this.titulo);
-  
-  this.fechaSalida = this.fechaService.fechaActual(); // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
-  //console.log("esta es la fecha de salida: ", this.fechaSalida);
+    this.fechas.horaIngreso = this.fechaService.fechaHora(this.fecha);                     // desgloza la fecha en formato (hh:mm:ss) y la guarda en el objeto fechas
+    //console.log(this.fechas.horaIngreso);
 
-  this.fechas.fechaSalida = this.fechaService.fechaDia(this.fechaSalida);
-  //console.log("esta es el dia de la salida: ", this.fechas.fechaSalida);
+    this.fechas.fechaDate = this.fecha.toString()
+    ////console.log(this.fechas.fechaDate);
 
-  this.fechas.horaSalida = this.fechaService.fechaHora(this.fechaSalida);
-  //console.log("esta es la de la salida: ", this.fechas.horaSalida); 
 
-  this.fechas.estadia = this.fechaService.pruebaCierreHora(this.fechas.fechaDate);
- //console.log("esta es la fecha de ingreso date: ", this.fechas.fechaDate)
-  //console.log("esta es la fecha.estadia: ", this.fechas.estadia);
+  }
 
-  this.fechas.fechaSalidaDate = this.fechaSalida.toString();
- // console.log("esta es la fecha salida to string: ", this.fechas.fechaSalidaDate);
-  
+  pruebaCierreHora() {
 
-  this.saldoEstadia();
-  
+    //console.log(this.item);  
+    //console.log(this.titulo);
 
-  
-}
+    this.fechaSalida = this.fechaService.fechaActual(); // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
+    //console.log("esta es la fecha de salida: ", this.fechaSalida);
 
-getTarifas()  {
-  this.tarifas = JSON.parse(localStorage.getItem("tarifas")||`{}`)
-  console.log("estas son las tarifas: ", this.tarifas);  
-  
-}
+    this.fechas.fechaSalida = this.fechaService.fechaDia(this.fechaSalida);
+    //console.log("esta es el dia de la salida: ", this.fechas.fechaSalida);
 
-changeTarifa(e: any) {
-  console.log(e.target.value)    
-  let tarifaForm   //crea una variable para usarlo con la funcion filter
+    this.fechas.horaSalida = this.fechaService.fechaHora(this.fechaSalida);
+    //console.log("esta es la de la salida: ", this.fechas.horaSalida); 
 
-  tarifaForm = this.tarifas.filter(function(tarifas:any){       //filter recorre el array tarifas y devuelve otro array con lo que sea q coincida con el parametro
-    return tarifas.nombre === e.target.value
-  })
-  
-  this.tarifaSeleccionada = tarifaForm[0];               //se guarda el nombre de la tarifa seleccionada en la variable
-  console.log(this.tarifaSeleccionada);
-  
-}
+    this.fechas.estadia = this.fechaService.pruebaCierreHora(this.fechas.fechaDate);
+    //console.log("esta es la fecha de ingreso date: ", this.fechas.fechaDate)
+    //console.log("esta es la fecha.estadia: ", this.fechas.estadia);
 
-saldoEstadia( ){ 
+    this.fechas.fechaSalidaDate = this.fechaSalida.toString();
+    // console.log("esta es la fecha salida to string: ", this.fechas.fechaSalidaDate);
 
-  this.saldo = this.estadiaService.saldoEstadia(this.tarifaSeleccionada, this.fechas.estadia );
 
-  this.armarPuestoEstacionamiento();
-} 
+    this.saldoEstadia();
 
-armarPuestoEstacionamiento() {     
-  //la funcion arma el puesto
+
+
+  }
+
+  getTarifas() {
+    this.tarifas = JSON.parse(localStorage.getItem("tarifas") || `{}`)
+    console.log("estas son las tarifas: ", this.tarifas);
+
+  }
+
+  changeTarifa(e: any) {
+    console.log(e.target.value)
+    let tarifaForm   //crea una variable para usarlo con la funcion filter
+
+    tarifaForm = this.tarifas.filter(function (tarifas: any) {       //filter recorre el array tarifas y devuelve otro array con lo que sea q coincida con el parametro
+      return tarifas.nombre === e.target.value
+    })
+
+    this.tarifaSeleccionada = tarifaForm[0];               //se guarda el nombre de la tarifa seleccionada en la variable
+    console.log(this.tarifaSeleccionada);
+
+  }
+
+  saldoEstadia() {
+
+    this.saldo = this.estadiaService.saldoEstadia(this.tarifaSeleccionada, this.fechas.estadia);
+
+    this.armarPuestoEstacionamiento();
+  }
+
+  armarPuestoEstacionamiento() {
+    //la funcion arma el puesto
     this.puestoEstacionamiento = {
-    id: this.item.id, 
-    patente: this.editForm.value.patente,
-    fechas: this.fechas,
-    tarifa : this.tarifaSeleccionada,
-    descripcion:this.editForm.value.descripcion,
-    saldo: this.saldo,
-    codigoBarras: `${ this.fromParent.item.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
-  }  
+      id: this.item.id,
+      patente: this.editForm.value.patente,
+      fechas: this.fechas,
+      tarifa: this.tarifaSeleccionada,
+      descripcion: this.editForm.value.descripcion,
+      saldo: this.saldo,
+      codigoBarras: `${this.fromParent.item.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
+    }
 
-  this.item= this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
-  //console.log("este es el item final: ", this.puestoEstacionamiento)
-  this.closeModal();
-}
+    this.item = this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
+    //console.log("este es el item final: ", this.puestoEstacionamiento)
+    this.closeModal();
+  }
 
-getPlaya()  {
-  
-  this.patentesPlaya = JSON.parse(localStorage.getItem("playa")||`{}`)  
-  
-  
-}
+  getPlaya() {
 
-buscarCliente(){
-  /* console.log(this.vehiculos);
-  console.log(this.clientes); */
-  let consulta = this.clientesService.buscarPatente(this.fromParent.item.patente); 
-  console.log("esto es buscar cliente. respuesta a la consulta: ", consulta);
+    this.patentesPlaya = JSON.parse(localStorage.getItem("playa") || `{}`)
 
-  if(consulta.clienteExiste){                         //este camino es si el cliente existe en la base de datos
-    //console.log(consulta.datosCliente);
-    this.clienteExiste = consulta.datosVehiculo;
-    //console.log("esto es clienteExiste: ",this.clienteExiste);
-    
-    //this.tarifaSeleccionada = this.buscarTarifa(this.clienteExiste.idTarifa);
-    this.tarifaSeleccionada = this.clienteExiste.tarifa;
-    //console.log(this.tarifaSeleccionada);
-  
-    this.armarPuestoEstacionamiento()
 
   }
-  
-  
-}
 
-buscarTarifa(id:number){
-  let tarifas = JSON.parse(localStorage.getItem("tarifas")||`{}`)
+  buscarCliente() {
+    /* console.log(this.vehiculos);
+    console.log(this.clientes); */
+    let consulta = this.clientesService.buscarPatente(this.fromParent.item.patente);
+    console.log("esto es buscar cliente. respuesta a la consulta: ", consulta);
 
-  tarifas = tarifas.filter(function(tarifa:any){
-    return tarifa.id === id;
-  }); 
-  //console.log(tarifas[0]);
-  
-  return tarifas[0]
-}
+    if (consulta.clienteExiste) {                         //este camino es si el cliente existe en la base de datos
+      //console.log(consulta.datosCliente);
+      this.clienteExiste = consulta.datosVehiculo;
+      //console.log("esto es clienteExiste: ",this.clienteExiste);
 
-eliminarVehiculo(){
-  /* console.log("esto es eliminar vehiculo. patente: ", this.editForm.value.patente );
-  console.log("esto es eliminar vehiculo. playa: ", this.patentesPlaya); */
-  
-  this.vehiculoEliminar = this.validacionPatente.eliminarVehiculo(this.editForm.value.patente, this.patentesPlaya);
-  //console.log("esto es eliminar vehiculo. vehiculo: ", this.vehiculoEliminar); 
-    
-  this.fechas = this.vehiculoEliminar.fechas;
- // console.log("esta es las fechas del vehiulo a eliminar. Fechas: ", this.fechas);
+      //this.tarifaSeleccionada = this.buscarTarifa(this.clienteExiste.idTarifa);
+      this.tarifaSeleccionada = this.clienteExiste.tarifa;
+      //console.log(this.tarifaSeleccionada);
 
-  this.tarifaSeleccionada = this.vehiculoEliminar.tarifa;
-  //console.log("este es la tarifa del vehiculo a eliminar: ", this.tarifaSeleccionada);
-  
-  this.item= this.vehiculoEliminar;;                         //gurda el puesto en "item" para poder enviarlo
-  //console.log("esto es eliminar vehiculo. item: ", this.item);
-  
+      this.armarPuestoEstacionamiento()
 
-}
-  
+    }
+
+
+  }
+
+  buscarTarifa(id: number) {
+    let tarifas = JSON.parse(localStorage.getItem("tarifas") || `{}`)
+
+    tarifas = tarifas.filter(function (tarifa: any) {
+      return tarifa.id === id;
+    });
+    //console.log(tarifas[0]);
+
+    return tarifas[0]
+  }
+
+  eliminarVehiculo() {
+    /* console.log("esto es eliminar vehiculo. patente: ", this.editForm.value.patente );
+    console.log("esto es eliminar vehiculo. playa: ", this.patentesPlaya); */
+
+    this.vehiculoEliminar = this.validacionPatente.eliminarVehiculo(this.editForm.value.patente, this.patentesPlaya);
+    //console.log("esto es eliminar vehiculo. vehiculo: ", this.vehiculoEliminar); 
+
+    this.fechas = this.vehiculoEliminar.fechas;
+    // console.log("esta es las fechas del vehiulo a eliminar. Fechas: ", this.fechas);
+
+    this.tarifaSeleccionada = this.vehiculoEliminar.tarifa;
+    //console.log("este es la tarifa del vehiculo a eliminar: ", this.tarifaSeleccionada);
+
+    this.item = this.vehiculoEliminar;;                         //gurda el puesto en "item" para poder enviarlo
+    //console.log("esto es eliminar vehiculo. item: ", this.item);
+
+
+  }
+
 }
