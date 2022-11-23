@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DbFirestoreService } from '../servicios/database/db-firestore.service';
 import { LogService } from '../servicios/log.service';
 
 @Component({
@@ -8,7 +9,13 @@ import { LogService } from '../servicios/log.service';
 })
 export class LogsComponent implements OnInit {
 
-  constructor(private logger: LogService) {
+  searchText!: string;
+  componente:string="logger"
+  data!: any;
+
+  constructor(private logger: LogService,
+    private dbFirebase: DbFirestoreService,
+    ) {
   }
 
   testLog(): void {
@@ -17,6 +24,15 @@ export class LogsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getAll();
+  }
+
+  getAll(): void {
+    this.dbFirebase.getAll(this.componente).subscribe(data => {
+      this.data = data;
+      localStorage.setItem(`${this.componente}`, JSON.stringify(data))
+      console.log(this.data);      
+    })
   }
 
 }
