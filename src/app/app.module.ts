@@ -62,6 +62,8 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { AuthGuard, canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { AuthService } from './servicios/autentificacion/auth.service';
 import { ScannerComponent } from './scanner/scanner.component';
+import { LogsComponent } from './logs/logs.component';
+import { LogService } from './servicios/log.service';
 
 
 
@@ -84,6 +86,7 @@ const appRoutes: Routes = [
   
   {path: 'dashboard', component: DashboardComponent, ...canActivate(redirectUnauthorizedToLogin) },
   {path: 'ocupacion', component: OcupacionComponent, ...canActivate(redirectUnauthorizedToLogin) },
+  {path: 'logs', component: LogsComponent, ...canActivate(redirectUnauthorizedToLogin) },
   {path: 'login', component: LoginComponent,   }, // la ruta al login
  // {path: '', redirectTo: '/playa', pathMatch: 'full', canActivate: [AuthGuard]}, 
 
@@ -127,6 +130,7 @@ const appRoutes: Routes = [
    
     ConsultaFacturacionComponent,
          ScannerComponent,
+         LogsComponent,
 
 
 
@@ -145,7 +149,12 @@ const appRoutes: Routes = [
     provideAuth(() => getAuth()),
 
   ],
-  providers: [LoggedService, CustomAdapterService, CustomDateParserFormatterService, NgbTimeStringAdapterService, AuthService],
+  providers: [LoggedService, 
+              CustomAdapterService, 
+              CustomDateParserFormatterService, 
+              NgbTimeStringAdapterService, 
+              AuthService,
+              LogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
