@@ -12,7 +12,7 @@ export class LogsComponent implements OnInit {
   }
 
   testLog(): void {
-      this.logger.log("Test the `log()` Method");
+      this.logger.log("console","Test the `log()` Method");
   }
 
 
