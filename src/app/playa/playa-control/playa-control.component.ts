@@ -5,6 +5,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // s
 import { PlayaI } from 'src/app/interfaces/playaI';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { InterOpService } from 'src/app/servicios/inter-op.service';
+import { LogService } from 'src/app/servicios/log.service';
 
 
 import { TicketEntradaComponent } from 'src/app/ticket-entrada/ticket-entrada.component';
@@ -43,6 +44,7 @@ export class PlayaControlComponent implements OnInit {
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
     private interOpService: InterOpService,
+    private logger: LogService,
   ) {}
 
 
@@ -192,6 +194,7 @@ export class PlayaControlComponent implements OnInit {
       }
       case 'Reimprimir': {
         this.openTicket("Reimprimir", item);
+        this.logger.log("ticket-reimpresion",item);
         break;
       }
 
