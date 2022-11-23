@@ -37,7 +37,7 @@
           <th class="badge" scope="row">{{i + 1}}</th>
           <td>{{item.Fecha.seconds * 1000 | date:'dd/MM/yyyy - hh:mmaaa'}}</td>
           <td>{{item.tipo}}</td>
-          <td>{{item.msg}}</td>
+          <td>{{item.msg | json}}</td>
      
      
           <!-- <div *ngIf="$estado | async" class="card-footer"> -->
