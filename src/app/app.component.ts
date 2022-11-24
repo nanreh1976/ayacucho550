@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   }
 
    comprobarEstado(): void {
-   console.log(this.$estado.value);
+  // console.log(this.$estado.value);
     if (this.$estado.value) {
 
       this.router.navigate(['playa'])
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
     this.dbFirebase.getAll("clientes").subscribe(data => {
       this.clientes = data;
       localStorage.setItem(`${"clientes"}`, JSON.stringify(this.clientes))
-      console.log(this.clientes);      
+      //console.log(this.clientes);      
     })
   }
 
@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
     this.dbFirebase.getAll("vehiculos").subscribe(data => {
       this.vehiculos = data;
       localStorage.setItem(`${"vehiculos"}`, JSON.stringify(this.vehiculos))
-      console.log(this.vehiculos);      
+      //console.log(this.vehiculos);      
     })
   }
 
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     this.dbFirebase.getAll("tarifas").subscribe(data => {
       this.tarifas = data;
       localStorage.setItem(`${"tarifas"}`, JSON.stringify(this.tarifas))
-      console.log(this.tarifas);      
+      //console.log(this.tarifas);      
     })
   }
 
