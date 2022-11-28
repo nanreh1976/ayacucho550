@@ -20,6 +20,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class BtnEliminarComponent implements OnInit {
 
   @Input() name?: string;
+  @Input() disabled! : boolean;
   constructor() { }
 
   ngOnInit(): void {

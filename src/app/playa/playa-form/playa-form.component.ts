@@ -21,6 +21,7 @@ import { LogService } from 'src/app/servicios/log.service';
 export class PlayaFormComponent implements OnInit {
 
   @Input() fromParent: any;
+  barCodeId:string="BCN"
   editForm!: any;
   titulo!: string;
   item!: any;
@@ -184,10 +185,10 @@ export class PlayaFormComponent implements OnInit {
     let patenteValida = this.validacionPatente.validarPatente(this.editForm.value.patente);
 
     if (patenteValida) {
-      alert("es una patente valida")
+      console.log("es una patente valida")
       //this.validarTarifa()
     } else {
-      alert("no es una patente valida")
+      console.log("no es una patente valida")
       this.activeModal.dismiss()
     }
 
@@ -288,6 +289,7 @@ export class PlayaFormComponent implements OnInit {
   }
 
   armarPuestoEstacionamiento() {
+    
     //la funcion arma el puesto
     this.puestoEstacionamiento = {
       id: this.item.id,
@@ -296,7 +298,7 @@ export class PlayaFormComponent implements OnInit {
       tarifa: this.tarifaSeleccionada,
       descripcion: this.editForm.value.descripcion,
       saldo: this.saldo,
-      codigoBarras: `${this.fromParent.item.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
+      codigoBarras: `${this.barCodeId}-${this.fromParent.item.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
     }
 
     this.item = this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
