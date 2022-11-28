@@ -6,75 +6,61 @@
 
 <ul>
   <li>
-    <div style=" float: right;" >
+    <div style=" float: right;">
 
-      <app-btn-agregar class="right " (click)="msgBack('Agregar',[])"
-        class="d-flex align-items-center ">
+      <app-btn-agregar class="right " (click)="msgBack('Agregar',[])" class="d-flex align-items-center ">
       </app-btn-agregar>
     </div>
   </li>
 </ul>
 <div>
 
+  <div class="form-group mb-4">
+    <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
+  </div>
 
-  <style type="text/css">
-    .tftable {
-      font-size: 18px;
-      color: #333333;
-      width: 100%;
-      border-width: 1px;
-      border-color: #729ea5;
-      border-collapse: collapse;
-    }
 
-    .tftable th {
-      font-size: 12px;
-      background-color: #acc8cc;
-      border-width: 1px;
-      padding: 8px;
-      border-style: solid;
-      border-color: #729ea5;
-      text-align: left;
-    }
+  <table class="table" *ngIf="(data | filter: searchText).length > 0; else noResults">
+    
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">nombre</th>
+      <th scope="col">fraccion</th>
+      <th scope="col">UT</th>
+      <th scope="col">Valor</th>
+      <th scope="col">tolerancia</th>
+      <th scope="col">Modificar<i class="bi bi-pencil-fill"></i></th>
+    </tr>
+  </thead>
 
-    .tftable tr {
-      background-color: #d4e3e5;
-    }
 
-    .tftable td {
-      font-size: 12px;
-      border-width: 1px;
-      padding: 8px;
-      border-style: solid;
-      border-color: #729ea5;
-    }
+  
 
-    </style>
-
-    <table class="tftable" border="1">
-    <tr><th>nombre</th><th>fraccion</th><th>Unidad de tiempo</th><th>Valor</th><th>tolerancia</th><th>Modificar<i class="bi bi-pencil-fill"></i></th></tr>
+    <tbody>
     <tr *ngFor="let item of data | filter: searchText; let i = index">
-      
-      <td>{{item.nombre}}</td>      
+      <th class="badge" scope="row">{{i + 1}}</th>
+      <td>{{item.nombre}}</td>
       <td>{{item.fraccion}}</td>
       <td>{{item.unidad_tiempo}}</td>
-      <td>{{item.valor}}</td>      
+      <td>{{item.valor}}</td>
       <td>{{item.tolerancia}}</td>
-     
 
-
-
-
-      <div class="card-footer">
-
-        <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
-
-        <app-btn-editar class="right"  (click)="msgBack('Editar',item)"
-          class="d-flex align-items-center">
+      <td>
+        <app-btn-editar class="right" (click)="msgBack('Editar',item)" >
         </app-btn-editar>
-        <app-btn-eliminar class="right"  (click)="msgBack('Eliminar',item)"
-          class="d-flex align-items-center">
+      </td>
+      
+      <td>
+        <app-btn-eliminar class="d-flex align-items-center" (click)="msgBack('Eliminar',item) " >
         </app-btn-eliminar>
-      </div>
+      </td>
+
     </tr>
+
+    </tbody>
   </table>
+
+  <ng-template #noResults>
+    <p>No results found for "{{searchText}}".</p>
+  </ng-template>

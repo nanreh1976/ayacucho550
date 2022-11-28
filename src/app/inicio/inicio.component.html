@@ -12,11 +12,13 @@
     </div>
     <div class="d-flex justify-content-evenly mt-2">
         <div>
-            <app-btn-agregar type="submit" name='Ingreso' (click)="setOp('Agregar')" class="d-flex align-items-center "[disabled]="!patenteForm.valid"  >
+            <app-btn-agregar type="submit" name='Ingreso' (click)="setOp('Agregar')" class="d-flex align-items-center "
+                [disabled]="!patenteForm.valid">
             </app-btn-agregar>
         </div>
         <div>
-            <app-btn-eliminar (click)="setOp('Eliminar')" class="d-flex align-items-center " name='Egreso' [disabled]="!patenteForm.valid">
+            <app-btn-eliminar (click)="setOp('Eliminar')" class="d-flex align-items-center " name='Egreso'
+                [disabled]="!patenteForm.valid">
 
             </app-btn-eliminar>
         </div>

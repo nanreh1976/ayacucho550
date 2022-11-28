@@ -78,7 +78,7 @@ const appRoutes: Routes = [
   {path: 'home', component: AppComponent, ...canActivate(redirectUnauthorizedToLogin) },
   {path: 'inicio', component: InicioComponent, ...canActivate(redirectUnauthorizedToLogin)},
   {path: 'playa', component: PlayaControlComponent, ...canActivate(redirectUnauthorizedToLogin)  },
-  {path: 'scanner', component: ScannerComponent, ...canActivate(redirectUnauthorizedToLogin)  },
+ // {path: 'scanner', component: ScannerComponent, ...canActivate(redirectUnauthorizedToLogin)  },
   {path: 'facturacion', component:FacturacionControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
 //  {path: 'ticketE', component: TicketEntradaComponent },
   {path: 'tarifas', component: TarifasControlComponent, ...canActivate(redirectUnauthorizedToLogin)},
