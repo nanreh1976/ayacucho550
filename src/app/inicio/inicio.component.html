@@ -1,33 +1,25 @@
-<form [formGroup]="patenteForm" (ngSubmit)="onSubmit()" >
-    
+<form [formGroup]="patenteForm" (ngSubmit)="onSubmit()">
+
     <label for="patente">Ingresar Patente</label><br>
-    
-    <input type="text" formControlName="patente" class="form-control mt-3" required type="text"     
-    [ngClass]="{'is-invalid':Patente?.errors && Patente?.touched, 'is-valid': !Patente?.errors && !Patente?.touched }">    
+
+    <input type="text" formControlName="patente" class="form-control mt-3" required type="text"
+        [ngClass]="{'is-invalid':Patente?.errors && Patente?.touched, 'is-valid': !Patente?.errors && !Patente?.touched }">
     <div *ngIf="Patente?.errors?.required && Patente?.touched" class="text-danger fs-6">
         Ingrese la patente por favor
     </div>
     <div *ngIf="Patente?.errors && Patente?.touched" class="text-danger fs-6">
         Patente no valida
-    </div>  
-    <div class="d-flex justify-content-evenly mt-2">        
-        <div >
-            <app-btn-agregar 
-            type="submit"
-            name = 'Ingreso'
-            (click)="setTitulo('Agregar')"
-              class="d-flex align-items-center "   >
+    </div>
+    <div class="d-flex justify-content-evenly mt-2">
+        <div>
+            <app-btn-agregar type="submit" name='Ingreso' (click)="setOp('Agregar')" class="d-flex align-items-center "[disabled]="!patenteForm.valid"  >
             </app-btn-agregar>
         </div>
         <div>
-            <app-btn-eliminar 
-            type="submit"
-            (click)="setTitulo('Eliminar')"
-            class="d-flex align-items-center "
-            name = 'Egreso'>
-            
+            <app-btn-eliminar (click)="setOp('Eliminar')" class="d-flex align-items-center " name='Egreso' [disabled]="!patenteForm.valid">
+
             </app-btn-eliminar>
-        </div>        
+        </div>
     </div>
 
 </form>
