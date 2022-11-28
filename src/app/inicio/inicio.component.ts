@@ -96,21 +96,7 @@ export class InicioComponent implements OnInit {
 
 
   onScan(code: string) {
-    //console.log(JSON.parse(localStorage.getItem('playa')!));
-    let objVal = JSON.parse(localStorage.getItem('playa')!)
-
-
-
-      const printKeyAndValue = (objVal: any) => {
-        for (const key of Object.keys(objVal)){
-            console.log(key);
-            console.log(objVal[key]);   
-        }
-      
-     
-  }
-
-  
+    console.log(JSON.parse(localStorage.getItem('playa')!))
     // chequear que el barcode este en playa
     // si esta en playa manda el form para egreso
     //this.msgBack("Eliminar", pat)
