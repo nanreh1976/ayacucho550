@@ -23,10 +23,21 @@ export class InicioComponent implements OnInit {
   searchText!: string;
   msg: any
 
+  
+
+  // TOMA EL VALOR DEL CAMPO EN EL FORM
+  get Patente() {
+    return this.patenteForm.get("patente")
+  }
+
+
   constructor(
     private fb: FormBuilder, public vpService: ValidarPatenteService
   ) {
     this.createForm()
+  }
+
+  ngOnInit(): void {
   }
 
   createForm() {
@@ -35,7 +46,7 @@ export class InicioComponent implements OnInit {
 
       patente: ['', [Validators.required,
       Validators.minLength(6),
-      this.vpService.evaluarPatente,
+      this.vpService.evaluarPatente(),
       ]]
     });
   }
@@ -53,15 +64,6 @@ export class InicioComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-
-
-  }
-
-  // TOMA EL VALOR DEL CAMPO EN EL FORM
-  get Patente() {
-    return this.patenteForm.get("patente")
-  }
 
 
   onSubmit() {
@@ -75,12 +77,11 @@ export class InicioComponent implements OnInit {
       // chequea si el str ingresado es barcode o patente
       if (this.vpService.isBarCode(str)) {
         console.log("submitted barcode")
-    
-        this.onScan(str)
+        this.onScan(str)  //va a chequear el scan
 
       } else {
         console.log("submited patente")
-        // this.msgBack(this.op, str);
+        this.msgBack(this.op, str); //manda el form al parent
       }
     } else {
       alert("NO DEBERIA LLEGAR ACA, SOLUCIONAR FILTROS EN LOS CAMPOS form invalid")
@@ -99,8 +100,10 @@ export class InicioComponent implements OnInit {
     console.log(JSON.parse(localStorage.getItem('playa')!))
     // chequear que el barcode este en playa
     // si esta en playa manda el form para egreso
-    //this.msgBack("Eliminar", pat)
-    // sino esta, manda alert (y resetea el form?)
+  
+    //this.msgBack("Eliminar", pat)   // manda el egreso al parent
+
+    // sino esta, manda alert (y resetea el form? )
  
 
 
