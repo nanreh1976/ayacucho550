@@ -23,7 +23,7 @@ export class InicioComponent implements OnInit {
   searchText!: string;
   msg: any
 
-  
+
 
   // TOMA EL VALOR DEL CAMPO EN EL FORM
   get Patente() {
@@ -96,33 +96,44 @@ export class InicioComponent implements OnInit {
 
   onScan(code: string) {
 
-    let playa=(JSON.parse(localStorage.getItem('playa')!))
-    // chequear que el barcode este en playa
-    let barcodes: string[]=[]
- 
-    //recolecta barcodes
-    Object.keys(playa).forEach(function(key) {
-      var value = playa[key];
-      barcodes.push= (value.codigoBarras)
-    //  console.log(barcodes)
-    //chequea si el codigo esta
-      // if(code===enplaya){
-      //   console.log(enplaya,"esta en playa")
-      // } else {
-      //   console.log(enplaya, "no esta en playa")
-      // }
+    let playa = (JSON.parse(localStorage.getItem('playa')!))
+    let barcodes: string[] = []
 
-    console.log("esta o no esta", barcodes.includes(code))
+    //recolecta barcodes
+    for(var it of playa) {
+      console.log(it)
+      
+      let cod = it['codigoBarras'] 
+      let pat = it['patente']
+      console.log(cod, pat)
+
+      if (code === cod) {
+        console.log("esta en playa")
+        this.msgBack("Eliminar", pat) 
+        break
+
+      } else {
+        console.log("NO esta en playa")
+      }
+  }
+
+   // Object.keys(playa).forEach(function (key) {
+    //  var value = playa[key];
+  //    barcodes.push(value.codigoBarras[value.patente])
+
+ //   })
+    // chequear que el barcode este en playa
+   // console.log(barcodes)
 
 
     // si esta en playa manda el form para egreso
-  
+
     //this.msgBack("Eliminar", pat)   // manda el egreso al parent
 
     // sino esta, manda alert (y resetea el form? )
 
 
-  });
+
   }
 
   // Escucha cualquier evento que termine en \n, supone que es lector de barras
