@@ -115,7 +115,7 @@ export class InicioComponent implements OnInit {
     // ENVIA EL CONT DEL FORM AL PARENT
    let value = {
      op: op,
-     item: str,
+     item: {patente: str}
    }
    console.log("MSGbACK, aca emite el msj con el valor ", value);
    this.newItemEvent.emit(value);
