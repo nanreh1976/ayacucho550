@@ -1,17 +1,18 @@
-
 <div class="container">
 
   <div class="form-group mb-4">
     <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
   </div>
 
-  <table class="table" *ngIf="(data | filter: searchText).length > 0; else noResults">
+  <table class="table table-hover table-condensed" *ngIf="(data | filter: searchText).length > 0; else noResults">
+ 
     <colgroup>
       <col width="5%">
       <col width="20%">
       <col width="20%">
       <col width="20%">
     </colgroup>
+ 
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -22,9 +23,6 @@
         <th>
       </tr>
     </thead>
-
-
-
 
     <tbody>
       <tr *ngFor="let item of data | filter: searchText; let i = index">
@@ -40,7 +38,7 @@
           <app-btn-editar class="right" (click)="msgBack('Editar',item)">
           </app-btn-editar>
         </td>
-       <!--  <td>
+        <!--  <td>
           <app-btn-eliminar class="right" 
                             (click)="msgBack('Eliminar',item)"
                             name = 'Egreso'>

@@ -1,8 +1,7 @@
 <!-- <H1 class="display-1" style="text-align: center;">Tarifas </H1> -->
 
 
-
-
+<div class="container">
 
 <ul>
   <li>
@@ -18,7 +17,6 @@
   <div class="form-group mb-4">
     <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
   </div>
-
 
   <table class="table" *ngIf="(data | filter: searchText).length > 0; else noResults">
     
@@ -64,3 +62,5 @@
   <ng-template #noResults>
     <p>No results found for "{{searchText}}".</p>
   </ng-template>
+
+</div>
