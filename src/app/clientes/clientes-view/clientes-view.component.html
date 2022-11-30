@@ -1,61 +1,66 @@
 <!-- <H1 class="display-1" style="text-align: center;">Clientes </H1> -->
 
+<div class="container">
 
 
 
+  <ul>
+    <li>
+      <div style=" float: right;">
+        <app-btn-agregar class="right " (click)="msgBack('Agregar',[])" class="d-flex align-items-center ">
+        </app-btn-agregar>
+      </div>
+    </li>
+  </ul>
 
-<ul>
-  <li>
-    <div style=" float: right;">
-      <app-btn-agregar class="right " (click)="msgBack('Agregar',[])" class="d-flex align-items-center ">
-      </app-btn-agregar>
-    </div>
-  </li>
-</ul>
-<div>
+
 
   <div class="form-group mb-4">
     <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
   </div>
 
-  <table class="table" *ngIf="(data | filter: searchText).length > 0; else noResults">
-    <thead>
-      <tr>
-        <th>Apellido</th>
-        <th>Nombre</th>
-        <th>telefono</th>
-        <th>Direccion</th>
-        <th>email</th>
-        <th>Comentario</th>
-        <th><i class="bi bi-pencil-fill"></i></th>
-      </tr>
-    </thead>
+  <div class="table-responsive">
+    <table class="table table-hover table-condensed" *ngIf="(data | filter: searchText).length > 0; else noResults">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th>Apellido</th>
+          <th>Nombre</th>
+          <th>telefono</th>
+          <th>Direccion</th>
+          <th>email</th>
+          <th>Comentario</th>
+          <th><i class="bi bi-pencil-fill"></i></th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr *ngFor="let item of data | filter: searchText; let i = index">
-        <th class="badge" scope="row">{{i + 1}}</th>
-        <td>{{item.apellido}}</td>
-        <td>{{item.nombre}}</td>
-        <td>{{item.telefono}}</td>
-        <td>{{item.direccion}}</td>
-        <td>{{item.email}}</td>
-        <td>{{item.comentario}}</td>
-        <td>
-          <app-btn-editar class="right" (click)="msgBack('Editar',item)" class="d-flex align-items-center">
-          </app-btn-editar>
-        </td>
-        <td>
-          <app-btn-eliminar class="right" (click)="msgBack('Eliminar',item)" class="d-flex align-items-center">
-          </app-btn-eliminar>
-        </td>
-        <td>
-          <app-btn-agregar class="right" (click)="msgBack('Vehiculo',item)" [name]="vehiculo">
-          </app-btn-agregar>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      <tbody>
+        <tr *ngFor="let item of data | filter: searchText; let i = index">
+          <th class="badge" scope="row">{{i + 1}}</th>
+          <td>{{item.apellido}}</td>
+          <td>{{item.nombre}}</td>
+          <td>{{item.telefono}}</td>
+          <td>{{item.direccion}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.comentario}}</td>
+          <td>
+            <app-btn-editar class="right" (click)="msgBack('Editar',item)" class="d-flex align-items-center">
+            </app-btn-editar>
+          </td>
+          <td>
+            <app-btn-eliminar class="right" (click)="msgBack('Eliminar',item)" class="d-flex align-items-center">
+            </app-btn-eliminar>
+          </td>
+          <td>
+            <app-btn-agregar class="right" (click)="msgBack('Vehiculo',item)" [name]="vehiculo">
+            </app-btn-agregar>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
+  </div>
   <ng-template #noResults>
     <p>No results found for "{{searchText}}".</p>
   </ng-template>
+</div>
