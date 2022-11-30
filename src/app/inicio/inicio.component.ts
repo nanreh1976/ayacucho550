@@ -17,18 +17,9 @@ export class InicioComponent implements OnInit {
 
   op!: string
   private code: string = '';
-  public lastScanned: { code: string, times: number };
-
   patenteForm: any
   searchText!: string;
   msg: any
-
-  
-
-  // TOMA EL VALOR DEL CAMPO EN EL FORM
-  get Patente() {
-    return this.patenteForm.get("patente")
-  }
 
 
   constructor(
@@ -40,10 +31,9 @@ export class InicioComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
   createForm() {
-
     this.patenteForm = this.fb.group({
-
       patente: ['', [Validators.required,
       Validators.minLength(6),
       this.vpService.evaluarPatente(),
@@ -51,19 +41,21 @@ export class InicioComponent implements OnInit {
     });
   }
 
-
-  // ENVIA EL CONT DEL FORM AL PARENT
-  msgBack(op: string, patente: string) {
-    let value = {
-      op: op,
-      item: this.patenteForm.value,
-    }
-    console.log("MSGbACK, aca emite el msj con el valor ", value);
-    this.newItemEvent.emit(value);
-    this.patenteForm.reset();
+ 
+  get Patente() {
+     // TOMA EL VALOR DEL CAMPO EN EL FORM
+    return this.patenteForm.get("patente")
   }
 
 
+
+
+
+
+  //TOMA LA OPERACION DEL BOTON SELECCIONADO EN EL FORM
+  setOp(op: string) {
+    this.op = op;
+  }
 
 
   onSubmit() {
@@ -89,55 +81,46 @@ export class InicioComponent implements OnInit {
 
   }
 
-  //TOMA LA OPERACION DEL BOTON SELECCIONADO EN EL FORM
-  setOp(op: string) {
-    this.op = op;
-  }
 
 
 
   onScan(code: string) {
-    console.log(JSON.parse(localStorage.getItem('playa')!))
-    // chequear que el barcode este en playa
-    // si esta en playa manda el form para egreso
-  
-    //this.msgBack("Eliminar", pat)   // manda el egreso al parent
 
-    // sino esta, manda alert (y resetea el form? )
+    let playa = (JSON.parse(localStorage.getItem('playa')!))
+
+    //recorre playa buscando barcode 
+    for(var it of playa) {
+      console.log(it)
+      
+      let cod = it['codigoBarras'] 
+      let pat = it['patente']
+      console.log(cod, pat)
+
+      if (code === cod) {
+        console.log("esta en playa", pat)
+        this.msgBack(this.op, String(pat)) 
+        break
+
+      } else {
+        console.log("NO esta en playa")
+      }
+  }
+
+  }
  
 
 
-  }
-
-  // Escucha cualquier evento que termine en \n, supone que es lector de barras
-  // chequea que no sea escaneo repetido y llama a onScan con el codigo
-  // @HostListener('window:keypress', ['$event'])
-  // protected keyEvent(event: KeyboardEvent): void {
-  //   if (event.key === 'Enter') {
-  //     console.log("es o no Barcode: ", this.code, this.vpService.isBarCode(this.code))
-  //     if (this.lastScanned?.code === this.code) {
-  //       this.lastScanned.times++;
-  //       console.log("codigo repetido");
-  //     } else {
-
-  //       this.lastScanned = {
-  //         code: this.code,
-  //         times: 1
-  //       };
-  //     }
-
-  //     this.onScan(this.code);
-  //     this.code = '';
-  //   } else {
-  //     this.code += event.key;
-  //   }
-  // }
-
-
-
-
-
-
+ 
+  msgBack(op: string, str: string) {
+    // ENVIA EL CONT DEL FORM AL PARENT
+   let value = {
+     op: op,
+     item: {patente: str}  // antes    item: this.patenteForm.value,  -> chequear foramto
+   }
+   console.log("MSGbACK, aca emite el msj con el valor ", value);
+   this.newItemEvent.emit(value);
+   this.patenteForm.reset();
+ }
 
 }
 
