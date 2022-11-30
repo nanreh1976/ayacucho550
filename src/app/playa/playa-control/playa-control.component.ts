@@ -197,11 +197,23 @@ getuser(){
         this.openTicket("Ticket Salida", item)
         break;
       }
+
       case 'Reimprimir': {
+       
         this.openTicket("Reimprimir", item);
         this.logger.log("ticket-reimpresion",item);
+       // console.log(JSON.parse(localStorage.getItem("user")||`{}`))
         break;
       }
+
+
+      // case 'Reimprimir': {
+      //   let user= JSON.parse(localStorage.getItem("user")||`{}`)
+      //   this.openTicket("Reimprimir", item);
+      //   this.logger.log("ticket-reimpresion",item.patente);
+      //   console.log(user['displayName'])
+      //   break;
+      // }
 
       default: {
         console.log("sin operacion en case crud")
