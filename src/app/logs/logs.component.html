@@ -16,14 +16,18 @@
         <col width="5%">
         <col width="20%">
         <col width="20%">
+        <col width="20%">
+        <col width="20%">
 
       </colgroup>
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Fecha</th>
+          <th scope="col">usuario</th>
           <th scope="col">Tipo</th>
-          <th scope="col">Log</th>
+          <th scope="col">Patente</th>
+       <!--   <th scope="col">Log</th> -->
 
         </tr>
       </thead>
@@ -36,8 +40,10 @@
     
           <th class="badge" scope="row">{{i + 1}}</th>
           <td>{{item.Fecha.seconds * 1000 | date:'dd/MM/yyyy - hh:mmaaa'}}</td>
+          <td>{{item.usuario}}</td>
           <td>{{item.tipo}}</td>
-          <td>{{item.msg | json}}</td>
+          <td>{{item.patente}}</td>
+        <!-- <td>{{item.msg | json}}</td> -->
      
      
           <!-- <div *ngIf="$estado | async" class="card-footer"> -->
