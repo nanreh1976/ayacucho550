@@ -20,6 +20,7 @@ export class AuthService {
 
   loginWithGoogle() {
     return signInWithPopup(this.auth, new GoogleAuthProvider());
+    
   }
 
   logout() {    

@@ -17,34 +17,18 @@ export class LoginComponent implements OnInit {
   hide = true;
   spinner:boolean = false;
 
-// propiedades servicios logged 
-  //$estado: BehaviorSubject<boolean>;
 
- /*  logIn(): void {
-    this.loggedService.LogIn();
-    this.router.navigate(['home']) //se agrega la routa a donde navegar
-    //this.closeModal();
-    
-  } */
 
-  constructor( private router: Router, private readonly authService: AuthService, private initializerService: InitializerService) { 
+  constructor( private router: Router, 
+    private readonly authService: AuthService, private initializerService: InitializerService) { 
 
-    /* this.$estado = loggedService.logged$ */
+
   } 
 
   ngOnInit(): void {
-    //this.$estado.subscribe
-  }
-/*   
-  volverHome(){   
-    this.router.navigate(['']) //se agrega la routa a donde navegar
+
   }
 
-  closeModal() {
-    this.activeModal.close();
-  }
-
- */
 
   loginWithGoogle() {
     this.authService
@@ -54,7 +38,7 @@ export class LoginComponent implements OnInit {
       //.then(() => this.router.navigate(['/playa']))             
       .then(() => this.accionAsincrona())      
       .then(() => this.initializerService.getTodo())
-      .then(() => this.router.navigate(['/playa']))             
+      .then(() => this.router.navigate(['/home']))             
       .catch((e) => console.log(e.message));
   }
 

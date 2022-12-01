@@ -56,9 +56,9 @@ import { ConsultaFacturacionComponent } from './facturacion/consulta-facturacion
 import { CustomAdapterService } from './servicios/Fechas/calendario/custom-adapter.service';
 import { CustomDateParserFormatterService } from './servicios/Fechas/calendario/custom-date-parser-formatter.service';
 import { NgbTimeStringAdapterService } from './servicios/Fechas/calendario/ngb-time-string-adapter.service';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideAuth,getAuth } from '@angular/fire/auth';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AuthGuard, canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { AuthService } from './servicios/autentificacion/auth.service';
 import { ScannerComponent } from './scanner/scanner.component';
@@ -77,20 +77,30 @@ const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full', },
-  {path: 'home', component: AppComponent, ...canActivate(redirectUnauthorizedToLogin) },
-  {path: 'inicio', component: InicioComponent, ...canActivate(redirectUnauthorizedToLogin)},
-  {path: 'playa', component: PlayaControlComponent, ...canActivate(redirectUnauthorizedToLogin)  },
- // {path: 'scanner', component: ScannerComponent, ...canActivate(redirectUnauthorizedToLogin)  },
-  {path: 'facturacion', component:FacturacionControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
-//  {path: 'ticketE', component: TicketEntradaComponent },
-  {path: 'tarifas', component: TarifasControlComponent, ...canActivate(redirectUnauthorizedToLogin)},
-  {path: 'clientes', component: ClientesControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
-  
-  {path: 'dashboard', component: DashboardComponent, ...canActivate(redirectUnauthorizedToLogin) },
-  {path: 'ocupacion', component: OcupacionComponent, ...canActivate(redirectUnauthorizedToLogin) },
-  {path: 'logs', component: LogsComponent, ...canActivate(redirectUnauthorizedToLogin) },
-  {path: 'login', component: LoginComponent,   }, // la ruta al login
- // {path: '', redirectTo: '/playa', pathMatch: 'full', canActivate: [AuthGuard]}, 
+  {
+    path: 'home', component: HomeComponent, ...canActivate(redirectUnauthorizedToLogin),
+    children: [
+      { path: 'playa', component: PlayaControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
+   
+
+
+      // {path: 'home/playa', component: PlayaControlComponent, outlet: 'outlet1', ...canActivate(redirectUnauthorizedToLogin)  },
+      // {path: 'scanner', component: ScannerComponent, ...canActivate(redirectUnauthorizedToLogin)  },
+      { path: 'facturacion', component: FacturacionControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
+      //  {path: 'ticketE', component: TicketEntradaComponent },
+      { path: 'tarifas', component: TarifasControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
+      { path: 'clientes', component: ClientesControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
+
+      { path: 'dashboard', component: DashboardComponent, ...canActivate(redirectUnauthorizedToLogin) },
+      { path: 'ocupacion', component: OcupacionComponent, ...canActivate(redirectUnauthorizedToLogin) },
+      { path: 'logs', component: LogsComponent, ...canActivate(redirectUnauthorizedToLogin) },
+
+    ]
+  },
+  { path: 'login', component: LoginComponent, }, // la ruta al login
+  // {path: '', redirectTo: '/playa', pathMatch: 'full', canActivate: [AuthGuard]}, 
+
+  { path: 'inicio', component: InicioComponent, ...canActivate(redirectUnauthorizedToLogin) },
 
 ]
 
@@ -107,7 +117,7 @@ const appRoutes: Routes = [
     PlayaFormComponent,
     FilterPipe,
 
-      
+
     DashboardComponent,
     PagenotfoundComponent,
     ClientesFormComponent,
@@ -115,8 +125,8 @@ const appRoutes: Routes = [
     PlayaControlComponent,
     ClientesViewComponent,
     ClientesControlComponent,
- 
-   
+
+
     TicketEntradaComponent,
     BtnReimpresionComponent,
 
@@ -129,12 +139,12 @@ const appRoutes: Routes = [
     FacturacionFormComponent,
     InicioComponent,
     VehiculosFormComponent,
-   
+
     ConsultaFacturacionComponent,
-         ScannerComponent,
-         LogsComponent,
-         DashboardFormComponent,
-         SpinnerComponent,
+    ScannerComponent,
+    LogsComponent,
+    DashboardFormComponent,
+    SpinnerComponent,
 
 
 
@@ -153,12 +163,12 @@ const appRoutes: Routes = [
     provideAuth(() => getAuth()),
 
   ],
-  providers: [LoggedService, 
-              CustomAdapterService, 
-              CustomDateParserFormatterService, 
-              NgbTimeStringAdapterService, 
-              AuthService,
-              LogService],
+  providers: [LoggedService,
+    CustomAdapterService,
+    CustomDateParserFormatterService,
+    NgbTimeStringAdapterService,
+    AuthService,
+    LogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
