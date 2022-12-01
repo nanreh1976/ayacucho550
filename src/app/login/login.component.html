@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="!spinner else spinnerCarga">
     <h1>Bienvenido</h1>
     <!-- <form>
         <h1>Bienvenido</h1>
@@ -23,3 +23,7 @@
     <p>ó si lo desea puede ingresar con su cuenta de google</p>
     <app-btn-agregar [name]="'Google'" (click)="loginWithGoogle()"></app-btn-agregar>
 </div>
+
+<ng-template #spinnerCarga>
+    <app-spinner></app-spinner>
+</ng-template>

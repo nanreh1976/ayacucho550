@@ -65,6 +65,7 @@ import { ScannerComponent } from './scanner/scanner.component';
 import { LogsComponent } from './logs/logs.component';
 import { LogService } from './servicios/log.service';
 import { DashboardFormComponent } from './dashboard/dashboard-form/dashboard-form.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -133,6 +134,7 @@ const appRoutes: Routes = [
          ScannerComponent,
          LogsComponent,
          DashboardFormComponent,
+         SpinnerComponent,
 
 
 

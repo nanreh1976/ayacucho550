@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../servicios/autentificacion/auth.service';
+import { InitializerService } from '../servicios/initializer/initializer.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   
   hide = true;
+  spinner:boolean = false;
 
 // propiedades servicios logged 
   //$estado: BehaviorSubject<boolean>;
@@ -25,7 +27,7 @@ export class LoginComponent implements OnInit {
     
   } */
 
-  constructor( private router: Router, private readonly authService: AuthService) { 
+  constructor( private router: Router, private readonly authService: AuthService, private initializerService: InitializerService) { 
 
     /* this.$estado = loggedService.logged$ */
   } 
@@ -47,8 +49,29 @@ export class LoginComponent implements OnInit {
   loginWithGoogle() {
     this.authService
       .loginWithGoogle()     
-      .then(() => this.router.navigate(['/home']))
+      .then(() => this.authService.isLoggedIn())
+      
+      //.then(() => this.router.navigate(['/playa']))             
+      .then(() => this.accionAsincrona())      
+      .then(() => this.initializerService.getTodo())
+      .then(() => this.router.navigate(['/playa']))             
       .catch((e) => console.log(e.message));
   }
+
+  accionAsincrona = async () => {
+    console.log("pasa por aca 1?");
+    this.spinner = true;
+    return new Promise<void>((resolve, reject) => {
+      console.log("pasa por aca 2?");
+    setTimeout(() => {  
+        resolve();         
+    }, 3000);    
+  })
+    
+    .then(() => {
+      console.log("pasa por aca 3?");
+      this.spinner = false;
+    });   
+  }  
 
 }

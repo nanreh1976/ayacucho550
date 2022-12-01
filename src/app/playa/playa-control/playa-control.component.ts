@@ -50,7 +50,7 @@ export class PlayaControlComponent implements OnInit {
 
   ngOnInit(): void {    
     this.getAll();  //tomar datos de los vehiculos en playa
-this.getuser();
+//this.getuser();
   }
 
 
