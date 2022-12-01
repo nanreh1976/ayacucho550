@@ -9,6 +9,7 @@ export class InitializerService {
   clientes!:any;
   vehiculos!:any;
   tarifas!:any;
+  playa!:any
 
   constructor(private dbFirebase: DbFirestoreService) { }
 
@@ -16,6 +17,7 @@ export class InitializerService {
     this.getClientes();
     this.getVehiculos();
     this.getTarifas();
+    this.getPlaya();
   }
 
   getClientes(){
@@ -39,6 +41,14 @@ export class InitializerService {
       this.tarifas = data;
       localStorage.setItem(`${"tarifas"}`, JSON.stringify(this.tarifas))
       //console.log(this.tarifas);      
+    })
+  }
+
+  getPlaya(): void {
+    this.dbFirebase.getAll("playa").subscribe(data => {
+      this.playa = data;
+      localStorage.setItem(`${"playa"}`, JSON.stringify(data))
+      console.log(this.playa);      
     })
   }
 
