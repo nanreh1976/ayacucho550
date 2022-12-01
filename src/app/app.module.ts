@@ -64,6 +64,7 @@ import { AuthService } from './servicios/autentificacion/auth.service';
 import { ScannerComponent } from './scanner/scanner.component';
 import { LogsComponent } from './logs/logs.component';
 import { LogService } from './servicios/log.service';
+import { DashboardFormComponent } from './dashboard/dashboard-form/dashboard-form.component';
 
 
 
@@ -131,6 +132,7 @@ const appRoutes: Routes = [
     ConsultaFacturacionComponent,
          ScannerComponent,
          LogsComponent,
+         DashboardFormComponent,
 
 
 

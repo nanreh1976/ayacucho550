@@ -2,7 +2,22 @@
 
 <br>
 <br>
-Reportes diarios / mensuales<br>
-alta de usuarios<br>
-Configuracion de la app (lugares disponibles, horarios, tarifa general si usa, etc)<br>
+<table>
+    <tbody>
+    
+        <tr>Cuit: {{data.cuit|| 'Sin Datos'}}</tr>
+        <tr>Direccion: {{data.direccion|| 'Sin Datos'}}</tr>
+        <tr>Mail: {{data.mail|| 'Sin Datos'}}</tr>
+        <tr>Razon Social: {{data.razonSocial|| 'Sin Datos'}}</tr>
+        <tr>Telefono: {{data.telefono|| 'Sin Datos'}}</tr>
 
+         <tr>
+          <app-btn-editar class="right" (click)="openForm('Editar',data)">
+          </app-btn-editar>
+        </tr> 
+
+
+    
+
+      
+    </tbody>
