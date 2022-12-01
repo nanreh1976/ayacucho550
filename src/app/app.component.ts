@@ -24,54 +24,6 @@ export class AppComponent implements OnInit {
     this.$estado = authService.logged$;
   }
   ngOnInit(): void {
-    this.$estado.subscribe;
-   // console.log("esta pasando por el app component!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    this.getClientes();
-    this.getVehiculos();
-    this.getTarifas();
-    this.comprobarEstado();
-    //console.log(this.$estado.value);
+    this.$estado.subscribe;  
   }
-
-   comprobarEstado(): void {
-  // console.log(this.$estado.value);
-    if (this.$estado.value) {
-
-      this.router.navigate(['playa'])
-      //console.log("logueado");
-      //console.log(this.$estado);
-
-
-    } else {
-     //console.log("no logueado");
-
-      //this.router.navigate(['login'])
-    }
-  } 
-
-  getClientes(){
-    this.dbFirebase.getAll("clientes").subscribe(data => {
-      this.clientes = data;
-      localStorage.setItem(`${"clientes"}`, JSON.stringify(this.clientes))
-      //console.log(this.clientes);      
-    })
-  }
-
-  getVehiculos(){
-    this.dbFirebase.getAll("vehiculos").subscribe(data => {
-      this.vehiculos = data;
-      localStorage.setItem(`${"vehiculos"}`, JSON.stringify(this.vehiculos))
-      //console.log(this.vehiculos);      
-    })
-  }
-
-  getTarifas(){
-    this.dbFirebase.getAll("tarifas").subscribe(data => {
-      this.tarifas = data;
-      localStorage.setItem(`${"tarifas"}`, JSON.stringify(this.tarifas))
-      //console.log(this.tarifas);      
-    })
-  }
-
-
 }
