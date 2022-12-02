@@ -19,27 +19,29 @@ export class HeaderComponent implements OnInit {
 
   closeResult: string = ''
 
-  open(content: any) {
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+  // open(content: any) {
+  //   this.modalService.open(content).result.then((result) => {
+  //     this.closeResult = `Closed with: ${result}`;
+  //   }, (reason) => {
+  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  //   });
+  // }
 
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+  // private getDismissReason(reason: any): string {
+  //   if (reason === ModalDismissReasons.ESC) {
+  //     return 'by pressing ESC';
+  //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+  //     return 'by clicking on a backdrop';
+  //   } else {
+  //     return `with: ${reason}`;
+  //   }
+  // }
 
 
-  constructor(private modalService: NgbModal, private router: Router, private authService: AuthService ) {
+  constructor( //private modalService: NgbModal,
+     private router: Router, 
+     private authService: AuthService ) {
 
    
   }
@@ -51,26 +53,26 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  save() { this.modalService.dismissAll(); }
+  // save() { this.modalService.dismissAll(); }
 
 
 
-  openLoginForm() {
-    {
-      const modalRef = this.modalService.open(LoginComponent,
-        {
-          // scrollable: false,
-          windowClass: 'myCustomModalClass',
-          // keyboard: false,
-          // backdrop: 'static'
-        })
+  // openLoginForm() {
+  //   {
+  //     const modalRef = this.modalService.open(LoginComponent,
+  //       {
+  //         // scrollable: false,
+  //         windowClass: 'myCustomModalClass',
+  //         // keyboard: false,
+  //         // backdrop: 'static'
+  //       })
 
-      modalRef.result.then((result) => {
-        console.log(result);
+  //     modalRef.result.then((result) => {
+  //       console.log(result);
        
-      }, (reason) => { });
-    }
-  }
+  //     }, (reason) => { });
+  //   }
+  // }
 
   logout() {
     this.authService
