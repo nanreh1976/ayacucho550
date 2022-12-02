@@ -11,19 +11,20 @@ import { InitializerService } from '../servicios/initializer/initializer.service
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-// propiedades servicio modal
+  // propiedades servicio modal
 
-  
+
   hide = true;
-  spinner:boolean = false;
+  spinner: boolean = false;
 
 
 
-  constructor( private router: Router, 
-    private readonly authService: AuthService, private initializerService: InitializerService) { 
+  constructor(private router: Router,
+    private readonly authService: AuthService,
+    private initializerService: InitializerService) {
 
 
-  } 
+  }
 
   ngOnInit(): void {
 
@@ -32,13 +33,13 @@ export class LoginComponent implements OnInit {
 
   loginWithGoogle() {
     this.authService
-      .loginWithGoogle()     
+      .loginWithGoogle()
       .then(() => this.authService.isLoggedIn())
-      
+
       //.then(() => this.router.navigate(['/playa']))             
-      .then(() => this.accionAsincrona())      
+      //.then(() => this.accionAsincrona())
       .then(() => this.initializerService.getTodo())
-      .then(() => this.router.navigate(['/home']))             
+      //.then(() => this.router.navigate(['/home']))
       .catch((e) => console.log(e.message));
   }
 
@@ -47,17 +48,17 @@ export class LoginComponent implements OnInit {
     this.spinner = true;
     return new Promise<void>((resolve, reject) => {
       console.log("pasa por aca 2?");
-    setTimeout(() => {  
-        resolve();         
-    }, 3000);    
-  })
-    
-    .then(() => {
-      console.log("pasa por aca 3?");
-      this.spinner = false;
-    });   
-  }  
+      setTimeout(() => {
+        resolve();
+      }, 3000);
+    })
+
+      .then(() => {
+        console.log("pasa por aca 3?");
+        this.spinner = false;
+      });
+  }
 
 
-  
+
 }

@@ -1,8 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Auth, GoogleAuthProvider, signInWithPopup, signOut } from '@angular/fire/auth';
+import { Injectable, NgZone } from '@angular/core';
+import { Auth, GoogleAuthProvider, signInWithPopup, signOut, user } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+//import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DbFirestoreService } from '../database/db-firestore.service';
+import * as auth from 'firebase/auth';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/compat/firestore';
 
 
 @Injectable({
@@ -16,11 +24,57 @@ export class AuthService {
 
   usuario:any;
 
-  constructor(private auth: Auth, private dbFirebase: DbFirestoreService) {}
+  constructor(private auth: Auth, private dbFirebase: DbFirestoreService,
+    public afs: AngularFirestore, // Inject Firestore service
+    public afAuth: AngularFireAuth, // Inject Firebase auth service
+    public router: Router,
+    public ngZone: NgZone // NgZone service to remove outside scope warning
+    ) {
 
-  loginWithGoogle() {
-    return signInWithPopup(this.auth, new GoogleAuthProvider());
+    }
+
     
+
+  // loginWithGoogle() {
+  //   return signInWithPopup(this.auth, new GoogleAuthProvider());
+  // }
+
+  async loginWithGoogle() {
+  const res = await this.AuthLogin(new auth.GoogleAuthProvider());
+    this.router.navigate(['/home']);
+}
+
+
+  // Auth logic to run auth providers
+  async AuthLogin(provider: any) {
+    try {
+      const result = await this.afAuth
+        .signInWithPopup(provider);
+      this.router.navigate(['/home']);
+
+      this.SetUsuario(result.user);
+    } catch (error) {
+      window.alert(error);
+    }
+  }
+
+    /* Setting up user data when sign in with username/password, 
+  sign up with username/password and sign in with social auth  
+  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
+  SetUsuario(user: any) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${user.uid}`
+    );
+    const userData: any = {    //interface User
+       uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
+    };
+    return userRef.set(userData, {
+      merge: true,
+    });
   }
 
   logout() {    
