@@ -116,6 +116,9 @@ const appRoutes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent, }, // la ruta al login
+  { path: 'register-user', component: SignUpComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'verify-email-address', component: VerifyEmailComponent },
   // {path: '', redirectTo: '/playa', pathMatch: 'full', canActivate: [AuthGuard]}, 
 
   { path: 'inicio', component: InicioComponent, ...canActivate(redirectUnauthorizedToLogin) },
