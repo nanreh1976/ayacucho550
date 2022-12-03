@@ -42,6 +42,7 @@ export class AuthService {
   async loginWithGoogle() {
     const res = await this.AuthLogin(new auth.GoogleAuthProvider());
     this.router.navigate(['/home']);
+    
   }
 
 
@@ -82,11 +83,12 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
     return signOut(this.auth).then(() => {
       localStorage.removeItem('user');
       this.router.navigate(['/']);
-  
+
     });
-
-
   }
+
+
+
 
   isLoggedIn() {
     console.log("esto pasa por isLoggedIn");
@@ -113,6 +115,61 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
 
   }
 
+
+  // Sign in with email/password
+  SignIn(email: string, password: string) {
+    return this.afAuth
+      .signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        this.SetUserData(result.user);
+        this.afAuth.authState.subscribe((user) => {
+          if (user) {
+            this.router.navigate(['dashboard']);
+          }
+        });
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
+  }
+
+  // Send email verfificaiton when new user sign up
+  SendVerificationMail() {
+    return this.afAuth.currentUser
+      .then((u: any) => u.sendEmailVerification())
+      .then(() => {
+        this.router.navigate(['verify-email-address']);
+      });
+  }
+
+
+  // Reset Forggot password
+  ForgotPassword(passwordResetEmail: string) {
+    return this.afAuth
+      .sendPasswordResetEmail(passwordResetEmail)
+      .then(() => {
+        window.alert('Password reset email sent, check your inbox.');
+      })
+      .catch((error) => {
+        window.alert(error);
+      });
+  }
+
+  // Sign up with email/password
+  SignUp(email: string, password: string) {
+    return this.afAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        /* Call the SendVerificaitonMail() function when new user sign 
+        up and returns promise */
+        this.SendVerificationMail();
+        this.SetUserData(result.user);
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
+  }
+
   LogIn() {
     this.logged$.next(true);
   }
@@ -130,6 +187,25 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
       this.LogIn();
       console.log("prueba")
     }
+  }
+
+    /* Setting up user data when sign in with username/password, 
+  sign up with username/password and sign in with social auth  
+  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
+  SetUserData(user: any) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${user.uid}`
+    );
+    const userData: any = {   // aca va interface usuario
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
+    };
+    return userRef.set(userData, {
+      merge: true,
+    });
   }
 
   getUsuario(id: string) {
