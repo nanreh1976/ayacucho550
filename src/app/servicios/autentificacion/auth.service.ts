@@ -22,27 +22,27 @@ export class AuthService {
 
   logged$ = new BehaviorSubject<boolean>(false);
 
-  usuario:any;
+  usuario: any;
 
   constructor(private auth: Auth, private dbFirebase: DbFirestoreService,
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
-    ) {
+  ) {
 
-    }
+  }
 
-    
+
 
   // loginWithGoogle() {
   //   return signInWithPopup(this.auth, new GoogleAuthProvider());
   // }
 
   async loginWithGoogle() {
-  const res = await this.AuthLogin(new auth.GoogleAuthProvider());
+    const res = await this.AuthLogin(new auth.GoogleAuthProvider());
     this.router.navigate(['/home']);
-}
+  }
 
 
   // Auth logic to run auth providers
@@ -58,15 +58,15 @@ export class AuthService {
     }
   }
 
-    /* Setting up user data when sign in with username/password, 
-  sign up with username/password and sign in with social auth  
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
+  /* Setting up user data when sign in with username/password, 
+sign up with username/password and sign in with social auth  
+provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
   SetUsuario(user: any) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
     const userData: any = {    //interface User
-       uid: user.uid,
+      uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
@@ -77,8 +77,15 @@ export class AuthService {
     });
   }
 
-  logout() {    
-    return signOut(this.auth);
+  logout() {
+
+    return signOut(this.auth).then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['/']);
+  
+    });
+
+
   }
 
   isLoggedIn() {
@@ -87,14 +94,14 @@ export class AuthService {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;        
+        const uid = user.uid;
         // ...
         localStorage.setItem(`user`, JSON.stringify(user))
         this.LogIn();
         //console.log("esto es el user", user);        
         //console.log("esto es el user.uid", uid);
         this.getUsuario(uid);
-        
+
       } else {
         // User is signed out
         // ...
@@ -103,34 +110,34 @@ export class AuthService {
         this.LogOut()
       }
     });
-    
+
   }
 
-  LogIn(){
+  LogIn() {
     this.logged$.next(true);
   }
-  
-  LogOut(){
+
+  LogOut() {
     this.logged$.next(false);
   }
-  
+
   LogState() {
     return this.logged$.asObservable();
   }
 
-  mantenerseLogueado(){
-    if(sessionStorage.getItem('user')){
+  mantenerseLogueado() {
+    if (sessionStorage.getItem('user')) {
       this.LogIn();
       console.log("prueba")
     }
   }
 
-  getUsuario(id:string){
+  getUsuario(id: string) {
     this.dbFirebase.getUsuarioUid(id).subscribe(data => {
       this.usuario = data;
       localStorage.setItem(`usuario`, JSON.stringify(data))
       console.log("este es el usuario nuestro: ", this.usuario);
-      this.setearColeccion(); 
+      this.setearColeccion();
     })
   }
 
@@ -138,5 +145,5 @@ export class AuthService {
     this.dbFirebase.setearColeccion(this.usuario.coleccion)
   }
 
-  
+
 }

@@ -67,6 +67,7 @@ import { LogService } from './servicios/log.service';
 import { DashboardFormComponent } from './dashboard/dashboard-form/dashboard-form.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { LogoutComponent } from './logout/logout.component';
 
 
 
@@ -145,6 +146,7 @@ const appRoutes: Routes = [
     LogsComponent,
     DashboardFormComponent,
     SpinnerComponent,
+    LogoutComponent,
 
 
 
