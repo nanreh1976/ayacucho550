@@ -23,14 +23,14 @@
           />
         </div>
   
-        <!-- <div class="formGroup">-->
+        <div class="formGroup">
           <input
             type="button"
             class="btn btnPrimary"
             value="Sign Up"
             (click)="authService.SignUp(userEmail.value, userPwd.value)"
           />
-        </div> 
+        </div>
   
         <div class="formGroup">
           <span class="or"><span class="orInner">Or</span></span>
@@ -41,11 +41,10 @@
           <button
             type="button"
             class="btn googleBtn"
-            (click)="this.loginWithGoogle"
+            (click)="authService.loginWithGoogle"
           >
             <i class="fab fa-google-plus-g"></i>
-            <app-btn-agregar [name]="'Google'" (click)="loginWithGoogle()"></app-btn-agregar>
-
+            Continue with Google
           </button>
         </div>
       </div>
@@ -57,4 +56,5 @@
         >
       </div>
     </div>
- 
+  </div>
+  

@@ -16,7 +16,7 @@
         <div class="formGroup">
           <input type="password" class="formControl" placeholder="Password" #userPassword required>
         </div>
-          <!-- Calling SignIn Api from AuthService -->
+        <!-- Calling SignIn Api from AuthService -->
         <div class="formGroup">
           <input type="button" class="btn btnPrimary" value="Log in"
             (click)="authService.SignIn(userName.value, userPassword.value)">
@@ -34,11 +34,12 @@
 
 
         <div class="formGroup">
-                  <button type="button" class="btn googleBtn" (click)="loginWithGoogle()">
-                    <i class="fab fa-google-plus-g"></i>
-                    Ingresar con Google
-                  </button>
-                </div>
+          <button type="button" class="btn googleBtn" (click)="loginWithGoogle()">
+            <i class="fab fa-google-plus-g"></i>
+            Ingresar con Google
+          </button>
+        </div>
+        
         <div class="forgotPassword">
           <span routerLink="/forgot-password">Olvide mi contraseña</span>
         </div>
