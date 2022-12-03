@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../servicios/autentificacion/auth.service';
 import { DbFirestoreService } from '../servicios/database/db-firestore.service';
 import { InterOpService } from '../servicios/inter-op.service';
 import { LogService } from '../servicios/log.service';
@@ -25,6 +26,7 @@ export class DashboardComponent implements OnInit {
   data!: any;
   
   constructor(private modalService: NgbModal,   
+    public authService: AuthService,
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
     private interOpService: InterOpService,
