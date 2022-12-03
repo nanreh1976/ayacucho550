@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from '../servicios/autentificacion/auth.service';
-import { InitializerService } from '../servicios/initializer/initializer.service';
+
+
+import { AuthService } from 'src/app/servicios/autentificacion/auth.service';
+import { InitializerService } from 'src/app/servicios/initializer/initializer.service';
 
 @Component({
   selector: 'app-login',
