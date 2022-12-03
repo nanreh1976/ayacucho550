@@ -7,15 +7,14 @@ import { HeaderComponent } from './header/header.component';
 
 import { OcupacionComponent } from './ocupacion/ocupacion.component';
 
-import { LoginComponent } from './login/login.component';
+
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoggedService } from './servicios/logged.service';
-import { BtnAgregarComponent } from './shared/btn-agregar/btn-agregar.component';
-import { BtnEditarComponent } from './shared/btn-editar/btn-editar.component';
-import { BtnEliminarComponent } from './shared/btn-eliminar/btn-eliminar.component';
+
+
 
 import { DataService } from './servicios/data.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -59,15 +58,33 @@ import { NgbTimeStringAdapterService } from './servicios/Fechas/calendario/ngb-t
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { AuthGuard, canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
-import { AuthService } from './servicios/autentificacion/auth.service';
+
+
 import { ScannerComponent } from './scanner/scanner.component';
+
+// LOGS //
 import { LogsComponent } from './logs/logs.component';
 import { LogService } from './servicios/log.service';
+
 import { DashboardFormComponent } from './dashboard/dashboard-form/dashboard-form.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-import { LogoutComponent } from './logout/logout.component';
+
+// LOGIN 
+import { LoginComponent } from './appLogin/login/login.component';
+import { LogoutComponent } from './appLogin/logout/logout.component';
+import { AuthService } from './servicios/autentificacion/auth.service';
+import { AuthGuard, canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+// BOTONES 
+import { BtnAgregarComponent } from './shared/btn-agregar/btn-agregar.component';
+import { BtnEditarComponent } from './shared/btn-editar/btn-editar.component';
+import { BtnEliminarComponent } from './shared/btn-eliminar/btn-eliminar.component';
+import { ForgotPasswordComponent } from './appLogin/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './appLogin/verify-email/verify-email.component';
+import { SignUpComponent } from './appLogin/sign-up/sign-up.component';
+
+
 
 
 
@@ -147,6 +164,11 @@ const appRoutes: Routes = [
     DashboardFormComponent,
     SpinnerComponent,
     LogoutComponent,
+    ForgotPasswordComponent,
+    VerifyEmailComponent,
+    SignUpComponent,
+
+
 
 
 
