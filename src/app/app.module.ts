@@ -83,6 +83,7 @@ import { BtnEliminarComponent } from './shared/btn-eliminar/btn-eliminar.compone
 import { ForgotPasswordComponent } from './appLogin/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './appLogin/verify-email/verify-email.component';
 import { SignUpComponent } from './appLogin/sign-up/sign-up.component';
+import { LoginHeaderComponent } from './appLogin/login-header/login-header.component';
 
 
 
@@ -116,7 +117,7 @@ const appRoutes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent, }, // la ruta al login
-  { path: 'register-user', component: SignUpComponent },
+ // { path: 'register-user', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
   // {path: '', redirectTo: '/playa', pathMatch: 'full', canActivate: [AuthGuard]}, 
@@ -170,6 +171,7 @@ const appRoutes: Routes = [
     ForgotPasswordComponent,
     VerifyEmailComponent,
     SignUpComponent,
+    LoginHeaderComponent,
 
 
 

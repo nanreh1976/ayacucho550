@@ -1,15 +1,13 @@
+
+
 <div class="container" *ngIf="!spinner else spinnerCarga">
-  <div class="circle">
-    <span id="text">LinkinPark</span>
-  </div>
-  <br>
-  <br>
-  <h1>Bienvenido</h1>
+
+  <app-login-header></app-login-header>
 
   <div class="displayTable">
     <div class="displayTableCell">
       <div class="authBlock">
-        <h3>Ingrese con su email</h3>
+        <h2>Bienvenido</h2>
         <div class="formGroup">
           <input type="text" class="formControl" placeholder="Username" #userName required>
         </div>
@@ -26,10 +24,7 @@
         </div>
         <!-- Calling GoogleAuth Api from AuthService --->
 
-
-
-
-        <p>Ingrese con su cuenta de google</p>
+        <!-- <p>Ingrese con su cuenta de google</p> -->
         <!-- <app-btn-agregar [name]="'Google'" (click)="loginWithGoogle()"></app-btn-agregar> -->
 
 
@@ -45,7 +40,7 @@
         </div>
       </div>
       <div class="redirectToLogin">
-        <span>Registrese<span class="redirect" routerLink="/register-user"> Sign Up</span></span>
+        <!-- <span>Registrese<span class="redirect" routerLink="/register-user"> Sign Up</span></span> -->
       </div>
     </div>
   </div>
