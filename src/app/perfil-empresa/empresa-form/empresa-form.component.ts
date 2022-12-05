@@ -1,14 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-dashboard-form',
-  templateUrl: './dashboard-form.component.html',
-  styleUrls: ['./dashboard-form.component.scss']
+  selector: 'app-empresa-form',
+  templateUrl: './empresa-form.component.html',
+  styleUrls: ['./empresa-form.component.scss']
 })
-export class DashboardFormComponent implements OnInit {
-
+export class EmpresaFormComponent implements OnInit {
 
   @Input() fromParent: any;
   editForm!: any;
