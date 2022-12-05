@@ -1,66 +1,74 @@
 <br>
 
-Saldo de caja: X     
 
-<br>
-ops Egreso    Ingreso  Cierre  
 
-<br><br><br>
 
-fecha concepto entrada salida saldo
 
 
 <!-- <H1 class="display-1" style="text-align: center;">Clientes </H1> -->
 
 <div class="container">
-
-
-
-    <ul>
-      <li>
-        <div style=" float: right;">
-          <app-btn-agregar class="right " name='Ingreso $'  (click)="msgBack('Ingreso',[])" class="d-flex align-items-center ">
-          </app-btn-agregar>
-        </div>
-      </li>
-
-      <li>
-        <div style=" float: right;">
-          <app-btn-eliminar class="right " name='Egreso $' (click)="msgBack('Eliminar',[])" class="d-flex align-items-center ">
-          </app-btn-eliminar>
-        </div>
-      </li>
-    </ul>
-  
-  
-  
-    <div class="form-group mb-4">
-      <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
+  <div class="container" style="display: flex; height: 100px;">
+    <div style="width: 50%; ">
+      <div>Saldo de caja: X </div>
     </div>
-  
-    <div class="table-responsive">
-      <table class="table table-hover table-condensed" *ngIf="(data | filter: searchText).length > 0; else noResults">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th>fecha</th>
-            <th>Concepto</th>
-            <th>Importe</th>
-            <th>Ingreso</th>
-            <th>Egreso</th>
-            <th>Saldo</th>
-            <th><i class="bi bi-pencil-fill"></i></th>
-          </tr>
-        </thead>
-  
-        <tbody>
-          <tr *ngFor="let item of data | filter: searchText; let i = index">
-            <th class="badge" scope="row">{{i + 1}}</th>
-            <td>{{item.fecha}}</td>
-            <td>{{item.concepto}}</td>
-            <td>{{item.importe}}</td>
-      
-            <!-- <td>
+    <div style="flex-grow: 1; ">
+
+      <div style=" float: right;">
+        <app-btn-agregar class="right " name='Ingreso $' (click)="msgBack('Ingreso',[])"
+          class="d-flex align-items-center ">
+        </app-btn-agregar>
+      </div>
+
+
+
+      <div style=" float: right;">
+        <app-btn-eliminar class="right " name='Egreso $' (click)="msgBack('Egreso',[])"
+          class="d-flex align-items-center ">
+        </app-btn-eliminar>
+      </div>
+
+      <div style=" float: right;">
+        <app-btn-eliminar class="right " name='Cerrar caja' class="d-flex align-items-center ">
+        </app-btn-eliminar>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <div class="form-group mb-4">
+    <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-condensed" *ngIf="(data | filter: searchText).length > 0; else noResults">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th>fecha</th>
+          <th>Concepto</th>
+          <th>Importe</th>
+          <th>Ingreso</th>
+          <th>Egreso</th>
+          <th>Saldo</th>
+          <th><i class="bi bi-pencil-fill"></i></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of data | filter: searchText; let i = index">
+          <th class="badge" scope="row">{{i + 1}}</th>
+          <td>{{item.fecha.seconds * 1000 | date:'dd/MM/yyyy - hh:mmaaa'}} </td>
+          <td>{{item.concepto}}</td>
+          <td>{{item.importe}}</td>
+
+
+          <!-- <td>
               <app-btn-editar class="right" (click)="msgBack('Editar',item)" class="d-flex align-items-center">
               </app-btn-editar>
             </td>
@@ -72,12 +80,12 @@ fecha concepto entrada salida saldo
               <app-btn-agregar class="right" (click)="msgBack('Vehiculo',item)" [name]="vehiculo">
               </app-btn-agregar>
             </td> -->
-          </tr>
-        </tbody>
-      </table>
-  
-    </div>
-    <ng-template #noResults>
-      <p>No results found for "{{searchText}}".</p>
-    </ng-template>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
+  <ng-template #noResults>
+    <p>No results found for "{{searchText}}".</p>
+  </ng-template>
+</div>

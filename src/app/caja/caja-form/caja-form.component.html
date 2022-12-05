@@ -17,7 +17,7 @@
               <div class="form-group">
                 <label for="Concepto">Concepto</label>
                 <div class="input-group">
-                  <input formControlName="Concepto" class="form-control" required type="text"
+                  <input formControlName="concepto" class="form-control" required type="text"
                   [ngClass]="{'is-invalid':Concepto?.errors && Concepto?.touched, 'is-valid': !Concepto?.errors && !Concepto?.touched }">
                 </div>
               </div>
@@ -31,20 +31,20 @@
 
          
         
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="Fecha">Fecha</label>
                 <div class="input-group">
                   <input formControlName="fecha" class="form-control" type="text">
                 </div>
-              </div>
+              </div> -->
         
 
-              <div class="form-group">
+              <!-- <div class="form-group">
 
                 <div class="input-group">
                   <input formControlName="id" class="form-control" type="hidden">
                 </div>
-              </div>
+              </div> -->
             </form>
           </div>
           <div class="modal-footer">

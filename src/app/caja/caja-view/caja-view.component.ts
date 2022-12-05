@@ -10,8 +10,8 @@ export class CajaViewComponent implements OnInit {
  
   @Input() data?: any 
   @Output() newItemEvent = new EventEmitter<any>();
-  titulo: string = 'clientes';
-  vehiculo: string = 'Vehiculo';
+  titulo: string = 'caja';
+
 
   
   searchText!: string;

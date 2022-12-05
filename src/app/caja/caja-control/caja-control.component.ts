@@ -44,7 +44,8 @@ export class CajaControlComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getAll();  //tomar datos de los vehiculos en playa    
+    this.getAll();  
+
   }
 
 
@@ -90,41 +91,26 @@ export class CajaControlComponent implements OnInit {
   selectCrudOp(op: string, item: any) {
 
     switch (op) {
-      case 'Agregar': {
+      case 'Ingreso': {
 
         this.addItem(this.componente, item);
         break;
       }
 
-      case 'Editar': {
-        this.updateItem(this.componente, item);
-        break;
-      }
-      case 'Eliminar': {
-        this.deleteItem(this.componente, item);
-        break;
-      }
-      case 'Vehiculo': {
-        //this.delete( item.id);
-        break;
-      }
-      case 'Vehiculo Agregar': {
-        //console.log("llega aca?");
-        this.addItem("vehiculos", item);
-        break;
-      }
-      case 'Vehiculo Editar': {
-        this.updateItem("vehiculos", item);
-        break;
-      }
-      case 'Vehiculo Eliminar': {
-        this.deleteItem("vehiculos", item);
+      case 'Egreso': {
+
+        this.addItem(this.componente, item);
         break;
       }
 
-
-
-
+      // case 'Editar': {
+      //   this.updateItem(this.componente, item);
+      //   break;
+      // }
+      // case 'Eliminar': {
+      //   this.deleteItem(this.componente, item);
+      //   break;
+      // }
 
       default: {
         console.log("sin operacion en case crud")
@@ -135,7 +121,6 @@ export class CajaControlComponent implements OnInit {
 
   // CRUD
 
-
   getAll(): void {
     this.dbFirebase.getAll(this.componente).subscribe(data => {
       this.data = data;
@@ -144,18 +129,17 @@ export class CajaControlComponent implements OnInit {
     })
   }
 
+  // deleteItem(componente: string, item: any): void {
 
-  deleteItem(componente: string, item: any): void {
+  //   console.log("delete itemcomponent", item,)
 
-    console.log("delete itemcomponent", item,)
+  //   this.dbFirebase.delete(componente, item.id)
+  //     .then((data) => console.log(data))
+  //     .then(() => this.ngOnInit())
+  //     .then(() => console.log("pasa por delete metodo?"))
+  //     .catch((e) => console.log(e.message));
 
-    this.dbFirebase.delete(componente, item.id)
-      .then((data) => console.log(data))
-      .then(() => this.ngOnInit())
-      .then(() => console.log("pasa por delete metodo?"))
-      .catch((e) => console.log(e.message));
-
-  }
+  // }
 
   addItem(componente: string, item: any): void {
 
@@ -166,24 +150,18 @@ export class CajaControlComponent implements OnInit {
       .then(() => this.ngOnInit())
       .catch((e) => console.log(e.message));
 
-
-
   }
 
 
+  // updateItem(componente: string, item: any): void {
+  //   console.log("update itemcomponent", item,)
 
+  //   this.dbFirebase.update(componente, item)
+  //     .then((data) => console.log(data))
+  //     .then(() => this.ngOnInit())
+  //     .catch((e) => console.log(e.message));
 
-  updateItem(componente: string, item: any): void {
-    console.log("update itemcomponent", item,)
-
-    this.dbFirebase.update(componente, item)
-      .then((data) => console.log(data))
-      .then(() => this.ngOnInit())
-      .catch((e) => console.log(e.message));
-
-  }
-
-
+  // }
 
 }
 
