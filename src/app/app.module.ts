@@ -84,6 +84,9 @@ import { ForgotPasswordComponent } from './appLogin/forgot-password/forgot-passw
 import { VerifyEmailComponent } from './appLogin/verify-email/verify-email.component';
 import { SignUpComponent } from './appLogin/sign-up/sign-up.component';
 import { LoginHeaderComponent } from './appLogin/login-header/login-header.component';
+import { CajaControlComponent } from './caja/caja-control/caja-control.component';
+import { CajaViewComponent } from './caja/caja-view/caja-view.component';
+import { CajaFormComponent } from './caja/caja-form/caja-form.component';
 
 
 
@@ -106,6 +109,7 @@ const appRoutes: Routes = [
       // {path: 'home/playa', component: PlayaControlComponent, outlet: 'outlet1', ...canActivate(redirectUnauthorizedToLogin)  },
       // {path: 'scanner', component: ScannerComponent, ...canActivate(redirectUnauthorizedToLogin)  },
       { path: 'facturacion', component: FacturacionControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
+      { path: 'caja', component: CajaControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
       //  {path: 'ticketE', component: TicketEntradaComponent },
       { path: 'tarifas', component: TarifasControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
       { path: 'clientes', component: ClientesControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
@@ -172,6 +176,9 @@ const appRoutes: Routes = [
     VerifyEmailComponent,
     SignUpComponent,
     LoginHeaderComponent,
+    CajaControlComponent,
+    CajaViewComponent,
+    CajaFormComponent,
 
 
 
