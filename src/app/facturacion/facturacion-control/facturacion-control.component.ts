@@ -13,8 +13,8 @@ import { FacturacionFormComponent } from '../facturacion-form/facturacion-form.c
 @Component({
   selector: 'app-facturacion-control',
   template: `
-<br>
-<br>
+<br><br>
+<H1 class="display-1" style="text-align: center;">Facturacion </H1>
 <div>
 <button (click)="toggle()" id="bt" class="btn btn-outline-secondary">
     {{buttonName}}
