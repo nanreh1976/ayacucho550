@@ -19,8 +19,15 @@ fecha concepto entrada salida saldo
     <ul>
       <li>
         <div style=" float: right;">
-          <app-btn-agregar class="right " (click)="msgBack('Agregar',[])" class="d-flex align-items-center ">
+          <app-btn-agregar class="right " name='Ingreso $'  (click)="msgBack('Ingreso',[])" class="d-flex align-items-center ">
           </app-btn-agregar>
+        </div>
+      </li>
+
+      <li>
+        <div style=" float: right;">
+          <app-btn-eliminar class="right " name='Egreso $' (click)="msgBack('Eliminar',[])" class="d-flex align-items-center ">
+          </app-btn-eliminar>
         </div>
       </li>
     </ul>

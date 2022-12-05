@@ -15,75 +15,30 @@
           <div class="modal-body">
             <form [formGroup]="editForm" novalidate>
               <div class="form-group">
-                <label for="Apellido">Apellido</label>
+                <label for="Concepto">Concepto</label>
                 <div class="input-group">
-                  <input formControlName="apellido" class="form-control" required type="text"
-                  [ngClass]="{'is-invalid':Apellido?.errors && Apellido?.touched, 'is-valid': !Apellido?.errors && !Apellido?.touched }">
+                  <input formControlName="Concepto" class="form-control" required type="text"
+                  [ngClass]="{'is-invalid':Concepto?.errors && Concepto?.touched, 'is-valid': !Concepto?.errors && !Concepto?.touched }">
                 </div>
               </div>
               <div class="form-group">
-                <label for="Nombre">Nombre</label>
+                <label for="Importe">Importe</label>
                 <div class="input-group">
-                  <input formControlName="nombre" class="form-control" required type="text"
-                  [ngClass]="{'is-invalid':Nombre?.errors && Nombre?.touched, 'is-valid': !Nombre?.errors && !Nombre?.touched }">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="Telefono">Telefono</label>
-                <div class="input-group">
-                  <input formControlName="telefono" class="form-control"  type="text"
-                  [ngClass]="{'is-invalid':Telefono?.errors && Telefono?.touched, 'is-valid': !Telefono?.errors && !Telefono?.touched }">                  
+                  <input formControlName="importe" class="form-control" required type="text"
+                  [ngClass]="{'is-invalid':Importe?.errors && Importe?.touched, 'is-valid': !Importe?.errors && !Importe?.touched }">
                 </div>
               </div>
 
+         
+        
               <div class="form-group">
-                <label for="Direccion">Direccion</label>
+                <label for="Fecha">Fecha</label>
                 <div class="input-group">
-                  <input formControlName="direccion" class="form-control"  type="text">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="Email">Email</label>
-                <div class="input-group">
-                  <input formControlName="email" class="form-control" required type="email" placeholder="example@example.com"
-                  [ngClass]="{'is-invalid':Email?.errors && Email?.touched, 'is-valid': !Email?.errors && !Email?.touched }">
-                  <div *ngIf="Email?.errors && Email?.touched"  class="text-danger fs-6">
-                    <p *ngIf="Email?.hasError('required')">El email es requerido.</p>           
-                    <p *ngIf="Email?.hasError('email')">El formato debe ser válido.</p> 
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="Comentario">Comentario</label>
-                <div class="input-group">
-                  <input formControlName="comentario" class="form-control" type="text">
+                  <input formControlName="fecha" class="form-control" type="text">
                 </div>
               </div>
         
-              <!-- Ingreso egreso lado a lado  -->
-              <!-- <table class="table">
-                <tr>
-                  <td>
-                    <div class="form-group">
-                      <label for="ingreso">Ingreso</label>
-                      <div class="input-group">
-                        <input formControlName="ingreso" class="form-control" required type="date">
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-group">
-                      <label for="egreso">Egreso</label>
-                      <div class="input-group">
-                        <input formControlName="egreso" class="form-control" required type="date">
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </table> -->
+
               <div class="form-group">
 
                 <div class="input-group">
@@ -102,12 +57,3 @@
   </div>
 </ng-template>
 
-
-
-
-<!-- <select class="form-select form-select-md mb-3" (change)="changeTarifa($event)">
-  <option value={{tarifaSeleccionada}}>Elegir Tarifa</option>
-  <option *ngFor="let tarifa of tarifas">
-    {{tarifa.nombre}}
-  </option>
-</select> -->

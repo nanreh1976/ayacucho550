@@ -53,13 +53,9 @@ export class CajaFormComponent implements OnInit {
     // console.log("configure form", titulo, item), (titulo !=='agregar');
     this.editForm.patchValue({
       
-      apellido: item .apellido,
-      nombre: item .nombre,
-      telefono: item .telefono,
-      direccion: item.direccion,
-      comentario: item .comentario,
-      email: item.email,
-      id: item.id,
+      fecha:"",
+      concepto: "",
+      importe: "", 
     });
 
   }
@@ -67,13 +63,10 @@ export class CajaFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      apellido: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
-      nombre: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
-      telefono: ['', Validators.pattern(/^[0-9]{5,10}$/)],
-      direccion: [''],
-      comentario: [''],
-      email: ['', [Validators.required, Validators.email]],
-      id: [''],
+      concepto: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
+      importe: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
+      fecha: ['',],
+ 
     });
   }
 
@@ -92,20 +85,14 @@ export class CajaFormComponent implements OnInit {
 
 }
 
-get Email(){
-  return this.editForm.get("email"); 
+
+
+get Importe(){
+  return this.editForm.get("importe"); 
 }
 
-get Telefono(){
-  return this.editForm.get("telefono"); 
-}
-
-get Nombre(){
-  return this.editForm.get("nombre"); 
-}
-
-get Apellido(){
-  return this.editForm.get("apellido"); 
+get Concepto(){
+  return this.editForm.get("concepto"); 
 }
 
 getMsg(msg: any) {
