@@ -11,15 +11,16 @@
             <!-- <a routerLink="/inicio" routerLinkActive="active" ariaCurrentWhenActive="page">Inicio</a> -->
             <a routerLink="./playa" routerLinkActive="active" ariaCurrentWhenActive="page">Playa</a>
             <!-- <a routerLink="/scanner" routerLinkActive="active" ariaCurrentWhenActive="page">Scanner</a> -->
-   
 
 
-            <a routerLink="./facturacion" routerLinkActive="active" ariaCurrentWhenActive="page">Facturacion</a>
+
+            <!-- <a routerLink="./facturacion" routerLinkActive="active" ariaCurrentWhenActive="page">Facturacion</a> -->
+            <a routerLink="./caja" routerLinkActive="active" ariaCurrentWhenActive="page">Caja</a>
             <a routerLink="./tarifas" routerLinkActive="active" ariaCurrentWhenActive="page">Tarifas</a>
             <a routerLink="./clientes" routerLinkActive="active" ariaCurrentWhenActive="page">Clientes</a>
-            <a routerLink="./dashboard" routerLinkActive="active" ariaCurrentWhenActive="page">Dashboard</a>
+            <!-- <a routerLink="./dashboard" routerLinkActive="active" ariaCurrentWhenActive="page">Dashboard</a> -->
             <!-- <a routerLink="/ocupacion" routerLinkActive="active" ariaCurrentWhenActive="page">Disponibilidad</a> -->
-            <a routerLink="./logs" routerLinkActive="active" ariaCurrentWhenActive="page">Logs</a>
+            <!-- <a routerLink="./logs" routerLinkActive="active" ariaCurrentWhenActive="page">Logs</a> -->
             <!-- <a class="button" routerLink="/facturacion">Facturacion</a>
              <a class="button" routerLink="/ticketE">TicketE</a> -->
             <!-- <a class="button" routerLink="/tarifas">Tarifas</a>
@@ -27,9 +28,25 @@
             <!-- <a class="button" routerLink="/vehiculos">Vehiculos</a> -->
             <!-- <a class="button" routerLink="/dashboard">Dashboard</a>
             <a class="button" routerLink="/ocupacion">Disponibilidad</a> -->
+            <!-- Example single danger button -->
+
+            <a ngbDropdown >
+                <a ngbDropdownToggle  id="dropdownMenuButton1" aria-expanded="false">
+                 Dashboard
+                </a>
+                <ul ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
+                     <a ngbDropdownItem href="#" routerLink="./logs" routerLinkActive="active" ariaCurrentWhenActive="page">Logs</a>
+                    <a ngbDropdownItem href="#" routerLink="./facturacion" routerLinkActive="active" ariaCurrentWhenActive="page">Facturacion</a>
+                    <a ngbDropdownItem href="#" routerLink="./usuario" routerLinkActive="active" ariaCurrentWhenActive="page">Perfil Usuario</a>
+                    <a ngbDropdownItem href="#" routerLink="./empresa" routerLinkActive="active" ariaCurrentWhenActive="page">Perfil Empresa</a>
+   
+                </ul>
+            </a>
 
         </nav>
-    
+ 
+
+   
 
     </div>
 

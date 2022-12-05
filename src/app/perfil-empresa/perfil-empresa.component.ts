@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { DbFirestoreService } from '../servicios/database/db-firestore.service';
+import { EmpresaFormComponent } from './empresa-form/empresa-form.component';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../servicios/autentificacion/auth.service';
-import { DbFirestoreService } from '../servicios/database/db-firestore.service';
 import { InterOpService } from '../servicios/inter-op.service';
 import { LogService } from '../servicios/log.service';
-import { DashboardFormComponent } from './dashboard-form/dashboard-form.component';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-perfil-empresa',
+  templateUrl: './perfil-empresa.component.html',
+  styleUrls: ['./perfil-empresa.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class PerfilEmpresaComponent implements OnInit {
+
 
   titulo: string = 'empresa'
   searchText!: string;
@@ -58,7 +59,7 @@ getuser(){
 
   openForm(modo: string, item: any) {
     {
-      const modalRef = this.modalService.open(DashboardFormComponent,
+      const modalRef = this.modalService.open(EmpresaFormComponent,
         {
           // scrollable: false,
           windowClass: 'myCustomModalClass',

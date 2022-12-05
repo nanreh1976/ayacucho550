@@ -1,0 +1,29 @@
+<br><br>
+    <h1 class="display-1" style="text-align: center;">Datos de la empresa</h1>
+
+<div class="container">
+
+
+
+    
+    <table>
+      <tbody>
+
+        <tr>Cuit: {{data.cuit|| 'Sin Datos'}}</tr>
+        <tr>Direccion: {{data.direccion|| 'Sin Datos'}}</tr>
+        <tr>Mail: {{data.mail|| 'Sin Datos'}}</tr>
+        <tr>Razon Social: {{data.razonSocial|| 'Sin Datos'}}</tr>
+        <tr>Telefono: {{data.telefono|| 'Sin Datos'}}</tr>
+
+        <tr>
+          <app-btn-editar class="right" (click)="openForm('Editar',data)">
+          </app-btn-editar>
+        </tr>
+
+      </tbody>
+    </table>
+
+
+
+
+  </div>

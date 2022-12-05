@@ -2,19 +2,19 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-@Component({
-  selector: 'app-dashboard-form',
-  templateUrl: './dashboard-form.component.html',
-  styleUrls: ['./dashboard-form.component.scss']
-})
-export class DashboardFormComponent implements OnInit {
 
+@Component({
+  selector: 'app-caja-form',
+  templateUrl: './caja-form.component.html',
+  styleUrls: ['./caja-form.component.scss']
+})
+export class CajaFormComponent implements OnInit {
 
   @Input() fromParent: any;
   editForm!: any;
   titulo!: string;
   item: any;
-
+  now!: Date
 
   constructor(public activeModal: NgbActiveModal,
 
@@ -26,13 +26,14 @@ export class DashboardFormComponent implements OnInit {
 
   ngOnInit(): void {
     {
+      this.now = new Date()
       console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
 
       if (this.titulo === 'Agregar') {
         //this.item.id = ""
       } else {
-        this.item = this.fromParent.item;
+     //   this.item = this.fromParent.item;
         this.configureForm(this.titulo, this.item);
       }
     }
@@ -43,12 +44,10 @@ export class DashboardFormComponent implements OnInit {
     // console.log("configure form", titulo, item), (titulo !=='agregar');
     this.editForm.patchValue({
 
-      cuit: item.cuit,
-      direccion: item.direccion,
-      mail: item.mail,
-      razonSocial: item.razonSocial,
-      telefono: item.telefono,
-      id: item.id,
+      fecha: this.now ,
+      concepto: "",
+      importe: "",
+     // id:""
     });
 
   }
@@ -56,12 +55,11 @@ export class DashboardFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      cuit: [''],
-      direccion: [''],
-      mail: [''],
-      razonSocial: [''],
-      Telefono: [''],
-      id: [''],
+      concepto: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
+      importe: [Validators.required, Validators.pattern("-?\\d+(?:\\.\\d+)?")],
+      fecha: ['',],
+      //id: [''],
+
     });
   }
 
@@ -72,29 +70,22 @@ export class DashboardFormComponent implements OnInit {
     let value = {
       op: this.titulo,
       item: this.editForm.value
-
     };
-
     console.log("closemodal", value)
     this.activeModal.close(value);
-
   }
 
-  get Email() {
-    return this.editForm.get("email");
+
+
+  get Importe(){
+    return this.editForm.get("importe"); 
   }
 
-  get Telefono() {
-    return this.editForm.get("telefono");
+  get Concepto(){
+    return this.editForm.get("concepto"); 
   }
 
-  get Nombre() {
-    return this.editForm.get("nombre");
-  }
 
-  get Apellido() {
-    return this.editForm.get("apellido");
-  }
 
   getMsg(msg: any) {
     console.log(msg, "from vehiculos-form");

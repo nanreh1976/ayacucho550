@@ -22,7 +22,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { PlayaFormComponent } from './playa/playa-form/playa-form.component';
 import { FilterPipe } from './servicios/filter.pipe';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ClientesFormComponent } from './clientes/clientes-form/clientes-form.component';
 import { PlayaViewComponent } from './playa/playa-view/playa-view.component';
@@ -66,7 +65,6 @@ import { ScannerComponent } from './scanner/scanner.component';
 import { LogsComponent } from './logs/logs.component';
 import { LogService } from './servicios/log.service';
 
-import { DashboardFormComponent } from './dashboard/dashboard-form/dashboard-form.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
@@ -84,6 +82,12 @@ import { ForgotPasswordComponent } from './appLogin/forgot-password/forgot-passw
 import { VerifyEmailComponent } from './appLogin/verify-email/verify-email.component';
 import { SignUpComponent } from './appLogin/sign-up/sign-up.component';
 import { LoginHeaderComponent } from './appLogin/login-header/login-header.component';
+import { CajaControlComponent } from './caja/caja-control/caja-control.component';
+import { CajaViewComponent } from './caja/caja-view/caja-view.component';
+import { CajaFormComponent } from './caja/caja-form/caja-form.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { PerfilEmpresaComponent } from './perfil-empresa/perfil-empresa.component';
+import { EmpresaFormComponent } from './perfil-empresa/empresa-form/empresa-form.component';
 
 
 
@@ -106,13 +110,18 @@ const appRoutes: Routes = [
       // {path: 'home/playa', component: PlayaControlComponent, outlet: 'outlet1', ...canActivate(redirectUnauthorizedToLogin)  },
       // {path: 'scanner', component: ScannerComponent, ...canActivate(redirectUnauthorizedToLogin)  },
       { path: 'facturacion', component: FacturacionControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
+      { path: 'caja', component: CajaControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
       //  {path: 'ticketE', component: TicketEntradaComponent },
       { path: 'tarifas', component: TarifasControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
       { path: 'clientes', component: ClientesControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
 
-      { path: 'dashboard', component: DashboardComponent, ...canActivate(redirectUnauthorizedToLogin) },
+     // { path: 'dashboard', component: DashboardComponent, ...canActivate(redirectUnauthorizedToLogin) },
       { path: 'ocupacion', component: OcupacionComponent, ...canActivate(redirectUnauthorizedToLogin) },
       { path: 'logs', component: LogsComponent, ...canActivate(redirectUnauthorizedToLogin) },
+
+      { path: 'usuario', component: PerfilUsuarioComponent, ...canActivate(redirectUnauthorizedToLogin) },
+
+      { path: 'empresa', component: PerfilEmpresaComponent, ...canActivate(redirectUnauthorizedToLogin) },
 
     ]
   },
@@ -140,7 +149,6 @@ const appRoutes: Routes = [
     FilterPipe,
 
 
-    DashboardComponent,
     PagenotfoundComponent,
     ClientesFormComponent,
     PlayaViewComponent,
@@ -165,13 +173,20 @@ const appRoutes: Routes = [
     ConsultaFacturacionComponent,
     ScannerComponent,
     LogsComponent,
-    DashboardFormComponent,
+
     SpinnerComponent,
     LogoutComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
     SignUpComponent,
     LoginHeaderComponent,
+    CajaControlComponent,
+    CajaViewComponent,
+    CajaFormComponent,
+    PerfilUsuarioComponent,
+    PerfilEmpresaComponent,
+    EmpresaFormComponent,
+
 
 
 
