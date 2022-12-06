@@ -11,7 +11,7 @@ export class CajaViewComponent implements OnInit {
   @Input() data?: any 
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'caja';
-
+saldo:number = 0
 
   
   searchText!: string;
