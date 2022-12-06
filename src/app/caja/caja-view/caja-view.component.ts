@@ -7,14 +7,21 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class CajaViewComponent implements OnInit {
 
- 
-  @Input() data?: any 
+
+  @Input() data?: any
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'caja';
-saldo:number = 0
-
-  
+  @Input() saldo:number
+  msg: any
   searchText!: string;
+
+  constructor() { }
+
+  ngOnInit(): void {
+
+  }
+
+
 
   msgBack(op: string, item: any) {
     let value = {
@@ -26,8 +33,4 @@ saldo:number = 0
 
 
 
-  constructor() { }
-  msg: any
-  ngOnInit(): void {
-  }
 }

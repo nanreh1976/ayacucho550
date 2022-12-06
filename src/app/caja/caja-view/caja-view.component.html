@@ -10,7 +10,7 @@
 <div class="container">
   <div class="container" style="display: flex; height: 100px;">
     <div style="width: 50%; ">
-      <div>Saldo de caja: {{saldo}} </div>
+      <div>Saldo de caja: {{saldo | currency: '$ ':true:'2.0' }} </div>
     </div>
     <div style="flex-grow: 1; ">
 
@@ -54,7 +54,7 @@
           <th>Concepto</th>
           <th>Operacion</th>
           <th>Importe</th>
-    
+
           <th><i class="bi bi-pencil-fill"></i></th>
         </tr>
       </thead>
@@ -64,12 +64,10 @@
           <th class="badge" scope="row">{{i + 1}}</th>
           <td>{{item.fecha.seconds * 1000 | date:'dd/MM/yyyy - hh:mmaaa'}} </td>
           <td>{{item.concepto}}</td>
-          <td [class.positive]="item.operacion === 'ingreso'" [class.negative]="item.operacion === 'egreso'" >{{item.operacion}}</td>
-          <td [class.positive]="item.operacion === 'ingreso'" [class.negative]="item.operacion === 'egreso'" >{{item.importe}}</td>
-     
-          
-          
-
+          <td [class.positive]="item.operacion === 'ingreso'" [class.negative]="item.operacion === 'egreso'">
+            {{item.operacion}}</td>
+          <td [class.positive]="item.operacion === 'ingreso'" [class.negative]="item.operacion === 'egreso'"   style="text-align: right;">
+            {{item.importe |  currency: '$ ':true:'2.0'}}</td>
 
           <!-- <td>
               <app-btn-editar class="right" (click)="msgBack('Editar',item)" class="d-flex align-items-center">

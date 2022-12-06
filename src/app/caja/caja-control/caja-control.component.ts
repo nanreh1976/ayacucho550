@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { TitleStrategy } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { CajaFormComponent } from '../caja-form/caja-form.component';
@@ -7,11 +8,12 @@ import { CajaFormComponent } from '../caja-form/caja-form.component';
 @Component({
   selector: 'app-caja-control',
 
-    template: `
+  template: `
   <app-caja-view
 
 
-  [data]=data   
+  [data]=data 
+  [saldo]=saldo  
  (newItemEvent)="getMsg($event)"
 
 
@@ -34,6 +36,7 @@ export class CajaControlComponent implements OnInit {
 
   // data recibida del crud
   data!: any;
+  saldo: number = 0
 
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
@@ -44,9 +47,29 @@ export class CajaControlComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getAll();  
+    this.getAll();
+
 
   }
+
+
+
+
+  // Do stuff in case forEach has not returned
+  calcularSaldo(data: any) {
+    this.saldo = 0
+    for (let item of data) {
+      if (item.operacion === "ingreso") {
+        this.saldo += Number(item.importe)
+      } else {
+        this.saldo -= Number(item.importe)
+      }
+      console.log(item.importe)
+      console.log("saldo", this.saldo)
+    }
+
+  }
+
 
 
   getMsg(msg: any) {
@@ -125,7 +148,8 @@ export class CajaControlComponent implements OnInit {
     this.dbFirebase.getAll(this.componente).subscribe(data => {
       this.data = data;
       localStorage.setItem(`${this.componente}`, JSON.stringify(data))
-      console.log(this.data);
+      console.log(JSON.stringify(this.data))
+      this.calcularSaldo(this.data)
     })
   }
 
@@ -149,6 +173,8 @@ export class CajaControlComponent implements OnInit {
       .then((data) => console.log(data))
       .then(() => this.ngOnInit())
       .catch((e) => console.log(e.message));
+
+
 
   }
 
