@@ -32,6 +32,7 @@ export class CajaFormComponent implements OnInit {
 
       if (this.titulo === 'Agregar') {
         //this.item.id = ""
+        
       } else {
      //   this.item = this.fromParent.item;
         this.configureForm(this.titulo, this.item);
@@ -46,6 +47,7 @@ export class CajaFormComponent implements OnInit {
 
       fecha: this.now ,
       concepto: "",
+      operacion:"",
       importe: "",
      // id:""
     });
@@ -57,6 +59,7 @@ export class CajaFormComponent implements OnInit {
     this.editForm = this.fb.group({
       concepto: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
       importe: [Validators.required, Validators.pattern("-?\\d+(?:\\.\\d+)?")],
+      operacion: [''],
       fecha: ['',],
       //id: [''],
 

@@ -92,13 +92,13 @@ export class CajaControlComponent implements OnInit {
 
     switch (op) {
       case 'Ingreso': {
-
+        item.operacion = "ingreso"
         this.addItem(this.componente, item);
         break;
       }
 
       case 'Egreso': {
-
+        item.operacion = "egreso"
         this.addItem(this.componente, item);
         break;
       }
