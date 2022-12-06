@@ -36,27 +36,27 @@ export class PlayaControlComponent implements OnInit {
 
   // nombre del crud / componente
   componente: string = 'playa'
-  
+
   // data recibida del crud
   data!: any;
-  
-  constructor(private modalService: NgbModal,   
+
+  constructor(private modalService: NgbModal,
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
     private interOpService: InterOpService,
     private logger: LogService,
-  ) {}
+  ) { }
 
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.getAll();  //tomar datos de los vehiculos en playa
-//this.getuser();
+    //this.getuser();
   }
 
 
-getuser(){
-   console.log(JSON.parse(localStorage.getItem('user')||`{}`))
-  
+  getuser() {
+    console.log(JSON.parse(localStorage.getItem('user') || `{}`))
+
   }
 
   /// RECIBE MENSAJE DE LA VISTA ///
@@ -124,6 +124,16 @@ getuser(){
       case 'Eliminar': {
         this.deleteItem(this.componente, item);
         this.interOpService.addItem("facturacion", item)
+
+        // pasar a funcion que genere el item
+        let ndate = new Date()
+        this.interOpService.addItem("caja", {
+          "concepto": item.patente,
+          "fecha": ndate ,// item.fechas["fechaSalidaDate"],
+          "importe": item.saldo,
+          "operacion": "ingreso"
+        })
+
         break;
       }
 
@@ -142,7 +152,7 @@ getuser(){
     this.dbFirebase.getAll(this.componente).subscribe(data => {
       this.data = data;
       localStorage.setItem(`${this.componente}`, JSON.stringify(data))
-      console.log(this.data);      
+      console.log(this.data);
     })
   }
 
@@ -150,35 +160,35 @@ getuser(){
   deleteItem(componente: string, item: any): void {
 
     console.log("delete itemcomponent", item,)
-   
-      this.dbFirebase.delete(componente, item.id)
-      .then((data) => console.log(data))      
+
+    this.dbFirebase.delete(componente, item.id)
+      .then((data) => console.log(data))
       .then(() => this.ngOnInit())
-      .then(() => console.log("pasa por delete metodo?")   )
+      .then(() => console.log("pasa por delete metodo?"))
       .catch((e) => console.log(e.message));
-      
+
   }
 
   addItem(componente: string, item: any): void {
 
-     console.log("add itemcomponent", item,)
-   
-      this.dbFirebase.create(componente, item)
+    console.log("add itemcomponent", item,)
+
+    this.dbFirebase.create(componente, item)
       .then((data) => console.log(data))
       .then(() => this.ngOnInit())
       .catch((e) => console.log(e.message));
-       
-      
+
+
 
   }
 
   updateItem(componente: string, item: any): void {
     console.log("update itemcomponent", item,)
-    
-        this.dbFirebase.update(componente, item)
-        .then((data) => console.log(data))
-        .then(() => this.ngOnInit())
-        .catch((e) => console.log(e.message));
+
+    this.dbFirebase.update(componente, item)
+      .then((data) => console.log(data))
+      .then(() => this.ngOnInit())
+      .catch((e) => console.log(e.message));
 
   }
 
@@ -199,10 +209,10 @@ getuser(){
       }
 
       case 'Reimprimir': {
-       
+
         this.openTicket("Reimprimir", item);
-        this.logger.log("ticket-reimpresion",item);
-       // console.log(JSON.parse(localStorage.getItem("user")||`{}`))
+        this.logger.log("ticket-reimpresion", item);
+        // console.log(JSON.parse(localStorage.getItem("user")||`{}`))
         break;
       }
 
@@ -251,5 +261,5 @@ getuser(){
       }, (reason) => { });
     }
   }
-  
+
 }

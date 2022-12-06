@@ -1,4 +1,4 @@
-export interface PlayaLogI {
+export interface IPlayaLogI {
 
     id: number;
     patente: string;

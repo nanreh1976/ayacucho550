@@ -52,9 +52,8 @@
           <th scope="col">#</th>
           <th>fecha</th>
           <th>Concepto</th>
+          <th>Operacion</th>
           <th>Importe</th>
-          <th>Ingreso</th>
-          <th>Egreso</th>
           <th>Saldo</th>
           <th><i class="bi bi-pencil-fill"></i></th>
         </tr>
@@ -65,7 +64,11 @@
           <th class="badge" scope="row">{{i + 1}}</th>
           <td>{{item.fecha.seconds * 1000 | date:'dd/MM/yyyy - hh:mmaaa'}} </td>
           <td>{{item.concepto}}</td>
-          <td>{{item.importe}}</td>
+          <td [class.positive]="item.operacion === 'ingreso'" [class.negative]="item.operacion === 'egreso'" >{{item.operacion}}</td>
+          <td [class.positive]="item.operacion === 'ingreso'" [class.negative]="item.operacion === 'egreso'" >{{item.importe}}</td>
+     
+          
+          
 
 
           <!-- <td>
