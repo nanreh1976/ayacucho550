@@ -1,93 +1,90 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">{{titulo}} Tarifas <Form></Form> </h5>
-    <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-  </button>
+  <h5 class="modal-title" id="modal-basic-title">{{titulo}} Tarifas <Form></Form> </h5>
+  <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+</button>
 </div>
 <div class="modal-body">
-    <div class="container">
-        <div class="modal-body">
-          <form [formGroup]="editForm" novalidate>
-            <div class="form-group">
-              <label for="Nombre">Nombre</label>
-              <div class="input-group">
-                <input formControlName="nombre" class="form-control" required type="text">
-              </div>
+  <div class="container">
+      <div class="modal-body">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="Nombre">Nombre</label>
+            <div class="input-group">
+              <input formControlName="nombre" class="form-control" required type="text">
             </div>
-            <!--<div class="form-group">
-              <label for="Nombre">Nombre</label>
-              <div class="input-group">
-                <input formControlName="nombre" class="form-control" required type="text">
+          </div>
+         
+          <div class="form-group">
+            <label for="unidad tiempo">unidad tiempo</label>
+            <!--<div class="input-group">
+              <input formControlName="unidad_tiempo" class="form-control" required type="text"> -->
+              <div>
+                <select class="form-select form-select-md mb-3" (change)="changeUnidadTiempo($event)">
+                  <option value={{unidadSeleccionada}}>Elegir unidad de tiempo</option>
+                  <option *ngFor="let unidad of unidadTiempo">
+                    {{unidad.unidad_tiempo}}
+                  </option>
+                </select>
               </div>
-            </div>-->
+          </div>
 
-            <div class="form-group">
-              <label for="unidad tiempo">unidad tiempo</label>
-              <div class="input-group">
-                <input formControlName="unidad_tiempo" class="form-control" required type="text">
-              </div>
+          <div class="form-group">
+            <label for="valor">valor</label>
+            <div class="input-group">
+              <input formControlName="valor" class="form-control" required type="text">
             </div>
+          </div>
 
-            <div class="form-group">
-              <label for="valor">valor</label>
-              <div class="input-group">
-                <input formControlName="valor" class="form-control" required type="text">
-              </div>
+          <div class="form-group">
+            <label for="fraccion">fraccion</label>
+            <div class="input-group">
+              <input formControlName="fraccion" class="form-control" required type="text">
             </div>
+          </div>
+         <!--  <div class="form-group">
+            <label for="unidad de fraccion">unidad de fraccion</label>
+            <div class="input-group">
+              <input formControlName="fraccion" class="form-control" required type="text">
+            </div>
+          </div> -->
+          <!-- <div class="form-group">
+            <label for="descuento">categoria</label>
+            <div class="input-group">
+              <input formControlName="categoria" class="form-control" required type="text">
+            </div>
+          </div> -->
+          <div>
+            <label for="descuento">categoria</label>
+            <select class="form-select form-select-md mb-3" (change)="changeCategoria($event)">
+              <option value={{categoriaSeleccionada}}>Elegir categoria</option>
+              <option *ngFor="let categoria of categorias">
+                {{categoria.nombre}}
+              </option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="descuento">tolerancia</label>
+            <div class="input-group">
+              <input formControlName="tolerancia" class="form-control" required type="text">
+            </div>
+          </div>
+          <div class="form-group">
 
-            <div class="form-group">
-              <label for="fraccion">fraccion</label>
-              <div class="input-group">
-                <input formControlName="fraccion" class="form-control" required type="text">
-              </div>
+            <div class="input-group">
+              <input formControlName="id" class="form-control" type="hidden">
             </div>
-            <div class="form-group">
-              <label for="unidad de fraccion">unidad de fraccion</label>
-              <div class="input-group">
-                <input formControlName="ut_fraccion" class="form-control" required type="text">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="descuento">descuento</label>
-              <div class="input-group">
-                <input formControlName="descuento" class="form-control" required type="text">
-              </div>
-            </div>
-            <!-- Ingreso egreso lado a lado  -->
-            <!-- <table class="table">
-              <tr>
-                <td>
-                  <div class="form-group">
-                    <label for="ingreso">Ingreso</label>
-                    <div class="input-group">
-                      <input formControlName="ingreso" class="form-control" required type="date">
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <label for="egreso">Egreso</label>
-                    <div class="input-group">
-                      <input formControlName="egreso" class="form-control" required type="date">
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </table> -->
-            <div class="form-group">
-
-              <div class="input-group">
-                <input formControlName="id" class="form-control" type="hidden">
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-success" (click)="closeModal()">
-            {{titulo}}
-          </button>
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-success" type="submit">
+              {{titulo}}
+            </button>
+          </div>
+        </form>
       </div>
-  
+      
+    </div>
+
 </div>
 

@@ -18,7 +18,7 @@ export class EstadiaService {
 
     let unidadesFraccion:number = minutosEstadia/tarifas.fraccion       //la estadia dividido la fraccion minima de la tarifa, da cuantas fracciones se consumieron 
 
-    let minutosTolerancia: number = 5;
+    let minutosTolerancia: number = tarifas.tolerancia;
     let minutosResto = Math.floor(minutosEstadia % tarifas.fraccion)    //esto transforma en un entero el resto de la division
 
     switch (tarifas.unidad_tiempo) {
@@ -27,7 +27,7 @@ export class EstadiaService {
         saldo = 0 ;
         return saldo         
         //break;
-      case "min":
+      case "minutos":
         if (unidadesFraccion < 2){                                          //si es menos de una hora, cobra una hora
           saldo = valorTarifa * 2
           return saldo
