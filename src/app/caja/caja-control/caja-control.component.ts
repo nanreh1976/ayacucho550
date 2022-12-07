@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { TitleStrategy } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
+import { LogService } from 'src/app/servicios/log.service';
 import { CajaFormComponent } from '../caja-form/caja-form.component';
 
 @Component({
@@ -41,6 +42,7 @@ export class CajaControlComponent implements OnInit {
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
+    private logger: LogService
   ) {
   }
 
@@ -52,8 +54,16 @@ export class CajaControlComponent implements OnInit {
 
   }
 
+  aperturaCaja() {
+    console.log("apertura de caja")
+    this.logger.log("apertura de caja", "");
+  }
 
 
+  cierreCaja() {
+    console.log("cierre de caja")
+    this.logger.log("Cierre de caja", "");
+  }
 
   // Do stuff in case forEach has not returned
   calcularSaldo(data: any) {
@@ -126,6 +136,19 @@ export class CajaControlComponent implements OnInit {
         break;
       }
 
+      case 'Cierre de caja': {
+        this.cierreCaja()
+        item.operacion = "cierre"
+        //  this.addItem(this.componente, item);
+        break;
+      }
+
+      case 'Apertura de Caja': {
+        this.aperturaCaja()
+        item.operacion = "apertura"
+        // this.addItem(this.componente, item);
+        break;
+      }
       // case 'Editar': {
       //   this.updateItem(this.componente, item);
       //   break;
