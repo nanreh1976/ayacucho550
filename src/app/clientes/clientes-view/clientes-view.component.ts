@@ -17,7 +17,7 @@ export class ClientesViewComponent implements OnInit {
   
   searchText!: string;
 
-  msgBack(op: string, item: any) {
+  msgBack(op: string, item: any) {    
     let value = {
       op: op,
       item: item,
@@ -42,6 +42,8 @@ export class ClientesViewComponent implements OnInit {
         }
       })
     }else{
+      console.log(value);
+      
       this.newItemEvent.emit(value);
     }
   }
