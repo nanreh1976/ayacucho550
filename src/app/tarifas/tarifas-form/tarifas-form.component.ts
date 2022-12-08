@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { unitOfTime } from 'moment';
 
 import { LogService } from 'src/app/servicios/log.service';
+import Swal from 'sweetalert2';
 //import { DataService } from 'src/app/servicios/data.service';
 
 @Component({
@@ -94,14 +95,25 @@ export class TarifasFormComponent implements OnInit {
     this.editForm = this.fb.group({
       nombre: [''],
       unidad_tiempo: [''],
-      valor: [''],
-      fraccion: [''],
+      valor: ['', Validators.pattern(/^[0-9]{1,256}$/)],
+      fraccion: ['', Validators.pattern(/^[0-9]{1,256}$/)],
       categoria: [''],
-      tolerancia: [''],
+      tolerancia: ['', Validators.pattern(/^[0-9]{1,256}$/)],
       id: [''],
     });
   }
 
+  get Valor() {
+    return this.editForm.get("valor"); 
+  }
+
+  get Fraccion() {
+    return this.editForm.get("fraccion"); 
+  }
+
+  get Tolerancia() {
+    return this.editForm.get("tolerancia"); 
+  }
 
   configureForm() {
     
@@ -168,14 +180,49 @@ export class TarifasFormComponent implements OnInit {
         this.item = this.editForm.value                     //guarda los valores del form en item
         this.item.unidad_tiempo = this.unidadSeleccionada   //guarda la unidad seleccionada en el item
         this.item.categoria = this.categoriaSeleccionada    //guarda la categoria seleccionada en el item
-        this.closeModal();                                  //cierra el modal
+        Swal.fire({
+          title: '¿Desea guardar la tarifa?',
+          //text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Confirmar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+           /*  Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success' 
+            )*/
+            this.closeModal();                                  //cierra el modal
+          }
+        })
+        
         break;
       }
       case 'Editar': {        
         this.item = this.editForm.value                     //guarda los valores del form en item
         this.item.unidad_tiempo = this.unidadSeleccionada   //guarda la unidad seleccionada en el item
         this.item.categoria = this.categoriaSeleccionada    //guarda la categoria seleccionada en el item
-        this.closeModal();                                  //cierra el modal
+        Swal.fire({
+          title: '¿Desea confirmar los cambios?',
+          //text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Confirmar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+           /*  Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success' 
+            )*/
+            this.closeModal();                                  //cierra el modal
+          }
+        })       
 
         break;
       }
