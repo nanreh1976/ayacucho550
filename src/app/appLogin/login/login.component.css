@@ -1,4 +1,7 @@
 
+@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
+
+
 .wrapper{
     position: absolute;
     top: 0;
@@ -30,8 +33,6 @@ vertical-align: middle;
     
 }
 
-
-@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
 
 * {
   -webkit-box-sizing: border-box;

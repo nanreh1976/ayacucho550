@@ -34,6 +34,9 @@ export class CajaControlComponent implements OnInit {
   // reactiveforms, modo edicion, delete etc
   //modo!: string;
 
+  user= JSON.parse(localStorage.getItem("user")||`{}`)
+  usuario = (this.user['displayName'])
+
 
   // data recibida del crud
   data!: any;
@@ -55,13 +58,13 @@ export class CajaControlComponent implements OnInit {
   }
 
   aperturaCaja() {
-    console.log("apertura de caja")
+   // console.log("apertura de caja")
     this.logger.log("apertura de caja", "");
   }
 
 
   cierreCaja() {
-    console.log("cierre de caja")
+   // console.log("cierre de caja")
     this.logger.log("Cierre de caja", "");
   }
 
@@ -74,8 +77,8 @@ export class CajaControlComponent implements OnInit {
       } else {
         this.saldo -= Number(item.importe)
       }
-      console.log(item.importe)
-      console.log("saldo", this.saldo)
+     // console.log(item.importe)
+      //console.log("saldo", this.saldo)
     }
 
   }
@@ -83,7 +86,7 @@ export class CajaControlComponent implements OnInit {
 
 
   getMsg(msg: any) {
-    console.log(msg, "from parent");
+   // console.log(msg, "from parent");
     this.openForm(msg.op, msg.item)
   }
 
@@ -108,7 +111,7 @@ export class CajaControlComponent implements OnInit {
 
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then((result) => {
-        console.log("result from control", "op", result.op, "item", result.item);
+       // console.log("result from control", "op", result.op, "item", result.item);
 
         // this.getXps();  
         this.selectCrudOp(result.op, result.item)
@@ -117,12 +120,14 @@ export class CajaControlComponent implements OnInit {
     }
   }
 
-
+agregarUsuario(item:any){
+  item.usuario=this.usuario
+}
 
   // seleccionar operacion CRUD
 
   selectCrudOp(op: string, item: any) {
-
+    this.agregarUsuario(item)
     switch (op) {
       case 'Ingreso': {
         item.operacion = "ingreso"
@@ -171,7 +176,7 @@ export class CajaControlComponent implements OnInit {
     this.dbFirebase.getAll(this.componente).subscribe(data => {
       this.data = data;
       localStorage.setItem(`${this.componente}`, JSON.stringify(data))
-      console.log(JSON.stringify(this.data))
+      //console.log(JSON.stringify(this.data))
       this.calcularSaldo(this.data)
     })
   }

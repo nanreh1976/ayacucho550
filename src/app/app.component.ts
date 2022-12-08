@@ -13,7 +13,7 @@ import { LoggedService } from './servicios/logged.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'proyecto-final-7380';
+  title = 'LinkinPark';
   $estado;
 
   clientes!:any;

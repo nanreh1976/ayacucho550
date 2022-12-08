@@ -27,7 +27,7 @@ export class CajaFormComponent implements OnInit {
   ngOnInit(): void {
     {
       this.now = new Date()
-      console.log("on init form", this.fromParent);
+      //console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
 
       if (this.titulo === 'Agregar') {
@@ -74,7 +74,7 @@ export class CajaFormComponent implements OnInit {
       op: this.titulo,
       item: this.editForm.value
     };
-    console.log("closemodal", value)
+    //console.log("closemodal", value)
     this.activeModal.close(value);
   }
 
@@ -91,14 +91,14 @@ export class CajaFormComponent implements OnInit {
 
 
   getMsg(msg: any) {
-    console.log(msg, "from vehiculos-form");
+
     /* let value = {
       op: msg.op,
       item: msg.item
       
     }; */
 
-    console.log("closemodal", msg)
+    //console.log("closemodal", msg)
     this.activeModal.close(msg);
 
   }
