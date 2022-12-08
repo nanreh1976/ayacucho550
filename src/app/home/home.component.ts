@@ -11,7 +11,7 @@ import { LoggedService } from '../servicios/logged.service';
 })
 export class HomeComponent implements OnInit {
 
-  title = 'proyecto-final-7380';
+  title = 'LinkinPark';
  // $estado;
 
   clientes!:any;

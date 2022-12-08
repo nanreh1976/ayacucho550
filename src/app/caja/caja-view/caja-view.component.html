@@ -10,7 +10,7 @@
 <div class="container">
   <div class="container" style="display: flex; height: 100px;">
     <div style="width: 50%; ">
-      <div>Saldo de caja: {{saldo | currency: '$ ':true:'2.0' }} </div>
+      <div>Saldo de caja: $ {{saldo | number :'':'ar-AR' }} </div>
     </div>
     <div style="flex-grow: 1; ">
 
@@ -76,7 +76,7 @@
           {{item.operacion}}</td>
         <td [class.positive]="item.operacion === 'ingreso'" [class.negative]="item.operacion === 'egreso'"
           style="text-align: right;">
-          {{item.importe | currency: '$ ':true:'2.0'}}</td>
+          $ {{item.importe | number}}</td>
 
         <!-- <td>
               <app-btn-editar class="right" (click)="msgBack('Editar',item)" class="d-flex align-items-center">
