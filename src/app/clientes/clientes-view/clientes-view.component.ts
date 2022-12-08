@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-clientes-view',
@@ -21,7 +22,28 @@ export class ClientesViewComponent implements OnInit {
       op: op,
       item: item,
     }
-    this.newItemEvent.emit(value);
+    if(op === 'Eliminar'){
+      Swal.fire({
+        title: '¿Desea eliminar el cliente?',
+        text: "No podrá revertir esta acción",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+         /*  Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success' 
+          )*/
+          this.newItemEvent.emit(value);
+        }
+      })
+    }else{
+      this.newItemEvent.emit(value);
+    }
   }
 
 
