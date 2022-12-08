@@ -4,6 +4,7 @@ import { FormBuilder, Validators, } from '@angular/forms';
 
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { Clientes } from 'src/app/interfaces/clientes';
+import Swal from 'sweetalert2';
 
 
 
@@ -36,15 +37,22 @@ export class ClientesFormComponent implements OnInit {
     {
       console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
+      switch (this.titulo) {  
+        case 'Agregar':{
 
-      if(this.titulo === 'Agregar'){ 
-        //this.item.id = ""
-      } else{
-        this.item = this.fromParent.item;      
-        this.configureForm(this.titulo, this.item);
+          break;
+        }
+        case 'Editar':{
+          this.item = this.fromParent.item;      
+          this.configureForm(this.titulo, this.item);  
+          break;
+        }
+        case'Eliminar': {
+          this.item = this.fromParent.item;  
+          this.closeModal()  ;
+          break;
+        }
       }
-
-      
 
     }
   }
@@ -72,8 +80,8 @@ export class ClientesFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      apellido: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
-      nombre: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
+      apellido: ['', Validators.pattern(/^[ a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)],
+      nombre: ['', Validators.pattern(/^[ a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)],
       telefono: ['', Validators.pattern(/^[0-9]{5,10}$/)],
       direccion: [''],
       comentario: [''],
@@ -86,15 +94,23 @@ export class ClientesFormComponent implements OnInit {
 
   closeModal() {  
 
-    let value = {
-   op: this.titulo,
-   item: this.editForm.value
+    if(this.titulo === "Eliminar"){
+      let value = {
+        op: this.titulo,
+        item: this.item,       
+        };
+      this.activeModal.close(value);
+    }else{
+      let value = {
+        op: this.titulo,
+        item: this.editForm.value,       
+        };
+      this.activeModal.close(value)
+    }
+    
    
- };
-
- console.log("closemodal", value)
- this.activeModal.close(value);
-
+ /*console.log("closemodal", value)
+ this.activeModal.close(value); */
 }
 
 get Email(){
@@ -124,6 +140,48 @@ getMsg(msg: any) {
   console.log("closemodal", msg)
   this.activeModal.close(msg);
   
+}
+
+guardarDatos() {
+  if(this.titulo === "Agregar"){
+    Swal.fire({
+      title: '¿Desea guardar el cliente?',
+      //text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+       /*  Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success' 
+        )*/
+        this.closeModal();                               //cierra el modal
+      }
+    })
+  } else{
+    Swal.fire({
+      title: '¿Desea guardar los cambios?',
+      //text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+       /*  Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success' 
+        )*/
+        this.closeModal();                                 //cierra el modal
+      }
+    })
+  }
 }
 
 
