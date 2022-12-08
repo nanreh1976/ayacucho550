@@ -9,6 +9,7 @@ export class CajaViewComponent implements OnInit {
 
 
   @Input() data?: any
+  @Input() usuario?: any
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'caja';
   @Input() saldo:number

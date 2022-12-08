@@ -58,7 +58,10 @@ export class CajaFormComponent implements OnInit {
   createForm() {
     this.editForm = this.fb.group({
       concepto: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
-      importe: [Validators.required, Validators.pattern("-?\\d+(?:\\.\\d+)?")],
+      importe: [Validators.required, 
+                Validators.pattern("-?\\d+(?:\\.\\d+)?")
+              
+              ],
       operacion: [''],
       fecha: ['',],
       //id: [''],

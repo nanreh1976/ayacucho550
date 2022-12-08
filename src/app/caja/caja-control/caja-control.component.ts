@@ -15,6 +15,7 @@ import { CajaFormComponent } from '../caja-form/caja-form.component';
 
   [data]=data 
   [saldo]=saldo  
+  [usuario]=usuario 
  (newItemEvent)="getMsg($event)"
 
 
@@ -34,13 +35,18 @@ export class CajaControlComponent implements OnInit {
   // reactiveforms, modo edicion, delete etc
   //modo!: string;
 
-  user= JSON.parse(localStorage.getItem("user")||`{}`)
-  usuario = (this.user['displayName'])
+  usuario!: string
 
 
   // data recibida del crud
   data!: any;
   saldo: number = 0
+
+
+  setUser() {
+    let user = JSON.parse(localStorage.getItem("user") || `{}`)
+    this.usuario = (user['displayName'])
+  }
 
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
@@ -53,18 +59,18 @@ export class CajaControlComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
-
+    this.setUser()
 
   }
 
   aperturaCaja() {
-   // console.log("apertura de caja")
+    // console.log("apertura de caja")
     this.logger.log("apertura de caja", "");
   }
 
 
   cierreCaja() {
-   // console.log("cierre de caja")
+    // console.log("cierre de caja")
     this.logger.log("Cierre de caja", "");
   }
 
@@ -77,7 +83,7 @@ export class CajaControlComponent implements OnInit {
       } else {
         this.saldo -= Number(item.importe)
       }
-     // console.log(item.importe)
+      // console.log(item.importe)
       //console.log("saldo", this.saldo)
     }
 
@@ -86,7 +92,7 @@ export class CajaControlComponent implements OnInit {
 
 
   getMsg(msg: any) {
-   // console.log(msg, "from parent");
+    // console.log(msg, "from parent");
     this.openForm(msg.op, msg.item)
   }
 
@@ -111,7 +117,7 @@ export class CajaControlComponent implements OnInit {
 
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then((result) => {
-       // console.log("result from control", "op", result.op, "item", result.item);
+        // console.log("result from control", "op", result.op, "item", result.item);
 
         // this.getXps();  
         this.selectCrudOp(result.op, result.item)
@@ -120,9 +126,10 @@ export class CajaControlComponent implements OnInit {
     }
   }
 
-agregarUsuario(item:any){
-  item.usuario=this.usuario
-}
+  agregarUsuario(item: any) {
+    item.usuario = this.usuario
+    console.log("usuario agregado", JSON.stringify(item))
+  }
 
   // seleccionar operacion CRUD
 
