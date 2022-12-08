@@ -39,11 +39,11 @@ export class ClientesService implements OnInit {
 
 
     if(vehiculos.length === 0){
-      alert("esta cliente NO existe en la base de datos")
+      //alert("esta cliente NO existe en la base de datos")
       respuesta.clienteExiste = false
       return respuesta
     } else{
-      alert("esta cliente existe")
+      //alert("esta cliente existe")
       respuesta.datosVehiculo = vehiculos[0];
       respuesta.clienteExiste = true;
       /* respuesta.datosTarifa = this.buscarTarifa(vehiculos[0].idTarifa) */
