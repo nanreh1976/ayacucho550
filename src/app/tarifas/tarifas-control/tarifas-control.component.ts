@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 
 
 import { TarifasFormComponent } from '../tarifas-form/tarifas-form.component';
@@ -28,9 +29,9 @@ componente: string = 'tarifas'
 
 
  
-  //data!: [];
+  data!: any;
   //esto reemplaza in memory api
-  data: any = [{
+  /* data: any = [{
     id: 3,
     nombre: "auto-basico",               // nombre de la tarifa 
     categoria: "auto",            // tipo de vehiculo
@@ -69,12 +70,13 @@ componente: string = 'tarifas'
     },
   ];
 
-
+ */
 
 
 
   constructor(private modalService: NgbModal,             
-              private fb: FormBuilder,              
+              private fb: FormBuilder,           
+              private dbFirebase: DbFirestoreService,  
   ) {}
 
 
@@ -151,34 +153,33 @@ componente: string = 'tarifas'
 
 
 getAll(): void {
- /*  this.servicioDatosService.getAll(this.componente).subscribe (
-  datos => {this.data = datos;
-  console.log("get all ", this.componente, this.data)
-
-  }
-); */
+  this.dbFirebase.getAll("tarifas").subscribe(data => {
+    this.data = data;
+    localStorage.setItem(`${"tarifas"}`, JSON.stringify(this.data))
+    //console.log(this.tarifas);      
+  })
 }
 
 
 deleteItem(componente: string, item: any): void {
-   /* console.log("delete component", item, item.id)
-  this.servicioDatosService.deleteItem(componente, item.id)
-  .subscribe 
-  (data => { 
-    this.data = data; 
-    this.ngOnInit();
-  }) */
+  console.log("delete itemcomponent", item,)
+
+  this.dbFirebase.delete(componente, item.id)
+    .then((data) => console.log(data))
+    .then(() => this.ngOnInit())
+    .then(() => console.log("pasa por delete metodo?"))
+    .catch((e) => console.log(e.message));
 }
 
 addItem(componente: string, item: any): void {
 
-  // console.log("add itemcomponent", item, )
-  /* this.servicioDatosService.addItem(componente, item) 
-  .subscribe
-  (data => { 
-    this.data = data; 
-    this.ngOnInit();
-  }); */
+  
+  console.log("add itemcomponent", item,)
+
+  this.dbFirebase.create(componente, item)
+    .then((data) => console.log(data))
+    .then(() => this.ngOnInit())
+    .catch((e) => console.log(e.message));
 
   }
 
@@ -187,12 +188,12 @@ addItem(componente: string, item: any): void {
 
 updateItem(componente: string, item: any): void {
  
-/*   this.servicioDatosService.updateItem(componente, item, item.id)
-  .subscribe
-  (data => { 
-    this.data = data; 
-    this.ngOnInit();
-  }); */
+  console.log("update itemcomponent", item,)
+
+  this.dbFirebase.update(componente, item)
+    .then((data) => console.log(data))
+    .then(() => this.ngOnInit())
+    .catch((e) => console.log(e.message));
 
   }
 

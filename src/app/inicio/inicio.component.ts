@@ -1,6 +1,7 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 import { InterOpService } from '../servicios/inter-op.service';
 
 import { ValidarPatenteService } from '../servicios/patentes/validar-patente.service';
@@ -68,12 +69,55 @@ export class InicioComponent implements OnInit {
 
       // chequea si el str ingresado es barcode o patente
       if (this.vpService.isBarCode(str)) {
+        if(this.op === "Eliminar"){
+          Swal.fire({
+            title: '¿Desea realizar la salida del vehículo?',
+            //text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+             /*  Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success' 
+              )*/
+              console.log("submitted barcode")
+              this.onScan(str)  //va a chequear el scan
+            }
+          })
+        }else{
         console.log("submitted barcode")
         this.onScan(str)  //va a chequear el scan
-
+        }  
       } else {
-        console.log("submited patente")
-        this.msgBack(this.op, str); //manda el form al parent
+        if(this.op === "Eliminar"){
+          Swal.fire({
+            title: '¿Desea realizar la salida del vehículo?',
+            //text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+             /*  Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success' 
+              )*/
+              console.log("submited patente")
+              this.msgBack(this.op, str); //manda el form al parent
+            }
+          })
+        }else{
+          console.log("submited patente")
+          this.msgBack(this.op, str); //manda el form al parent
+        }  
       }
     } else {
       alert("NO DEBERIA LLEGAR ACA, SOLUCIONAR FILTROS EN LOS CAMPOS form invalid")

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-playa-view',
@@ -20,7 +21,30 @@ export class PlayaViewComponent implements OnInit {
       op: op,
       item: item,
     }
-    this.newItemEvent.emit(value);
+    
+    if (op === 'Reimprimir'){
+      Swal.fire({
+        title: '¿Desea reimprimir el ticket?',
+        //text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+         /*  Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success' 
+          )*/
+          this.newItemEvent.emit(value);
+        }
+      })
+    } else{
+      this.newItemEvent.emit(value);
+    }  
+    
   }
 
 

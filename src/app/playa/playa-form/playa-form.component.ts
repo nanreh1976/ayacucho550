@@ -12,6 +12,7 @@ import { CalculoFechasService } from 'src/app/servicios/Fechas/calculo-fechas.se
 import { EstadiaService } from 'src/app/servicios/facturacion/estadia.service';
 import { ClientesService } from 'src/app/servicios/clientes.service';
 import { LogService } from 'src/app/servicios/log.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-playa-form',
@@ -93,6 +94,7 @@ export class PlayaFormComponent implements OnInit {
           break;
         }
         case 'Eliminar': {
+          this.buscarPatente();
           this.eliminarVehiculo();
           this.pruebaCierreHora();
           break;
@@ -205,15 +207,18 @@ export class PlayaFormComponent implements OnInit {
 
   buscarPatente() {
     //console.log("metodo buscar patente. playa: ", this.patentesPlaya);
-
-    this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.value.patente, this.patentesPlaya);
-    if (this.patenteNueva === false) {
-      alert("esta patente ya fue ingresada")
-      //this.titulo = "";
-      //this.puestoEstacionamiento.patente = this.fromParent.item.patente
-      //console.log(this.puestoEstacionamiento);    
-      this.activeModal.dismiss()
-      //this.validarPatente()
+    if(this.titulo ==="Eliminar"){
+      this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.value.patente, this.patentesPlaya);
+      if (this.patenteNueva === true) {
+        this.titulo="ErrorEliminar"
+        this.ventanaConfirmacion();
+      }  
+    } else {
+      this.patenteNueva = this.validacionPatente.buscarPatentePlaya(this.editForm.value.patente, this.patentesPlaya);
+      if (this.patenteNueva === false) {
+        this.titulo="PatenteIngresada"
+        this.ventanaConfirmacion();
+      }
     }
   }
 
@@ -303,7 +308,8 @@ export class PlayaFormComponent implements OnInit {
 
     this.item = this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
     //console.log("este es el item final: ", this.puestoEstacionamiento)
-    this.closeModal();
+    //this.closeModal();
+    this.ventanaConfirmacion()
   }
 
   getPlaya() {
@@ -328,6 +334,7 @@ export class PlayaFormComponent implements OnInit {
       this.tarifaSeleccionada = this.clienteExiste.tarifa;
       //console.log(this.tarifaSeleccionada);
 
+      this.titulo="Cliente"
       this.armarPuestoEstacionamiento()
 
     }
@@ -363,6 +370,82 @@ export class PlayaFormComponent implements OnInit {
     //console.log("esto es eliminar vehiculo. item: ", this.item);
 
 
+  }
+
+  ventanaConfirmacion(){
+    switch (this.titulo) {
+      case 'Agregar': {
+        Swal.fire({
+          title: '¿Desea confirmar el ingreso?',
+          //text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Confirmar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+           /*  Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success' 
+            )*/
+            this.closeModal();
+          }
+        })
+        break;
+      }
+      case 'Editar': {
+        Swal.fire({
+          title: '¿Desea confirmar las modificaciones?',
+          //text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Confirmar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+           /*  Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success' 
+            )*/
+            this.closeModal();
+          }
+        })
+        break;
+      }
+      case 'Eliminar': {
+        this.closeModal();        
+        break;
+      }
+      case 'Reimprimir': {
+        this.closeModal();
+        break;
+      }
+      case 'PatenteIngresada':{
+        Swal.fire('La patente ya fue ingresada');
+        this.activeModal.dismiss();
+        break;
+      }
+      case 'ErrorEliminar':{
+        Swal.fire('No es una patente ingresada');
+        this.activeModal.dismiss();
+        break;
+      }
+      case 'Cliente':{
+        this.titulo="Agregar";
+        Swal.fire('Cliente con abono');
+        this.closeModal();
+        break
+      }
+      default: {
+        //console.log("algo se rompio")
+        break;
+      }
+    }
+    
   }
 
 }
