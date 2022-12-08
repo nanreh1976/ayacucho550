@@ -37,6 +37,7 @@ export class ClientesFormComponent implements OnInit {
     {
       console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
+      this.item = this.fromParent.item;  
       switch (this.titulo) {  
         case 'Agregar':{
 

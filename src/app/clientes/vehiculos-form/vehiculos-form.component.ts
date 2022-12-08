@@ -5,6 +5,7 @@ import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -90,15 +91,22 @@ export class VehiculosFormComponent implements OnInit {
     })
     
     this.tarifaSeleccionada = tarifaForm[0];               //se guarda el nombre de la tarifa seleccionada en la variable
-    //console.log(this.tarifaSeleccionada);
+    console.log(this.tarifaSeleccionada);
     
   }
 
+  setearTitulo(){
+    this.titulo = "Vehiculo Agregar"
+  }
+
   guardarVehiculo(){
-    //console.log(this.editForm.value);
-    //console.log(this.item);    
-    if(this.titulo === undefined){
-      this.titulo = "Vehiculo Agregar";
+    console.log(this.editForm.value);
+    console.log(this.item);    
+    console.log(this.titulo);
+    
+    if(this.titulo === "Vehiculo Agregar"){
+      //this.titulo = "Vehiculo Agregar";
+      console.log("pasa por aca?")
       let vehiculoAgregado={
         //id: this.item.id,
         patente: this.editForm.value.patente,
@@ -108,9 +116,29 @@ export class VehiculosFormComponent implements OnInit {
         idCliente: this.item.id,
         tarifa: this.tarifaSeleccionada,
         estado: 1,
-      }    
+      } 
+      console.log(vehiculoAgregado);
+      
+      Swal.fire({
+        title: '¿Desea agendar el vehiculo?',
+        //text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Agendado',
+            //'Your file has been deleted.',
+            //'success' 
+          )
+          this.msgBack(this.titulo, vehiculoAgregado);
+        }
+      })   
       //console.log(vehiculoAgregado);      
-      this.msgBack(this.titulo, vehiculoAgregado);
+      //this.msgBack(this.titulo, vehiculoAgregado);
     } else {
       let vehiculoEditado={
         id: this.editForm.value.id,
@@ -122,7 +150,25 @@ export class VehiculosFormComponent implements OnInit {
         tarifa: this.tarifaSeleccionada,
         estado: 1,
       }
-      this.msgBack(this.titulo, vehiculoEditado);
+      Swal.fire({
+        title: '¿Desea guardar los cambios?',
+        //text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+           Swal.fire(
+            'Guardados',
+            //'Your file has been deleted.',
+            //success' 
+          )
+          this.msgBack(this.titulo, vehiculoEditado);
+        }
+      })   
+      //this.msgBack(this.titulo, vehiculoEditado);
 
     }
     
@@ -131,8 +177,26 @@ export class VehiculosFormComponent implements OnInit {
 
   eliminarVehiculo(vehiculo: Vehiculo){
     //console.log(vehiculo);
-    this.titulo = "Vehiculo Eliminar"
-    this.msgBack(this.titulo, vehiculo)
+    this.titulo = "Vehiculo Eliminar";
+    Swal.fire({
+      title: '¿Desea eliminar el vehículo?',
+      text: "No podrá revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+       Swal.fire(
+          'Eliminado',
+          //'Your file has been deleted.',
+          //'success' 
+        )
+        this.msgBack(this.titulo, vehiculo);
+      }
+    })
+    //this.msgBack(this.titulo, vehiculo)
   }
 
   editarVehiculo(vehiculo: Vehiculo){
