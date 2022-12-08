@@ -32,14 +32,16 @@
           <div class="form-group">
             <label for="valor">valor</label>
             <div class="input-group">
-              <input formControlName="valor" class="form-control" required type="text">
+              <input formControlName="valor" class="form-control" required type="text"
+              [ngClass]="{'is-invalid':Valor?.errors && Valor?.touched, 'is-valid': !Valor?.errors && !Valor?.touched }"> 
             </div>
           </div>
 
           <div class="form-group">
             <label for="fraccion">fraccion</label>
             <div class="input-group">
-              <input formControlName="fraccion" class="form-control" required type="text">
+              <input formControlName="fraccion" class="form-control" required type="text"
+              [ngClass]="{'is-invalid':Fraccion?.errors && Fraccion?.touched, 'is-valid': !Fraccion?.errors && !Fraccion?.touched }"> 
             </div>
           </div>
          <!--  <div class="form-group">
@@ -67,7 +69,8 @@
           <div class="form-group">
             <label for="descuento">tolerancia</label>
             <div class="input-group">
-              <input formControlName="tolerancia" class="form-control" required type="text">
+              <input formControlName="tolerancia" class="form-control" required type="text"
+              [ngClass]="{'is-invalid':Tolerancia?.errors && Tolerancia?.touched, 'is-valid': !Tolerancia?.errors && !Tolerancia?.touched }"> 
             </div>
           </div>
           <div class="form-group">
@@ -77,7 +80,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" type="submit">
+            <button class="btn btn-success" type="submit" [disabled]="editForm.invalid">
               {{titulo}}
             </button>
           </div>
