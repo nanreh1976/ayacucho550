@@ -294,7 +294,8 @@ export class PlayaFormComponent implements OnInit {
   }
 
   armarPuestoEstacionamiento() {
-    
+    let fechaLimpia = this.fechas.fechaIngreso.replace(/[^0-9A-Z]+/gi,"")
+    let horaLimpia = this.fechas.horaIngreso.replace(/[^0-9A-Z]+/gi,"")
     //la funcion arma el puesto
     this.puestoEstacionamiento = {
       id: this.item.id,
@@ -303,7 +304,7 @@ export class PlayaFormComponent implements OnInit {
       tarifa: this.tarifaSeleccionada,
       descripcion: this.editForm.value.descripcion,
       saldo: this.saldo,
-      codigoBarras: `${this.barCodeId}-${this.fromParent.item.patente}-${this.fechas.fechaIngreso}-${this.fechas.horaIngreso}`
+      codigoBarras: `${this.barCodeId}${this.fromParent.item.patente}${fechaLimpia}${horaLimpia}`
     }
 
     this.item = this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
