@@ -67,8 +67,8 @@ export class CajaCierreFormComponent implements OnInit {
 
       fecha: this.now,
       concepto: "",
-      operacion: "",
-      importe: "",
+      operacion: "cierre",
+      importe: this.saldo,
       // id:""
     });
 
