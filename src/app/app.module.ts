@@ -84,10 +84,14 @@ import { SignUpComponent } from './appLogin/sign-up/sign-up.component';
 import { LoginHeaderComponent } from './appLogin/login-header/login-header.component';
 import { CajaControlComponent } from './caja/caja-control/caja-control.component';
 import { CajaViewComponent } from './caja/caja-view/caja-view.component';
-import { CajaFormComponent } from './caja/caja-form/caja-form.component';
+
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { PerfilEmpresaComponent } from './perfil-empresa/perfil-empresa.component';
 import { EmpresaFormComponent } from './perfil-empresa/empresa-form/empresa-form.component';
+import { CajaCierreFormComponent } from './caja/forms/caja-cierre-form/caja-cierre-form.component';
+import { CajaAperturaFormComponent } from './caja/forms/caja-apertura-form/caja-apertura-form.component';
+import { CajaEgresoFormComponent } from './caja/forms/caja-egreso-form/caja-egreso-form.component';
+import { CajaIngresoFormComponent } from './caja/forms/caja-ingreso-form/caja-ingreso-form.component';
 
 
 
@@ -182,10 +186,14 @@ const appRoutes: Routes = [
     LoginHeaderComponent,
     CajaControlComponent,
     CajaViewComponent,
-    CajaFormComponent,
+
     PerfilUsuarioComponent,
     PerfilEmpresaComponent,
     EmpresaFormComponent,
+    CajaCierreFormComponent,
+    CajaAperturaFormComponent,
+    CajaEgresoFormComponent,
+    CajaIngresoFormComponent,
 
 
 
