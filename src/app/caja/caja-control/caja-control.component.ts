@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵcompileNgModuleFactory } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { TitleStrategy } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { LogService } from 'src/app/servicios/log.service';
-import { CajaFormComponent } from '../caja-form/caja-form.component';
+
+import { CajaCierreFormComponent } from '../forms/caja-cierre-form/caja-cierre-form.component';
+import { CajaEgresoFormComponent } from '../forms/caja-egreso-form/caja-egreso-form.component';
+
+import { CajaIngresoFormComponent } from '../forms/caja-ingreso-form/caja-ingreso-form.component';
+import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-apertura-form.component';
 
 @Component({
   selector: 'app-caja-control',
@@ -96,36 +101,68 @@ export class CajaControlComponent implements OnInit {
     this.openForm(msg.op, msg.item)
   }
 
-  openForm(modo: string, item: any) {
-    {
-      const modalRef = this.modalService.open(CajaFormComponent,
-        {
-          // scrollable: false,
-          windowClass: 'myCustomModalClass',
-          // keyboard: false,
-          // backdrop: 'static'
-          centered: true,
-          size: 'lg',
-        })
 
-      let info = {
-        modo: modo,
-        item: item,
-        saldo:this.saldo,
 
+  selectForm(modo: string) {
+
+    switch (modo) {
+      case 'Cierre de Caja': {
+        return CajaCierreFormComponent
+        break;
+      }
+      case 'Apertura de Caja': {
+        return CajaAperturaFormComponent
+        break;
       }
 
+      case 'Egreso': {
+        return CajaEgresoFormComponent
+        break;
+      }
 
-      modalRef.componentInstance.fromParent = info;
-      modalRef.result.then((result) => {
-        // console.log("result from control", "op", result.op, "item", result.item);
-
-        // this.getXps();  
-        this.selectCrudOp(result.op, result.item)
-          ;
-      }, (reason) => { });
+      case 'Ingreso': {
+        return CajaIngresoFormComponent
+        break;
+      }
+      default: {
+        return "no hay operacion con ese nombre"
+        break;
+      }
     }
   }
+
+  openForm(modo: string, item: any) {
+
+    let selectedForm = this.selectForm(modo)
+
+    const modalRef = this.modalService.open(selectedForm,
+      {
+        // scrollable: false,
+        windowClass: 'myCustomModalClass',
+        // keyboard: false,
+        // backdrop: 'static'
+        centered: true,
+        size: 'lg',
+      })
+
+    let info = {
+      modo: modo,
+      item: item,
+      saldo: this.saldo,
+
+    }
+
+
+    modalRef.componentInstance.fromParent = info;
+    modalRef.result.then((result) => {
+      // console.log("result from control", "op", result.op, "item", result.item);
+
+      // this.getXps();  
+      this.selectCrudOp(result.op, result.item)
+        ;
+    }, (reason) => { });
+  }
+
 
   agregarUsuario(item: any) {
     item.usuario = this.usuario

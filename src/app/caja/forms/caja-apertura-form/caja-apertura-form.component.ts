@@ -2,14 +2,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-
 @Component({
-  selector: 'app-caja-form',
-  templateUrl: './caja-form.component.html',
-  styleUrls: ['./caja-form.component.scss']
+  selector: 'app-caja-apertura-form',
+  templateUrl: './caja-apertura-form.component.html',
+  styleUrls: ['./caja-apertura-form.component.scss']
 })
-export class CajaFormComponent implements OnInit {
+export class CajaAperturaFormComponent implements OnInit {
 
+ 
   @Input() fromParent: any;
   editForm!: any;
   titulo!: string;
