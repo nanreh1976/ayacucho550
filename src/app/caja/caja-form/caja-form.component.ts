@@ -15,6 +15,7 @@ export class CajaFormComponent implements OnInit {
   titulo!: string;
   item: any;
   now!: Date
+  saldo!: number
 
   constructor(public activeModal: NgbActiveModal,
 
@@ -24,32 +25,51 @@ export class CajaFormComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-    {
-      this.now = new Date()
-      //console.log("on init form", this.fromParent);
-      this.titulo = this.fromParent.modo
 
-      if (this.titulo === 'Agregar') {
+  ngOnInit(): void {
+    this.now = new Date()
+    //console.log("on init form", this.fromParent);
+    this.titulo = this.fromParent.modo
+    this.saldo = this.fromParent.saldo
+    console.log( "form init saldo", this.saldo)
+    this.selectConfigureForm()
+    // {
+    //   this.now = new Date()
+    //   //console.log("on init form", this.fromParent);
+    //   this.titulo = this.fromParent.modo
+
+    //   if (this.titulo === 'Agregar') {
+    //     //this.item.id = ""
+
+    //   } else {
+    //  //   this.item = this.fromParent.item;
+    //     this.configureForm(this.titulo, this.item);
+    //   }
+    // }
+  }
+
+  selectConfigureForm() {
+     if (this.titulo === 'Agregar') {
         //this.item.id = ""
-        
+
       } else {
-     //   this.item = this.fromParent.item;
+        //   this.item = this.fromParent.item;
         this.configureForm(this.titulo, this.item);
       }
     }
-  }
+
+  
 
   configureForm(_titulo: string, item: any) {
 
     // console.log("configure form", titulo, item), (titulo !=='agregar');
     this.editForm.patchValue({
 
-      fecha: this.now ,
+      fecha: this.now,
       concepto: "",
-      operacion:"",
+      operacion: "",
       importe: "",
-     // id:""
+      // id:""
     });
 
   }
@@ -58,10 +78,10 @@ export class CajaFormComponent implements OnInit {
   createForm() {
     this.editForm = this.fb.group({
       concepto: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
-      importe: [Validators.required, 
-                Validators.pattern("-?\\d+(?:\\.\\d+)?")
-              
-              ],
+      importe: [Validators.required,
+      Validators.pattern("-?\\d+(?:\\.\\d+)?")
+
+      ],
       operacion: [''],
       fecha: ['',],
       //id: [''],
@@ -83,12 +103,12 @@ export class CajaFormComponent implements OnInit {
 
 
 
-  get Importe(){
-    return this.editForm.get("importe"); 
+  get Importe() {
+    return this.editForm.get("importe");
   }
 
-  get Concepto(){
-    return this.editForm.get("concepto"); 
+  get Concepto() {
+    return this.editForm.get("concepto");
   }
 
 

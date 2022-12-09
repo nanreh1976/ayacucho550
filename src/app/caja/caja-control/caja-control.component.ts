@@ -110,7 +110,8 @@ export class CajaControlComponent implements OnInit {
 
       let info = {
         modo: modo,
-        item: item
+        item: item,
+        saldo:this.saldo,
 
       }
 
