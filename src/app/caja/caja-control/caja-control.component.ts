@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { TitleStrategy } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
+import { Icaja } from 'src/app/interfaces/Icaja'
 import { LogService } from 'src/app/servicios/log.service';
 
 import { CajaCierreFormComponent } from '../forms/caja-cierre-form/caja-cierre-form.component';
@@ -39,31 +40,33 @@ export class CajaControlComponent implements OnInit {
 
 
   // data recibida del crud
-  data!: any;
+  data!: Icaja[];
+
   saldo: number = 0
 
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
-   // private logger: LogService
+    // private logger: LogService
   ) {
   }
 
   ngOnInit(): void {
-    this.getAll();
-    this.setUser()
+    this.getAll2();
+    this.setUser();
+    console.log("caja", this.data)
 
   }
 
   aperturaCaja() {
     // console.log("apertura de caja")
-   // this.logger.log("apertura de caja", "");
+    // this.logger.log("apertura de caja", "");
   }
 
 
   cierreCaja() {
     console.log("cierre de caja")
-  //  this.logger.log("Cierre de caja", "");
+    //  this.logger.log("Cierre de caja", "");
   }
 
   // Do stuff in case forEach has not returned
@@ -190,6 +193,20 @@ export class CajaControlComponent implements OnInit {
       //console.log(JSON.stringify(this.data))
       this.calcularSaldo(this.data)
     })
+  }
+
+  getAll2():void {
+    // llamar a getAll del servicio firebase para tener la lista de registros de caja
+    this.dbFirebase.getAll2(this.componente).subscribe(data => {
+      // data toma el listado de registros de caja
+      this.data = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data() as {}
+        } as unknown as  Icaja;
+      });
+    });
+   
   }
 
   // deleteItem(componente: string, item: any): void {
