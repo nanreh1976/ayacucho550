@@ -16,7 +16,7 @@ import { LoggedService } from './servicios/logged.service';
 
 
 
-import { DataService } from './servicios/data.service';
+
 import { HttpClientModule } from '@angular/common/http';
 
 import { PlayaFormComponent } from './playa/playa-form/playa-form.component';
