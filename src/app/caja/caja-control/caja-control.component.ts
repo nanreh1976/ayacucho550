@@ -209,6 +209,20 @@ export class CajaControlComponent implements OnInit {
    
   }
 
+getAllSorted(){
+
+this.dbFirebase.getAllSorted(this.componente).subscribe(data => {
+  this.data = data.map(e => {
+    return {
+      id: e.payload.doc.id,
+      ...e.payload.doc.data() as {}
+    } as unknown as  Icaja;
+  });
+});
+
+}
+
+
   // deleteItem(componente: string, item: any): void {
 
   //   console.log("delete itemcomponent", item,)

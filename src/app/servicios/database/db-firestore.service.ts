@@ -31,6 +31,13 @@ export class DbFirestoreService {
     let dataCollection = `/${this.coleccion}/datos/${componente}`;
     return this.firestore2.collection(dataCollection).snapshotChanges();
   }
+  
+
+  getAllSorted(componente:string) {
+    let dataCollection = `/${this.coleccion}/datos/${componente}`;
+    return this.firestore2.collection(dataCollection, ref => ref.orderBy('name','desc')).snapshotChanges(); }
+
+    // this.firestore.collection('Employees', ref => ref.orderBy('name', 'desc'))
 
   get(id: string) {
     const estacionamiento1DocumentReference = doc(this.firestore, `/${this.coleccion}/datos/${id}`);
