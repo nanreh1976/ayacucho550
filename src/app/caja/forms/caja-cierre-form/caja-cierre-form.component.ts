@@ -11,11 +11,18 @@ export class CajaCierreFormComponent implements OnInit {
 
   
   @Input() fromParent: any;
+  usuario!: string
   editForm!: any;
   titulo!: string;
   item: any;
   now!: Date
   saldo!: number
+
+  setUser() {
+    let user = JSON.parse(localStorage.getItem("user") || `{}`)
+    this.usuario = (user['displayName'])
+  }
+
 
   constructor(public activeModal: NgbActiveModal,
 
@@ -31,34 +38,9 @@ export class CajaCierreFormComponent implements OnInit {
     //console.log("on init form", this.fromParent);
     this.titulo = this.fromParent.modo
     this.saldo = this.fromParent.saldo
-    console.log( "form init saldo", this.saldo)
-    this.selectConfigureForm()
-    // {
-    //   this.now = new Date()
-    //   //console.log("on init form", this.fromParent);
-    //   this.titulo = this.fromParent.modo
 
-    //   if (this.titulo === 'Agregar') {
-    //     //this.item.id = ""
-
-    //   } else {
-    //  //   this.item = this.fromParent.item;
-    //     this.configureForm(this.titulo, this.item);
-    //   }
-    // }
+    this.configureForm(this.titulo, this.item);
   }
-
-  selectConfigureForm() {
-     if (this.titulo === 'Agregar') {
-        //this.item.id = ""
-
-      } else {
-        //   this.item = this.fromParent.item;
-        this.configureForm(this.titulo, this.item);
-      }
-    }
-
-  
 
   configureForm(_titulo: string, item: any) {
 
@@ -67,8 +49,8 @@ export class CajaCierreFormComponent implements OnInit {
 
       fecha: this.now,
       concepto: "",
-      operacion: "",
-      importe: "",
+      operacion: "Cierre de Caja",
+      importe: this.saldo,
       // id:""
     });
 

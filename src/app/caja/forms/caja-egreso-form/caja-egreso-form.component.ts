@@ -9,8 +9,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CajaEgresoFormComponent implements OnInit {
 
- 
+
   @Input() fromParent: any;
+  @Input() usuario?: any
   editForm!: any;
   titulo!: string;
   item: any;
@@ -24,41 +25,12 @@ export class CajaEgresoFormComponent implements OnInit {
     this.createForm();
   }
 
-
-
   ngOnInit(): void {
     this.now = new Date()
-    //console.log("on init form", this.fromParent);
     this.titulo = this.fromParent.modo
     this.saldo = this.fromParent.saldo
-    console.log( "form init saldo", this.saldo)
-    this.selectConfigureForm()
-    // {
-    //   this.now = new Date()
-    //   //console.log("on init form", this.fromParent);
-    //   this.titulo = this.fromParent.modo
-
-    //   if (this.titulo === 'Agregar') {
-    //     //this.item.id = ""
-
-    //   } else {
-    //  //   this.item = this.fromParent.item;
-    //     this.configureForm(this.titulo, this.item);
-    //   }
-    // }
+    this.configureForm(this.titulo, this.item)
   }
-
-  selectConfigureForm() {
-     if (this.titulo === 'Agregar') {
-        //this.item.id = ""
-
-      } else {
-        //   this.item = this.fromParent.item;
-        this.configureForm(this.titulo, this.item);
-      }
-    }
-
-  
 
   configureForm(_titulo: string, item: any) {
 
@@ -77,11 +49,11 @@ export class CajaEgresoFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      concepto: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
-      importe: [Validators.required,
-      Validators.pattern("-?\\d+(?:\\.\\d+)?")
-
-      ],
+      concepto: ['',  
+                Validators.required,
+                Validators.minLength(4),], 
+      importe: [''], //, Validators.required, Validators.pattern("-?\\d+(?:\\.\\d+)?"),
+    //Validators.max(this.saldo), Validators.min(1),],
       operacion: [''],
       fecha: ['',],
       //id: [''],
@@ -90,14 +62,11 @@ export class CajaEgresoFormComponent implements OnInit {
   }
 
 
-
   closeModal() {
-
     let value = {
       op: this.titulo,
       item: this.editForm.value
     };
-    //console.log("closemodal", value)
     this.activeModal.close(value);
   }
 
@@ -114,19 +83,7 @@ export class CajaEgresoFormComponent implements OnInit {
 
 
   getMsg(msg: any) {
-
-    /* let value = {
-      op: msg.op,
-      item: msg.item
-      
-    }; */
-
-    //console.log("closemodal", msg)
     this.activeModal.close(msg);
-
   }
-
-
-
 
 }

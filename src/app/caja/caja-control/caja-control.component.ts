@@ -34,12 +34,7 @@ import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-aper
 })
 export class CajaControlComponent implements OnInit {
 
-
-  // nombre del crud / componente
   componente: string = 'caja'
-  // reactiveforms, modo edicion, delete etc
-  //modo!: string;
-
   usuario!: string
 
 
@@ -47,20 +42,12 @@ export class CajaControlComponent implements OnInit {
   data!: any;
   saldo: number = 0
 
-
-  setUser() {
-    let user = JSON.parse(localStorage.getItem("user") || `{}`)
-    this.usuario = (user['displayName'])
-  }
-
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
-    private logger: LogService
+   // private logger: LogService
   ) {
   }
-
-
 
   ngOnInit(): void {
     this.getAll();
@@ -70,13 +57,13 @@ export class CajaControlComponent implements OnInit {
 
   aperturaCaja() {
     // console.log("apertura de caja")
-    this.logger.log("apertura de caja", "");
+   // this.logger.log("apertura de caja", "");
   }
 
 
   cierreCaja() {
-    // console.log("cierre de caja")
-    this.logger.log("Cierre de caja", "");
+    console.log("cierre de caja")
+  //  this.logger.log("Cierre de caja", "");
   }
 
   // Do stuff in case forEach has not returned
@@ -88,20 +75,14 @@ export class CajaControlComponent implements OnInit {
       } else {
         this.saldo -= Number(item.importe)
       }
-      // console.log(item.importe)
-      //console.log("saldo", this.saldo)
     }
 
   }
-
-
 
   getMsg(msg: any) {
     // console.log(msg, "from parent");
     this.openForm(msg.op, msg.item)
   }
-
-
 
   selectForm(modo: string) {
 
@@ -132,15 +113,10 @@ export class CajaControlComponent implements OnInit {
   }
 
   openForm(modo: string, item: any) {
-
     let selectedForm = this.selectForm(modo)
-
     const modalRef = this.modalService.open(selectedForm,
       {
-        // scrollable: false,
         windowClass: 'myCustomModalClass',
-        // keyboard: false,
-        // backdrop: 'static'
         centered: true,
         size: 'lg',
       })
@@ -149,30 +125,27 @@ export class CajaControlComponent implements OnInit {
       modo: modo,
       item: item,
       saldo: this.saldo,
-
     }
 
 
     modalRef.componentInstance.fromParent = info;
     modalRef.result.then((result) => {
-      // console.log("result from control", "op", result.op, "item", result.item);
-
-      // this.getXps();  
       this.selectCrudOp(result.op, result.item)
         ;
     }, (reason) => { });
   }
 
 
-  agregarUsuario(item: any) {
-    item.usuario = this.usuario
-    console.log("usuario agregado", JSON.stringify(item))
+  setUser() {
+    let user = JSON.parse(localStorage.getItem("user") || `{}`)
+    this.usuario = (user['displayName'])
   }
+
 
   // seleccionar operacion CRUD
 
   selectCrudOp(op: string, item: any) {
-    this.agregarUsuario(item)
+
     switch (op) {
       case 'Ingreso': {
         item.operacion = "ingreso"
@@ -186,27 +159,20 @@ export class CajaControlComponent implements OnInit {
         break;
       }
 
-      case 'Cierre de caja': {
+      case 'Cierre de Caja': {
         this.cierreCaja()
         item.operacion = "cierre"
-        //  this.addItem(this.componente, item);
+        this.addItem(this.componente, item);
         break;
       }
 
       case 'Apertura de Caja': {
         this.aperturaCaja()
         item.operacion = "apertura"
-        // this.addItem(this.componente, item);
+        this.addItem(this.componente, item);
         break;
       }
-      // case 'Editar': {
-      //   this.updateItem(this.componente, item);
-      //   break;
-      // }
-      // case 'Eliminar': {
-      //   this.deleteItem(this.componente, item);
-      //   break;
-      // }
+
 
       default: {
         console.log("sin operacion en case crud")

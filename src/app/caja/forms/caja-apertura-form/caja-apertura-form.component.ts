@@ -11,11 +11,13 @@ export class CajaAperturaFormComponent implements OnInit {
 
  
   @Input() fromParent: any;
+  usuario?: string
   editForm!: any;
   titulo!: string;
   item: any;
   now!: Date
   saldo!: number
+  
 
   constructor(public activeModal: NgbActiveModal,
 
@@ -31,6 +33,7 @@ export class CajaAperturaFormComponent implements OnInit {
     //console.log("on init form", this.fromParent);
     this.titulo = this.fromParent.modo
     this.saldo = this.fromParent.saldo
+    this.usuario = this.fromParent.usuario
     console.log( "form init saldo", this.saldo)
     this.selectConfigureForm()
     // {

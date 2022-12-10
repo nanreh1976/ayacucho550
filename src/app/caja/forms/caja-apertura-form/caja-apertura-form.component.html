@@ -1,58 +1,36 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="modal-basic-title">{{titulo}}</h5>
+  <h1 class="modal-title" id="modal-basic-title">Apertura de Caja</h1>
 
-    <div> Este el el form de Apertura </div>
-    <div>Saldo de caja: {{saldo | currency:'ARS':'symbol-narrow' :'1.0-0'}} </div>
-    <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  
-  <div *ngIf="titulo === 'cierre'">hola</div>
-  
-  <div class="modal-body">
-    <div class="container">
-      <div class="modal-body">
-        <form [formGroup]="editForm" novalidate>
-          <div class="form-group">
+  <!-- <div>Saldo de caja: {{saldo | currency:'ARS':'symbol-narrow' :'1.0-0'}} </div> -->
+  <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container">
+    <div class="modal-body">
+      <form [formGroup]="editForm" novalidate>
+        <div class="form-group">
             <label for="Concepto">Concepto</label>
             <div class="input-group">
               <input formControlName="concepto" class="form-control" required type="text"
                 [ngClass]="{'is-invalid':Concepto?.errors && Concepto?.touched, 'is-valid': !Concepto?.errors && !Concepto?.touched }">
             </div>
           </div>
-          <div class="form-group">
-            <label for="Importe">Importe</label>
-            <div class="input-group">
-              <input formControlName="importe" class="form-control" required type="text"
-                [ngClass]="{'is-invalid':Importe?.errors && Importe?.touched, 'is-valid': !Importe?.errors && !Importe?.touched }">
-            </div>
+        <div class="form-group">
+          <label for="Importe">Saldo Inicial de Caja</label>
+          <div class="input-group">
+            <input formControlName="importe" class="form-control" required type="text"
+              [ngClass]="{'is-invalid':Importe?.errors && Importe?.touched, 'is-valid': !Importe?.errors && !Importe?.touched }">
           </div>
-  
-  
-  
-          <!-- <div class="form-group">
-                  <label for="Fecha">Fecha</label>
-                  <div class="input-group">
-                    <input formControlName="fecha" class="form-control" type="text">
-                  </div>
-                </div> -->
-  
-  <!-- 
-          <div class="form-group">
-  
-            <div class="input-group">
-              <input formControlName="usuario" class="form-control" type="hidden">
-            </div>
-          </div> -->
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-success" [disabled]="editForm.invalid" (click)="closeModal()">
-          {{titulo}}
-        </button>
-      </div>
+        </div>
+      </form>
     </div>
-  
+    <div class="modal-footer">
+      <button class="btn btn-success" [disabled]="editForm.invalid" (click)="closeModal()">
+        {{titulo}}
+      </button>
+    </div>
   </div>
 
+</div>
