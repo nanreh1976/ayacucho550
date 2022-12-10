@@ -11,6 +11,7 @@ export class CajaEgresoFormComponent implements OnInit {
 
 
   @Input() fromParent: any;
+  @Input() usuario?: any
   editForm!: any;
   titulo!: string;
   item: any;
