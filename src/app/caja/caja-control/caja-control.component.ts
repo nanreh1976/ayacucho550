@@ -52,7 +52,7 @@ export class CajaControlComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAll2();
+    this.getAllSorted();
     this.setUser();
     console.log("caja", this.data)
 

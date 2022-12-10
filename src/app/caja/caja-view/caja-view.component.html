@@ -1,5 +1,10 @@
 <br>
 
+
+
+
+
+
 <!-- <H1 class="display-1" style="text-align: center;">Clientes </H1> -->
 
 <div class="container">
@@ -40,45 +45,45 @@
 
 
 
-  <div class="form-group mb-4">
-    <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
-  </div>
+<div class="form-group mb-4">
+  <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
+</div>
 
-  <div class="table-responsive">
-    <table class="table table-hover table-condensed" *ngIf="(data | filter: searchText).length > 0; else noResults">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th>fecha</th>
-          <th>Concepto</th>
-          <th>Operacion</th>
-          <th>Importe</th>
+<div class="table-responsive">
+  <table class="table table-hover table-condensed" *ngIf="(data | filter: searchText).length > 0; else noResults">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th>fecha</th>
+        <th>Concepto</th>
+        <th>Operacion</th>
+        <th>Importe</th>
 
-          <th><i class="bi bi-pencil-fill"></i></th>
-        </tr>
-      </thead>
-      <div *ngIf="data | async; let items; else loading">
-      <tbody>
-        <tr *ngFor="let item of data | filter: searchText; let i = index">
-          <th class="badge" scope="row">{{i + 1}}</th>
-          <td>{{item.fecha.seconds * 1000 | date:'dd/MM/yyyy - hh:mmaaa'}} </td>
-          <td>{{item.concepto}}</td>
-          <td [class.positive]="item.operacion === 'ingreso'" [class.negative]="item.operacion === 'egreso'"
+        <th><i class="bi bi-pencil-fill"></i></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of data | filter: searchText; let i = index">
+        <th class="badge" scope="row">{{i + 1}}</th>
+        <td>{{item.fecha.seconds * 1000 | date:'dd/MM/yyyy - hh:mmaaa'}} </td>
+        <td>{{item.concepto}}</td>
+        <td [class.positive]="item.operacion === 'ingreso'" 
+            [class.negative]="item.operacion === 'egreso'"
             [class.cierre]="item.operacion === 'cierre'">
 
-            {{item.operacion}}</td>
-          <td [class.positive]="item.operacion === 'ingreso'" [class.negative]="item.operacion === 'egreso'"
-            [class.cierre]="item.operacion === 'cierre'" style="text-align: right;">
-            {{item.importe | currency:'ARS':'symbol-narrow' :'1.0-0'}}</td>
-        </tr>
-      </tbody>
-      </div>
-   
-    </table>
- 
-  </div>
-  <ng-template #loading>Loading&hellip;</ng-template>
-  <ng-template #noResults>
-    <p>No results found for "{{searchText}}".</p>
-  </ng-template>
+          {{item.operacion}}</td>
+        <td [class.positive]="item.operacion === 'ingreso'" 
+        [class.negative]="item.operacion === 'egreso'"
+        [class.cierre]="item.operacion === 'cierre'"
+          style="text-align: right;">
+          {{item.importe | currency:'ARS':'symbol-narrow' :'1.0-0'}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<ng-template #noResults>
+  <p>No results found for "{{searchText}}".</p>
+</ng-template>
 </div>

@@ -35,7 +35,7 @@ export class DbFirestoreService {
 
   getAllSorted(componente:string) {
     let dataCollection = `/${this.coleccion}/datos/${componente}`;
-    return this.firestore2.collection(dataCollection, ref => ref.orderBy('name','desc')).snapshotChanges(); }
+    return this.firestore2.collection(dataCollection, ref => ref.orderBy('fecha','desc')).snapshotChanges(); }
 
     // this.firestore.collection('Employees', ref => ref.orderBy('name', 'desc'))
 
