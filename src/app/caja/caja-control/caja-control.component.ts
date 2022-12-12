@@ -54,8 +54,7 @@ export class CajaControlComponent implements OnInit {
   ngOnInit(): void {
     this.getAllSorted();
     this.setUser();
-    console.log("caja", this.data)
-
+  
   }
 
   aperturaCaja() {
@@ -195,7 +194,9 @@ export class CajaControlComponent implements OnInit {
     })
   }
 
-  getAll2():void {
+
+  // GET ALL ACTUALIZADO PARA LEER EL PAYLOAD
+  getAll2(): void {
     // llamar a getAll del servicio firebase para tener la lista de registros de caja
     this.dbFirebase.getAll2(this.componente).subscribe(data => {
       // data toma el listado de registros de caja
@@ -203,24 +204,33 @@ export class CajaControlComponent implements OnInit {
         return {
           id: e.payload.doc.id,
           ...e.payload.doc.data() as {}
-        } as unknown as  Icaja;
+        } as unknown as Icaja;
       });
+      localStorage.setItem(`${this.componente}`, JSON.stringify(data))
+      //console.log(JSON.stringify(this.data))
+      this.calcularSaldo(this.data)
     });
-   
+
   }
 
-getAllSorted(){
+  getAllSorted() {
+    // pasar campo y orden (asc o desc)
+    this.dbFirebase.getAllSorted(this.componente, 'fecha', 'desc').subscribe(data => {
+      this.data = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data() as {}
+        } as unknown as Icaja;
+      });
 
-this.dbFirebase.getAllSorted(this.componente).subscribe(data => {
-  this.data = data.map(e => {
-    return {
-      id: e.payload.doc.id,
-      ...e.payload.doc.data() as {}
-    } as unknown as  Icaja;
-  });
-});
+      // guardar en el local storage
+      localStorage.setItem(`${this.componente}`, JSON.stringify(data))
 
-}
+      // calcular el saldo en cada actualizacion
+      this.calcularSaldo(this.data)
+    });
+
+  }
 
 
   // deleteItem(componente: string, item: any): void {

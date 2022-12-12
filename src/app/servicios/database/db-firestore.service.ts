@@ -26,18 +26,31 @@ export class DbFirestoreService {
     }) as Observable<any[]>;
   }
 
+  // GET ALL ACTUALIZADO
 
   getAll2(componente:string) {
     let dataCollection = `/${this.coleccion}/datos/${componente}`;
     return this.firestore2.collection(dataCollection).snapshotChanges();
   }
   
+// GET ALL ORDENADO POR CAMPO Y ORDEN
+  getAllSorted(componente:string, campo:string, orden:any) {
+    // campo debe existir en la coleccion, si esta anidado pasar ruta separada por puntso (field.subfield)
+    // orden solo asc o desc
 
-  getAllSorted(componente:string) {
     let dataCollection = `/${this.coleccion}/datos/${componente}`;
-    return this.firestore2.collection(dataCollection, ref => ref.orderBy('fecha','desc')).snapshotChanges(); }
+    return this.firestore2.collection(dataCollection, ref => ref.orderBy(campo, orden)).snapshotChanges(); }
 
     // this.firestore.collection('Employees', ref => ref.orderBy('name', 'desc'))
+
+
+
+
+  // this.firestore.collection('Employees', ref => ref.orderBy('name', 'desc'))
+
+
+
+
 
   get(id: string) {
     const estacionamiento1DocumentReference = doc(this.firestore, `/${this.coleccion}/datos/${id}`);
