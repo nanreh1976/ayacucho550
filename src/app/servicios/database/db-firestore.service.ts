@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { addDoc, collection, collectionData, CollectionReference, deleteDoc, doc, docData, DocumentData, Firestore, updateDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { PlayaI } from 'src/app/interfaces/playaI';
@@ -8,55 +9,48 @@ import { PlayaI } from 'src/app/interfaces/playaI';
 })
 export class DbFirestoreService {
 
+  coleccion: string = '';
   componente: string = '';
 
-  coleccion: string = '';
 
-  private dataCollection: CollectionReference<DocumentData>;
-  private estacionamiento1Collection!: CollectionReference<DocumentData>;
-  
+  constructor(private readonly firestore: Firestore, private firestore2: AngularFirestore) {
 
-  constructor(private readonly firestore: Firestore) {
-    this.dataCollection = collection(this.firestore, 'data');    
   }
 
-  /* getAll(componente:string) {
-    return collectionData(collection(this.firestore, componente), {
-      idField: 'id',
-    }) as Observable<any[]>;
-  }
-  
 
-  get(id: string) {
-    const dataDocumentReference = doc(this.firestore, `data/${id}`);
-    return docData(dataDocumentReference, { idField: 'id' });
-  }
-
-  create(componente:string, item: any) {
-    console.log(item);
-    
-    return addDoc(collection(this.firestore, componente), item);
-  }
-
-  update(componente:string, item: any) {
-    const dataDocumentReference = doc(
-      this.firestore,
-      `${componente}/${item.id}`
-    );
-    return updateDoc(dataDocumentReference, { ...item });
-  }
-
-  delete(componente:string, id: string) {
-    const dataDocumentReference = doc(this.firestore, `${componente}/${id}`);
-    return deleteDoc(dataDocumentReference);
-  } */
   getAll(componente:string) {
-    this.estacionamiento1Collection = collection(this.firestore, `/${this.coleccion}/datos/${componente}`);
+    let dataCollection = collection(this.firestore, `/${this.coleccion}/datos/${componente}`);
         
-    return collectionData(this.estacionamiento1Collection, {
+    return collectionData(dataCollection, {
       idField: 'id',
     }) as Observable<any[]>;
   }
+
+  // GET ALL ACTUALIZADO
+
+  getAll2(componente:string) {
+    let dataCollection = `/${this.coleccion}/datos/${componente}`;
+    return this.firestore2.collection(dataCollection).snapshotChanges();
+  }
+  
+// GET ALL ORDENADO POR CAMPO Y ORDEN
+  getAllSorted(componente:string, campo:string, orden:any) {
+    // campo debe existir en la coleccion, si esta anidado pasar ruta separada por puntso (field.subfield)
+    // orden solo asc o desc
+
+    let dataCollection = `/${this.coleccion}/datos/${componente}`;
+    return this.firestore2.collection(dataCollection, ref => ref.orderBy(campo, orden)).snapshotChanges(); }
+
+    // this.firestore.collection('Employees', ref => ref.orderBy('name', 'desc'))
+
+
+
+
+  // this.firestore.collection('Employees', ref => ref.orderBy('name', 'desc'))
+
+
+
+
 
   get(id: string) {
     const estacionamiento1DocumentReference = doc(this.firestore, `/${this.coleccion}/datos/${id}`);
@@ -64,12 +58,12 @@ export class DbFirestoreService {
   }
 
   create(componente:string, item: any) {
-    this.estacionamiento1Collection = collection(this.firestore, `/${this.coleccion}/datos/${componente}`);
-    return addDoc(this.estacionamiento1Collection, item);
+    let dataCollection = collection(this.firestore, `/${this.coleccion}/datos/${componente}`);
+    return addDoc(dataCollection, item);
   }
 
   update(componente: string, item: any) {
-    //this.estacionamiento1Collection = collection(this.firestore, `/estacionamiento/datos/${componente}`);
+    //this.dataCollection = collection(this.firestore, `/estacionamiento/datos/${componente}`);
     const estacionamiento1DocumentReference = doc(
       this.firestore,
       `/${this.coleccion}/datos/${componente}/${item.id}`
@@ -78,7 +72,7 @@ export class DbFirestoreService {
   }
 
   delete(componente:string, id: string) {
-    //this.estacionamiento1Collection = collection(this.firestore, `/estacionamiento/datos/${componente}`);
+    //this.dataCollection = collection(this.firestore, `/estacionamiento/datos/${componente}`);
     const estacionamiento1DocumentReference = doc(this.firestore, `/${this.coleccion}/datos/${componente}/${id}`);
     return deleteDoc(estacionamiento1DocumentReference);
   }
@@ -95,9 +89,9 @@ export class DbFirestoreService {
   }
 
   getTodo(){
-    this.estacionamiento1Collection = collection(this.firestore, `/datos/`);
+    let dataCollection = collection(this.firestore, `/datos/`);
     
-    return collectionData(this.estacionamiento1Collection, {
+    return collectionData(dataCollection, {
       idField: 'id',
     }) as Observable<any[]>
   }

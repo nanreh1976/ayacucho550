@@ -17,7 +17,8 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Patente</th>
-        <th scope="col">Ingreso</th>
+        <th scope="col">F Ingreso</th>
+        <th scope="col">H Ingreso</th>
         <th scope="col">Tarifa</th>
         <th scope="col">Descripcion
         <th>
@@ -28,6 +29,7 @@
       <tr *ngFor="let item of data | filter: searchText; let i = index">
         <th class="badge" scope="row">{{i + 1}}</th>
         <td>{{item.patente}}</td>
+        <td>{{item.fechas.fechaIngreso}}</td>
         <td>{{item.fechas.horaIngreso}}</td>
         <td>{{item.tarifa.nombre}}</td>
         <td>{{item.descripcion}}</td>
