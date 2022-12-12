@@ -160,7 +160,7 @@ export class PlayaControlComponent implements OnInit {
 
   getAllSorted() {
     // pasar campo y orden (asc o desc)
-    this.dbFirebase.getAllSorted(this.componente, 'fechas.fechaDate', 'desc').subscribe(data => {
+    this.dbFirebase.getAllSorted(this.componente, 'fechas.fechaDate', 'asc').subscribe(data => {
       this.data = data.map(e => {
         return {
           id: e.payload.doc.id,
