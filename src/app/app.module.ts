@@ -92,6 +92,8 @@ import { CajaCierreFormComponent } from './caja/forms/caja-cierre-form/caja-cier
 import { CajaAperturaFormComponent } from './caja/forms/caja-apertura-form/caja-apertura-form.component';
 import { CajaEgresoFormComponent } from './caja/forms/caja-egreso-form/caja-egreso-form.component';
 import { CajaIngresoFormComponent } from './caja/forms/caja-ingreso-form/caja-ingreso-form.component';
+import { DataTablesModule } from "angular-datatables";
+
 
 
 
@@ -200,6 +202,7 @@ const appRoutes: Routes = [
 
 
 
+
   ],
   imports: [
     BrowserModule,
@@ -213,9 +216,12 @@ const appRoutes: Routes = [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    DataTablesModule,
 
   ],
-  providers: [LoggedService,
+  providers: [
+    
+    LoggedService,
     CustomAdapterService,
     CustomDateParserFormatterService,
     NgbTimeStringAdapterService,

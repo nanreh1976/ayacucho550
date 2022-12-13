@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { LanguageApp } from 'src/app/shared/DTLanguage';
 
 @Component({
   selector: 'app-caja-view',
@@ -15,11 +16,20 @@ export class CajaViewComponent implements OnInit {
   @Input() saldo:number
   msg: any
   searchText!: string;
+  dtOptions: DataTables.Settings = {};
 
   constructor() { }
 
   ngOnInit(): void {
-
+    this.dtOptions = {
+      searching: false,
+      dom: 't<"bottom"riflp><"clear">',
+      language: LanguageApp.spanish_datatables,
+      columnDefs: [
+     //   { orderable: false, targets: [7,8,9] },
+    // { searchable: false, targets: [ 7,8,9] },
+    ]
+    };
   }
 
 

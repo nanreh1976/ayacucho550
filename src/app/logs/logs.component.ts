@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DbFirestoreService } from '../servicios/database/db-firestore.service';
 import { LogService } from '../servicios/log.service';
+import { LanguageApp } from '../shared/DTLanguage';
 
 @Component({
   selector: 'app-logs',
@@ -12,6 +13,7 @@ export class LogsComponent implements OnInit {
   searchText!: string;
   componente:string="logger"
   data!: any;
+  dtOptions: DataTables.Settings = {};
 
   constructor(private logger: LogService,
     private dbFirebase: DbFirestoreService,
@@ -25,6 +27,15 @@ export class LogsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
+    this.dtOptions = {
+      searching: false,
+      dom: 't<"bottom"riflp><"clear">',
+      language: LanguageApp.spanish_datatables,
+      columnDefs: [
+       // { orderable: false, targets: [6,7] },
+       // { searchable: false, targets: [ 6,7] },
+    ]
+    };
   }
 
   getAll(): void {

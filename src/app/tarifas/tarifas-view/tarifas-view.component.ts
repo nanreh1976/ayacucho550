@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { LanguageApp } from 'src/app/shared/DTLanguage';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,6 +15,7 @@ export class TarifasViewComponent implements OnInit {
 titulo: string = 'tarifas'
 
 searchText!: string;
+dtOptions: DataTables.Settings = {};
 
 
 msgBack(op: string, item: any){
@@ -52,5 +54,14 @@ msgBack(op: string, item: any){
   constructor() { }
   msg: any
   ngOnInit(): void {
+    this.dtOptions = {
+      searching: false,
+      dom: 't<"bottom"riflp><"clear">',
+      language: LanguageApp.spanish_datatables,
+      columnDefs: [
+        { orderable: false, targets: [6,7] },
+        { searchable: false, targets: [ 6,7] },
+    ]
+    };
   }
 }
