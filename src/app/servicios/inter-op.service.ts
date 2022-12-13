@@ -34,11 +34,10 @@ export class InterOpService {
 
   addItem(componente: string, item: any): void {
 
-    console.log("add facturacion itemcomponent", item)
-  
+
+     item.fechaOp = new Date()
      this.dbFirebase.create(componente, item)
-     .then((data) => console.log(data))
-     //.then(() => this.ngOnInit())
+  //   .then((data) => console.log(data))
      .catch((e) => console.log(e.message));
       
      
