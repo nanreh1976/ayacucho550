@@ -193,7 +193,9 @@ export class PlayaControlComponent implements OnInit {
 
   addItem(componente: string, item: any): void {
 
-    console.log("add itemcomponent", item,)
+    item.fechaOp = new Date()
+    console.log("add item playa", item,)
+
 
     this.dbFirebase.create(componente, item)
       .then((data) => console.log(data))

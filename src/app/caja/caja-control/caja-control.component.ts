@@ -72,7 +72,7 @@ export class CajaControlComponent implements OnInit {
   calcularSaldo(data: any) {
     this.saldo = 0
     for (let item of data) {
-      if (item.operacion === "ingreso") {
+      if (item.operacion === "ingreso" || item.operacion === "apertura" ) {
         this.saldo += Number(item.importe)
       } else {
         this.saldo -= Number(item.importe)
