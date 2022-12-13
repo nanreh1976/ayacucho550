@@ -1,12 +1,5 @@
 <br>
 
-
-
-
-
-
-<!-- <H1 class="display-1" style="text-align: center;">Clientes </H1> -->
-
 <div class="container">
   <div class="container" style="display: flex; height: 100px;">
     <div style="width: 50%; ">
@@ -49,8 +42,8 @@
   <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
 </div>
 
-<div class="table-responsive">
-  <table class="table table-hover table-condensed" *ngIf="(data | filter: searchText).length > 0; else noResults">
+<div >
+  <table datatable [dtOptions]="dtOptions" class="row-border" *ngIf="(data | filter: searchText).length > 0; else noResults">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -59,13 +52,13 @@
         <th>Operacion</th>
         <th>Importe</th>
 
-        <th><i class="bi bi-pencil-fill"></i></th>
+  
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let item of data | filter: searchText; let i = index">
-        <th class="badge" scope="row">{{i + 1}}</th>
+        <td class="badge" scope="row">{{i + 1}}</td>
         <td>{{item.fecha.seconds * 1000 | date:'dd/MM/yyyy - hh:mmaaa'}} </td>
         <td>{{item.concepto}}</td>
         <td [class.positive]="item.operacion === 'ingreso'" 

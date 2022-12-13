@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { LanguageApp } from 'src/app/shared/DTLanguage';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,6 +14,7 @@ export class ClientesViewComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'clientes';
   vehiculo: string = 'Vehiculo';
+  dtOptions: DataTables.Settings = {};
 
   
   searchText!: string;
@@ -53,5 +55,14 @@ export class ClientesViewComponent implements OnInit {
   constructor() { }
   msg: any
   ngOnInit(): void {
+    this.dtOptions = {
+      searching: false,
+      dom: 't<"bottom"riflp><"clear">',
+      language: LanguageApp.spanish_datatables,
+      columnDefs: [
+        { orderable: false, targets: [7,8,9] },
+        { searchable: false, targets: [ 7,8,9] },
+    ]
+    };
   }
 }

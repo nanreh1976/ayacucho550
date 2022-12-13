@@ -18,17 +18,19 @@
     <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
   </div>
 
-  <table class="table" *ngIf="(data | filter: searchText).length > 0; else noResults">
+  <table datatable [dtOptions]="dtOptions" class="row-border" *ngIf="(data | filter: searchText).length > 0; else noResults">
     
     <thead>
     <tr>
+
       <th scope="col">#</th>
       <th scope="col">nombre</th>
       <th scope="col">fraccion</th>
       <th scope="col">UT</th>
       <th scope="col">Valor</th>
       <th scope="col">tolerancia</th>
-      <th scope="col">Modificar<i class="bi bi-pencil-fill"></i></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
@@ -37,7 +39,7 @@
 
     <tbody>
     <tr *ngFor="let item of data | filter: searchText; let i = index">
-      <th class="badge" scope="row">{{i + 1}}</th>
+      <td class="badge" scope="row">{{i + 1}}</td>
       <td>{{item.nombre}}</td>
       <td>{{item.fraccion}}</td>
       <td>{{item.unidad_tiempo}}</td>
