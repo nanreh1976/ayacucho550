@@ -49,8 +49,8 @@ export class PlayaControlComponent implements OnInit {
 
 
   ngOnInit(): void {
-  this.getAll();  //tomar datos de los vehiculos en playa
- //this.getAllSorted()
+  //this.getAll();  //tomar datos de los vehiculos en playa
+ this.getAllSorted2()
 
     //this.getuser();
   }
@@ -158,16 +158,17 @@ export class PlayaControlComponent implements OnInit {
     })
   }
 
-  getAllSorted() {
+  getAllSorted2() {
     // pasar campo y orden (asc o desc)
-    this.dbFirebase.getAllSorted(this.componente, 'fechas.fechaDate', 'asc').subscribe(data => {
-      this.data = data.map(e => {
-        let id = e.payload.doc.id 
-        return {
-         id,
-          ...e.payload.doc.data() as {}
-        }; // as unknown as Icaja; // aca va la interface playa
-      });
+    this.dbFirebase.getAllSorted2(this.componente, 'fechas.fechaDate', 'asc').subscribe(data => {
+      this.data = data
+      // .map(e => {
+      //   let id = e.payload.doc.id 
+      //   return {
+      //    id,
+      //     ...e.payload.doc.data() as {}
+      //   }; // as unknown as Icaja; // aca va la interface playa
+      // });
 
       // guardar en el local storage
  
