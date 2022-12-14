@@ -28,7 +28,8 @@ export class CajaViewComponent implements OnInit {
       columnDefs: [
      //   { orderable: false, targets: [7,8,9] },
     // { searchable: false, targets: [ 7,8,9] },
-    ]
+    ],
+    responsive: true
     };
   }
 

@@ -13,7 +13,7 @@ export class TarifasViewComponent implements OnInit {
 @Input() data?: any
 @Output() newItemEvent = new EventEmitter<any>();
 titulo: string = 'tarifas'
-
+msg: any
 searchText!: string;
 dtOptions: DataTables.Settings = {};
 
@@ -52,7 +52,9 @@ msgBack(op: string, item: any){
 
 
   constructor() { }
-  msg: any
+
+
+
   ngOnInit(): void {
     this.dtOptions = {
       searching: false,
@@ -61,7 +63,8 @@ msgBack(op: string, item: any){
       columnDefs: [
         { orderable: false, targets: [6,7] },
         { searchable: false, targets: [ 6,7] },
-    ]
+    ], 
+    responsive: true
     };
   }
 }
