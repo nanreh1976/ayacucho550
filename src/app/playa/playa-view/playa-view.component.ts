@@ -61,7 +61,8 @@ export class PlayaViewComponent implements OnInit {
       columnDefs: [
         { orderable: false, targets: [6,7] },
         { searchable: false, targets: [ 6,7] },
-    ]
+    ],
+    responsive: true
     };
   }
 }
