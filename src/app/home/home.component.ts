@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   clientes!:any;
   vehiculos!:any;
   tarifas!:any;
+  collapsed = true;
 
   constructor(private loggedService: LoggedService, private router: Router,private dbFirebase: DbFirestoreService, private authService: AuthService) {
   //  this.$estado = authService.logged$;

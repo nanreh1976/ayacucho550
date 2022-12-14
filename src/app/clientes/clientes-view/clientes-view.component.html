@@ -4,14 +4,10 @@
 
 
 
-  <ul>
-    <li>
-      <div style=" float: right;">
-        <app-btn-agregar class="right " (click)="msgBack('Agregar',[])" class="d-flex align-items-center ">
-        </app-btn-agregar>
-      </div>
-    </li>
-  </ul>
+  <div style=" float: right;">
+    <app-btn-agregar class="right " (click)="msgBack('Agregar',[])" class="d-flex align-items-center ">
+    </app-btn-agregar>
+  </div>
 
 
 
@@ -20,7 +16,7 @@
   </div>
 
   <div>
-    <table datatable [dtOptions]="dtOptions" class="row-border"
+    <table datatable [dtOptions]="dtOptions" class="display"
       *ngIf="(data | filter: searchText).length > 0; else noResults">
       <thead>
         <tr>
@@ -34,7 +30,7 @@
           <th></th>
           <th></th>
           <th></th>
- 
+
 
 
         </tr>
@@ -66,7 +62,9 @@
     </table>
 
   </div>
-  <ng-template #noResults>
-    <p>No results found for "{{searchText}}".</p>
-  </ng-template>
+  <div>
+    <ng-template #noResults>
+      <p>No results found for "{{searchText}}".</p>
+    </ng-template>
+  </div>
 </div>
