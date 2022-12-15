@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../servicios/autentificacion/auth.service';
 import { InterOpService } from '../servicios/inter-op.service';
 import { LogService } from '../servicios/log.service';
+import { Empresa } from '../interfaces/empresa';
 
 @Component({
   selector: 'app-perfil-empresa',
@@ -15,8 +16,9 @@ import { LogService } from '../servicios/log.service';
 export class PerfilEmpresaComponent implements OnInit {
 
 
-  titulo: string = 'empresa'
+  titulo: string =''
   searchText!: string;
+  empresa:any = {};
 
   
 
@@ -24,7 +26,7 @@ export class PerfilEmpresaComponent implements OnInit {
   componente: string = 'empresa'
   
   // data recibida del crud
-  data!: any;
+  data: Empresa;   
   
   constructor(private modalService: NgbModal,   
     public authService: AuthService,
@@ -72,7 +74,8 @@ getuser(){
         item: item
 
       }
-
+      console.log("esto es info: ",info);
+      
 
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then((result) => {
@@ -100,10 +103,10 @@ getuser(){
   selectCrudOp(op: string, item: any) {
 
     switch (op) {
-      // case 'Agregar': {
-      //   this.addItem(this.componente, item);
-      //   break;
-      // }
+      case 'Agregar': {
+         this.addItem(this.componente, item);
+         break;
+       }
 
       case 'Editar': {
         this.updateItem(this.componente, item);
@@ -128,9 +131,12 @@ getuser(){
 
   getAll(): void {
     this.dbFirebase.getAll(this.componente).subscribe(data => {
-      this.data = data;
+      console.log("esto es la data: ", data);
+      
+      this.data = data[0];           
       localStorage.setItem(`${this.componente}`, JSON.stringify(data))
-      console.log(this.data);      
+      console.log(this.data);
+            
     })
   }
 
@@ -147,18 +153,18 @@ getuser(){
       
   // }
 
-  // addItem(componente: string, item: any): void {
+  addItem(componente: string, item: any): void {
 
-  //    console.log("add itemcomponent", item,)
+      console.log("add itemcomponent", item,)
    
-  //     this.dbFirebase.create(componente, item)
-  //     .then((data) => console.log(data))
-  //     .then(() => this.ngOnInit())
-  //     .catch((e) => console.log(e.message));
+       this.dbFirebase.create(componente, item)
+       .then((data) => console.log(data))
+       .then(() => this.ngOnInit())
+       .catch((e) => console.log(e.message));
        
       
 
-  // }
+   }
 
   updateItem(componente: string, item: any): void {
     console.log("update itemcomponent", item,)

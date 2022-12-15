@@ -1,10 +1,4 @@
 
-
-<div *ngIf="titulo ==='Vehiculo' else clientes ">
-    <app-vehiculos-form [item]="item" (newItemEvent)="getMsg($event)" ></app-vehiculos-form>
-</div>
-
-<ng-template #clientes>
   <div class="modal-header">
       <h5 class="modal-title" id="modal-basic-title">{{titulo}}</h5>
       <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
@@ -14,49 +8,49 @@
   <div class="modal-body">
       <div class="container">
           <div class="modal-body">
-            <form [formGroup]="editForm" novalidate>
+            <form [formGroup]="editForm" novalidate >
               <div class="form-group">
                 <label for="cuit">Cuit</label>
                 <div class="input-group">
-                  <input formControlName="cuit" class="form-control" required type="text">
+                  <input formControlName="cuit" class="form-control" required type="text"
+                  [ngClass]="{'is-invalid':Cuit?.errors && Cuit?.touched, 'is-valid': !Cuit?.errors && !Cuit?.touched }">                  
                 </div>
               </div>
               <div class="form-group">
-                <label for="direccion">direccion</label>
+                <label for="direccion">Direccion</label>
                 <div class="input-group">
                   <input formControlName="direccion" class="form-control" required type="text"
-   
-                  >
-   
-   
+                  [ngClass]="{'is-invalid':Direccion?.errors && Direccion?.touched, 'is-valid': !Direccion?.errors && !Direccion?.touched }">                  
                 </div>
               </div>
               <div class="form-group">
                 <label for="mail">Mail</label>
                 <div class="input-group">
-                  <input formControlName="mail" class="form-control"  type="text"
->                  
+                  <input formControlName="mail" class="form-control"  required type="email"
+                  [ngClass]="{'is-invalid':Email?.errors && Email?.touched, 'is-valid': !Email?.errors && !Email?.touched }">
+                  <div *ngIf="Email?.errors && Email?.touched"  class="text-danger fs-6">
+                    <p *ngIf="Email?.hasError('required')">El email es requerido.</p>           
+                    <p *ngIf="Email?.hasError('email')">El formato debe ser válido.</p> 
+                  </div>              
+                </div>
+              </div>  
+                <div class="form-group">
+                  <label for="razonSocial">Razón Social</label>
+                  <div class="input-group">
+                    <input formControlName="razonSocial" class="form-control" required type="text"
+                    [ngClass]="{'is-invalid':RazonSocial?.errors && RazonSocial?.touched, 'is-valid': !RazonSocial?.errors && !RazonSocial?.touched }"> 
+                  </div>
                 </div>
 
-
               <div class="form-group">
-                <label for="Telefono">Telefono</label>
+                <label for="telefono">Telefono</label>
                 <div class="input-group">
                   <input formControlName="telefono" class="form-control"  type="text"
->                  
+                  [ngClass]="{'is-invalid':Telefono?.errors && Telefono?.touched, 'is-valid': !Telefono?.errors && !Telefono?.touched }">                   
                 </div>
               </div>
 
 
-
-              </div>
-
-              <div class="form-group">
-                <label for="Comentario">Comentario</label>
-                <div class="input-group">
-                  <input formControlName="comentario" class="form-control" type="text">
-                </div>
-              </div>
         
               <!-- Ingreso egreso lado a lado  -->
               <!-- <table class="table">
@@ -88,14 +82,14 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" [disabled]="editForm.invalid"(click)="closeModal()">
-              {{titulo}}
+            <button class="btn btn-success" [disabled]="editForm.invalid"(click)="guardarDatos()">
+              Guardar
             </button>
           </div>
         </div>
     
   </div>
-</ng-template>
+
 
 
 

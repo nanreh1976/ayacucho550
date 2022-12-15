@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Empresa } from 'src/app/interfaces/empresa';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-empresa-form',
@@ -12,7 +14,14 @@ export class EmpresaFormComponent implements OnInit {
   @Input() fromParent: any;
   editForm!: any;
   titulo!: string;
-  item: any;
+  item: Empresa = {
+    id: "",
+    cuit: "",
+    direccion: "",
+    mail: "",
+    razonSocial: "",
+    telefono: 0,
+  }
 
 
   constructor(public activeModal: NgbActiveModal,
@@ -29,71 +38,82 @@ export class EmpresaFormComponent implements OnInit {
       this.titulo = this.fromParent.modo
 
       if (this.titulo === 'Agregar') {
-        //this.item.id = ""
-      } else {
+        this.item.id = "";
+      } else {        
         this.item = this.fromParent.item;
-        this.configureForm(this.titulo, this.item);
+        console.log(this.item);
+        
+        this.configureForm();
       }
     }
   }
 
-  configureForm(_titulo: string, item: any) {
+  configureForm() {
 
-    // console.log("configure form", titulo, item), (titulo !=='agregar');
+    console.log("configure form", this.item);
     this.editForm.patchValue({
 
-      cuit: item.cuit,
-      direccion: item.direccion,
-      mail: item.mail,
-      razonSocial: item.razonSocial,
-      telefono: item.telefono,
-      id: item.id,
+      cuit: this.item.cuit,
+      direccion: this.item.direccion,
+      mail: this.item.mail,
+      razonSocial: this.item.razonSocial,
+      telefono: this.item.telefono,
+      
     });
+
+    console.log("esto es editForm: ", this.editForm.value);
+    
 
   }
 
 
   createForm() {
-    this.editForm = this.fb.group({
-      cuit: [''],
-      direccion: [''],
-      mail: [''],
-      razonSocial: [''],
-      Telefono: [''],
-      id: [''],
+    this.editForm = this.fb.group({    
+      cuit: ['', [Validators.required, Validators.pattern(/^([0-9]{11}|[0-9]{2}-[0-9]{8}-[0-9]{1})$/)]],
+      direccion: ['', Validators.required],
+      mail: ['', Validators.email],
+      razonSocial: ['', Validators.required],
+      telefono: ['', Validators.pattern(/^[0-9]{5,12}$/)],
+     
     });
   }
 
 
 
   closeModal() {
-
+   //console.log("esto es closeModal:", this.editForm.value);
+   
     let value = {
       op: this.titulo,
-      item: this.editForm.value
+      item: this.item,
 
     };
-
-    console.log("closemodal", value)
+    
+    //console.log("closemodal", value)
     this.activeModal.close(value);
 
   }
 
   get Email() {
-    return this.editForm.get("email");
+    return this.editForm.get("mail");
   }
 
   get Telefono() {
     return this.editForm.get("telefono");
   }
 
-  get Nombre() {
-    return this.editForm.get("nombre");
+  get Cuit() {
+    return this.editForm.get("cuit");
   }
 
-  get Apellido() {
-    return this.editForm.get("apellido");
+  get RazonSocial() {
+    return this.editForm.get("razonSocial");
   }
+
+  get Direccion() {
+    return this.editForm.get("direccion");
+  }
+  
 
   getMsg(msg: any) {
     console.log(msg, "from vehiculos-form");
@@ -103,12 +123,41 @@ export class EmpresaFormComponent implements OnInit {
       
     }; */
 
-    console.log("closemodal", msg)
+    //console.log("closemodal", msg)
     this.activeModal.close(msg);
 
   }
 
+  guardarDatos(){
+    //console.log(this.item);
+    
+    this.item.cuit = this.editForm.value.cuit;
+    this.item.direccion = this.editForm.value.direccion;
+    this.item.mail = this.editForm.value.mail;
+    this.item.razonSocial = this.editForm.value.razonSocial;
+    this.item.telefono = this.editForm.value.telefono;
 
+    Swal.fire({
+      title: '¿Desea guardar los datos?',
+      //text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          /* 'Deleted!',
+          'Your file has been deleted.',
+          'success'  */
+          'Guardados'
+        )
+        this.closeModal();
+      }
+    })
+
+  }
 
 
 }
