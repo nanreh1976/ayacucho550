@@ -11,23 +11,56 @@ import { CajaEgresoFormComponent } from '../forms/caja-egreso-form/caja-egreso-f
 
 import { CajaIngresoFormComponent } from '../forms/caja-ingreso-form/caja-ingreso-form.component';
 import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-apertura-form.component';
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-caja-control',
 
   template: `
+
+<div class="container">
+
+
+<div *ngIf="modo==='block'">
+
+La caja esta abierta por otro usuario.#
+Consulte a su admin
+
+</div>
+
+<div *ngIf="modo==='admin'">
+
+La caja esta abierta por el usuario 
+desde, desea cerrarla?
+boton cerrar caja
+
+
+</div>
+
+
+<div *ngIf="modo==='cerrada'">
+
+La caja esta cerrada.
+Puede abirla para empezar a operar.#
+boton abrir
+
+
+</div>
+
+
+<div *ngIf="modo==='abierta'">
   <app-caja-view
-
-
   [data]=data 
   [saldo]=saldo  
   [usuario]=usuario 
+  [cajaLog]=cajaLog
  (newItemEvent)="getMsg($event)"
-
-
   ></app-caja-view>
   
-              `,
+</div>
+
+</div>
+`,
 
 
 
@@ -43,6 +76,8 @@ export class CajaControlComponent implements OnInit {
   data!: Icaja[];
 
   saldo: number = 0
+  cajaLog:any
+  modo:string=""
 
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
@@ -54,9 +89,33 @@ export class CajaControlComponent implements OnInit {
   ngOnInit(): void {
     this.getAllSorted();
     this.setUser();
+    this.getCajaLog()
+    this.chequearEstado()
   
   }
 
+chequearEstado(){
+  // si el usuario no coincide con el que abrio la sesion de caja:
+     // si es user la bloquea y que llame al admin
+     
+     //this.modo="blocked"
+
+     // si es admin le avisa y le muestra el boton cerrar
+
+      //this.modo="admin"
+
+
+  // Si la caja esta cerrada, Avisa y muestra la opcion de abrir caja
+ 
+      //this.modo="cerrada"
+
+  // si la caja esta abierta y el usuario de la sesion es el mismo de la app
+  // procede normalmente
+
+      this.modo="abierta"
+
+  return
+}
   aperturaCaja() {
     // console.log("apertura de caja")
     // this.logger.log("apertura de caja", "");
@@ -183,7 +242,28 @@ export class CajaControlComponent implements OnInit {
     }
   };
 
-  // CRUD
+
+// CAJALOG
+
+// Cada sesion de caja tiene un id unico, y queda registrado en la coleccion CAJALOG
+// En el caja log se registra apertura, cierre, estado (abierto o cerrado ) usuario .
+// Solo puede haber una sesion abierta a la vez (porque hay una sola caja)
+
+  
+getCajaLog(){
+  this.dbFirebase.getByFieldValue  ('cajaLog', 'estado', 'abierto').subscribe(ref => {
+    console.log ("caja abierta", JSON.stringify(ref)  )
+    this.cajaLog = ref[0]
+
+  }) 
+}
+
+
+
+
+// CRUD
+
+
 
   getAll(): void {
     this.dbFirebase.getAll(this.componente).subscribe(data => {
@@ -195,23 +275,23 @@ export class CajaControlComponent implements OnInit {
   }
 
 
-  // GET ALL ACTUALIZADO PARA LEER EL PAYLOAD
-  getAll2(): void {
-    // llamar a getAll del servicio firebase para tener la lista de registros de caja
-    this.dbFirebase.getAll2(this.componente).subscribe(data => {
-      // data toma el listado de registros de caja
-      this.data = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data() as {}
-        } as unknown as Icaja;
-      });
-      localStorage.setItem(`${this.componente}`, JSON.stringify(data))
-      //console.log(JSON.stringify(this.data))
-      this.calcularSaldo(this.data)
-    });
+  // // GET ALL ACTUALIZADO PARA LEER EL PAYLOAD
+  // getAll2(): void {
+  //   // llamar a getAll del servicio firebase para tener la lista de registros de caja
+  //   this.dbFirebase.getAll2(this.componente).subscribe(data => {
+  //     // data toma el listado de registros de caja
+  //     this.data = data.map(e => {
+  //       return {
+  //         id: e.payload.doc.id,
+  //         ...e.payload.doc.data() as {}
+  //       } as unknown as Icaja;
+  //     });
+  //     localStorage.setItem(`${this.componente}`, JSON.stringify(data))
+  //     //console.log(JSON.stringify(this.data))
+  //     this.calcularSaldo(this.data)
+  //   });
 
-  }
+  // }
 
   getAllSorted() {
     // pasar campo y orden (asc o desc)

@@ -11,8 +11,9 @@ export class CajaViewComponent implements OnInit {
 
   @Input() data?: any
   @Input() usuario?: any
+  @Input() cajaLog:any
   @Output() newItemEvent = new EventEmitter<any>();
-  titulo: string = 'caja';
+  //titulo: string = 'caja';
   @Input() saldo:number
   msg: any
   searchText!: string;
@@ -21,6 +22,8 @@ export class CajaViewComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    //opciones para dataTable
     this.dtOptions = {
       searching: false,
       dom: 't<"bottom"riflp><"clear">',
@@ -31,6 +34,8 @@ export class CajaViewComponent implements OnInit {
     ],
     responsive: true
     };
+
+
   }
 
 

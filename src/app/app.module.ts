@@ -99,6 +99,7 @@ import { DataTablesModule } from "angular-datatables";
 
 
 
+
 //se crea una const del tipo Routes para guardar todas las rutas
 //esto importa la clase Routes 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -196,6 +197,7 @@ const appRoutes: Routes = [
     CajaAperturaFormComponent,
     CajaEgresoFormComponent,
     CajaIngresoFormComponent,
+
 
 
 

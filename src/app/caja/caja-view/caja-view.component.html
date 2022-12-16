@@ -2,6 +2,11 @@
 
 <div class="container">
 
+<p>Usuario : {{cajaLog.usuario}}    
+<span>Sesion: {{cajaLog.id}} </span>    
+ Abierta el : {{cajaLog.apertura.seconds * 1000 | date:'dd/MM/yyyy - hh:mmaaa'}}</p>
+
+
   <div style="display: flex; height: 100px;">
     <div style="width: 50%; ">
       <div>Saldo de caja: {{saldo | currency:'ARS':'symbol-narrow' :'1.0-0'}} </div>
