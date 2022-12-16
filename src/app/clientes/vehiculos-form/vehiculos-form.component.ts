@@ -25,7 +25,7 @@ export class VehiculosFormComponent implements OnInit {
   tarifaSeleccionada!: any;
   titulo!:string;
   componente: string = 'vehiculos'
-
+  form:boolean = false;
   
   vehiculos: Vehiculo [];
 
@@ -229,6 +229,17 @@ export class VehiculosFormComponent implements OnInit {
 
   get Patente(){
     return this.editForm.get("patente"); 
+  }
+
+  toggle() {
+    this.form = !this.form;
+    console.log(this.form);
+    
+    // Change the name of the button.
+    /* if (this.form)
+      this.buttonName = "Cerrar";
+    else
+      this.buttonName = "Consultar Facturacion"; */
   }
 
 

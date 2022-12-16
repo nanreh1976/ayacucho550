@@ -44,7 +44,7 @@
                 <td class="d-flex">
             
                 <app-btn-editar class="right" class="d-flex align-items-center" (click)="editarVehiculo(vehiculo)"
-                data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                (click)="toggle()">
 
                 </app-btn-editar>
                 <app-btn-eliminar class="right" class="d-flex align-items-center" (click)="eliminarVehiculo(vehiculo)"></app-btn-eliminar>                
@@ -55,15 +55,14 @@
 
       </table>
 
-      <div class="d-flex justify-content-between mx-4">
+      <div class="d-flex justify-content-between mx-4 my-2">
           <h2>Asignar vehiculo</h2>
-          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" (click)="setearTitulo()">
-              <i class="fa fa-plus" ></i>
+          <button class="btn btn-primary" (click)="setearTitulo()" (click)="toggle()">
+              <i *ngIf="!form" class="fa fa-plus" ></i>
+              <i *ngIf="form" class="fa fa-minus" ></i>
           </button>       
       </div>
-      <div class="collapse" id="collapseExample">
-        <div class="modal-body">
-          <div class="container">
+      <ng-container *ngIf="form">
             <div class="modal-body">
               <form [formGroup]="editForm" novalidate>
                 <div class="form-group">
@@ -112,9 +111,6 @@
                 Guardar
               </button>
             </div>
-          </div>
-        
-        </div>
-      </div>
+      </ng-container>
   </div>
   
