@@ -233,13 +233,7 @@ export class VehiculosFormComponent implements OnInit {
 
   toggle() {
     this.form = !this.form;
-    console.log(this.form);
-    
-    // Change the name of the button.
-    /* if (this.form)
-      this.buttonName = "Cerrar";
-    else
-      this.buttonName = "Consultar Facturacion"; */
+    //console.log(this.form);    
   }
 
 
