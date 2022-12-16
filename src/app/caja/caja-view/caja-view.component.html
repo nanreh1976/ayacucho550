@@ -33,12 +33,14 @@
     </div>
   </div>
 
-  <br />
-  <br />
+
 
   <!-- Caja Cerrada View -->
 
   <div *ngIf="($estadoCaja | async) === 'cerrada'">
+    <br />
+    <br />
+
     <p>La caja esta cerrada. Puede abirla para empezar a operar.</p>
     <div style="float: right">
       <app-btn-agregar
