@@ -10,6 +10,8 @@ export class CajaViewComponent implements OnInit {
   @Input() data?: any;
   @Input() usuario?: any;
   @Input() cajaLog: any;
+  @Input() $estadoCaja: any;
+
   @Output() newItemEvent = new EventEmitter<any>();
   //titulo: string = 'caja';
   @Input() saldo: number;
@@ -20,6 +22,7 @@ export class CajaViewComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    console.log ("caja View", JSON.stringify(this.cajaLog))
     //opciones para dataTable
     this.dtOptions = {
       searching: false,

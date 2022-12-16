@@ -93,6 +93,7 @@ import { CajaAperturaFormComponent } from './caja/forms/caja-apertura-form/caja-
 import { CajaEgresoFormComponent } from './caja/forms/caja-egreso-form/caja-egreso-form.component';
 import { CajaIngresoFormComponent } from './caja/forms/caja-ingreso-form/caja-ingreso-form.component';
 import { DataTablesModule } from "angular-datatables";
+import { CajaLogComponent } from './caja/caja-log/caja-log.component';
 
 
 
@@ -197,6 +198,7 @@ const appRoutes: Routes = [
     CajaAperturaFormComponent,
     CajaEgresoFormComponent,
     CajaIngresoFormComponent,
+    CajaLogComponent,
 
 
 

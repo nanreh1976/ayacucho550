@@ -63,7 +63,7 @@ getAllSorted2(componente:string, campo:string, orden:any) {
 
 
 getByFieldValue(componente:string, campo:string, value:string){
-
+  // devuelve los docs  de la coleccion que tengan un campo con un valor determinado
   // campo debe existir en la coleccion, si esta anidado pasar ruta separada por puntso (field.subfield)
   // orden solo asc o desc
 

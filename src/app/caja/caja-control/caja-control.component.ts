@@ -1,38 +1,25 @@
 import { Component, OnInit, ɵcompileNgModuleFactory } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { TitleStrategy } from '@angular/router';
+
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { Icaja } from 'src/app/interfaces/Icaja';
-import { LogService } from 'src/app/servicios/log.service';
 
 import { CajaCierreFormComponent } from '../forms/caja-cierre-form/caja-cierre-form.component';
 import { CajaEgresoFormComponent } from '../forms/caja-egreso-form/caja-egreso-form.component';
 
 import { CajaIngresoFormComponent } from '../forms/caja-ingreso-form/caja-ingreso-form.component';
 import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-apertura-form.component';
-import { ThisReceiver } from '@angular/compiler';
+import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
 
 @Component({
   selector: 'app-caja-control',
 
   template: `
     <div class="container">
-      <div *ngIf="modo === 'block'">
-        La caja esta abierta por otro usuario.# Consulte a su admin
-      </div>
-
-      <div *ngIf="modo === 'admin'">
-        La caja esta abierta por el usuario desde, desea cerrarla? boton cerrar
-        caja
-      </div>
-
-      <div *ngIf="modo === 'cerrada'">
-        La caja esta cerrada. Puede abirla para empezar a operar.# boton abrir
-      </div>
-
-      <div *ngIf="modo === 'abierta'">
+      <div>
         <app-caja-view
+          [$estadoCaja]="$estadoCaja"
           [data]="data"
           [saldo]="saldo"
           [usuario]="usuario"
@@ -51,57 +38,32 @@ export class CajaControlComponent implements OnInit {
 
   // data recibida del crud
   data!: Icaja[];
-
+  $estadoCaja: any;
   saldo: number = 0;
   cajaLog: any;
-  modo: string = '';
 
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private dbFirebase: DbFirestoreService
-  ) // private logger: LogService
-  {}
+    private dbFirebase: DbFirestoreService,
+    private estadoCaja: EstadoCajaService
+  ) {}
 
   ngOnInit(): void {
+
     this.getAllSorted();
     this.setUser();
-    this.getCajaLog();
-    this.chequearEstado();
+    this.$estadoCaja = this.estadoCaja.estadoCaja$;
+    this.getCajaAbierta();
   }
 
-  chequearEstado() {
-    // si el usuario no coincide con el que abrio la sesion de caja:
-    // si es user la bloquea y que llame al admin
+  // settings y calculos
 
-    //this.modo="blocked"
-
-    // si es admin le avisa y le muestra el boton cerrar
-
-    //this.modo="admin"
-
-    // Si la caja esta cerrada, Avisa y muestra la opcion de abrir caja
-
-    //this.modo="cerrada"
-
-    // si la caja esta abierta y el usuario de la sesion es el mismo de la app
-    // procede normalmente
-
-    this.modo = 'abierta';
-
-    return;
-  }
-  aperturaCaja() {
-    // console.log("apertura de caja")
-    // this.logger.log("apertura de caja", "");
+  setUser() {
+    let user = JSON.parse(localStorage.getItem('user') || `{}`);
+    this.usuario = user['displayName'];
   }
 
-  cierreCaja() {
-    console.log('cierre de caja');
-    //  this.logger.log("Cierre de caja", "");
-  }
-
-  // Do stuff in case forEach has not returned
   calcularSaldo(data: any) {
     this.saldo = 0;
     for (let item of data) {
@@ -113,12 +75,15 @@ export class CajaControlComponent implements OnInit {
     }
   }
 
+
+
   getMsg(msg: any) {
     // console.log(msg, "from parent");
     this.openForm(msg.op, msg.item);
   }
 
   selectForm(modo: string) {
+    // selecciona el form a mostrar segun la opcion elegida en la vsta
     switch (modo) {
       case 'Cierre de Caja': {
         return CajaCierreFormComponent;
@@ -146,7 +111,10 @@ export class CajaControlComponent implements OnInit {
   }
 
   openForm(modo: string, item: any) {
+    // seleccion el form a mostrar
     let selectedForm = this.selectForm(modo);
+
+    // abre el form con el modal seleccionado
     const modalRef = this.modalService.open(selectedForm, {
       windowClass: 'myCustomModalClass',
       centered: true,
@@ -159,6 +127,7 @@ export class CajaControlComponent implements OnInit {
       saldo: this.saldo,
     };
 
+    // seleccion la opcion crud segun resultado form
     modalRef.componentInstance.fromParent = info;
     modalRef.result.then(
       (result) => {
@@ -166,11 +135,6 @@ export class CajaControlComponent implements OnInit {
       },
       (reason) => {}
     );
-  }
-
-  setUser() {
-    let user = JSON.parse(localStorage.getItem('user') || `{}`);
-    this.usuario = user['displayName'];
   }
 
   // seleccionar operacion CRUD
@@ -190,9 +154,8 @@ export class CajaControlComponent implements OnInit {
       }
 
       case 'Cierre de Caja': {
-        this.cierreCaja();
-        item.operacion = 'cierre';
-        this.addItem(this.componente, item);
+        this.cierreCaja(item);
+
         break;
       }
 
@@ -210,13 +173,32 @@ export class CajaControlComponent implements OnInit {
     }
   }
 
+  // operaciones de caja
+
+  aperturaCaja() {
+    // console.log("apertura de caja")
+    // this.logger.log("apertura de caja", "");
+  }
+
+  cierreCaja(item: any) {
+    // registra el cierre en la caja
+    item.operacion = 'cierre';
+    this.addItem(this.componente, item);
+    console.log('cierre de caja');
+    // tiene que cerrar la sesion de caja actual
+
+    // tiene que pasar el modo de caja a cerrada
+    //  this.estadoCaja = 'cerrada';
+  }
+
   // CAJALOG
 
   // Cada sesion de caja tiene un id unico, y queda registrado en la coleccion CAJALOG
   // En el caja log se registra apertura, cierre, estado (abierto o cerrado ) usuario .
   // Solo puede haber una sesion abierta a la vez (porque hay una sola caja)
 
-  getCajaLog() {
+  getCajaAbierta() {
+    // si hay una caja abierta en el cajalog la devuelve
     this.dbFirebase
       .getByFieldValue('cajaLog', 'estado', 'abierto')
       .subscribe((ref) => {
@@ -231,7 +213,7 @@ export class CajaControlComponent implements OnInit {
     this.dbFirebase.getAll(this.componente).subscribe((data) => {
       this.data = data;
       localStorage.setItem(`${this.componente}`, JSON.stringify(data));
-      //console.log(JSON.stringify(this.data))
+
       this.calcularSaldo(this.data);
     });
   }
@@ -287,11 +269,11 @@ export class CajaControlComponent implements OnInit {
   // }
 
   addItem(componente: string, item: any): void {
-    console.log('add itemcomponent', item);
+    // console.log('add itemcomponent', item);
 
     this.dbFirebase
       .create(componente, item)
-      .then((data) => console.log(data))
+      //   .then((data) => console.log(data))
       .then(() => this.ngOnInit())
       .catch((e) => console.log(e.message));
   }
