@@ -1,18 +1,23 @@
-<br><br>
+<br /><br />
 
-
-<h1 class="display-1" style="text-align: center;">Log Operaciones</h1>
-
-
+<h1 class="display-1" style="text-align: center">Log Operaciones</h1>
 
 <div class="container">
-
   <div class="form-group mb-4">
-    <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
+    <input
+      class="form-control"
+      type="text"
+      [(ngModel)]="searchText"
+      placeholder="Buscar"
+    />
   </div>
 
-  <table datatable [dtOptions]="dtOptions" class="row-border"*ngIf="(data | filter: searchText).length > 0; else noResults">
-
+  <table
+    datatable
+    [dtOptions]="dtOptions"
+    class="row-border"
+    *ngIf="(data | filter : searchText).length > 0; else noResults"
+  >
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -20,24 +25,18 @@
         <th scope="col">usuario</th>
         <th scope="col">Tipo</th>
         <th scope="col">Patente</th>
-
-
       </tr>
     </thead>
 
-
-
-
     <tbody>
-      <tr *ngFor="let item of data | filter: searchText; let i = index">
-
-        <td class="badge" scope="row">{{i + 1}}</td>
-        <td>{{item.Fecha.seconds * 1000 | date:'dd/MM/yyyy - hh:mmaaa'}}</td>
-        <td>{{item.usuario}}</td>
-        <td>{{item.tipo}}</td>
-        <td>{{item.patente}}</td>
-
-
+      <tr *ngFor="let item of data | filter : searchText; let i = index">
+        <td class="badge" scope="row">{{ i + 1 }}</td>
+        <td>
+          {{ item.Fecha.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}
+        </td>
+        <td>{{ item.usuario }}</td>
+        <td>{{ item.tipo }}</td>
+        <td>{{ item.patente }}</td>
 
         <!-- <div *ngIf="$estado | async" class="card-footer"> -->
 
@@ -58,13 +57,11 @@
 
         <!-- </td> -->
         <!-- </div> -->
-
-
       </tr>
     </tbody>
   </table>
 
   <ng-template #noResults>
-    <p>No results found for "{{searchText}}".</p>
+    <p>No results found for "{{ searchText }}".</p>
   </ng-template>
 </div>
