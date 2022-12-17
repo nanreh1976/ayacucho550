@@ -30,7 +30,7 @@
           </div>
 
           <div class="form-group">
-            <label for="valor">valor</label>
+            <label for="valor">valor de la fraccíon mínima</label>
             <div class="input-group">
               <input formControlName="valor" class="form-control" required type="text"
               [ngClass]="{'is-invalid':Valor?.errors && Valor?.touched, 'is-valid': !Valor?.errors && !Valor?.touched }"> 
@@ -38,7 +38,7 @@
           </div>
 
           <div class="form-group">
-            <label for="fraccion">fraccion</label>
+            <label for="fraccion">fraccion mínima de tiempo</label>
             <div class="input-group">
               <input formControlName="fraccion" class="form-control" required type="text"
               [ngClass]="{'is-invalid':Fraccion?.errors && Fraccion?.touched, 'is-valid': !Fraccion?.errors && !Fraccion?.touched }"> 
@@ -57,11 +57,21 @@
             </div>
           </div> -->
           <div>
-            <label for="descuento">categoria</label>
+            <label for="descuento">categoria de la tarifa</label>
             <select class="form-select form-select-md mb-3" (change)="changeCategoria($event)">
               <option value={{categoriaSeleccionada}}>Elegir categoria</option>
               <option *ngFor="let categoria of categorias">
                 {{categoria.nombre}}
+              </option>
+            </select>
+          </div>
+
+          <div>
+            <label for="descuento">vehiculo</label>
+            <select class="form-select form-select-md mb-3" (change)="changeVehiculo($event)">
+              <option value={{vehiculoSeleccionado}}>Seleccionar tipo de vehiculo</option>
+              <option *ngFor="let vehiculo of vehiculos">
+                {{vehiculo.nombre}}
               </option>
             </select>
           </div>
