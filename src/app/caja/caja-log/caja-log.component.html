@@ -1,1 +1,77 @@
-<p>caja-log works!</p>
+<!-- {{data | json}} -->
+<H1 class="display-1" style="text-align: center;">Historial de Caja </H1>
+
+<div class="container">
+
+    <!-- 
+
+    <div style=" float: right;">
+      <app-btn-agregar class="right " (click)="msgBack('Agregar',[])" class="d-flex align-items-center ">
+      </app-btn-agregar>
+    </div>
+   -->
+
+
+    <div class="form-group mb-4">
+        <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
+    </div>
+
+    <div>
+        <table datatable [dtOptions]="dtOptions" class="display"
+            *ngIf="(data | filter: searchText).length > 0; else noResults">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th>Apertura</th>
+                    <th>Cierre</th>
+                    <th>Estado</th>
+                    <th>LogId</th>
+                    <th>usuario</th>
+                    <!-- <th>Comentario</th> -->
+                    <!-- <th></th>
+            <th></th>
+            <th></th> -->
+
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of data | filter: searchText; let i = index">
+                    <td class="badge" scope="row">{{i + 1}}</td>
+                    <td>{{item.apertura.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}  </td>
+
+   
+                    <td *ngIf="item?.cierre; else elsePerfId">{{item.cierre.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}  </td>
+                    <ng-template #elsePerfId>
+                        <td> -- -- </td>
+                    </ng-template>
+
+                    <td>{{item.estado}}</td>
+                    <td>{{item.logId}}</td>
+                    <td>{{item.usuario}}</td>
+                    <!-- <td>{{item.comentario}}</td> -->
+                    <!-- <td>
+              <app-btn-editar class="right" (click)="msgBack('Editar',item)" class="d-flex align-items-center">
+              </app-btn-editar>
+            </td>
+            <td>
+              <app-btn-eliminar class="right" (click)="msgBack('Eliminar',item)" class="d-flex align-items-center">
+              </app-btn-eliminar>
+            </td>
+            <td>
+              <app-btn-agregar class="right" (click)="msgBack('Vehiculo',item)" [name]="vehiculo">
+              </app-btn-agregar>
+            </td> -->
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div>
+        <ng-template #noResults>
+            <p>Sin resultados para "{{searchText}}".</p>
+        </ng-template>
+    </div>
+</div>

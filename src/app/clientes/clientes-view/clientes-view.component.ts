@@ -15,7 +15,7 @@ export class ClientesViewComponent implements OnInit {
   titulo: string = 'clientes';
   vehiculo: string = 'Vehiculo';
   dtOptions: DataTables.Settings = {};
-
+  msg: any
   
   searchText!: string;
 
@@ -52,8 +52,11 @@ export class ClientesViewComponent implements OnInit {
 
 
 
+ 
+ 
+
   constructor() { }
-  msg: any
+  
   ngOnInit(): void {
     this.dtOptions = {
       searching: false,
