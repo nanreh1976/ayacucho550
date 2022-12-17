@@ -1,46 +1,47 @@
 <div class="container">
-
   <div class="form-group mb-4">
-    <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
+    <input
+      class="form-control"
+      type="text"
+      [(ngModel)]="searchText"
+      placeholder="Buscar"
+    />
   </div>
 
-  <table datatable [dtOptions]="dtOptions" class="row-border"
-    *ngIf="(data | filter: searchText).length > 0; else noResults">
-
-    <colgroup>
-      <col width="5%">
-      <col width="20%">
-      <col width="20%">
-      <col width="20%">
-    </colgroup>
-
+  <table
+    datatable
+    [dtOptions]="dtOptions"
+    class="display table"
+    *ngIf="(data | filter : searchText).length > 0; else noResults"
+  >
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Patente</th>
-        <th scope="col">F Ingreso</th>
-        <th scope="col">H Ingreso</th>
+        <th scope="col">Ingreso</th>
+        <!-- <th scope="col">F Ingreso</th>
+        <th scope="col">H Ingreso</th> -->
         <th scope="col">Tarifa</th>
-        <th scope="col">Descripcion>
+        <th scope="col">Descripcion></th>
         <th></th>
         <th></th>
-      
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let item of data | filter: searchText; let i = index">
-        <th class="badge" scope="row">{{i + 1}}</th>
-        <td>{{item.patente}}</td>
-        <td>{{item.fechas.fechaIngreso}}</td>
-        <td>{{item.fechas.horaIngreso}}</td>
-        <td>{{item.tarifa.nombre}}</td>
-        <td>{{item.descripcion}}</td>
+      <tr *ngFor="let item of data | filter : searchText; let i = index">
+        <th class="badge" scope="row">{{ i + 1 }}</th>
+        <td>{{ item.patente }}</td>
+        <td>{{ item.fechaOp.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}</td>
+        <!-- <td>{{ item.fechas.fechaIngreso }}</td>
+        <td>{{ item.fechas.horaIngreso }}</td> -->
+        <td>{{ item.tarifa.nombre }}</td>
+        <td>{{ item.descripcion }}</td>
         <!-- <div *ngIf="$estado | async" class="card-footer"> -->
 
         <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
         <td>
-          <app-btn-editar class="right" (click)="msgBack('Editar',item)">
+          <app-btn-editar class="right" (click)="msgBack('Editar', item)">
           </app-btn-editar>
         </td>
         <!--  <td>
@@ -50,17 +51,18 @@
           </app-btn-eliminar>
         </td> -->
         <td>
-          <app-btn-reimpresion class="right" (click)="msgBack('Reimprimir',item)">
+          <app-btn-reimpresion
+            class="right"
+            (click)="msgBack('Reimprimir', item)"
+          >
           </app-btn-reimpresion>
-
         </td>
         <!-- </div> -->
-
-
       </tr>
     </tbody>
   </table>
 
   <ng-template #noResults>
-    <p>Sin resultados para "{{searchText}}".</p>
+    <p>Sin resultados para "{{ searchText }}".</p>
   </ng-template>
+</div>

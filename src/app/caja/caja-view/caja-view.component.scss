@@ -1,22 +1,30 @@
-
 .modal-dialog {
-    width: 600px; 
-    margin: 0 auto; 
-  }
- 
-  
- .positive {
-    color: green;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.positive {
+  color: green;
 }
 
 .negative {
-    color: lightblue;
+  color: lightblue;
 }
 
 .cierre {
-    color: red;
+  color: red;
 }
 
 table.dataTable {
-    margin: 0 auto;
-  }
+  margin: 0 auto;
+}
+
+.badge {
+  padding: 1em 2em;
+  color: white;
+  background-color: #435b60;
+  min-width: 16px;
+  margin-top: 0.2em;
+  margin-right: 0.8em;
+  border-radius: 8px 0 0 8px;
+}

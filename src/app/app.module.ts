@@ -3,19 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 
-
-
 import { OcupacionComponent } from './ocupacion/ocupacion.component';
-
 
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoggedService } from './servicios/logged.service';
-
-
-
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -28,7 +22,6 @@ import { PlayaViewComponent } from './playa/playa-view/playa-view.component';
 import { PlayaControlComponent } from './playa/playa-control/playa-control.component';
 import { ClientesViewComponent } from './clientes/clientes-view/clientes-view.component';
 import { ClientesControlComponent } from './clientes/clientes-control/clientes-control.component';
-
 
 import { TicketEntradaComponent } from './ticket-entrada/ticket-entrada.component';
 import { NgxPrintElementModule } from 'ngx-print-element';
@@ -58,7 +51,6 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 
-
 import { ScannerComponent } from './scanner/scanner.component';
 
 // LOGS //
@@ -68,13 +60,18 @@ import { LogService } from './servicios/log.service';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
-// LOGIN 
+// LOGIN
 import { LoginComponent } from './appLogin/login/login.component';
 import { LogoutComponent } from './appLogin/logout/logout.component';
 import { AuthService } from './servicios/autentificacion/auth.service';
-import { AuthGuard, canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import {
+  AuthGuard,
+  canActivate,
+  redirectLoggedInTo,
+  redirectUnauthorizedTo,
+} from '@angular/fire/auth-guard';
 
-// BOTONES 
+// BOTONES
 import { BtnAgregarComponent } from './shared/btn-agregar/btn-agregar.component';
 import { BtnEditarComponent } from './shared/btn-editar/btn-editar.component';
 import { BtnEliminarComponent } from './shared/btn-eliminar/btn-eliminar.component';
@@ -92,45 +89,13 @@ import { CajaCierreFormComponent } from './caja/forms/caja-cierre-form/caja-cier
 import { CajaAperturaFormComponent } from './caja/forms/caja-apertura-form/caja-apertura-form.component';
 import { CajaEgresoFormComponent } from './caja/forms/caja-egreso-form/caja-egreso-form.component';
 import { CajaIngresoFormComponent } from './caja/forms/caja-ingreso-form/caja-ingreso-form.component';
-import { DataTablesModule } from "angular-datatables";
+import { DataTablesModule } from 'angular-datatables';
 import { CajaLogComponent } from './caja/caja-log/caja-log.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
 import { HeaderComponent } from './home/header/header.component';
+import { AppRoutingModule } from './app-routing.module';
 
 
-
-
-
-
-
-//se crea una const del tipo Routes para guardar todas las rutas
-//esto importa la clase Routes 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
-const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
-
-const appRoutes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full', },
-  {
-    path: 'home', component: HomeComponent, ...canActivate(redirectUnauthorizedToLogin),
-    children: [
-      { path: 'playa', component: PlayaControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: 'facturacion', component: FacturacionControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: 'caja', component: CajaControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: 'tarifas', component: TarifasControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: 'clientes', component: ClientesControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: 'ocupacion', component: OcupacionComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: 'logs', component: LogsComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: 'usuario', component: PerfilUsuarioComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: 'empresa', component: PerfilEmpresaComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: 'cajaLog', component: CajaLogComponent, ...canActivate(redirectUnauthorizedToLogin) },
-    ]
-  },
-  { path: 'login', component: LoginComponent, }, // la ruta al login
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'verify-email-address', component: VerifyEmailComponent },
-  { path: 'inicio', component: InicioComponent, ...canActivate(redirectUnauthorizedToLogin) },
-
-]
 
 @NgModule({
   declarations: [
@@ -145,14 +110,12 @@ const appRoutes: Routes = [
     PlayaFormComponent,
     FilterPipe,
 
-
     PagenotfoundComponent,
     ClientesFormComponent,
     PlayaViewComponent,
     PlayaControlComponent,
     ClientesViewComponent,
     ClientesControlComponent,
-
 
     TicketEntradaComponent,
     BtnReimpresionComponent,
@@ -189,21 +152,13 @@ const appRoutes: Routes = [
     CajaIngresoFormComponent,
     CajaLogComponent,
     NavbarComponent,
-
-
-
-
-
-
-
-
   ],
   imports: [
     BrowserModule,
     FormsModule,
     NgxPrintElementModule,
     NgxBarcode6Module,
-    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
     NgbModule, //se importa la clase RouterModule y se le indica la const donde estan las rutas
     ReactiveFormsModule,
     HttpClientModule,
@@ -211,18 +166,17 @@ const appRoutes: Routes = [
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     DataTablesModule,
-
   ],
   providers: [
-
     LoggedService,
     CustomAdapterService,
     CustomDateParserFormatterService,
     NgbTimeStringAdapterService,
     AuthService,
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
-    LogService],
+    LogService,
+  ],
 
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
