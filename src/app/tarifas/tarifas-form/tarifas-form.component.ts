@@ -21,6 +21,7 @@ export class TarifasFormComponent implements OnInit {
   componente: string = 'unidadTiempo';
   unidadSeleccionada! : any ;   
   categoriaSeleccionada! :any;
+  vehiculoSeleccionado!: any
   nombre!:any;
   nombreT!:any;
   
@@ -32,11 +33,18 @@ export class TarifasFormComponent implements OnInit {
   { id: 4, unidad_tiempo: 'mes', },
   { id: 5, unidad_tiempo: 'semestral', }];
 
-  categorias = [
+  vehiculos = [
     { id: 0, nombre: 'moto', },
     { id: 1, nombre: 'auto', },
     { id: 2, nombre: 'utilitario', },
     { id: 3, nombre: 'otro', },    
+  ];
+
+  categorias = [
+    { id: 0, nombre: 'moto-base', },
+    { id: 1, nombre: 'auto-base', },
+    { id: 2, nombre: 'utilitario-base', },
+    { id: 3, nombre: 'promo', },    
   ];
   
 
@@ -98,6 +106,7 @@ export class TarifasFormComponent implements OnInit {
       valor: ['', Validators.pattern(/^[0-9]{1,256}$/)],
       fraccion: ['', Validators.pattern(/^[0-9]{1,256}$/)],
       categoria: [''],
+      vehiculo: [''],
       tolerancia: ['', Validators.pattern(/^[0-9]{1,256}$/)],
       id: [''],
     });
@@ -122,6 +131,7 @@ export class TarifasFormComponent implements OnInit {
       unidad_tiempo: this.item.unidad_tiempo,
       valor: this.item.valor,
       fraccion: this.item.fraccion,
+      vehiculo: this.item.vehiculo,
       categoria: this.item.categoria,
       tolerancia: this.item.tolerancia,
       id: this.item.id,
@@ -152,7 +162,15 @@ export class TarifasFormComponent implements OnInit {
     console.log(e.target.value)  ; 
     
     this.categoriaSeleccionada = e.target.value
-    console.log(this.unidadSeleccionada);
+    console.log(this.categoriaSeleccionada);
+    
+  }
+
+  changeVehiculo(e: any) {
+    console.log(e.target.value)  ; 
+    
+    this.vehiculoSeleccionado = e.target.value
+    console.log(this.vehiculoSeleccionado);
     
   }
 
@@ -180,6 +198,7 @@ export class TarifasFormComponent implements OnInit {
         this.item = this.editForm.value                     //guarda los valores del form en item
         this.item.unidad_tiempo = this.unidadSeleccionada   //guarda la unidad seleccionada en el item
         this.item.categoria = this.categoriaSeleccionada    //guarda la categoria seleccionada en el item
+        this.item.vehiculo = this.vehiculoSeleccionado      
         Swal.fire({
           title: '¿Desea guardar la tarifa?',
           //text: "You won't be able to revert this!",
@@ -205,6 +224,7 @@ export class TarifasFormComponent implements OnInit {
         this.item = this.editForm.value                     //guarda los valores del form en item
         this.item.unidad_tiempo = this.unidadSeleccionada   //guarda la unidad seleccionada en el item
         this.item.categoria = this.categoriaSeleccionada    //guarda la categoria seleccionada en el item
+        this.item.vehiculo = this.vehiculoSeleccionado      
         Swal.fire({
           title: '¿Desea confirmar los cambios?',
           //text: "You won't be able to revert this!",
