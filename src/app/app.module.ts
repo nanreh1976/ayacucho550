@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
+
 
 
 import { OcupacionComponent } from './ocupacion/ocupacion.component';
@@ -95,6 +95,7 @@ import { CajaIngresoFormComponent } from './caja/forms/caja-ingreso-form/caja-in
 import { DataTablesModule } from "angular-datatables";
 import { CajaLogComponent } from './caja/caja-log/caja-log.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
+import { HeaderComponent } from './home/header/header.component';
 
 
 
