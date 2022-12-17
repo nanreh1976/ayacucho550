@@ -110,7 +110,7 @@
       <table
         datatable
         [dtOptions]="dtOptions"
-        class="display"
+        class="display table"
         *ngIf="(data | filter : searchText).length > 0; else noResults"
       >
         <thead>
