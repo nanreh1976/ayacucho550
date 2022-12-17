@@ -114,33 +114,20 @@ const appRoutes: Routes = [
     path: 'home', component: HomeComponent, ...canActivate(redirectUnauthorizedToLogin),
     children: [
       { path: 'playa', component: PlayaControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
-   
-
-
-      // {path: 'home/playa', component: PlayaControlComponent, outlet: 'outlet1', ...canActivate(redirectUnauthorizedToLogin)  },
-      // {path: 'scanner', component: ScannerComponent, ...canActivate(redirectUnauthorizedToLogin)  },
       { path: 'facturacion', component: FacturacionControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
       { path: 'caja', component: CajaControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      //  {path: 'ticketE', component: TicketEntradaComponent },
       { path: 'tarifas', component: TarifasControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
       { path: 'clientes', component: ClientesControlComponent, ...canActivate(redirectUnauthorizedToLogin) },
-
-     // { path: 'dashboard', component: DashboardComponent, ...canActivate(redirectUnauthorizedToLogin) },
       { path: 'ocupacion', component: OcupacionComponent, ...canActivate(redirectUnauthorizedToLogin) },
       { path: 'logs', component: LogsComponent, ...canActivate(redirectUnauthorizedToLogin) },
-
       { path: 'usuario', component: PerfilUsuarioComponent, ...canActivate(redirectUnauthorizedToLogin) },
-
       { path: 'empresa', component: PerfilEmpresaComponent, ...canActivate(redirectUnauthorizedToLogin) },
-
+      { path: 'cajaLog', component: CajaLogComponent, ...canActivate(redirectUnauthorizedToLogin) },
     ]
   },
   { path: 'login', component: LoginComponent, }, // la ruta al login
- // { path: 'register-user', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
-  // {path: '', redirectTo: '/playa', pathMatch: 'full', canActivate: [AuthGuard]}, 
-
   { path: 'inicio', component: InicioComponent, ...canActivate(redirectUnauthorizedToLogin) },
 
 ]
@@ -227,7 +214,7 @@ const appRoutes: Routes = [
 
   ],
   providers: [
-    
+
     LoggedService,
     CustomAdapterService,
     CustomDateParserFormatterService,

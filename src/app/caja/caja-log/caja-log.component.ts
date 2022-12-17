@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
+import { LanguageApp } from 'src/app/shared/DTLanguage';
 
 @Component({
   selector: 'app-caja-log',
@@ -8,8 +9,11 @@ import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.serv
 })
 export class CajaLogComponent implements OnInit {
 
-  cajaLog: any;
+  data: any;
+  dtOptions: DataTables.Settings = {};
 
+  
+  searchText!: string;
   componente: string = 'cajaLog';
 
   constructor(
@@ -19,17 +23,44 @@ export class CajaLogComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.getCajasAbiertas();
+    this.getAllSorted();
+
+    this.dtOptions = {
+      searching: false,
+      dom: 't<"bottom"riflp><"clear">',
+      language: LanguageApp.spanish_datatables,
+    //   columnDefs: [
+    //     { orderable: false, targets: [7,8,9] },
+    //     { searchable: false, targets: [ 7,8,9] },
+    // ]
+    };
   }
 
-  getCajasAbiertas() {
-    // busca en caja log todos los docs con estado abierto
+  getAllSorted() {
+    // pasar campo y orden (asc o desc)
     this.dbFirebase
-      .getByFieldValue('cajaLog', 'estado', 'abierto')
-      .subscribe((ref) => {
-        console.log('caja abierta', JSON.stringify(ref));
-        this.cajaLog = ref[0];
+      .getAllSorted(this.componente, 'apertura', 'desc')
+      .subscribe((data) => {
+        this.data = data.map((e) => {
+          return {
+            id: e.payload.doc.id,
+            ...(e.payload.doc.data() as {}),
+          } //as unknown as Icaja;
+        });
+
+        // guardar en el local storage
+        localStorage.setItem(`${this.componente}`, JSON.stringify(data));
+
       });
   }
+
+// interface cajaLog
+
+// apertura: 5 de diciembre de 2022, 15:13:36 UTC-3
+// cierre: 6 de diciembre de 2022, 19:09:20 UTC-3
+// estado: "abierto"
+// logId: "x"
+// usuario: ""
+
 
 }
