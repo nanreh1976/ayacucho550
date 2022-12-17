@@ -1,5 +1,4 @@
-
-
+<!-- {{data | json}} -->
 <H1 class="display-1" style="text-align: center;">Historial de Caja </H1>
 
 <div class="container">
@@ -41,10 +40,14 @@
             <tbody>
                 <tr *ngFor="let item of data | filter: searchText; let i = index">
                     <td class="badge" scope="row">{{i + 1}}</td>
-                    <td>{{item.apertura.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}</td>
+                    <td>{{item.apertura.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}  </td>
 
-                    
-                    <td>{{item.cierre.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}</td>
+   
+                    <td *ngIf="item?.cierre; else elsePerfId">{{item.cierre.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}  </td>
+                    <ng-template #elsePerfId>
+                        <td> -- -- </td>
+                    </ng-template>
+
                     <td>{{item.estado}}</td>
                     <td>{{item.logId}}</td>
                     <td>{{item.usuario}}</td>
