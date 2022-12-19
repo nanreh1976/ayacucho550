@@ -200,10 +200,11 @@ export class CajaControlComponent implements OnInit {
   getCajaAbierta() {
     // si hay una caja abierta en el cajalog la devuelve
     this.dbFirebase
-      .getByFieldValue('cajaLog', 'estado', 'abierto')
+      .getByFieldValue('cajaLog', 'estado', 'abierta')
       .subscribe((ref) => {
-        console.log('caja abierta', JSON.stringify(ref));
-        this.cajaLog = ref[0];
+        console.log('caja abierta', ref);
+        this.cajaLog = JSON.stringify(ref[0]);
+        console.log("tamaño Caja", (this.cajaLog === undefined) )
       });
   }
 
