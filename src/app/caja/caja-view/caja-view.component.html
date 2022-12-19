@@ -3,7 +3,7 @@
 <div class="container">
   <!-- Caja abierta por otro usuario -->
 
-  <div *ngIf="($estadoCaja | async) === 'block'">
+  <div *ngIf="($modoCaja | async) === 'block'">
     <p>La caja esta abierta por otro usuario.</p>
 
     <p>Consulte a su admin.</p>
@@ -11,7 +11,7 @@
 
   <!-- Caja admin pero caja abierta por usuario  view -->
 
-  <div *ngIf="($estadoCaja | async) === 'admin'">
+  <div *ngIf="($modoCaja | async) === 'admin'">
     <p>La caja esta abierta en otra sesion</p>
 <br>
     <p>Usuario : {{ cajaLog.usuario }}</p>
@@ -37,7 +37,7 @@
 
   <!-- Caja Cerrada View -->
 
-  <div *ngIf="($estadoCaja | async) === 'cerrada'">
+  <div *ngIf="($modoCaja | async) === 'cerrada'">
     <br />
     <br />
 
@@ -55,7 +55,7 @@
 
   <!-- Caja abierta view -->
 
-  <div *ngIf="($estadoCaja | async) === 'abierta'">
+  <div *ngIf="($modoCaja | async) === 'abierta'">
     <div style="display: flex; height: 100px">
       <div style="width: 50%">
         <div>

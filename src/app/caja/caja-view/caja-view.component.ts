@@ -10,7 +10,7 @@ export class CajaViewComponent implements OnInit {
   @Input() data?: any;
   @Input() usuario?: any;
   @Input() cajaLog: any;
-  @Input() $estadoCaja: any;
+  @Input() $modoCaja: any;
 
   @Output() newItemEvent = new EventEmitter<any>();
   //titulo: string = 'caja';

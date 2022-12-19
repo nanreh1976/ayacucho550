@@ -12,6 +12,7 @@ import { CajaIngresoFormComponent } from '../forms/caja-ingreso-form/caja-ingres
 import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-apertura-form.component';
 import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
 
+
 @Component({
   selector: 'app-caja-control',
 
@@ -19,7 +20,7 @@ import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
     <div class="container">
       <div>
         <app-caja-view
-          [$estadoCaja]="$estadoCaja"
+          [$modoCaja]="$modoCaja"
           [data]="data"
           [saldo]="saldo"
           [usuario]="usuario"
@@ -38,7 +39,7 @@ export class CajaControlComponent implements OnInit {
 
   // data recibida del crud
   data!: Icaja[];
-  $estadoCaja: any;
+  $modoCaja: any;
   saldo: number = 0;
   cajaLog: any;
 
@@ -53,8 +54,9 @@ export class CajaControlComponent implements OnInit {
 
     this.getAllSorted();
     this.setUser();
-    this.$estadoCaja = this.estadoCaja.estadoCaja$;
-    this.getCajaAbierta();
+    this.estadoCaja.getCajaAbierta()
+    this.$modoCaja = this.estadoCaja.getModoCaja()
+   
   }
 
   // settings y calculos
@@ -197,16 +199,6 @@ export class CajaControlComponent implements OnInit {
   // En el caja log se registra apertura, cierre, estado (abierto o cerrado ) usuario .
   // Solo puede haber una sesion abierta a la vez (porque hay una sola caja)
 
-  getCajaAbierta() {
-    // si hay una caja abierta en el cajalog la devuelve
-    this.dbFirebase
-      .getByFieldValue('cajaLog', 'estado', 'abierta')
-      .subscribe((ref) => {
-        console.log('caja abierta', ref);
-        this.cajaLog = JSON.stringify(ref[0]);
-        console.log("tamaño Caja", (this.cajaLog === undefined) )
-      });
-  }
 
   // CRUD
 
