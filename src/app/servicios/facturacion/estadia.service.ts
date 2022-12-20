@@ -37,8 +37,10 @@ export class EstadiaService {
 
 
     switch (tarifas.unidad_tiempo) {
+      case "dia":
+      case "semana":
       case "mes":
-      case "semanas":
+      case "semestral":
         this.saldo = 0 ;
         return this.saldo;         
         //break;
