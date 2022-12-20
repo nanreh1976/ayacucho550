@@ -329,7 +329,7 @@ export class PlayaFormComponent implements OnInit {
     if (consulta.clienteExiste) {                         //este camino es si el cliente existe en la base de datos
       //console.log(consulta.datosCliente);
       this.clienteExiste = consulta.datosVehiculo;
-      //console.log("esto es clienteExiste: ",this.clienteExiste);
+      console.log("esto es clienteExiste: ",this.clienteExiste);
 
       //this.tarifaSeleccionada = this.buscarTarifa(this.clienteExiste.idTarifa);
       this.tarifaSeleccionada = this.clienteExiste.tarifa;
@@ -438,6 +438,18 @@ export class PlayaFormComponent implements OnInit {
       case 'Cliente':{
         this.titulo="Agregar";
         Swal.fire('Cliente con abono');
+        if(this.clienteExiste.estado === 0){
+          Swal.fire({
+            title: 'El abono esta vencido',
+            text: "Regularice la situación del cliente",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+          }).then((result) => {
+            if (result.isConfirmed) {             
+              this.closeModal();
+            }
+          })
+        }
         this.closeModal();
         break
       }
