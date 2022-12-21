@@ -27,7 +27,9 @@ export class CajaViewComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+
     // console.log ("caja View", JSON.stringify(this.cajaLog))
+
     //opciones para dataTable
     this.dtOptions = {
       searching: true,

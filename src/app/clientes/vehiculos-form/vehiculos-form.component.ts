@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
+import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
 import Swal from 'sweetalert2';
+import { PagoAbonoComponent } from '../pago-abono/pago-abono.component';
 
 
 @Component({
@@ -29,13 +31,13 @@ export class VehiculosFormComponent implements OnInit {
   
   vehiculos: Vehiculo [];
 
-  constructor(private fb: FormBuilder, private dbFirebase: DbFirestoreService, public activeModal: NgbActiveModal, public vpService: ValidarPatenteService) {
+  constructor(private fb: FormBuilder, private dbFirebase: DbFirestoreService, public activeModal: NgbActiveModal, public vpService: ValidarPatenteService,  private interOpService: InterOpService, private modalService: NgbModal,) {
     
    }
 
   ngOnInit(): void {
-    console.log(this.item);
-    console.log(this.titulo);
+    console.log("componente vehiculo. item: ",this.item);
+    //console.log(this.titulo);
     
     this.createForm();
     this.getAllVehiculos();
@@ -115,7 +117,7 @@ export class VehiculosFormComponent implements OnInit {
         color: this.editForm.value.color,
         idCliente: this.item.id,
         tarifa: this.tarifaSeleccionada,
-        estado: 1,
+        estado: 0,
       } 
       console.log(vehiculoAgregado);
       
@@ -235,6 +237,53 @@ export class VehiculosFormComponent implements OnInit {
     this.form = !this.form;
     //console.log(this.form);    
   }
+
+  efectuarPago(vehiculo: Vehiculo) {
+    console.log("esto es el pago del abono: ", vehiculo);
+    const modalRef = this.modalService.open(PagoAbonoComponent,
+      {
+        // scrollable: false,
+        windowClass: 'myCustomModalClass',
+        // keyboard: false,
+        // backdrop: 'static'
+      })
+
+      let info = {
+        modo: "Agregar",
+        item: vehiculo,
+        cliente: this.item
+
+      }
+
+
+      modalRef.componentInstance.fromParent = info;
+      modalRef.result.then((result) => {
+      console.log("result from control","op", result);
+
+      this.cambiarEstadoAbono(vehiculo);
+
+
+
+      let ndate = new Date()
+      this.interOpService.addItem("caja", {
+        "concepto": result.item.patente,
+        "fecha": ndate ,// item.fechas["fechaSalidaDate"],
+        "importe": result.item.tarifa.valor,
+        "operacion": "ingreso"
+      });
+
+      this.msgBack(this.titulo, vehiculo);
+
+        
+    }, (reason) => { });
+  }
+
+  cambiarEstadoAbono(vehiculo:Vehiculo){
+    vehiculo.estado=1
+    this.titulo = "Vehiculo Editar"
+  }
+    
+  
 
 
 }

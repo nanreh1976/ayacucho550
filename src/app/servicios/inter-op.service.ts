@@ -35,7 +35,7 @@ export class InterOpService {
   addItem(componente: string, item: any): void {
 
 
-     item.fechaOp = new Date()
+     //item.fechaOp = new Date()
      this.dbFirebase.create(componente, item)
   //   .then((data) => console.log(data))
      .catch((e) => console.log(e.message));

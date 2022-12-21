@@ -87,16 +87,17 @@ export class CajaControlComponent implements OnInit {
     this.usuario = user['displayName'];
   }
 
-  // calcularSaldo(data: any) {
-  //   this.saldo = 0;
-  //   for (let item of data) {
-  //     if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
-  //       this.saldo += Number(item.importe);
-  //     } else {
-  //       this.saldo -= Number(item.importe);
-  //     }
-  //   }
-  // }
+   calcularSaldo(data: any) {
+     this.saldo = 0;
+     for (let item of data) {
+       if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
+         this.saldo += Number(item.importe);
+       } else {
+         this.saldo -= Number(item.importe);
+       }
+     }
+   }
+
 
 
 

@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-end">
+    <button type="button" class="close mt-2 me-2" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<h1 class="text-center">Ventana de Pago</h1>
+
+<h3>Cliente: {{cliente.apellido}}  {{cliente.nombre}}</h3>
+
+<h3>Patente: {{item.patente}} </h3>
+
+<h3>Tarifa: {{item.tarifa.nombre}} </h3>
+
+<h3>Importe: {{item.tarifa.valor}} </h3>
+
+<app-btn-agregar [name] = "'Confirmar'" class="left" (click)="pago()"></app-btn-agregar>
