@@ -11,6 +11,8 @@ import { CajaEgresoFormComponent } from '../forms/caja-egreso-form/caja-egreso-f
 import { CajaIngresoFormComponent } from '../forms/caja-ingreso-form/caja-ingreso-form.component';
 import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-apertura-form.component';
 import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
+import { Observable } from 'rxjs';
+import { CajaService } from '../caja.service';
 
 
 @Component({
@@ -25,6 +27,8 @@ import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
           [saldo]="saldo"
           [usuario]="usuario"
           [cajaLog]="cajaLog"
+          [$estadoCaja]="$estadoCaja"
+            [data]="data$"
           (newItemEvent)="getMsg($event)"
         ></app-caja-view>
       </div>
@@ -42,21 +46,36 @@ export class CajaControlComponent implements OnInit {
   $modoCaja: any;
   saldo: number = 0;
   cajaLog: any;
+  $estadoCaja: any;
+
+  loading$: Observable<boolean>;
+  data$: Observable<any>;
+  noResults$: Observable<boolean>;
 
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
-    private estadoCaja: EstadoCajaService
-  ) {}
+    private estadoCaja: EstadoCajaService,
+
+    private cajas: CajaService
+  ) { }
 
   ngOnInit(): void {
 
-    this.getAllSorted();
+    // this.getAllSorted();
     this.setUser();
     this.estadoCaja.getCajaAbierta()
     this.$modoCaja = this.estadoCaja.getModoCaja()
-   
+    this.loading$ = this.cajas.loading$;
+    this.noResults$ = this.cajas.noResults$;
+    this.data$ = this.cajas.data$
+    // this.calcularSaldo(this.data$);
+
+    // esto es lo anterior para tomar estado caja ocupada o ono
+    //  this.estadoCaja.getCajaAbierta()
+    //  this.$modoCaja = this.estadoCaja.getModoCaja()
+
   }
 
   // settings y calculos
@@ -135,7 +154,7 @@ export class CajaControlComponent implements OnInit {
       (result) => {
         this.selectCrudOp(result.op, result.item);
       },
-      (reason) => {}
+      (reason) => { }
     );
   }
 
@@ -202,14 +221,14 @@ export class CajaControlComponent implements OnInit {
 
   // CRUD
 
-  getAll(): void {
-    this.dbFirebase.getAll(this.componente).subscribe((data) => {
-      this.data = data;
-      localStorage.setItem(`${this.componente}`, JSON.stringify(data));
+  // getAll(): void {
+  //   this.dbFirebase.getAll(this.componente).subscribe((data) => {
+  //     this.data = data;
+  //     localStorage.setItem(`${this.componente}`, JSON.stringify(data));
 
-      this.calcularSaldo(this.data);
-    });
-  }
+  //     this.calcularSaldo(this.data);
+  //   });
+  // }
 
   // // GET ALL ACTUALIZADO PARA LEER EL PAYLOAD
   // getAll2(): void {
@@ -229,25 +248,25 @@ export class CajaControlComponent implements OnInit {
 
   // }
 
-  getAllSorted() {
-    // pasar campo y orden (asc o desc)
-    this.dbFirebase
-      .getAllSorted(this.componente, 'fecha', 'desc')
-      .subscribe((data) => {
-        this.data = data.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            ...(e.payload.doc.data() as {}),
-          } as unknown as Icaja;
-        });
+  // getAllSorted() {
+  //   // pasar campo y orden (asc o desc)
+  //   this.dbFirebase
+  //     .getAllSorted(this.componente, 'fecha', 'desc')
+  //     .subscribe((data) => {
+  //       this.data = data.map((e) => {
+  //         return {
+  //           id: e.payload.doc.id,
+  //           ...(e.payload.doc.data() as {}),
+  //         } as unknown as Icaja;
+  //       });
 
-        // guardar en el local storage
-        localStorage.setItem(`${this.componente}`, JSON.stringify(data));
+  //       // guardar en el local storage
+  //       localStorage.setItem(`${this.componente}`, JSON.stringify(data));
 
-        // calcular el saldo en cada actualizacion
-        this.calcularSaldo(this.data);
-      });
-  }
+  //       // calcular el saldo en cada actualizacion
+  //       this.calcularSaldo(this.data);
+  //     });
+  // }
 
   // deleteItem(componente: string, item: any): void {
 

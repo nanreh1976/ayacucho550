@@ -56,6 +56,14 @@
   <!-- Caja abierta view -->
 
   <div *ngIf="($modoCaja | async) === 'abierta'">
+
+    <div class="container">
+      <div *ngIf="loading$ | async">
+        Cargando...
+      </div>
+      <div *ngIf="noResults$ | async">
+        Sin resultados.
+      </div>
     <div style="display: flex; height: 100px">
       <div style="width: 50%">
         <div>
@@ -124,7 +132,9 @@
         </thead>
 
         <tbody>
-          <tr *ngFor="let item of data | filter : searchText; let i = index">
+          <tr *ngFor="let item of data |
+          
+          filter : searchText; let i = index">
             <td class="badge" scope="row">{{ i + 1 }}</td>
             <td>
               {{ item.fecha.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}

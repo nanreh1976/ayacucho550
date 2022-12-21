@@ -11,6 +11,9 @@ export class CajaViewComponent implements OnInit {
   @Input() usuario?: any;
   @Input() cajaLog: any;
   @Input() $modoCaja: any;
+  @Input() $estadoCaja: any;
+  @Input() loading$: any;
+  @Input() noResults$: any;
 
   @Output() newItemEvent = new EventEmitter<any>();
   //titulo: string = 'caja';
