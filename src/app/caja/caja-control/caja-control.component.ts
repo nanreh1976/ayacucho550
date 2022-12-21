@@ -23,12 +23,12 @@ import { CajaService } from '../caja.service';
       <div>
         <app-caja-view
           [$modoCaja]="$modoCaja"
-          [data]="data"
+   
           [saldo]="saldo"
           [usuario]="usuario"
           [cajaLog]="cajaLog"
           [$estadoCaja]="$estadoCaja"
-            [data]="data$"
+            [data$]="data$"
           (newItemEvent)="getMsg($event)"
         ></app-caja-view>
       </div>
@@ -42,7 +42,7 @@ export class CajaControlComponent implements OnInit {
   usuario!: string;
 
   // data recibida del crud
-  data!: Icaja[];
+  // data!: Icaja[];
   $modoCaja: any;
   saldo: number = 0;
   cajaLog: any;
