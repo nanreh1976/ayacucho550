@@ -87,7 +87,7 @@ export class CajaControlComponent implements OnInit {
     this.usuario = user['displayName'];
   }
 
-   calcularSaldo(data: any) {
+   /* calcularSaldo(data: any) {
      this.saldo = 0;
      for (let item of data) {
        if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
@@ -96,7 +96,7 @@ export class CajaControlComponent implements OnInit {
          this.saldo -= Number(item.importe);
        }
      }
-   }
+   } */
 
 
 
