@@ -81,7 +81,7 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
   logout() {
     return signOut(this.auth).then(() => {
       localStorage.removeItem('user');
-      this.router.navigate(['/']);
+      this.router.navigate(['']);
     });
   }
 
