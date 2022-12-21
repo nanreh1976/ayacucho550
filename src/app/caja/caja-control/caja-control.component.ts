@@ -65,6 +65,8 @@ export class CajaControlComponent implements OnInit {
   }
 
   calcularSaldo(data: any) {
+    console.log("esto es la caja ", data);
+    
     this.saldo = 0;
     for (let item of data) {
       if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
@@ -73,6 +75,8 @@ export class CajaControlComponent implements OnInit {
         this.saldo -= Number(item.importe);
       }
     }
+    console.log("esto es saldo, ", this.saldo);
+    
   }
 
 

@@ -23,6 +23,8 @@ export class CajaViewComponent implements OnInit {
 
   ngOnInit(): void {
     console.log ("caja View", JSON.stringify(this.cajaLog))
+    console.log("data: ", this.data);
+    
     //opciones para dataTable
     this.dtOptions = {
       searching: false,
