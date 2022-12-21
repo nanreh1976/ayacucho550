@@ -18,6 +18,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // chequea el estado de las cajas al abrr la app
-    this.estadoCaja.setEstadoCaja();
+     this.estadoCaja.getCajaAbierta()
   }
 }

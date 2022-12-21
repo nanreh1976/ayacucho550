@@ -7,14 +7,19 @@ import { LanguageApp } from 'src/app/shared/DTLanguage';
   styleUrls: ['./caja-view.component.scss'],
 })
 export class CajaViewComponent implements OnInit {
-  @Input() data?: any;
+  @Input() data$: any ;  // desde caja service
+
   @Input() usuario?: any;
-  @Input() cajaLog: any;
+  @Input() cajaLog: any;  // sesiones de caja
+  @Input() $modoCaja: any;  //abierta cerrada admin block
   @Input() $estadoCaja: any;
+  @Input() loading$: any;  // todavia no recibio datos del server
+  @Input() noResults$: any;  // recibio datos del server pero vacios
+  @Input() saldo$:any;
 
   @Output() newItemEvent = new EventEmitter<any>();
   //titulo: string = 'caja';
-  @Input() saldo: number;
+
   msg: any;
   searchText!: string;
   dtOptions: DataTables.Settings = {};
@@ -22,10 +27,10 @@ export class CajaViewComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log ("caja View", JSON.stringify(this.cajaLog))
+    // console.log ("caja View", JSON.stringify(this.cajaLog))
     //opciones para dataTable
     this.dtOptions = {
-      searching: false,
+      searching: true,
       dom: 't<"bottom"riflp><"clear">',
       language: LanguageApp.spanish_datatables,
       columnDefs: [
