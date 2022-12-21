@@ -59,8 +59,9 @@
       <div style="display: flex; height: 100px">
         <div style="width: 50%">
           <div>
+  
             Saldo de caja:
-            {{ saldo | currency : "ARS" : "symbol-narrow" : "1.0-0" }}
+            {{ saldo$ | async | currency : "ARS" : "symbol-narrow" : "1.0-0" }}
           </div>
           <div>Usuario : {{ usuario }}</div>
         </div>

@@ -15,10 +15,11 @@ export class CajaViewComponent implements OnInit {
   @Input() $estadoCaja: any;
   @Input() loading$: any;  // todavia no recibio datos del server
   @Input() noResults$: any;  // recibio datos del server pero vacios
+  @Input() saldo$:any;
 
   @Output() newItemEvent = new EventEmitter<any>();
   //titulo: string = 'caja';
-  @Input() saldo: number;
+
   msg: any;
   searchText!: string;
   dtOptions: DataTables.Settings = {};

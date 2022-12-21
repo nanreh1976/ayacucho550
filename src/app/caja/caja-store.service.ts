@@ -16,6 +16,7 @@ export class CajaStoreService {
     {
       loading: true,
       data: [],
+      saldo: 0
     }
 
   constructor() {

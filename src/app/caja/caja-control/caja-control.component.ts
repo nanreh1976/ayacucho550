@@ -24,7 +24,7 @@ import { CajaService } from '../caja.service';
         <app-caja-view
           [$modoCaja]="$modoCaja"
    
-          [saldo]="saldo"
+          [saldo$]="saldo$"
           [usuario]="usuario"
           [cajaLog]="cajaLog"
           [$estadoCaja]="$estadoCaja"
@@ -44,10 +44,11 @@ export class CajaControlComponent implements OnInit {
   // data recibida del crud
   // data!: Icaja[];
   $modoCaja: any;
-  saldo: number = 0;
+
   cajaLog: any;
   $estadoCaja: any;
 
+  saldo$: Observable<any>;
   loading$: Observable<boolean>;
   data$: Observable<any>;
   noResults$: Observable<boolean>;
@@ -67,6 +68,7 @@ export class CajaControlComponent implements OnInit {
     this.setUser();
     this.estadoCaja.getCajaAbierta()
     this.$modoCaja = this.estadoCaja.getModoCaja()
+    this.saldo$ = this.cajas.saldo$
     this.loading$ = this.cajas.loading$;
     this.noResults$ = this.cajas.noResults$;
     this.data$ = this.cajas.data$
@@ -85,16 +87,16 @@ export class CajaControlComponent implements OnInit {
     this.usuario = user['displayName'];
   }
 
-  calcularSaldo(data: any) {
-    this.saldo = 0;
-    for (let item of data) {
-      if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
-        this.saldo += Number(item.importe);
-      } else {
-        this.saldo -= Number(item.importe);
-      }
-    }
-  }
+  // calcularSaldo(data: any) {
+  //   this.saldo = 0;
+  //   for (let item of data) {
+  //     if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
+  //       this.saldo += Number(item.importe);
+  //     } else {
+  //       this.saldo -= Number(item.importe);
+  //     }
+  //   }
+  // }
 
 
 
@@ -145,7 +147,7 @@ export class CajaControlComponent implements OnInit {
     let info = {
       modo: modo,
       item: item,
-      saldo: this.saldo,
+      saldo: this.saldo$,
     };
 
     // seleccion la opcion crud segun resultado form
