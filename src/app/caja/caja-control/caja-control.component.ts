@@ -11,6 +11,9 @@ import { CajaEgresoFormComponent } from '../forms/caja-egreso-form/caja-egreso-f
 import { CajaIngresoFormComponent } from '../forms/caja-ingreso-form/caja-ingreso-form.component';
 import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-apertura-form.component';
 import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
+import { Observable } from 'rxjs';
+import { CajaService } from '../caja.service';
+
 
 @Component({
   selector: 'app-caja-control',
@@ -19,11 +22,13 @@ import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
     <div class="container">
       <div>
         <app-caja-view
-          [$estadoCaja]="$estadoCaja"
-          [data]="data"
-          [saldo]="saldo"
+          [$modoCaja]="$modoCaja"
+   
+          [saldo$]="saldo$"
           [usuario]="usuario"
           [cajaLog]="cajaLog"
+          [$estadoCaja]="$estadoCaja"
+            [data$]="data$"
           (newItemEvent)="getMsg($event)"
         ></app-caja-view>
       </div>
@@ -37,24 +42,42 @@ export class CajaControlComponent implements OnInit {
   usuario!: string;
 
   // data recibida del crud
-  data!: Icaja[];
-  $estadoCaja: any;
-  saldo: number = 0;
+  // data!: Icaja[];
+  $modoCaja: any;
+
   cajaLog: any;
+  $estadoCaja: any;
+
+  saldo$: Observable<any>;
+  loading$: Observable<boolean>;
+  data$: Observable<any>;
+  noResults$: Observable<boolean>;
 
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
-    private estadoCaja: EstadoCajaService
-  ) {}
+    private estadoCaja: EstadoCajaService,
+
+    private cajas: CajaService
+  ) { }
 
   ngOnInit(): void {
 
-    this.getAllSorted();
+    // this.getAllSorted();
     this.setUser();
-    this.$estadoCaja = this.estadoCaja.estadoCaja$;
-    this.getCajaAbierta();
+    this.estadoCaja.getCajaAbierta()
+    this.$modoCaja = this.estadoCaja.getModoCaja()
+    this.saldo$ = this.cajas.saldo$
+    this.loading$ = this.cajas.loading$;
+    this.noResults$ = this.cajas.noResults$;
+    this.data$ = this.cajas.data$
+    // this.calcularSaldo(this.data$);
+
+    // esto es lo anterior para tomar estado caja ocupada o ono
+    //  this.estadoCaja.getCajaAbierta()
+    //  this.$modoCaja = this.estadoCaja.getModoCaja()
+
   }
 
   // settings y calculos
@@ -64,20 +87,17 @@ export class CajaControlComponent implements OnInit {
     this.usuario = user['displayName'];
   }
 
-  calcularSaldo(data: any) {
-    console.log("esto es la caja ", data);
-    
-    this.saldo = 0;
-    for (let item of data) {
-      if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
-        this.saldo += Number(item.importe);
-      } else {
-        this.saldo -= Number(item.importe);
-      }
-    }
-    console.log("esto es saldo, ", this.saldo);
-    
-  }
+   calcularSaldo(data: any) {
+     this.saldo = 0;
+     for (let item of data) {
+       if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
+         this.saldo += Number(item.importe);
+       } else {
+         this.saldo -= Number(item.importe);
+       }
+     }
+   }
+
 
 
 
@@ -128,7 +148,7 @@ export class CajaControlComponent implements OnInit {
     let info = {
       modo: modo,
       item: item,
-      saldo: this.saldo,
+      saldo: this.saldo$,
     };
 
     // seleccion la opcion crud segun resultado form
@@ -137,7 +157,7 @@ export class CajaControlComponent implements OnInit {
       (result) => {
         this.selectCrudOp(result.op, result.item);
       },
-      (reason) => {}
+      (reason) => { }
     );
   }
 
@@ -201,26 +221,17 @@ export class CajaControlComponent implements OnInit {
   // En el caja log se registra apertura, cierre, estado (abierto o cerrado ) usuario .
   // Solo puede haber una sesion abierta a la vez (porque hay una sola caja)
 
-  getCajaAbierta() {
-    // si hay una caja abierta en el cajalog la devuelve
-    this.dbFirebase
-      .getByFieldValue('cajaLog', 'estado', 'abierto')
-      .subscribe((ref) => {
-        console.log('caja abierta', JSON.stringify(ref));
-        this.cajaLog = ref[0];
-      });
-  }
 
   // CRUD
 
-  getAll(): void {
-    this.dbFirebase.getAll(this.componente).subscribe((data) => {
-      this.data = data;
-      localStorage.setItem(`${this.componente}`, JSON.stringify(data));
+  // getAll(): void {
+  //   this.dbFirebase.getAll(this.componente).subscribe((data) => {
+  //     this.data = data;
+  //     localStorage.setItem(`${this.componente}`, JSON.stringify(data));
 
-      this.calcularSaldo(this.data);
-    });
-  }
+  //     this.calcularSaldo(this.data);
+  //   });
+  // }
 
   // // GET ALL ACTUALIZADO PARA LEER EL PAYLOAD
   // getAll2(): void {
@@ -240,25 +251,25 @@ export class CajaControlComponent implements OnInit {
 
   // }
 
-  getAllSorted() {
-    // pasar campo y orden (asc o desc)
-    this.dbFirebase
-      .getAllSorted(this.componente, 'fecha', 'desc')
-      .subscribe((data) => {
-        this.data = data.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            ...(e.payload.doc.data() as {}),
-          } as unknown as Icaja;
-        });
+  // getAllSorted() {
+  //   // pasar campo y orden (asc o desc)
+  //   this.dbFirebase
+  //     .getAllSorted(this.componente, 'fecha', 'desc')
+  //     .subscribe((data) => {
+  //       this.data = data.map((e) => {
+  //         return {
+  //           id: e.payload.doc.id,
+  //           ...(e.payload.doc.data() as {}),
+  //         } as unknown as Icaja;
+  //       });
 
-        // guardar en el local storage
-        localStorage.setItem(`${this.componente}`, JSON.stringify(data));
+  //       // guardar en el local storage
+  //       localStorage.setItem(`${this.componente}`, JSON.stringify(data));
 
-        // calcular el saldo en cada actualizacion
-        this.calcularSaldo(this.data);
-      });
-  }
+  //       // calcular el saldo en cada actualizacion
+  //       this.calcularSaldo(this.data);
+  //     });
+  // }
 
   // deleteItem(componente: string, item: any): void {
 
