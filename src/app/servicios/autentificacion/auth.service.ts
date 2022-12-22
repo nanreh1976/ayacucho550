@@ -45,7 +45,7 @@ export class AuthService {
 
   async loginWithGoogle() {
     const res = await this.AuthLogin(new auth.GoogleAuthProvider());
-    this.router.navigate(['/home']);
+    // this.router.navigate(['/home']);
   }
 
   // Auth logic to run auth providers
@@ -60,6 +60,7 @@ export class AuthService {
     }
   }
 
+  
   /* Setting up user data when sign in with username/password, 
 sign up with username/password and sign in with social auth  
 provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
