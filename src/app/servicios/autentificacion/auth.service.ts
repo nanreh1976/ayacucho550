@@ -17,6 +17,7 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
+import { InitializerService } from '../initializer/initializer.service';
 
 @Injectable({
   providedIn: 'root',
@@ -34,8 +35,9 @@ export class AuthService {
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
-    public ngZone: NgZone // NgZone service to remove outside scope warning
-  ) {}
+    public ngZone: NgZone,// NgZone service to remove outside scope warning
+    public initializerService: InitializerService // inicializa datos aplicacion
+  ) { }
 
   // loginWithGoogle() {
   //   return signInWithPopup(this.auth, new GoogleAuthProvider());
@@ -94,16 +96,18 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
         const uid = user.uid;
         // ...
         localStorage.setItem(`user`, JSON.stringify(user));
-        this.LogIn();
+        // this.LogIn();
         //console.log("esto es el user", user);
         //console.log("esto es el user.uid", uid);
+        
         this.getUsuario(uid);
+        this.initializerService.getTodo()
       } else {
         // User is signed out
         // ...
         localStorage.removeItem(`user`);
         localStorage.clear();
-        this.LogOut();
+        // this.LogOut();
       }
     });
   }
@@ -161,24 +165,7 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
       });
   }
 
-  LogIn() {
-    this.logged$.next(true);
-  }
 
-  LogOut() {
-    this.logged$.next(false);
-  }
-
-  LogState() {
-    return this.logged$.asObservable();
-  }
-
-  mantenerseLogueado() {
-    if (sessionStorage.getItem('user')) {
-      this.LogIn();
-      console.log('prueba');
-    }
-  }
 
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  

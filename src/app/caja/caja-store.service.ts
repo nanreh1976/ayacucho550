@@ -33,4 +33,8 @@ export class CajaStoreService {
     const newState = Object.assign({}, this.state, newValue);
     this.bs.next(newState)
   }
+
+  // reset() {
+  //   this.bs.next(this.initialValue)
+  // }
 }

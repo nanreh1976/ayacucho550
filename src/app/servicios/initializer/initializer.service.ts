@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { tap, map } from 'rxjs/operators';
+import { CajaStoreService } from 'src/app/caja/caja-store.service';
+import { CajaService } from 'src/app/caja/caja.service';
 import { DbFirestoreService } from '../database/db-firestore.service';
 
 @Injectable({
@@ -11,13 +14,39 @@ export class InitializerService {
   tarifas!:any;
   playa!:any
 
-  constructor(private dbFirebase: DbFirestoreService) { }
+  constructor(private dbFirebase: DbFirestoreService,
+    private store: CajaStoreService
+    ) { }
 
   getTodo(){
+
     this.getClientes();
     this.getVehiculos();
     this.getTarifas();
     this.getPlaya();
+    this.getCaja();
+    // this.cajaService.restart();
+
+  }
+
+
+  getCaja() { // pasar campo y orden (asc o desc)
+    this.dbFirebase
+      .getAllSorted2('caja', 'fecha', 'desc')
+      .pipe(
+        tap(data => {
+          console.log("initializer get caja", data)
+          this.store.patch({
+            loading: false,
+            data,
+  
+            // saldo: this.calcularSaldo(data)
+          }
+   
+         )
+        })
+      )
+      .subscribe();
   }
 
   getClientes(){

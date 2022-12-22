@@ -24,7 +24,7 @@ export class SignUpComponent implements OnInit {
 
       //.then(() => this.router.navigate(['/playa']))             
       //.then(() => this.accionAsincrona())
-      .then(() => this.initializerService.getTodo())
+     
       //.then(() => this.router.navigate(['/home']))
       .catch((e) => console.log(e.message));
   }
