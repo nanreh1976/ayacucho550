@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './servicios/autentificacion/auth.service';
 import { DbFirestoreService } from './servicios/database/db-firestore.service';
 
-import { LoggedService } from './servicios/logged.service';
+
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   tarifas!: any;
 
   constructor(
-    private loggedService: LoggedService,
+
     private router: Router,
     private dbFirebase: DbFirestoreService,
     private authService: AuthService

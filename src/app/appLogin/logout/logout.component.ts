@@ -17,7 +17,7 @@ export class LogoutComponent implements OnInit {
 
   logout() {
     this.authService
-      .logout()
-      .catch((e) => console.log(e.message));
+      .SignOut()
+      // .catch((e) => console.log(e.message));
   }
 }

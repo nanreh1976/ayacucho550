@@ -1,109 +1,58 @@
 import { Injectable, NgZone } from '@angular/core';
-import {
-  Auth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  user,
-} from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-//import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { DbFirestoreService } from '../database/db-firestore.service';
+// import { User } from '../services/user';
 import * as auth from 'firebase/auth';
+import { AngularFireAuth ,  } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
-
+import { Router } from '@angular/router';
+import { InitializerService } from '../initializer/initializer.service';
+import { DbFirestoreService } from '../database/db-firestore.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  auth2 = getAuth();
+ 
+  userData: any; // Save logged in user data
 
-  logged$ = new BehaviorSubject<boolean>(false);
+
+  // PROPIEDAD PARA LA APP NO DEL LOGIN
 
   usuario: any;
 
   constructor(
-    private auth: Auth,
-    private dbFirebase: DbFirestoreService,
+
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
-    public ngZone: NgZone // NgZone service to remove outside scope warning
-  ) {}
+    public ngZone: NgZone , // NgZone service to remove outside scope warning
 
-  // loginWithGoogle() {
-  //   return signInWithPopup(this.auth, new GoogleAuthProvider());
-  // }
+    // SERVICIOS DE LA APP
 
-  async loginWithGoogle() {
-    const res = await this.AuthLogin(new auth.GoogleAuthProvider());
-    this.router.navigate(['/home']);
-  }
-
-  // Auth logic to run auth providers
-  async AuthLogin(provider: any) {
-    try {
-      const result = await this.afAuth.signInWithPopup(provider);
-      this.router.navigate(['/home']);
-
-      this.SetUsuario(result.user);
-    } catch (error) {
-      window.alert(error);
-    }
-  }
-
-  /* Setting up user data when sign in with username/password, 
-sign up with username/password and sign in with social auth  
-provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUsuario(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
-    );
-    const userData: any = {
-      //interface User
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
-
-  logout() {
-    return signOut(this.auth).then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['']);
-    });
-  }
-
-  isLoggedIn() {
-    console.log('esto pasa por isLoggedIn');
-    onAuthStateChanged(this.auth2, (user) => {
+    public initializerService: InitializerService, // inicializa datos aplicacion
+    private dbFirebase: DbFirestoreService,
+  ) {
+    /* Saving user data in localstorage when 
+    logged in and setting up null when logged out */
+    this.afAuth.authState.subscribe((user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user')!);
+        
+        // ESTO ES DE LA APP NO DEL LOGIN 
+
         const uid = user.uid;
-        // ...
-        localStorage.setItem(`user`, JSON.stringify(user));
-        this.LogIn();
-        //console.log("esto es el user", user);
-        //console.log("esto es el user.uid", uid);
         this.getUsuario(uid);
+        this.initializerService.getTodo()
+
+
+
       } else {
-        // User is signed out
-        // ...
-        localStorage.removeItem(`user`);
+        localStorage.setItem('user', 'null');
+        JSON.parse(localStorage.getItem('user')!);
         localStorage.clear();
-        this.LogOut();
       }
     });
   }
@@ -116,9 +65,24 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
         this.SetUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['/home']);
           }
         });
+      })
+      .catch((error) => {
+        window.alert(error.message);
+      });
+  }
+
+  // Sign up with email/password
+  SignUp(email: string, password: string) {
+    return this.afAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        /* Call the SendVerificaitonMail() function when new user sign 
+        up and returns promise */
+        this.SendVerificationMail();
+        this.SetUserData(result.user);
       })
       .catch((error) => {
         window.alert(error.message);
@@ -146,39 +110,51 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
       });
   }
 
-  // Sign up with email/password
-  SignUp(email: string, password: string) {
+
+
+  // Sign in with Google
+  GoogleAuth() {
+    return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
+      this.router.navigate(['/home']);
+    });
+  }
+
+  // Auth logic to run auth providers
+  AuthLogin(provider: any) {
     return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
+      .signInWithPopup(provider)
       .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign 
-        up and returns promise */
-        this.SendVerificationMail();
+        this.router.navigate(['/home']);
+
         this.SetUserData(result.user);
       })
       .catch((error) => {
-        window.alert(error.message);
+        window.alert(error);
       });
   }
 
-  LogIn() {
-    this.logged$.next(true);
+
+    // PORQUE NO ANDA???  USAR LOGOUT MIENTRAS
+  // // Sign out
+  SignOut() {
+    console.log("saliendo signout")
+    return this.afAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+      localStorage.clear()
+      this.router.navigate(['']);
+    });
   }
 
-  LogOut() {
-    this.logged$.next(false);
+
+
+  // chequear si alguien esta loqgueado 
+  // Returns true when user is looged in and email is verified
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    return user !== null && user.emailVerified !== false ? true : false;
   }
 
-  LogState() {
-    return this.logged$.asObservable();
-  }
 
-  mantenerseLogueado() {
-    if (sessionStorage.getItem('user')) {
-      this.LogIn();
-      console.log('prueba');
-    }
-  }
 
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
@@ -187,8 +163,7 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
-    const userData: any = {
-      // aca va interface usuario
+    const userData: any = {   //aca va la interface usuario
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
@@ -200,16 +175,23 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
     });
   }
 
-  getUsuario(id: string) {
-    this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
-      this.usuario = data;
-      localStorage.setItem(`usuario`, JSON.stringify(data));
-      console.log('este es el usuario nuestro: ', this.usuario);
-      this.setearColeccion();
-    });
-  }
 
-  setearColeccion() {
-    this.dbFirebase.setearColeccion(this.usuario.coleccion);
-  }
+// METODOS DE LA APP NO DEL LOGIN
+
+getUsuario(id: string) {
+  this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
+    this.usuario = data;
+    localStorage.setItem(`usuario`, JSON.stringify(data));
+    console.log('este es el usuario nuestro: ', this.usuario);
+    this.setearColeccion();
+  });
+}
+
+setearColeccion() {
+  this.dbFirebase.setearColeccion(this.usuario.coleccion);
+}
+
+
+
+
 }

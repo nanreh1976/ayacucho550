@@ -52,6 +52,11 @@ export class CajaService {
     return saldo
   }
 
+  // restart() {
+  //   this.store.reset()
+  //   this.getAllSorted2()
+  // }
+
   get data$(): Observable<any> {
     return this.store.state$.pipe(map(state => state.loading ? [] : state.data))
   }

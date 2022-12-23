@@ -9,7 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoggedService } from './servicios/logged.service';
+
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -170,7 +170,6 @@ import { PagoAbonoComponent } from './clientes/pago-abono/pago-abono.component';
     DataTablesModule,
   ],
   providers: [
-    LoggedService,
     CustomAdapterService,
     CustomDateParserFormatterService,
     NgbTimeStringAdapterService,

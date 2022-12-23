@@ -34,12 +34,12 @@ export class LoginComponent implements OnInit {
 
   loginWithGoogle() {
     this.authService
-      .loginWithGoogle()
-      .then(() => this.authService.isLoggedIn())
+      .GoogleAuth()
+      // .then(() => this.authService.getCurrentUser())
 
       //.then(() => this.router.navigate(['/playa']))             
       //.then(() => this.accionAsincrona())
-      .then(() => this.initializerService.getTodo())
+      // .then(() => this.initializerService.getTodo())
       //.then(() => this.router.navigate(['/home']))
       .catch((e) => console.log(e.message));
   }
