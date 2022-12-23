@@ -153,6 +153,7 @@ export class PlayaControlComponent implements OnInit {
   getAll(): void {
     this.dbFirebase.getAll(this.componente).subscribe(data => {
       this.data = data;
+    
       localStorage.setItem(`${this.componente}`, JSON.stringify(data))
     //  console.log(this.data);
     })
@@ -171,7 +172,7 @@ export class PlayaControlComponent implements OnInit {
       // });
 
       // guardar en el local storage
- 
+      console.log("playa leyendo base")
       localStorage.setItem(`${this.componente}`,JSON.stringify(this.data))
  
     });

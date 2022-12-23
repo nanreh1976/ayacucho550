@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit {
 
   loginWithGoogle() {
     this.authService
-      .loginWithGoogle()
-      .then(() => this.authService.isLoggedIn())
+      .GoogleAuth()
+      // .then(() => this.authService.getCurrentUser())
 
       //.then(() => this.router.navigate(['/playa']))             
       //.then(() => this.accionAsincrona())
