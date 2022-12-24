@@ -115,7 +115,7 @@ export class AuthService {
   // Sign in with Google
   GoogleAuth() {
     return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
-      this.router.navigate(['/home']);
+
     });
   }
 
@@ -124,9 +124,11 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        this.router.navigate(['/home']);
+
 
         this.SetUserData(result.user);
+
+        this.router.navigate(['/home']);
       })
       .catch((error) => {
         window.alert(error);
@@ -170,6 +172,7 @@ export class AuthService {
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
     };
+    this.getUsuario(user.uid)
     return userRef.set(userData, {
       merge: true,
     });
