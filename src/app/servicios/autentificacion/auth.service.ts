@@ -43,9 +43,9 @@ export class AuthService {
         
         // ESTO ES DE LA APP NO DEL LOGIN 
 
-        const uid = user.uid;
-        this.getUsuario(uid);
-        this.initializerService.getTodo()
+        // const uid = user.uid;
+        // this.getUsuario(uid);
+        // this.initializerService.getTodo()
 
 
 
@@ -128,7 +128,7 @@ export class AuthService {
 
         this.SetUserData(result.user);
 
-        this.router.navigate(['/home']);
+
       })
       .catch((error) => {
         window.alert(error);
@@ -192,6 +192,7 @@ getUsuario(id: string) {
 
 setearColeccion() {
   this.dbFirebase.setearColeccion(this.usuario.coleccion);
+  this.router.navigate(['/home']);
 }
 
 
