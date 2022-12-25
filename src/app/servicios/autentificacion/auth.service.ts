@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 // import { User } from '../services/user';
 import * as auth from 'firebase/auth';
-import { AngularFireAuth ,  } from '@angular/fire/compat/auth';
+import { AngularFireAuth, } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
@@ -13,7 +13,7 @@ import { DbFirestoreService } from '../database/db-firestore.service';
   providedIn: 'root',
 })
 export class AuthService {
- 
+
   userData: any; // Save logged in user data
 
 
@@ -26,7 +26,7 @@ export class AuthService {
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
-    public ngZone: NgZone , // NgZone service to remove outside scope warning
+    public ngZone: NgZone, // NgZone service to remove outside scope warning
 
     // SERVICIOS DE LA APP
 
@@ -40,7 +40,7 @@ export class AuthService {
     //     this.userData = user;
     //     localStorage.setItem('user', JSON.stringify(this.userData));
     //     JSON.parse(localStorage.getItem('user')!);
-        
+
     //     // ESTO ES DE LA APP NO DEL LOGIN 
 
     //     // const uid = user.uid;
@@ -136,14 +136,17 @@ export class AuthService {
   }
 
 
-    // PORQUE NO ANDA???  USAR LOGOUT MIENTRAS
+  // PORQUE NO ANDA???  USAR LOGOUT MIENTRAS
   // // Sign out
   SignOut() {
     console.log("saliendo signout")
     return this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
       localStorage.clear()
-      this.router.navigate(['']);
+      // this.router.navigate(['']);
+      //Reload Angular to refresh components and prevent old data from loading up for a 
+      //another user after login. This especially applies lazy loading cases. 
+      location.reload();
     });
   }
 
@@ -179,21 +182,21 @@ export class AuthService {
   }
 
 
-// METODOS DE LA APP NO DEL LOGIN
+  // METODOS DE LA APP NO DEL LOGIN
 
-getUsuario(id: string) {
-  this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
-    this.usuario = data;
-    localStorage.setItem(`usuario`, JSON.stringify(data));
-    console.log('este es el usuario nuestro: ', this.usuario);
-    this.setearColeccion();
-  });
-}
+  getUsuario(id: string) {
+    this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
+      this.usuario = data;
+      localStorage.setItem(`usuario`, JSON.stringify(data));
+      console.log('este es el usuario nuestro: ', this.usuario);
+      this.setearColeccion();
+    });
+  }
 
-setearColeccion() {
-  this.dbFirebase.setearColeccion(this.usuario.coleccion);
-  this.router.navigate(['/home']);
-}
+  setearColeccion() {
+    this.dbFirebase.setearColeccion(this.usuario.coleccion);
+    this.router.navigate(['/home']);
+  }
 
 
 
