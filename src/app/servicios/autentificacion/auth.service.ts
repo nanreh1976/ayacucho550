@@ -195,6 +195,7 @@ export class AuthService {
 
   setearColeccion() {
     this.dbFirebase.setearColeccion(this.usuario.coleccion);
+    this.initializerService.getTodo()
     this.router.navigate(['/home']);
   }
 
