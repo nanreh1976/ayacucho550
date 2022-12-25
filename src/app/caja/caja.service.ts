@@ -39,7 +39,7 @@ export class CajaService {
   }
 
   calcularSaldo(data: any) {
-    console.log("calcular saldo ", data)
+    // console.log("calcular saldo ", data)
     let saldo = 0;
     for (let item of data) {
       if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
@@ -47,7 +47,7 @@ export class CajaService {
       } else {
         saldo -= Number(item.importe);
       }
-      console.log(saldo)
+      // console.log(saldo)
     }
     return saldo
   }

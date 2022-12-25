@@ -25,6 +25,7 @@ export class InitializerService {
     this.getTarifas();
     this.getPlaya();
     this.getCaja();
+    console.log("initializer getting todo")
     // this.cajaService.restart();
 
   }
