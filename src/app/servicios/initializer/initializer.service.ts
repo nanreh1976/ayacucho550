@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { tap, map } from 'rxjs/operators';
 import { CajaStoreService } from 'src/app/caja/caja-store.service';
 import { CajaService } from 'src/app/caja/caja.service';
+import { AbonoService } from '../abono/abono.service';
 import { DbFirestoreService } from '../database/db-firestore.service';
 
 @Injectable({
@@ -15,7 +16,8 @@ export class InitializerService {
   playa!:any
 
   constructor(private dbFirebase: DbFirestoreService,
-    private store: CajaStoreService
+    private store: CajaStoreService,
+    private abonoService: AbonoService
     ) { }
 
   getTodo(){
@@ -27,7 +29,7 @@ export class InitializerService {
     this.getCaja();
     console.log("initializer getting todo")
     // this.cajaService.restart();
-
+    this.verificarAbonos();
   }
 
 
@@ -80,6 +82,10 @@ export class InitializerService {
       localStorage.setItem(`${"playa"}`, JSON.stringify(data))
       console.log(this.playa);      
     })
+  }
+
+  verificarAbonos(){
+    this.abonoService.verificarAbonos()     //se llama al servicio para comprobar el vencimiento de los abonos.
   }
 
 }
