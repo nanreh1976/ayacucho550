@@ -8,5 +8,7 @@ export interface Vehiculo {
   color: string;
   idCliente: number,
   tarifa: Tarifas;
+  abonoInicio: any;
+  abonoFin: any;
   estado: number;
 }

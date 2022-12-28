@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
+import { AbonoService } from 'src/app/servicios/abono/abono.service';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
@@ -28,10 +29,10 @@ export class VehiculosFormComponent implements OnInit {
   titulo!:string;
   componente: string = 'vehiculos'
   form:boolean = false;
-  
+  itemVehiculo: Vehiculo;
   vehiculos: Vehiculo [];
 
-  constructor(private fb: FormBuilder, private dbFirebase: DbFirestoreService, public activeModal: NgbActiveModal, public vpService: ValidarPatenteService,  private interOpService: InterOpService, private modalService: NgbModal,) {
+  constructor(private fb: FormBuilder, private dbFirebase: DbFirestoreService, public activeModal: NgbActiveModal, public vpService: ValidarPatenteService,  private interOpService: InterOpService, private modalService: NgbModal, private abonoService: AbonoService) {
     
    }
 
@@ -48,14 +49,14 @@ export class VehiculosFormComponent implements OnInit {
   this.dbFirebase.getAll(this.componente).subscribe(data => {
     this.vehiculos = data;
     localStorage.setItem(`${this.componente}`, JSON.stringify(data))
-    console.log(this.vehiculos); 
+    //console.log(this.vehiculos); 
     this.armarTabla()     
   })
 }
 
   getTarifas()  {
     this.tarifas = JSON.parse(localStorage.getItem("tarifas")||`{}`)
-    console.log(`estas son las tarifas: ${this.tarifas}`);  
+    //console.log(`estas son las tarifas: ${this.tarifas}`);  
     
   }
 
@@ -69,7 +70,7 @@ export class VehiculosFormComponent implements OnInit {
         
       } 
     })
-    console.log(this.vehiculosPorCliente);
+    //console.log(this.vehiculosPorCliente);
   }
 
   createForm() {
@@ -85,7 +86,7 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   changeTarifa(e: any) {
-    console.log(e.target.value)    
+    //console.log(e.target.value)    
     let tarifaForm   //crea una variable para usarlo con la funcion filter
   
     tarifaForm = this.tarifas.filter(function(tarifas:any){       //filter recorre el array tarifas y devuelve otro array con lo que sea q coincida con el parametro
@@ -93,7 +94,7 @@ export class VehiculosFormComponent implements OnInit {
     })
     
     this.tarifaSeleccionada = tarifaForm[0];               //se guarda el nombre de la tarifa seleccionada en la variable
-    console.log(this.tarifaSeleccionada);
+   // console.log(this.tarifaSeleccionada);
     
   }
 
@@ -102,13 +103,13 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   guardarVehiculo(){
-    console.log(this.editForm.value);
-    console.log(this.item);    
-    console.log(this.titulo);
+   // console.log(this.editForm.value);
+   // console.log(this.item);    
+   // console.log(this.titulo);
     
     if(this.titulo === "Vehiculo Agregar"){
       //this.titulo = "Vehiculo Agregar";
-      console.log("pasa por aca?")
+      
       let vehiculoAgregado={
         //id: this.item.id,
         patente: this.editForm.value.patente,
@@ -117,9 +118,11 @@ export class VehiculosFormComponent implements OnInit {
         color: this.editForm.value.color,
         idCliente: this.item.id,
         tarifa: this.tarifaSeleccionada,
+        abonoInicio: null,
+        abonoFin: null,
         estado: 0,
       } 
-      console.log(vehiculoAgregado);
+      //console.log(vehiculoAgregado);
       
       Swal.fire({
         title: '¿Desea agendar el vehiculo?',
@@ -150,7 +153,9 @@ export class VehiculosFormComponent implements OnInit {
         color: this.editForm.value.color,
         idCliente: this.item.id,
         tarifa: this.tarifaSeleccionada,
-        estado: 1,
+        abonoInicio: this.itemVehiculo.abonoInicio,
+        abonoFin: this.itemVehiculo.abonoFin,
+        estado: this.itemVehiculo.estado,
       }
       Swal.fire({
         title: '¿Desea guardar los cambios?',
@@ -202,7 +207,8 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   editarVehiculo(vehiculo: Vehiculo){
-    console.log(vehiculo);
+    //console.log(vehiculo);
+    this.itemVehiculo = vehiculo;
     this.editForm.patchValue({
         id: vehiculo.id,
         patente: vehiculo.patente,
@@ -211,7 +217,7 @@ export class VehiculosFormComponent implements OnInit {
         color: vehiculo.color,
         idCliente: vehiculo.idCliente, 
         tarifa: vehiculo.tarifa.nombre,
-        estado: 1,
+        estado: vehiculo.estado,
     });    
     //console.log(vehiculoAgregado);
     this.tarifaSeleccionada = vehiculo.tarifa
@@ -225,7 +231,7 @@ export class VehiculosFormComponent implements OnInit {
       item: item,
     }
     this.newItemEvent.emit(value);
-    console.log(value);
+   // console.log(value);
     
   }
 
@@ -239,7 +245,7 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   efectuarPago(vehiculo: Vehiculo) {
-    console.log("esto es el pago del abono: ", vehiculo);
+    //console.log("esto es el pago del abono: ", vehiculo);
     const modalRef = this.modalService.open(PagoAbonoComponent,
       {
         // scrollable: false,
@@ -258,9 +264,11 @@ export class VehiculosFormComponent implements OnInit {
 
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then((result) => {
-      console.log("result from control","op", result);
+      //console.log("result from control","op", result);
 
       this.cambiarEstadoAbono(vehiculo);
+      this.fechasAbono(vehiculo);
+      
 
 
 
@@ -283,7 +291,13 @@ export class VehiculosFormComponent implements OnInit {
     this.titulo = "Vehiculo Editar"
   }
     
-  
+  fechasAbono(vehiculo:Vehiculo){
+    vehiculo.abonoInicio = new Date();
+    console.log("esta es la fecha de inicio del abono: ", vehiculo.abonoInicio.toLocaleString());
+    
+    vehiculo.abonoFin = this.abonoService.setearFinAbono(vehiculo);
+    console.log("esta es la fecha de fin del abono: ", vehiculo.abonoFin.toLocaleString());
+  }
 
 
 }
