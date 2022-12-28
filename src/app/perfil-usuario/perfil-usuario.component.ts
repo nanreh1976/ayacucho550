@@ -18,9 +18,6 @@ export class PerfilUsuarioComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.data$ = this.storage.usuario$
-
-
     this.storage.usuario$
     .subscribe(data => this.data$ = data);
     console.log(this.data$)
