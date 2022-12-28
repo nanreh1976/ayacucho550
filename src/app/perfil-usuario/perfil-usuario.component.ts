@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../servicios/autentificacion/auth.service';
+import { StorageService } from '../servicios/storage.service';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -8,19 +9,23 @@ import { AuthService } from '../servicios/autentificacion/auth.service';
 })
 export class PerfilUsuarioComponent implements OnInit {
 
+  data$:any
+
   constructor(
     public authService: AuthService,
+    private storage:StorageService
 
   ) { }
 
   ngOnInit(): void {
-    this.getuser();
+    // this.data$ = this.storage.usuario$
+
+
+    this.storage.usuario$
+    .subscribe(data => this.data$ = data);
+    console.log(this.data$)
   }
 
 
-  
-getuser(){
-  console.log(JSON.parse(localStorage.getItem('user')||`{}`))
- 
- }
+
 }

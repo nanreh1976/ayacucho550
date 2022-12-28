@@ -56,6 +56,11 @@ msgBack(op: string, item: any){
 
 
   ngOnInit(): void {
+
+    this.setupDataTable()
+  }
+
+  setupDataTable(){
     this.dtOptions = {
       searching: false,
       dom: 't<"bottom"riflp><"clear">',

@@ -1,18 +1,10 @@
 <div class="container">
-  <div class="form-group mb-4">
-    <input
-      class="form-control"
-      type="text"
-      [(ngModel)]="searchText"
-      placeholder="Buscar"
-    />
-  </div>
 
   <table
     datatable
     [dtOptions]="dtOptions"
     class="display table"
-    *ngIf="(data | filter : searchText).length > 0; else noResults"
+
   >
     <thead>
       <tr>
@@ -29,7 +21,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let item of data | filter : searchText; let i = index">
+      <tr *ngFor="let item of data | async ; let i = index">
         <th class="badge" scope="row">{{ i + 1 }}</th>
         <td>{{ item.patente }}</td>
         <td>{{ item.fechaOp.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}</td>
@@ -62,7 +54,4 @@
     </tbody>
   </table>
 
-  <ng-template #noResults>
-    <p>Sin resultados para "{{ searchText }}".</p>
-  </ng-template>
 </div>

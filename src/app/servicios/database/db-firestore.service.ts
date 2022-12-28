@@ -28,10 +28,7 @@ export class DbFirestoreService {
 
   // GET ALL ACTUALIZADO
 
-  getAll2(componente:string) {
-    let dataCollection = `/${this.coleccion}/datos/${componente}`;
-    return this.firestore2.collection(dataCollection).snapshotChanges();
-  }
+
   
 // GET ALL ORDENADO POR CAMPO Y ORDEN
   getAllSorted(componente:string, campo:string, orden:any) {

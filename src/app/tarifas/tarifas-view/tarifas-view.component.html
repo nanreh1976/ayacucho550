@@ -2,30 +2,16 @@
 
 <div class="container">
   <div style="float: right">
-    <app-btn-agregar
-      class="right"
-      (click)="msgBack('Agregar', [])"
-      class="d-flex align-items-center"
-    >
+    <app-btn-agregar class="right" (click)="msgBack('Agregar', [])" class="d-flex align-items-center">
     </app-btn-agregar>
   </div>
 
   <div class="form-group mb-4">
-    <input
-      class="form-control"
-      type="text"
-      [(ngModel)]="searchText"
-      placeholder="Buscar"
-    />
+    <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar" />
   </div>
 
   <div>
-    <table
-      datatable
-      [dtOptions]="dtOptions"
-      class="display table"
-      *ngIf="(data | filter : searchText).length > 0; else noResults"
-    >
+    <table datatable [dtOptions]="dtOptions" class="display table">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -40,7 +26,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let item of data | filter : searchText; let i = index">
+        <tr *ngFor="let item of data | async ; let i = index">
           <td class="badge" scope="row">{{ i + 1 }}</td>
           <td>{{ item.nombre }}</td>
           <td>{{ item.fraccion }}</td>
@@ -54,10 +40,7 @@
           </td>
 
           <td>
-            <app-btn-eliminar
-              class="d-flex align-items-center"
-              (click)="msgBack('Eliminar', item)"
-            >
+            <app-btn-eliminar class="d-flex align-items-center" (click)="msgBack('Eliminar', item)">
             </app-btn-eliminar>
           </td>
         </tr>
@@ -65,10 +48,4 @@
     </table>
   </div>
 
-  <div>
-    <
-    <ng-template #noResults>
-      <p>Sin resultados para "{{ searchText }}".</p>
-    </ng-template>
-  </div>
 </div>

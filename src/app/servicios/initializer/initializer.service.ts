@@ -3,11 +3,14 @@ import { tap, map } from 'rxjs/operators';
 import { CajaStoreService } from 'src/app/caja/caja-store.service';
 import { CajaService } from 'src/app/caja/caja.service';
 import { DbFirestoreService } from '../database/db-firestore.service';
+import { StorageService } from '../storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InitializerService {
+
+  
 
   clientes!:any;
   vehiculos!:any;
@@ -15,15 +18,16 @@ export class InitializerService {
   playa!:any
 
   constructor(private dbFirebase: DbFirestoreService,
-    private store: CajaStoreService
+    private store: CajaStoreService,
+    private storage: StorageService
     ) { }
 
   getTodo(){
-
+    
+    this.storage.initializerSorted("playa", 'fechas.fechaDate', 'asc')
+    this.storage.initializerSorted("tarifas", 'categoria', 'asc')
     this.getClientes();
     this.getVehiculos();
-    this.getTarifas();
-    this.getPlaya();
     this.getCaja();
     console.log("initializer getting todo")
     // this.cajaService.restart();
@@ -66,20 +70,6 @@ export class InitializerService {
     })
   }
 
-  getTarifas(){
-    this.dbFirebase.getAll("tarifas").subscribe(data => {
-      this.tarifas = data;
-      localStorage.setItem(`${"tarifas"}`, JSON.stringify(this.tarifas))
-      //console.log(this.tarifas);      
-    })
-  }
 
-  getPlaya(): void {
-    this.dbFirebase.getAll("playa").subscribe(data => {
-      this.playa = data;
-      localStorage.setItem(`${"playa"}`, JSON.stringify(data))
-      console.log(this.playa);      
-    })
-  }
 
 }
