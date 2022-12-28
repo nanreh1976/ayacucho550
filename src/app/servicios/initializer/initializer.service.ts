@@ -21,7 +21,7 @@ export class InitializerService {
   constructor(private dbFirebase: DbFirestoreService,
     private store: CajaStoreService,
 
-    private abonoService: AbonoService,
+    // private abonoService: AbonoService,
 
     private storage: StorageService
 
@@ -36,7 +36,7 @@ export class InitializerService {
     this.getCaja();
     console.log("initializer getting todo")
     // this.cajaService.restart();
-    this.verificarAbonos();
+    // this.verificarAbonos();
   }
 
 
@@ -77,8 +77,8 @@ export class InitializerService {
 
 
 
-  verificarAbonos(){
-    this.abonoService.verificarAbonos()     //se llama al servicio para comprobar el vencimiento de los abonos.
-  }
+  // verificarAbonos(){
+  //   this.abonoService.verificarAbonos()     //se llama al servicio para comprobar el vencimiento de los abonos.
+  // }
 
 }
