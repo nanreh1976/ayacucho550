@@ -71,8 +71,6 @@ export class ClientesControlComponent implements OnInit {
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then((result) => {
         console.log("result from control", "op", result.op, "item", result.item);
-
-        // this.getXps();  
         this.selectCrudOp(result.op, result.item)
           ;
       }, (reason) => { });

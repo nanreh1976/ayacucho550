@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
 import { PlayaI } from 'src/app/interfaces/playaI';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { LogService } from 'src/app/servicios/log.service';
-
-
+import { StorageService } from 'src/app/servicios/storage.service';
 import { TicketEntradaComponent } from 'src/app/ticket-entrada/ticket-entrada.component';
 import { PlayaFormComponent } from '../playa-form/playa-form.component';
 
@@ -21,7 +19,7 @@ import { PlayaFormComponent } from '../playa-form/playa-form.component';
 ></app-inicio>
 
 <app-playa-view
-  [data]=data  
+  [data]=data$
  (newItemEvent)="getMsg($event)"
   ></app-playa-view>
   
@@ -38,21 +36,20 @@ export class PlayaControlComponent implements OnInit {
   componente: string = 'playa'
 
   // data recibida del crud
-  data!: any;
+  data$: any;
 
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
     private interOpService: InterOpService,
     private logger: LogService,
+    private storage: StorageService
   ) { }
 
 
   ngOnInit(): void {
-  //this.getAll();  //tomar datos de los vehiculos en playa
- this.getAllSorted2()
-
-    //this.getuser();
+    this.data$ = this.storage.playa$
+    this.getuser()
   }
 
 
@@ -115,23 +112,23 @@ export class PlayaControlComponent implements OnInit {
 
     switch (op) {
       case 'Agregar': {
-        this.addItem(this.componente, item);
+        this.storage.addItem(this.componente, item);
         break;
       }
 
       case 'Editar': {
-        this.updateItem(this.componente, item);
+        this.storage.updateItem(this.componente, item);
         break;
       }
       case 'Eliminar': {
-        this.deleteItem(this.componente, item);
+        this.storage.deleteItem(this.componente, item);
         this.interOpService.addItem("facturacion", item)
 
         // pasar a funcion que genere el item
         let ndate = new Date()
         this.interOpService.addItem("caja", {
           "concepto": item.patente,
-          "fecha": ndate ,// item.fechas["fechaSalidaDate"],
+          "fecha": ndate,// item.fechas["fechaSalidaDate"],
           "importe": item.saldo,
           "operacion": "ingreso"
         })
@@ -145,78 +142,6 @@ export class PlayaControlComponent implements OnInit {
       }
     }
   };
-
-
-  ///////////////////////////////
-  ///// OPERACIONES CRUD ////////
-
-  getAll(): void {
-    this.dbFirebase.getAll(this.componente).subscribe(data => {
-      this.data = data;
-    
-      localStorage.setItem(`${this.componente}`, JSON.stringify(data))
-    //  console.log(this.data);
-    })
-  }
-
-  getAllSorted2() {
-    // pasar campo y orden (asc o desc)
-    this.dbFirebase.getAllSorted2(this.componente, 'fechas.fechaDate', 'asc').subscribe(data => {
-      this.data = data
-      // .map(e => {
-      //   let id = e.payload.doc.id 
-      //   return {
-      //    id,
-      //     ...e.payload.doc.data() as {}
-      //   }; // as unknown as Icaja; // aca va la interface playa
-      // });
-
-      // guardar en el local storage
-      console.log("playa leyendo base")
-      localStorage.setItem(`${this.componente}`,JSON.stringify(this.data))
- 
-    });
-
-  }
-
-
-
-  deleteItem(componente: string, item: any): void {
-
-    console.log("delete itemcomponent", item,)
-
-    this.dbFirebase.delete(componente, item.id)
-      .then((data) => console.log(data))
-      .then(() => this.ngOnInit())
-      .then(() => console.log("pasa por delete metodo?"))
-      .catch((e) => console.log(e.message));
-
-  }
-
-  addItem(componente: string, item: any): void {
-
-    item.fechaOp = new Date()
-    console.log("add item playa", item,)
-
-
-    this.dbFirebase.create(componente, item)
-      .then((data) => console.log(data))
-      .then(() => this.ngOnInit())
-      .catch((e) => console.log(e.message));
-
-
-
-  }
-
-  updateItem(componente: string, item: any): void {
-    console.log("update itemcomponent", item,)
-
-    this.dbFirebase.update(componente, item)
-      .then((data) => console.log(data))
-      .then(() => this.ngOnInit())
-      .catch((e) => console.log(e.message));
-
-  }
 
   /////////////////////////////////////////
   ///// ELEGIR OPERACION DE TICKET/////////
@@ -242,14 +167,6 @@ export class PlayaControlComponent implements OnInit {
         break;
       }
 
-
-      // case 'Reimprimir': {
-      //   let user= JSON.parse(localStorage.getItem("user")||`{}`)
-      //   this.openTicket("Reimprimir", item);
-      //   this.logger.log("ticket-reimpresion",item.patente);
-      //   console.log(user['displayName'])
-      //   break;
-      // }
 
       default: {
         console.log("sin operacion en case crud")

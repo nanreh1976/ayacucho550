@@ -12,8 +12,16 @@ export class PlayaViewComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'Playa';
   dtOptions: DataTables.Settings = {};
+  msg: any;
 
-  searchText!: string;
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.setearDataTable()
+    // console.log("playa view", this.data)
+  }
+
 
   msgBack(op: string, item: any) {
     let value = {
@@ -32,11 +40,6 @@ export class PlayaViewComponent implements OnInit {
         confirmButtonText: 'Confirmar',
       }).then((result) => {
         if (result.isConfirmed) {
-          /*  Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success' 
-          )*/
           this.newItemEvent.emit(value);
         }
       });
@@ -45,11 +48,12 @@ export class PlayaViewComponent implements OnInit {
     }
   }
 
-  constructor() {}
-  msg: any;
-  ngOnInit(): void {
+
+
+
+  setearDataTable() {
     this.dtOptions = {
-      searching: false,
+
       dom: 't<"bottom"riflp><"clear">',
       language: LanguageApp.spanish_datatables,
       columnDefs: [
@@ -57,6 +61,9 @@ export class PlayaViewComponent implements OnInit {
         { searchable: false, targets: [5, 6] },
       ],
       responsive: true,
-    };
+    }
+
   }
+
 }
+

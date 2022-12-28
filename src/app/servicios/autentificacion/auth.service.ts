@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { InitializerService } from '../initializer/initializer.service';
 import { DbFirestoreService } from '../database/db-firestore.service';
+import { StorageService } from '../storage.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -29,32 +30,11 @@ export class AuthService {
     public ngZone: NgZone, // NgZone service to remove outside scope warning
 
     // SERVICIOS DE LA APP
-
+    private storage: StorageService,
     public initializerService: InitializerService, // inicializa datos aplicacion
     private dbFirebase: DbFirestoreService,
   ) {
-    /* Saving user data in localstorage when 
-    logged in and setting up null when logged out */
-    // this.afAuth.authState.subscribe((user) => {
-    //   if (user) {
-    //     this.userData = user;
-    //     localStorage.setItem('user', JSON.stringify(this.userData));
-    //     JSON.parse(localStorage.getItem('user')!);
 
-    //     // ESTO ES DE LA APP NO DEL LOGIN 
-
-    //     // const uid = user.uid;
-    //     // this.getUsuario(uid);
-    //     // this.initializerService.getTodo()
-
-
-
-    //   } else {
-    //     localStorage.setItem('user', 'null');
-    //     JSON.parse(localStorage.getItem('user')!);
-    //     localStorage.clear();
-    //   }
-    // });
   }
 
   // Sign in with email/password
@@ -141,25 +121,14 @@ export class AuthService {
   SignOut() {
     console.log("saliendo signout")
     return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      localStorage.clear()
+      this.storage.clearInfo('usuario');
+      this.storage.clearAllLocalStorage()
       // this.router.navigate(['']);
       //Reload Angular to refresh components and prevent old data from loading up for a 
       //another user after login. This especially applies lazy loading cases. 
       location.reload();
     });
   }
-
-
-
-  // chequear si alguien esta loqgueado 
-  // Returns true when user is looged in and email is verified
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user')!);
-    return user !== null && user.emailVerified !== false ? true : false;
-  }
-
-
 
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
@@ -187,8 +156,7 @@ export class AuthService {
   getUsuario(id: string) {
     this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
       this.usuario = data;
-      localStorage.setItem(`usuario`, JSON.stringify(data));
-      console.log('este es el usuario nuestro: ', this.usuario);
+      this.storage.setInfo(`usuario`, data);
       this.setearColeccion();
     });
   }
