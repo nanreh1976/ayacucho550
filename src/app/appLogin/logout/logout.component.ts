@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/autentificacion/auth.service';
-import { StorageService } from 'src/app/servicios/storage.service';
 
 
 @Component({
@@ -10,16 +9,10 @@ import { StorageService } from 'src/app/servicios/storage.service';
 })
 export class LogoutComponent implements OnInit {
 
-data$:any
-
-  constructor(private authService: AuthService,
-    private storage:StorageService) {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit(): void {
-    this.storage.usuario$
-    .subscribe(data => this.data$ = data);
-    console.log(this.data$)
   }
 
   logout() {
