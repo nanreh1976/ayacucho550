@@ -21,7 +21,7 @@ export class InitializerService {
   constructor(private dbFirebase: DbFirestoreService,
     private store: CajaStoreService,
 
-    private abonoService: AbonoService
+    private abonoService: AbonoService,
 
     private storage: StorageService
 
