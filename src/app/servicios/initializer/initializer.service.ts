@@ -31,8 +31,9 @@ export class InitializerService {
     
     this.storage.initializerSorted("playa", 'fechas.fechaDate', 'asc')
     this.storage.initializerSorted("tarifas", 'categoria', 'asc')
+    this.storage.initializerSorted("vehiculos", 'patente', 'asc')
     this.getClientes();
-    this.getVehiculos();
+    // this.getVehiculos();
     this.getCaja();
     console.log("initializer getting todo")
     // this.cajaService.restart();
@@ -67,13 +68,13 @@ export class InitializerService {
     })
   }
 
-  getVehiculos(){
-    this.dbFirebase.getAll("vehiculos").subscribe(data => {
-      this.vehiculos = data;
-      localStorage.setItem(`${"vehiculos"}`, JSON.stringify(this.vehiculos))
-      //console.log(this.vehiculos);      
-    })
-  }
+  // getVehiculos(){
+  //   this.dbFirebase.getAll("vehiculos").subscribe(data => {
+  //     this.vehiculos = data;
+  //     localStorage.setItem(`${"vehiculos"}`, JSON.stringify(this.vehiculos))
+  //     //console.log(this.vehiculos);      
+  //   })
+  // }
 
 
 

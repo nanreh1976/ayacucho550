@@ -43,13 +43,13 @@ export class ClientesControlComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();  //tomar datos de los vehiculos en playa   
-    this.verificarAbonos(); 
+    // this.verificarAbonos(); 
   }
 
 
-  verificarAbonos(){
-    this.abonoService.verificarAbonos()     //se llama al servicio para comprobar el vencimiento de los abonos.
-  }
+  // verificarAbonos(){
+  //   this.abonoService.verificarAbonos()     //se llama al servicio para comprobar el vencimiento de los abonos.
+  // }
 
   getMsg(msg: any) {
     console.log(msg, "from parent");

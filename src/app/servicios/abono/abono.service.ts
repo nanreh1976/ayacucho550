@@ -4,24 +4,39 @@ import * as moment from 'moment';
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { DbFirestoreService } from '../database/db-firestore.service';
+import { StorageService } from '../storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AbonoService {
 
-  vehiculos: Vehiculo[];
+  vehiculos: any;  // pasar despues interface vehiculos
   tarifas: Tarifas[];
   tiempoTotalMinutos: number;
 
-  constructor(private dbFirebase: DbFirestoreService) { 
+    // nombre del crud / componente
+    componente: string = 'vehiculos'
+
+    // data recibida del crud
+    data$: any;
+
+  constructor(private dbFirebase: DbFirestoreService, 
+    private storage: StorageService,
+    ) { 
     
   }
 
   getVehiculos(){
-    this.vehiculos = JSON.parse(localStorage.getItem("vehiculos")||`{}`)
-    console.log("servicio abono. Vehiculos: ", this.vehiculos);
+
+    this.storage.vehiculos$
+    .subscribe(data => this.vehiculos = data);
+    // this.vehiculos = this.storage.vehiculos$
+    // this.vehiculos = JSON.parse(localStorage.getItem("vehiculos")||`{}`)
+    // console.log("servicio abono. Vehiculos: ", this.vehiculos);
   }
+
+
 
   verificarAbonos(){
     this.getVehiculos();    
@@ -30,7 +45,7 @@ export class AbonoService {
     let fecha = moment().toDate().getTime();    //obtiene la fecha actual en milisegundos
     console.log("abono service. date: ", fecha);
     
-    this.vehiculos.forEach(vehiculo => {
+    this.vehiculos.forEach((vehiculo: { abonoFin: { seconds: number; nanoseconds: number; } | null; estado: number; }) => {
       
       if(vehiculo.abonoFin != null){              //si se cargo el vehiculo pero no se efectuo el pago, las fechas del abono estan en null
       

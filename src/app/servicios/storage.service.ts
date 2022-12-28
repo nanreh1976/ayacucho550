@@ -17,6 +17,9 @@ export class StorageService {
   private _usuario$ = new BehaviorSubject<any>(null)   //aca va interface my data
   public usuario$ = this._usuario$.asObservable()
 
+  private _vehiculos$ = new BehaviorSubject<any>(null)   //aca va interface my data
+  public vehiculos$ = this._vehiculos$.asObservable()
+
 
   updateObservable(componente: any, data: any){
     switch(componente) { 
@@ -30,6 +33,11 @@ export class StorageService {
       } 
       case "usuario": { 
         this._usuario$.next(data)
+         break; 
+      } 
+
+      case "vehiculos": { 
+        this._vehiculos$.next(data)
          break; 
       } 
       default: { 
