@@ -1,20 +1,12 @@
 <h1 class="display-1" style="text-align: center">Log Operaciones</h1>
 
 <div class="container">
-  <div class="form-group mb-4">
-    <input
-      class="form-control"
-      type="text"
-      [(ngModel)]="searchText"
-      placeholder="Buscar"
-    />
-  </div>
 
   <table
     datatable
     [dtOptions]="dtOptions"
     class="display table"
-    *ngIf="(data | filter : searchText).length > 0; else noResults"
+
   >
     <thead>
       <tr>
@@ -27,7 +19,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let item of data | filter : searchText; let i = index">
+      <tr *ngFor="let item of data | async ; let i = index">
         <td class="badge" scope="row">{{ i + 1 }}</td>
         <td>
           {{ item.Fecha.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}
@@ -36,30 +28,7 @@
         <td>{{ item.tipo }}</td>
         <td>{{ item.patente }}</td>
 
-        <!-- <div *ngIf="$estado | async" class="card-footer"> -->
-
-        <!--(1) modificar el boton para que llame al metodo open del modal con el template  -->
-        <!-- <td> -->
-        <!-- <app-btn-editar class="right" (click)="msgBack('Editar',item)"> -->
-        <!-- </app-btn-editar> -->
-        <!-- </td> -->
-        <!--  <td>
-            <app-btn-eliminar class="right" 
-                              (click)="msgBack('Eliminar',item)"
-                              name = 'Egreso'>
-            </app-btn-eliminar>
-          </td> -->
-        <!-- <td> -->
-        <!-- <app-btn-reimpresion class="right" (click)="msgBack('Reimprimir',item)"> -->
-        <!-- </app-btn-reimpresion> -->
-
-        <!-- </td> -->
-        <!-- </div> -->
       </tr>
     </tbody>
   </table>
-
-  <ng-template #noResults>
-    <p>Sin resultados para "{{ searchText }}".</p>
-  </ng-template>
 </div>

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Timestamp } from 'firebase/firestore';
 import * as moment from 'moment';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { DbFirestoreService } from '../database/db-firestore.service';
-import { StorageService } from '../storage.service';
+
 
 @Injectable({
   providedIn: 'root'

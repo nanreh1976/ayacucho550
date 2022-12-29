@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
-import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
+
 import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { LogService } from 'src/app/servicios/log.service';
 import { StorageService } from 'src/app/servicios/storage.service';
@@ -39,7 +39,6 @@ export class PlayaControlComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
-    private dbFirebase: DbFirestoreService,
     private interOpService: InterOpService,
     private logger: LogService,
     private storage: StorageService,
@@ -165,7 +164,7 @@ export class PlayaControlComponent implements OnInit {
 
         this.openTicket("Reimprimir", item);
         this.logger.log("ticket-reimpresion", item);
-        // console.log(JSON.parse(localStorage.getItem("user")||`{}`))
+
         break;
       }
 
@@ -185,10 +184,9 @@ export class PlayaControlComponent implements OnInit {
     {
       const modalRef = this.modalService.open(TicketEntradaComponent,
         {
-          // scrollable: false,
+
           windowClass: 'myCustomModalClass',
-          // keyboard: false,
-          // backdrop: 'static'
+
         })
 
       let info = {

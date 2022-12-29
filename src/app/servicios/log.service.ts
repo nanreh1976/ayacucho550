@@ -1,6 +1,6 @@
-import { computeMsgId } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { DbFirestoreService } from './database/db-firestore.service';
+import { StorageService } from './storage.service';
+
 @Injectable()
 
 export class LogService {
@@ -8,7 +8,7 @@ export class LogService {
     newLog: any = {}
 
     constructor(
-        private dbFirebase: DbFirestoreService,
+    private storageService:StorageService
     ) {
     }
 
@@ -35,12 +35,7 @@ export class LogService {
 
         console.log("add itemcomponent", item,)
 
-        this.dbFirebase.create(componente, item)
-            .then((data) => console.log(data))
-            .catch((e) => console.log(e.message));
-
-
-
+        this.storageService.addItem(componente, item)
     }
 
 }

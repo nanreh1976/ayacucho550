@@ -12,9 +12,6 @@ export class CajaLogComponent implements OnInit {
 
   data: any;
   dtOptions: DataTables.Settings = {};
-
-  
-  searchText!: string;
   componente: string = 'cajaLog';
 
   constructor(
@@ -31,7 +28,7 @@ this.setDataTable()
 
   setDataTable(){
     this.dtOptions = {
-      searching: false,
+      // searching: false,
       dom: 't<"bottom"riflp><"clear">',
       language: LanguageApp.spanish_datatables,
     //   columnDefs: [

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, } from '@angular/forms';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
-import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
+import { FormBuilder} from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
 import { StorageService } from 'src/app/servicios/storage.service';
 import { ClientesFormComponent } from '../clientes-form/clientes-form.component';
 
@@ -25,7 +24,6 @@ export class ClientesControlComponent implements OnInit {
 
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
-    private dbFirebase: DbFirestoreService,
     private storage: StorageService,
   ) {
   }

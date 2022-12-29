@@ -17,7 +17,13 @@ export class DbFirestoreService {
 
   }
 
-
+  getAll(componente:string) {
+    let dataCollection = collection(this.firestore, `/${this.coleccion}/datos/${componente}`);
+        
+    return collectionData(dataCollection, {
+      idField: 'id',
+    }) as Observable<any[]>;
+  }
 
 
 // GET ALL ORDENADO POR CAMPO Y ORDEN

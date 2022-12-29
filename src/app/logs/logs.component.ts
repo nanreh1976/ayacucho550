@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DbFirestoreService } from '../servicios/database/db-firestore.service';
 import { LogService } from '../servicios/log.service';
 import { StorageService } from '../servicios/storage.service';
 import { LanguageApp } from '../shared/DTLanguage';
@@ -32,7 +31,7 @@ this.setDataTable()
 
   setDataTable(){
     this.dtOptions = {
-      searching: false,
+      // searching: false,
       dom: 't<"bottom"riflp><"clear">',
       language: LanguageApp.spanish_datatables,
       columnDefs: [

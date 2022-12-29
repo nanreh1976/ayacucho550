@@ -4,7 +4,6 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'; // s
 import { ConsultaFacturacion } from 'src/app/interfaces/consulta-facturacion';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { ConsultaFacturacionService } from 'src/app/servicios/facturacion/consultaFacturacion/consulta-facturacion.service';
-import { StorageService } from 'src/app/servicios/storage.service';
 
 import { ConsultaFacturacionComponent } from '../consulta-facturacion/consulta-facturacion.component';
 import { FacturacionFormComponent } from '../facturacion-form/facturacion-form.component';
@@ -75,11 +74,12 @@ export class FacturacionControlComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private storageService: StorageService,
-    private consultaFacturacionService: ConsultaFacturacionService,
-  ) { }
+    private fb: FormBuilder,
+    private dbFirebase: DbFirestoreService,
+    private consultaFacturacionService: ConsultaFacturacionService
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getAll(); //tomar datos de los vehiculos en playa
     this.facturacionDia();
   }
@@ -126,7 +126,7 @@ export class FacturacionControlComponent implements OnInit {
           // this.getXps();
           this.selectCrudOp(result.op, result.item);
         },
-        (reason) => { }
+        (reason) => {}
       );
     }
   }
@@ -136,16 +136,16 @@ export class FacturacionControlComponent implements OnInit {
   selectCrudOp(op: string, item: any) {
     switch (op) {
       case 'Agregar': {
-        this.storageService.addItem(this.componente, item);
+        this.addItem(this.componente, item);
         break;
       }
 
       case 'Editar': {
-        this.storageService.updateItem(this.componente, item);
+        this.updateItem(this.componente, item);
         break;
       }
       case 'Eliminar': {
-        this.storageService.deleteItem(this.componente, item);
+        this.deleteItem(this.componente, item);
         break;
       }
 
@@ -161,19 +161,56 @@ export class FacturacionControlComponent implements OnInit {
   getAll(): void {
     let acumulador: number = 0;
     let dato: any;
-    this.data = this.storageService.facturacion$
-    this.data.forEach((datos: any) => {
-      //por cada data de facturacion
-      dato = datos; //lo guarda en una nueva variable (pq sino no lo reconocia)
-      //console.log(dato);
-      acumulador = acumulador + dato.saldo; //saca el saldo y lo guarda en un acumulador
-      //console.log(acumulador);
-    })
-    this.totalFacturacion = acumulador; //guarda el valor del acumulador en una variable para enviar al view
-    //console.log(this.totalFacturacion);
 
+    this.dbFirebase.getAll(this.componente).subscribe((data) => {
+      this.data = data;
+      localStorage.setItem(`${this.componente}`, JSON.stringify(data));
+      //console.log(this.data);
+
+      this.data.forEach((datos: any) => {
+        //por cada data de facturacion
+        dato = datos; //lo guarda en una nueva variable (pq sino no lo reconocia)
+        //console.log(dato);
+        acumulador = acumulador + dato.saldo; //saca el saldo y lo guarda en un acumulador
+        //console.log(acumulador);
+      });
+      this.totalFacturacion = acumulador; //guarda el valor del acumulador en una variable para enviar al view
+      //console.log(this.totalFacturacion);
+    });
   }
 
+  deleteItem(componente: string, item: any): void {
+    /* console.log("delete component", item, item.id)
+   this.servicioDatosService.deleteItem(componente, item.id)
+   .subscribe 
+   (data => { 
+     this.data = data; 
+     this.ngOnInit();
+   }) */
+  }
+
+  addItem(componente: string, item: any): void {
+    /* 
+    console.log("add itemcomponent", item, )
+    this.servicioDatosService.addItem(componente, item) 
+    .subscribe
+    (data => { 
+      this.data = data; 
+      this.ngOnInit();
+    });
+     */
+  }
+
+  updateItem(componente: string, item: any): void {
+    /* 
+    this.servicioDatosService.updateItem(componente, item, item.id)
+    .subscribe
+    (data => { 
+      this.data = data; 
+      this.ngOnInit();
+    });
+     */
+  }
 
   facturacionDia() {
     let facturacion = JSON.parse(localStorage.getItem('facturacion') || `{}`);
