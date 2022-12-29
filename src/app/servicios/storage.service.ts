@@ -1,12 +1,28 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DbFirestoreService } from './database/db-firestore.service';
+import { tap, map } from 'rxjs/operators';
+import { CajaStoreService } from 'src/app/caja/caja-store.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
 
+
+  // los componentes trabajan solo con el storage
+  // el storage hace las operaciones crud solo cuando hagan falta 
+  // los observables mantienen la info sincronizada entre comp y storage.
+
+
+  constructor(private dbFirebase: DbFirestoreService,
+    private store: CajaStoreService,
+  
+    
+    
+    ) { }
+
+  // Observables //
 
   private _playa$ = new BehaviorSubject<any>(null)   //aca va interface my data
   public playa$ = this._playa$.asObservable()
@@ -19,6 +35,10 @@ export class StorageService {
 
   private _vehiculos$ = new BehaviorSubject<any>(null)   //aca va interface my data
   public vehiculos$ = this._vehiculos$.asObservable()
+
+  private _clientes$ = new BehaviorSubject<any>(null)   //aca va interface my data
+  public clientes$ = this._clientes$.asObservable()
+
 
 
   updateObservable(componente: any, data: any){
@@ -40,6 +60,11 @@ export class StorageService {
         this._vehiculos$.next(data)
          break; 
       } 
+
+      case "clientes": { 
+        this._clientes$.next(data)
+         break; 
+      } 
       default: { 
          //statements; 
          break; 
@@ -48,9 +73,12 @@ export class StorageService {
 
   }
 
-  constructor(private dbFirebase: DbFirestoreService) { }
 
 
+
+
+  // metodos del storage
+  
   setInfo(componente: any, data: any) {    // interface mydata en vez de any
     const jsonData = JSON.stringify(data)
     localStorage.setItem(`${componente}`, JSON.stringify(data))
@@ -72,7 +100,48 @@ export class StorageService {
     this._playa$.next(null)
   }
 
-  initializerSorted(componente: any, campo:any, orden:any) {
+
+////   INITIALIZER     ////////
+
+// Al inicio de la aplicacion se carga el storage con los datos de la base
+// al estar suscripto, cualquier cambio en la base se refleja en el storage.
+
+initializer() {
+
+  this.getAllSorted("playa", 'fechas.fechaDate', 'asc')
+  this.getAllSorted("tarifas", 'categoria', 'asc')
+  this.getAllSorted("vehiculos", 'patente', 'asc')
+  this.getAllSorted("clientes", 'apellido', 'asc')
+
+  this.getCaja();
+  // console.log("initializer getting todo")
+}
+
+getCaja() { // pasar campo y orden (asc o desc)
+  this.dbFirebase
+    .getAllSorted2('caja', 'fecha', 'desc')
+    .pipe(
+      tap(data => {
+        console.log("initializer get caja", data)
+        this.store.patch({
+          loading: false,
+          data,
+
+        }
+
+        )
+      })
+    )
+    .subscribe();
+}
+
+
+
+
+
+// METODOS CRUD
+
+  getAllSorted(componente: any, campo:any, orden:any) {
 
     // pasar campo y orden (asc o desc)
     this.dbFirebase.getAllSorted2(componente, campo, orden)
@@ -86,6 +155,8 @@ export class StorageService {
       });
 
   }
+
+
 
   addItem(componente: string, item: any): void {
 
