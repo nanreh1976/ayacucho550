@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, } from '@angular/forms';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
-
+import { FormBuilder } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
 import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { LogService } from 'src/app/servicios/log.service';
 import { StorageService } from 'src/app/servicios/storage.service';
@@ -21,15 +20,12 @@ import { PlayaFormComponent } from '../playa-form/playa-form.component';
   [data]=data$
  (newItemEvent)="getMsg($event)"
   ></app-playa-view>
-  
-  
-              `,
+
+`,
 
   styleUrls: ['./playa-control.component.scss']
 })
 export class PlayaControlComponent implements OnInit {
-
-
 
   // nombre del crud / componente
   componente: string = 'playa'
@@ -41,13 +37,13 @@ export class PlayaControlComponent implements OnInit {
     private fb: FormBuilder,
     private interOpService: InterOpService,
     private logger: LogService,
-    private storage: StorageService,
+    private storageService: StorageService,
 
   ) { }
 
 
   ngOnInit(): void {
-    this.data$ = this.storage.playa$
+    this.data$ = this.storageService.playa$
     this.getuser()
 
   }
@@ -113,16 +109,16 @@ export class PlayaControlComponent implements OnInit {
 
     switch (op) {
       case 'Agregar': {
-        this.storage.addItem(this.componente, item);
+        this.storageService.addItem(this.componente, item);
         break;
       }
 
       case 'Editar': {
-        this.storage.updateItem(this.componente, item);
+        this.storageService.updateItem(this.componente, item);
         break;
       }
       case 'Eliminar': {
-        this.storage.deleteItem(this.componente, item);
+        this.storageService.deleteItem(this.componente, item);
         this.interOpService.addItem("facturacion", item)
 
         // pasar a funcion que genere el item
