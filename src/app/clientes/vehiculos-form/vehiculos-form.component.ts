@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { AbonoService } from 'src/app/servicios/abono/abono.service';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 import Swal from 'sweetalert2';
 import { PagoAbonoComponent } from '../pago-abono/pago-abono.component';
 
@@ -30,9 +32,15 @@ export class VehiculosFormComponent implements OnInit {
   componente: string = 'vehiculos'
   form:boolean = false;
   itemVehiculo: Vehiculo;
-  vehiculos: Vehiculo [];
+  vehiculos: any[] | Observable<any>;
 
-  constructor(private fb: FormBuilder, private dbFirebase: DbFirestoreService, public activeModal: NgbActiveModal, public vpService: ValidarPatenteService,  private interOpService: InterOpService, private modalService: NgbModal, private abonoService: AbonoService) {
+  constructor(private fb: FormBuilder, 
+    private storageService:StorageService,
+    public activeModal: NgbActiveModal, 
+    public vpService: ValidarPatenteService,  
+    private interOpService: InterOpService, 
+    private modalService: NgbModal, 
+    private abonoService: AbonoService) {
     
    }
 
@@ -46,12 +54,12 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   getAllVehiculos(): void {
-  this.dbFirebase.getAll(this.componente).subscribe(data => {
-    this.vehiculos = data;
-    localStorage.setItem(`${this.componente}`, JSON.stringify(data))
+
+    this.vehiculos = this.storageService.vehiculos$;
+
     //console.log(this.vehiculos); 
     this.armarTabla()     
-  })
+  
 }
 
   getTarifas()  {

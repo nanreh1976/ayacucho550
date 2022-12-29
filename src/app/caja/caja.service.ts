@@ -25,7 +25,7 @@ export class CajaService {
 
   getAllSorted2() { // pasar campo y orden (asc o desc)
     this.firestore
-      .getAllSorted2(this.componente, 'fecha', 'desc')
+      .getAllSorted(this.componente, 'fecha', 'desc')
       .pipe(
         tap(data => {
           this.store.patch({

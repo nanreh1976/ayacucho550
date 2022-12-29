@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DbFirestoreService } from '../servicios/database/db-firestore.service';
 import { LogService } from '../servicios/log.service';
+import { StorageService } from '../servicios/storage.service';
 import { LanguageApp } from '../shared/DTLanguage';
 
 @Component({
@@ -16,7 +17,7 @@ export class LogsComponent implements OnInit {
 
   constructor(
     private logger: LogService,
-    private dbFirebase: DbFirestoreService
+    private storageService:StorageService
   ) {}
 
   testLog(): void {
@@ -24,7 +25,12 @@ export class LogsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAll();
+  this.data=this.storageService.logger$
+this.setDataTable()
+  }
+
+
+  setDataTable(){
     this.dtOptions = {
       searching: false,
       dom: 't<"bottom"riflp><"clear">',
@@ -35,13 +41,7 @@ export class LogsComponent implements OnInit {
       ],
       responsive: true,
     };
+
   }
 
-  getAll(): void {
-    this.dbFirebase.getAll(this.componente).subscribe((data) => {
-      this.data = data;
-      localStorage.setItem(`${this.componente}`, JSON.stringify(data));
-      console.log(this.data);
-    });
-  }
 }

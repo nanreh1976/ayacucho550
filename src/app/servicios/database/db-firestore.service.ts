@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { addDoc, collection, collectionData, CollectionReference, deleteDoc, doc, docData, DocumentData, Firestore, updateDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { PlayaI } from 'src/app/interfaces/playaI';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,39 +18,15 @@ export class DbFirestoreService {
   }
 
 
-  getAll(componente:string) {
-    let dataCollection = collection(this.firestore, `/${this.coleccion}/datos/${componente}`);
-        
-    return collectionData(dataCollection, {
-      idField: 'id',
-    }) as Observable<any[]>;
-  }
 
-  // GET ALL ACTUALIZADO
-
-
-  
-// GET ALL ORDENADO POR CAMPO Y ORDEN
-  getAllSorted(componente:string, campo:string, orden:any) {
-    // campo debe existir en la coleccion, si esta anidado pasar ruta separada por puntso (field.subfield)
-    // orden solo asc o desc
-
-    let dataCollection = `/${this.coleccion}/datos/${componente}`;
-    return this.firestore2.collection(dataCollection, ref => ref.orderBy(campo, orden)).snapshotChanges(); }
-
-    // this.firestore.collection('Employees', ref => ref.orderBy('name', 'desc'))
-
-
-
-
-  // this.firestore.collection('Employees', ref => ref.orderBy('name', 'desc'))
 
 // GET ALL ORDENADO POR CAMPO Y ORDEN
-getAllSorted2(componente:string, campo:string, orden:any) {
+getAllSorted(componente:string, campo:string, orden:any) {
   // campo debe existir en la coleccion, si esta anidado pasar ruta separada por puntso (field.subfield)
   // orden solo asc o desc
 
   let dataCollection = `/${this.coleccion}/datos/${componente}`;
+
   return this.firestore2.collection(dataCollection, ref => ref
     .orderBy(campo, orden))
     .valueChanges(({  idField: 'id' })); }

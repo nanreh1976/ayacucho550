@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
-import { PlayaI } from 'src/app/interfaces/playaI';
-import { AbonoService } from 'src/app/servicios/abono/abono.service';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { LogService } from 'src/app/servicios/log.service';
@@ -45,20 +43,17 @@ export class PlayaControlComponent implements OnInit {
     private interOpService: InterOpService,
     private logger: LogService,
     private storage: StorageService,
-    private abonoService: AbonoService
+
   ) { }
 
 
   ngOnInit(): void {
     this.data$ = this.storage.playa$
     this.getuser()
-    this.verificarAbonos(); 
+
   }
 
 
-  verificarAbonos(){
-    this.abonoService.verificarAbonos()     //se llama al servicio para comprobar el vencimiento de los abonos.
-  }
 
   getuser() {
     console.log(JSON.parse(localStorage.getItem('user') || `{}`))

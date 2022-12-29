@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
+import { StorageService } from 'src/app/servicios/storage.service';
 import { LanguageApp } from 'src/app/shared/DTLanguage';
 
 @Component({
@@ -17,14 +18,18 @@ export class CajaLogComponent implements OnInit {
   componente: string = 'cajaLog';
 
   constructor(
-    private dbFirebase: DbFirestoreService
+   private storageService:StorageService
   ) {
  
    }
 
   ngOnInit(): void {
-    this.getAllSorted();
+   this.data=this.storageService.cajaLog$
 
+this.setDataTable()
+  }
+
+  setDataTable(){
     this.dtOptions = {
       searching: false,
       dom: 't<"bottom"riflp><"clear">',
@@ -36,23 +41,7 @@ export class CajaLogComponent implements OnInit {
     };
   }
 
-  getAllSorted() {
-    // pasar campo y orden (asc o desc)
-    this.dbFirebase
-      .getAllSorted(this.componente, 'apertura', 'desc')
-      .subscribe((data) => {
-        this.data = data.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            ...(e.payload.doc.data() as {}),
-          } //as unknown as Icaja;
-        });
 
-        // guardar en el local storage
-        localStorage.setItem(`${this.componente}`, JSON.stringify(data));
-
-      });
-  }
 
 // interface cajaLog
 

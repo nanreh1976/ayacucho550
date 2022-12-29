@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DbFirestoreService } from './database/db-firestore.service';
 import { tap, map } from 'rxjs/operators';
 import { CajaStoreService } from 'src/app/caja/caja-store.service';
+import { AbonoService } from './abono/abono.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +18,11 @@ export class StorageService {
 
   constructor(private dbFirebase: DbFirestoreService,
     private store: CajaStoreService,
-  
-    
-    
-    ) { }
+    private abonoService: AbonoService,
+
+
+
+  ) { }
 
   // Observables //
 
@@ -39,37 +41,64 @@ export class StorageService {
   private _clientes$ = new BehaviorSubject<any>(null)   //aca va interface my data
   public clientes$ = this._clientes$.asObservable()
 
+  private _cajaLog$ = new BehaviorSubject<any>(null)   //aca va interface my data
+  public cajaLog$ = this._cajaLog$.asObservable()
+
+  private _facturacion$ = new BehaviorSubject<any>(null)   //aca va interface my data
+  public facturacion$ = this._facturacion$.asObservable()
+
+  private _logger$ = new BehaviorSubject<any>(null)   //aca va interface my data
+  public logger$ = this._logger$.asObservable()
 
 
-  updateObservable(componente: any, data: any){
-    switch(componente) { 
-      case "playa": { 
+
+  updateObservable(componente: any, data: any) {
+    switch (componente) {
+      case "playa": {
         this._playa$.next(data)
-         break; 
-      } 
-      case "tarifas": { 
+        break;
+      }
+      case "tarifas": {
         this._tarifas$.next(data)
-         break; 
-      } 
-      case "usuario": { 
+        break;
+      }
+      case "usuario": {
         this._usuario$.next(data)
-         break; 
-      } 
+        break;
+      }
 
-      case "vehiculos": { 
+      case "vehiculos": {
         this._vehiculos$.next(data)
-         break; 
-      } 
+        break;
+      }
 
-      case "clientes": { 
+      case "clientes": {
         this._clientes$.next(data)
-         break; 
-      } 
-      default: { 
-         //statements; 
-         break; 
-      } 
-   } 
+        break;
+      }
+
+
+      case "cajaLog": {
+        this._cajaLog$.next(data)
+        break;
+      }
+
+      
+      case "facturacion": {
+        this._facturacion$.next(data)
+        break;
+      }
+
+      case "logger": {
+        this._logger$.next(data)
+        break;
+      }
+
+      default: {
+        //statements; 
+        break;
+      }
+    }
 
   }
 
@@ -78,11 +107,15 @@ export class StorageService {
 
 
   // metodos del storage
-  
+
   setInfo(componente: any, data: any) {    // interface mydata en vez de any
     const jsonData = JSON.stringify(data)
     localStorage.setItem(`${componente}`, JSON.stringify(data))
     this.updateObservable(componente, data)
+    if (componente = "vehiculos") {
+      console.log("vehiculos set info  ", data);
+      // this.abonoService.verificarAbonos(data)
+    }
   }
 
   loadInfo(componente: any) {
@@ -90,7 +123,7 @@ export class StorageService {
     this.updateObservable(componente, data)
   }
 
-  clearInfo(componente:any) {
+  clearInfo(componente: any) {
     localStorage.removeItem('myData')
     this.updateObservable(componente, null)
   }
@@ -101,54 +134,59 @@ export class StorageService {
   }
 
 
-////   INITIALIZER     ////////
+  ////   INITIALIZER     ////////
 
-// Al inicio de la aplicacion se carga el storage con los datos de la base
-// al estar suscripto, cualquier cambio en la base se refleja en el storage.
+  // Al inicio de la aplicacion se carga el storage con los datos de la base
+  // al estar suscripto, cualquier cambio en la base se refleja en el storage.
 
-initializer() {
+  initializer() {
 
-  this.getAllSorted("playa", 'fechas.fechaDate', 'asc')
-  this.getAllSorted("tarifas", 'categoria', 'asc')
-  this.getAllSorted("vehiculos", 'patente', 'asc')
-  this.getAllSorted("clientes", 'apellido', 'asc')
+    this.getAllSorted("playa", 'fechas.fechaDate', 'asc')
+    this.getAllSorted("tarifas", 'categoria', 'asc')
+    this.getAllSorted("vehiculos", 'patente', 'asc')
+    this.getAllSorted("clientes", 'apellido', 'asc')
+    this.getAllSorted("cajaLog", 'apertura', 'asc')
+    this.getAllSorted("facturacion", 'fechaOp', 'asc')
+    this.getAllSorted("logs", 'fechaOp', 'asc')
+    this.getAllSorted("facturacion", 'fechaOp', 'asc')
+    this.getAllSorted("logger", 'Fecha', 'asc')
 
-  this.getCaja();
-  // console.log("initializer getting todo")
-}
+    this.getCaja();
+    // console.log("initializer getting todo")
+  }
 
-getCaja() { // pasar campo y orden (asc o desc)
-  this.dbFirebase
-    .getAllSorted2('caja', 'fecha', 'desc')
-    .pipe(
-      tap(data => {
-        console.log("initializer get caja", data)
-        this.store.patch({
-          loading: false,
-          data,
+  getCaja() { // pasar campo y orden (asc o desc)
+    this.dbFirebase
+      .getAllSorted('caja', 'fecha', 'desc')
+      .pipe(
+        tap(data => {
+          console.log("initializer get caja", data)
+          this.store.patch({
+            loading: false,
+            data,
 
-        }
+          }
 
-        )
-      })
-    )
-    .subscribe();
-}
-
-
+          )
+        })
+      )
+      .subscribe();
+  }
 
 
 
-// METODOS CRUD
 
-  getAllSorted(componente: any, campo:any, orden:any) {
+
+  // METODOS CRUD
+
+  getAllSorted(componente: any, campo: any, orden: any) {
 
     // pasar campo y orden (asc o desc)
-    this.dbFirebase.getAllSorted2(componente, campo, orden)
+    this.dbFirebase.getAllSorted(componente, campo, orden)
       .subscribe(data => {
-  
+
         this.setInfo(componente, data)
-        this.updateObservable(componente, data)
+        // this.updateObservable(componente, data)
         console.log("storage initializer ", componente, data)
 
 
@@ -171,7 +209,7 @@ getCaja() { // pasar campo y orden (asc o desc)
   }
 
 
-  
+
   deleteItem(componente: string, item: any): void {
 
     console.log(" storage delete item ", componente, item,)
@@ -184,8 +222,8 @@ getCaja() { // pasar campo y orden (asc o desc)
 
   }
 
-    updateItem(componente: string, item: any): void {
-      console.log(" storage update item ", componente, item,)
+  updateItem(componente: string, item: any): void {
+    console.log(" storage update item ", componente, item,)
 
     this.dbFirebase.update(componente, item)
       // .then((data) => console.log(data))
