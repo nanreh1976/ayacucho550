@@ -110,7 +110,7 @@ export class StorageService {
 
   setInfo(componente: any, data: any) {    // interface mydata en vez de any
     const jsonData = JSON.stringify(data)
-    localStorage.setItem(`${componente}`, JSON.stringify(data))
+    localStorage.setItem(`${componente}`, JSON.stringify(data)) //local storage trabaja solo con strings
     this.updateObservable(componente, data)
     if (componente = "vehiculos") {
       console.log("vehiculos set info  ", data);
@@ -147,8 +147,6 @@ export class StorageService {
     this.getAllSorted("clientes", 'apellido', 'asc')
     this.getAllSorted("cajaLog", 'apertura', 'asc')
     this.getAllSorted("facturacion", 'fechaOp', 'asc')
-    this.getAllSorted("logs", 'fechaOp', 'asc')
-    this.getAllSorted("facturacion", 'fechaOp', 'asc')
     this.getAllSorted("logger", 'Fecha', 'asc')
 
     this.getCaja();
@@ -182,8 +180,9 @@ export class StorageService {
   getAllSorted(componente: any, campo: any, orden: any) {
 
     // pasar campo y orden (asc o desc)
-    this.dbFirebase.getAllSorted(componente, campo, orden)
-      .subscribe(data => {
+    this.dbFirebase
+    .getAllSorted(componente, campo, orden)
+    .subscribe(data => {
 
         this.setInfo(componente, data)
         // this.updateObservable(componente, data)
