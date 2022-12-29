@@ -21,7 +21,7 @@ export class InitializerService {
   constructor(private dbFirebase: DbFirestoreService,
     private store: CajaStoreService,
 
-    private abonoService: AbonoService,
+    // private abonoService: AbonoService,
 
     private storage: StorageService
 
@@ -31,12 +31,13 @@ export class InitializerService {
     
     this.storage.initializerSorted("playa", 'fechas.fechaDate', 'asc')
     this.storage.initializerSorted("tarifas", 'categoria', 'asc')
+    this.storage.initializerSorted("vehiculos", 'patente', 'asc')
     this.getClientes();
-    this.getVehiculos();
+    // this.getVehiculos();
     this.getCaja();
     console.log("initializer getting todo")
     // this.cajaService.restart();
-    this.verificarAbonos();
+    // this.verificarAbonos();
   }
 
 
@@ -67,18 +68,18 @@ export class InitializerService {
     })
   }
 
-  getVehiculos(){
-    this.dbFirebase.getAll("vehiculos").subscribe(data => {
-      this.vehiculos = data;
-      localStorage.setItem(`${"vehiculos"}`, JSON.stringify(this.vehiculos))
-      //console.log(this.vehiculos);      
-    })
-  }
+  // getVehiculos(){
+  //   this.dbFirebase.getAll("vehiculos").subscribe(data => {
+  //     this.vehiculos = data;
+  //     localStorage.setItem(`${"vehiculos"}`, JSON.stringify(this.vehiculos))
+  //     //console.log(this.vehiculos);      
+  //   })
+  // }
 
 
 
-  verificarAbonos(){
-    this.abonoService.verificarAbonos()     //se llama al servicio para comprobar el vencimiento de los abonos.
-  }
+  // verificarAbonos(){
+  //   this.abonoService.verificarAbonos()     //se llama al servicio para comprobar el vencimiento de los abonos.
+  // }
 
 }
