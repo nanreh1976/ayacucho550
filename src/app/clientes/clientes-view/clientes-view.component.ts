@@ -62,7 +62,7 @@ this.setDataTableOptions()
 
 setDataTableOptions(){
   this.dtOptions = {
-    searching: false,
+    // searching: false,
     dom: 't<"bottom"riflp><"clear">',
     language: LanguageApp.spanish_datatables,
     columnDefs: [

@@ -31,7 +31,7 @@ export class ClientesControlComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data$ = this.storage.playa$
+    this.data$ = this.storage.clientes$
 
   }
 
