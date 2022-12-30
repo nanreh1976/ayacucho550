@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder} from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
-import { StorageService } from 'src/app/servicios/storage.service';
+import { StorageService } from 'src/app/servicios/storage/storage.service';
 import { ClientesFormComponent } from '../clientes-form/clientes-form.component';
 
 

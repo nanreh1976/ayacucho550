@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LogService } from '../servicios/log.service';
-import { StorageService } from '../servicios/storage.service';
+import { StorageService } from '../servicios/storage/storage.service';
 import { LanguageApp } from '../shared/DTLanguage';
 
 @Component({
