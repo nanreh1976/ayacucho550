@@ -12,7 +12,8 @@ import { CajaIngresoFormComponent } from '../forms/caja-ingreso-form/caja-ingres
 import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-apertura-form.component';
 import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
 import { Observable } from 'rxjs';
-import { CajaService } from '../caja.service';
+import { CajaStorageService } from 'src/app/servicios/storage/caja-storage.service';
+
 
 
 @Component({
@@ -59,7 +60,7 @@ export class CajaControlComponent implements OnInit {
     private dbFirebase: DbFirestoreService,
     private estadoCaja: EstadoCajaService,
 
-    private cajas: CajaService
+    private cajaStorage: CajaStorageService
   ) { }
 
   ngOnInit(): void {
@@ -68,38 +69,17 @@ export class CajaControlComponent implements OnInit {
     this.setUser();
     this.estadoCaja.getCajaAbierta()
     this.$modoCaja = this.estadoCaja.getModoCaja()
-    this.saldo$ = this.cajas.saldo$
-    this.loading$ = this.cajas.loading$;
-    this.noResults$ = this.cajas.noResults$;
-    this.data$ = this.cajas.data$
-    // this.calcularSaldo(this.data$);
-
-    // esto es lo anterior para tomar estado caja ocupada o ono
-    //  this.estadoCaja.getCajaAbierta()
-    //  this.$modoCaja = this.estadoCaja.getModoCaja()
+    this.saldo$ = this.cajaStorage.saldo$
+    this.loading$ = this.cajaStorage.loading$;
+    this.noResults$ = this.cajaStorage.noResults$;
+    this.data$ = this.cajaStorage.data$
 
   }
-
-  // settings y calculos
 
   setUser() {
     let user = JSON.parse(localStorage.getItem('user') || `{}`);
     this.usuario = user['displayName'];
   }
-
-   /* calcularSaldo(data: any) {
-     this.saldo = 0;
-     for (let item of data) {
-       if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
-         this.saldo += Number(item.importe);
-       } else {
-         this.saldo -= Number(item.importe);
-       }
-     }
-   } */
-
-
-
 
   getMsg(msg: any) {
     // console.log(msg, "from parent");
@@ -227,13 +207,4 @@ export class CajaControlComponent implements OnInit {
       .catch((e) => console.log(e.message));
   }
 
-  // updateItem(componente: string, item: any): void {
-  //   console.log("update itemcomponent", item,)
-
-  //   this.dbFirebase.update(componente, item)
-  //     .then((data) => console.log(data))
-  //     .then(() => this.ngOnInit())
-  //     .catch((e) => console.log(e.message));
-
-  // }
 }

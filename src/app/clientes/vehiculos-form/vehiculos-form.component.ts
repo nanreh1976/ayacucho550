@@ -7,7 +7,8 @@ import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { AbonoService } from 'src/app/servicios/abono/abono.service';
 import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
-import { StorageService } from 'src/app/servicios/storage.service';
+import { VehiculosStorageService } from 'src/app/servicios/storage/vehiculos-storage.service';
+// import { StorageService } from 'src/app/servicios/storage.service';
 import Swal from 'sweetalert2';
 import { PagoAbonoComponent } from '../pago-abono/pago-abono.component';
 
@@ -34,7 +35,8 @@ export class VehiculosFormComponent implements OnInit {
   vehiculos: any[] | Observable<any>;
 
   constructor(private fb: FormBuilder, 
-    private storageService:StorageService,
+    private vehiculosStorage:VehiculosStorageService,
+    // private storageService:StorageService,
     public activeModal: NgbActiveModal, 
     public vpService: ValidarPatenteService,  
     private interOpService: InterOpService, 
@@ -54,7 +56,7 @@ export class VehiculosFormComponent implements OnInit {
 
   getAllVehiculos(): void {
 
-    this.vehiculos = this.storageService.vehiculos$;
+    this.vehiculos = this.vehiculosStorage.data$;
 
     //console.log(this.vehiculos); 
     this.armarTabla()     

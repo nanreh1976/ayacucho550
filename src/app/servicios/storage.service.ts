@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DbFirestoreService } from './database/db-firestore.service';
-import { tap, map } from 'rxjs/operators';
-import { CajaStoreService } from 'src/app/caja/caja-store.service';
 import { AbonoService } from './abono/abono.service';
+import { CajaStorageService } from './storage/caja-storage.service';
+import { VehiculosStorageService } from './storage/vehiculos-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,9 @@ export class StorageService {
 
 
   constructor(private dbFirebase: DbFirestoreService,
-    private store: CajaStoreService,
-    private abonoService: AbonoService,
+    private cajaStorage: CajaStorageService,
+    private vehiculosStorage: VehiculosStorageService,
+
 
 
 
@@ -34,9 +35,6 @@ export class StorageService {
 
   private _usuario$ = new BehaviorSubject<any>(null)   //aca va interface my data
   public usuario$ = this._usuario$.asObservable()
-
-  private _vehiculos$ = new BehaviorSubject<any>(null)   //aca va interface my data
-  public vehiculos$ = this._vehiculos$.asObservable()
 
   private _clientes$ = new BehaviorSubject<any>(null)   //aca va interface my data
   public clientes$ = this._clientes$.asObservable()
@@ -67,11 +65,6 @@ export class StorageService {
         break;
       }
 
-      case "vehiculos": {
-        this._vehiculos$.next(data)
-        break;
-      }
-
       case "clientes": {
         this._clientes$.next(data)
         break;
@@ -83,7 +76,7 @@ export class StorageService {
         break;
       }
 
-      
+
       case "facturacion": {
         this._facturacion$.next(data)
         break;
@@ -143,35 +136,22 @@ export class StorageService {
 
     this.getAllSorted("playa", 'fechas.fechaDate', 'asc')
     this.getAllSorted("tarifas", 'categoria', 'asc')
-    this.getAllSorted("vehiculos", 'patente', 'asc')
     this.getAllSorted("clientes", 'apellido', 'asc')
     this.getAllSorted("cajaLog", 'apertura', 'asc')
     this.getAllSorted("facturacion", 'fechaOp', 'asc')
     this.getAllSorted("logger", 'Fecha', 'asc')
 
     this.getCaja();
-    // console.log("initializer getting todo")
+    this.getVehiculos()
   }
 
   getCaja() { // pasar campo y orden (asc o desc)
-    this.dbFirebase
-      .getAllSorted('caja', 'fecha', 'desc')
-      .pipe(
-        tap(data => {
-          console.log("initializer get caja", data)
-          this.store.patch({
-            loading: false,
-            data,
-
-          }
-
-          )
-        })
-      )
-      .subscribe();
+    this.cajaStorage.getAllSorted()
   }
 
-
+  getVehiculos() {
+    this.vehiculosStorage.getAllSorted()
+  }
 
 
 
@@ -181,8 +161,8 @@ export class StorageService {
 
     // pasar campo y orden (asc o desc)
     this.dbFirebase
-    .getAllSorted(componente, campo, orden)
-    .subscribe(data => {
+      .getAllSorted(componente, campo, orden)
+      .subscribe(data => {
 
         this.setInfo(componente, data)
         // this.updateObservable(componente, data)
