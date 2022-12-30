@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { StorageService } from 'src/app/servicios/storage/storage.service';
 import { LanguageApp } from 'src/app/shared/DTLanguage';
 

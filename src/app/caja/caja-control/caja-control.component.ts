@@ -1,13 +1,9 @@
 import { Component, OnInit, ɵcompileNgModuleFactory } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
-import { Icaja } from 'src/app/interfaces/Icaja';
-
 import { CajaCierreFormComponent } from '../forms/caja-cierre-form/caja-cierre-form.component';
 import { CajaEgresoFormComponent } from '../forms/caja-egreso-form/caja-egreso-form.component';
-
 import { CajaIngresoFormComponent } from '../forms/caja-ingreso-form/caja-ingreso-form.component';
 import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-apertura-form.component';
 import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
@@ -203,7 +199,7 @@ export class CajaControlComponent implements OnInit {
     this.dbFirebase
       .create(componente, item)
       //   .then((data) => console.log(data))
-      .then(() => this.ngOnInit())
+      // .then(() => this.ngOnInit())
       .catch((e) => console.log(e.message));
   }
 
