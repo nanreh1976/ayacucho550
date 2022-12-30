@@ -7,7 +7,6 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { InitializerService } from '../initializer/initializer.service';
 import { DbFirestoreService } from '../database/db-firestore.service';
 import { StorageService } from '../storage.service';
 @Injectable({
@@ -31,7 +30,6 @@ export class AuthService {
 
     // SERVICIOS DE LA APP
     private storage: StorageService,
-    public initializerService: InitializerService, // inicializa datos aplicacion
     private dbFirebase: DbFirestoreService,
   ) {
 
@@ -163,7 +161,7 @@ export class AuthService {
 
   setearColeccion() {
     this.dbFirebase.setearColeccion(this.usuario.coleccion);
-    this.initializerService.getTodo()
+    this.storage.initializer()
     this.router.navigate(['/home']);
   }
 

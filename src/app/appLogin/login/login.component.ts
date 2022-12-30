@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 
 import { AuthService } from 'src/app/servicios/autentificacion/auth.service';
-import { InitializerService } from 'src/app/servicios/initializer/initializer.service';
+
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
     public authService: AuthService,
-    private initializerService: InitializerService) {
+  ) {
 
 
   }
@@ -35,12 +35,6 @@ export class LoginComponent implements OnInit {
   loginWithGoogle() {
     this.authService
       .GoogleAuth()
-      // .then(() => this.authService.getCurrentUser())
-
-      //.then(() => this.router.navigate(['/playa']))             
-      //.then(() => this.accionAsincrona())
-      // .then(() => this.initializerService.getTodo())
-      //.then(() => this.router.navigate(['/home']))
       .catch((e) => console.log(e.message));
   }
 

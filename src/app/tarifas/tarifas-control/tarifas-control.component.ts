@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { StorageService } from 'src/app/servicios/storage.service';
-
-
 import { TarifasFormComponent } from '../tarifas-form/tarifas-form.component';
-import { TarifasViewComponent } from '../tarifas-view/tarifas-view.component';
+
 
 
 @Component({

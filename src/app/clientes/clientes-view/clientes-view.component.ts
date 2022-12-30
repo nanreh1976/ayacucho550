@@ -17,7 +17,16 @@ export class ClientesViewComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   msg: any
   
-  searchText!: string;
+
+
+
+
+  constructor() { }
+  
+  ngOnInit(): void {
+this.setDataTableOptions()
+}
+
 
   msgBack(op: string, item: any) {    
     let value = {
@@ -51,21 +60,20 @@ export class ClientesViewComponent implements OnInit {
   }
 
 
+setDataTableOptions(){
+  this.dtOptions = {
+    // searching: false,
+    dom: 't<"bottom"riflp><"clear">',
+    language: LanguageApp.spanish_datatables,
+    columnDefs: [
+      { orderable: false, targets: [7,8,9] },
+      { searchable: false, targets: [ 7,8,9] },
+  ]
+  };
+}
 
  
  
 
-  constructor() { }
-  
-  ngOnInit(): void {
-    this.dtOptions = {
-      searching: false,
-      dom: 't<"bottom"riflp><"clear">',
-      language: LanguageApp.spanish_datatables,
-      columnDefs: [
-        { orderable: false, targets: [7,8,9] },
-        { searchable: false, targets: [ 7,8,9] },
-    ]
-    };
-  }
+
 }

@@ -49,10 +49,6 @@ export class InicioComponent implements OnInit {
   }
 
 
-
-
-
-
   //TOMA LA OPERACION DEL BOTON SELECCIONADO EN EL FORM
   setOp(op: string) {
     this.op = op;
@@ -72,7 +68,6 @@ export class InicioComponent implements OnInit {
         if(this.op === "Eliminar"){
           Swal.fire({
             title: '¿Desea realizar la salida del vehículo?',
-            //text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -80,11 +75,6 @@ export class InicioComponent implements OnInit {
             confirmButtonText: 'Confirmar'
           }).then((result) => {
             if (result.isConfirmed) {
-             /*  Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success' 
-              )*/
               console.log("submitted barcode")
               this.onScan(str)  //va a chequear el scan
             }
@@ -105,11 +95,6 @@ export class InicioComponent implements OnInit {
             confirmButtonText: 'Confirmar'
           }).then((result) => {
             if (result.isConfirmed) {
-             /*  Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success' 
-              )*/
               console.log("submited patente")
               this.msgBack(this.op, str); //manda el form al parent
             }
@@ -151,9 +136,6 @@ export class InicioComponent implements OnInit {
   }
 
   }
- 
-
-
  
   msgBack(op: string, str: string) {
     // ENVIA EL CONT DEL FORM AL PARENT

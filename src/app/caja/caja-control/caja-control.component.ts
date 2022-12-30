@@ -12,7 +12,8 @@ import { CajaIngresoFormComponent } from '../forms/caja-ingreso-form/caja-ingres
 import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-apertura-form.component';
 import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
 import { Observable } from 'rxjs';
-import { CajaService } from '../caja.service';
+import { CajaStorageService } from 'src/app/servicios/storage/caja-storage.service';
+
 
 
 @Component({
@@ -59,7 +60,7 @@ export class CajaControlComponent implements OnInit {
     private dbFirebase: DbFirestoreService,
     private estadoCaja: EstadoCajaService,
 
-    private cajas: CajaService
+    private cajaStorage: CajaStorageService
   ) { }
 
   ngOnInit(): void {
@@ -68,38 +69,17 @@ export class CajaControlComponent implements OnInit {
     this.setUser();
     this.estadoCaja.getCajaAbierta()
     this.$modoCaja = this.estadoCaja.getModoCaja()
-    this.saldo$ = this.cajas.saldo$
-    this.loading$ = this.cajas.loading$;
-    this.noResults$ = this.cajas.noResults$;
-    this.data$ = this.cajas.data$
-    // this.calcularSaldo(this.data$);
-
-    // esto es lo anterior para tomar estado caja ocupada o ono
-    //  this.estadoCaja.getCajaAbierta()
-    //  this.$modoCaja = this.estadoCaja.getModoCaja()
+    this.saldo$ = this.cajaStorage.saldo$
+    this.loading$ = this.cajaStorage.loading$;
+    this.noResults$ = this.cajaStorage.noResults$;
+    this.data$ = this.cajaStorage.data$
 
   }
-
-  // settings y calculos
 
   setUser() {
     let user = JSON.parse(localStorage.getItem('user') || `{}`);
     this.usuario = user['displayName'];
   }
-
-   /* calcularSaldo(data: any) {
-     this.saldo = 0;
-     for (let item of data) {
-       if (item.operacion === 'ingreso' || item.operacion === 'apertura') {
-         this.saldo += Number(item.importe);
-       } else {
-         this.saldo -= Number(item.importe);
-       }
-     }
-   } */
-
-
-
 
   getMsg(msg: any) {
     // console.log(msg, "from parent");
@@ -215,73 +195,7 @@ export class CajaControlComponent implements OnInit {
     //  this.estadoCaja = 'cerrada';
   }
 
-  // CAJALOG
 
-  // Cada sesion de caja tiene un id unico, y queda registrado en la coleccion CAJALOG
-  // En el caja log se registra apertura, cierre, estado (abierto o cerrado ) usuario .
-  // Solo puede haber una sesion abierta a la vez (porque hay una sola caja)
-
-
-  // CRUD
-
-  // getAll(): void {
-  //   this.dbFirebase.getAll(this.componente).subscribe((data) => {
-  //     this.data = data;
-  //     localStorage.setItem(`${this.componente}`, JSON.stringify(data));
-
-  //     this.calcularSaldo(this.data);
-  //   });
-  // }
-
-  // // GET ALL ACTUALIZADO PARA LEER EL PAYLOAD
-  // getAll2(): void {
-  //   // llamar a getAll del servicio firebase para tener la lista de registros de caja
-  //   this.dbFirebase.getAll2(this.componente).subscribe(data => {
-  //     // data toma el listado de registros de caja
-  //     this.data = data.map(e => {
-  //       return {
-  //         id: e.payload.doc.id,
-  //         ...e.payload.doc.data() as {}
-  //       } as unknown as Icaja;
-  //     });
-  //     localStorage.setItem(`${this.componente}`, JSON.stringify(data))
-  //     //console.log(JSON.stringify(this.data))
-  //     this.calcularSaldo(this.data)
-  //   });
-
-  // }
-
-  // getAllSorted() {
-  //   // pasar campo y orden (asc o desc)
-  //   this.dbFirebase
-  //     .getAllSorted(this.componente, 'fecha', 'desc')
-  //     .subscribe((data) => {
-  //       this.data = data.map((e) => {
-  //         return {
-  //           id: e.payload.doc.id,
-  //           ...(e.payload.doc.data() as {}),
-  //         } as unknown as Icaja;
-  //       });
-
-  //       // guardar en el local storage
-  //       localStorage.setItem(`${this.componente}`, JSON.stringify(data));
-
-  //       // calcular el saldo en cada actualizacion
-  //       this.calcularSaldo(this.data);
-  //     });
-  // }
-
-  // deleteItem(componente: string, item: any): void {
-
-  //   console.log("delete itemcomponent", item,)
-
-  //   this.dbFirebase.delete(componente, item.id)
-  //     .then((data) => console.log(data))
-  //     .then(() => this.ngOnInit())
-  //     .then(() => console.log("pasa por delete metodo?"))
-  //     .catch((e) => console.log(e.message));
-
-  // }
 
   addItem(componente: string, item: any): void {
     // console.log('add itemcomponent', item);
@@ -293,13 +207,4 @@ export class CajaControlComponent implements OnInit {
       .catch((e) => console.log(e.message));
   }
 
-  // updateItem(componente: string, item: any): void {
-  //   console.log("update itemcomponent", item,)
-
-  //   this.dbFirebase.update(componente, item)
-  //     .then((data) => console.log(data))
-  //     .then(() => this.ngOnInit())
-  //     .catch((e) => console.log(e.message));
-
-  // }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/servicios/autentificacion/auth.service';
-import { InitializerService } from 'src/app/servicios/initializer/initializer.service';
+
 
 
 @Component({
@@ -11,7 +11,7 @@ import { InitializerService } from 'src/app/servicios/initializer/initializer.se
 export class SignUpComponent implements OnInit {
 
   constructor(public authService: AuthService,
-    private initializerService: InitializerService) {}
+ ) {}
 
   ngOnInit(): void {
   }

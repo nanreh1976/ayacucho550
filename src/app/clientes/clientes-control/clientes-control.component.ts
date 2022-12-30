@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, } from '@angular/forms';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
-import { AbonoService } from 'src/app/servicios/abono/abono.service';
-import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
-
-
+import { FormBuilder} from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
+import { StorageService } from 'src/app/servicios/storage.service';
 import { ClientesFormComponent } from '../clientes-form/clientes-form.component';
-import { ClientesViewComponent } from '../clientes-view/clientes-view.component';
+
 
 
 @Component({
   selector: 'app-clientes-control',
   template: `
   <app-clientes-view
-  [data]=data   
+  [data]=data$  
  (newItemEvent)="getMsg($event)"
   ></app-clientes-view>
   
@@ -22,34 +19,19 @@ import { ClientesViewComponent } from '../clientes-view/clientes-view.component'
 })
 export class ClientesControlComponent implements OnInit {
 
-
-  // nombre del crud / componente
   componente: string = 'clientes'
-  // reactiveforms, modo edicion, delete etc
-  //modo!: string;
-
-
-  // data recibida del crud
-  data!: any;
+  data$!: any;
 
   constructor(private modalService: NgbModal,
     private fb: FormBuilder,
-    private dbFirebase: DbFirestoreService,
-    private abonoService: AbonoService,
+    private storage: StorageService,
   ) {
   }
 
-
-
   ngOnInit(): void {
-    this.getAll();  //tomar datos de los vehiculos en playa   
-    // this.verificarAbonos(); 
+    this.data$ = this.storage.clientes$
+
   }
-
-
-  // verificarAbonos(){
-  //   this.abonoService.verificarAbonos()     //se llama al servicio para comprobar el vencimiento de los abonos.
-  // }
 
   getMsg(msg: any) {
     console.log(msg, "from parent");
@@ -60,10 +42,7 @@ export class ClientesControlComponent implements OnInit {
     {
       const modalRef = this.modalService.open(ClientesFormComponent,
         {
-          // scrollable: false,
           windowClass: 'myCustomModalClass',
-          // keyboard: false,
-          // backdrop: 'static'
           centered: true,
           size: 'lg',
         })
@@ -93,16 +72,16 @@ export class ClientesControlComponent implements OnInit {
     switch (op) {
       case 'Agregar': {
 
-        this.addItem(this.componente, item);
+        this.storage.addItem(this.componente, item);
         break;
       }
 
       case 'Editar': {
-        this.updateItem(this.componente, item);
+        this.storage.updateItem(this.componente, item);
         break;
       }
       case 'Eliminar': {
-        this.deleteItem(this.componente, item);
+        this.storage.deleteItem(this.componente, item);
         break;
       }
       case 'Vehiculo': {
@@ -111,20 +90,17 @@ export class ClientesControlComponent implements OnInit {
       }
       case 'Vehiculo Agregar': {
         //console.log("llega aca?");
-        this.addItem("vehiculos", item);
+        this.storage.addItem("vehiculos", item);
         break;
       }
       case 'Vehiculo Editar': {
-        this.updateItem("vehiculos", item);
+        this.storage.updateItem("vehiculos", item);
         break;
       }
       case 'Vehiculo Eliminar': {
-        this.deleteItem("vehiculos", item);
+        this.storage.deleteItem("vehiculos", item);
         break;
       }
-
-
-
 
 
       default: {
@@ -133,57 +109,5 @@ export class ClientesControlComponent implements OnInit {
       }
     }
   };
-
-  // CRUD
-
-
-  getAll(): void {
-    this.dbFirebase.getAll(this.componente).subscribe(data => {
-      this.data = data;
-      localStorage.setItem(`${this.componente}`, JSON.stringify(data))
-      console.log(this.data);
-    })
-  }
-
-
-  deleteItem(componente: string, item: any): void {
-
-    console.log("delete itemcomponent", item,)
-
-    this.dbFirebase.delete(componente, item.id)
-      .then((data) => console.log(data))
-      .then(() => this.ngOnInit())
-      .then(() => console.log("pasa por delete metodo?"))
-      .catch((e) => console.log(e.message));
-
-  }
-
-  addItem(componente: string, item: any): void {
-
-    console.log("add itemcomponent", item,)
-
-    this.dbFirebase.create(componente, item)
-      .then((data) => console.log(data))
-      .then(() => this.ngOnInit())
-      .catch((e) => console.log(e.message));
-
-
-
-  }
-
-
-
-
-  updateItem(componente: string, item: any): void {
-    console.log("update itemcomponent", item,)
-
-    this.dbFirebase.update(componente, item)
-      .then((data) => console.log(data))
-      .then(() => this.ngOnInit())
-      .catch((e) => console.log(e.message));
-
-  }
-
-
 
 }

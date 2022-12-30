@@ -134,7 +134,6 @@ getuser(){
       console.log("esto es la data: ", data);
       
       this.data = data[0];           
-      localStorage.setItem(`${this.componente}`, JSON.stringify(data))
       console.log(this.data);
             
     })

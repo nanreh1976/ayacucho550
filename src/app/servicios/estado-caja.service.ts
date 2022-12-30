@@ -1,6 +1,4 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { TitleStrategy } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { DbFirestoreService } from './database/db-firestore.service';
 
