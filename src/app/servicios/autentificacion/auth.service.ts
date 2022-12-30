@@ -8,7 +8,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { DbFirestoreService } from '../database/db-firestore.service';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../storage/storage.service';
 @Injectable({
   providedIn: 'root',
 })

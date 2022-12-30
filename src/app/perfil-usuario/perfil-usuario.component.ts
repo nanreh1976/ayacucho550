@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../servicios/autentificacion/auth.service';
-import { StorageService } from '../servicios/storage.service';
+import { StorageService } from '../servicios/storage/storage.service';
 
 @Component({
   selector: 'app-perfil-usuario',

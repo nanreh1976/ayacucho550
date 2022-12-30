@@ -8,7 +8,7 @@ import { AbonoService } from 'src/app/servicios/abono/abono.service';
 import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
 import { VehiculosStorageService } from 'src/app/servicios/storage/vehiculos-storage.service';
-// import { StorageService } from 'src/app/servicios/storage.service';
+// import { StorageService } from 'src/app/servicios/storage/storage.service';
 import Swal from 'sweetalert2';
 import { PagoAbonoComponent } from '../pago-abono/pago-abono.component';
 

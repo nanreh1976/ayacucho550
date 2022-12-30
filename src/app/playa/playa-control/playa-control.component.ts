@@ -3,7 +3,8 @@ import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
 import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { LogService } from 'src/app/servicios/log.service';
-import { StorageService } from 'src/app/servicios/storage.service';
+import { StorageService } from 'src/app/servicios/storage/storage.service';
+
 import { TicketEntradaComponent } from 'src/app/ticket-entrada/ticket-entrada.component';
 import { PlayaFormComponent } from '../playa-form/playa-form.component';
 
