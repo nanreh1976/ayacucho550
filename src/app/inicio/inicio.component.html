@@ -3,8 +3,9 @@
 
     <label for="patente">Ingresar Patente</label><br>
     <div *ngIf="($modoCaja | async) === 'cerrada'">
-        <h5 style="color:red;">Caja Cerrada. Solo se permiten ingresos.</h5>
-        <h5 style="color:red;">Abrir Caja o consultar con un Administrador</h5>
+        <h5 style="color:red;">Caja Cerrada. </h5>
+        <h5 style="color:red;">Solo se permite ingreso de vehiculos.</h5>
+        <h5 style="color:red;">Abrir Caja o consultar con un Administrador.</h5>
     </div>
     <input type="text" formControlName="patente" class="form-control mt-3" required type="text"
         [ngClass]="{'is-invalid':Patente?.errors && Patente?.touched, 'is-valid': !Patente?.errors && !Patente?.touched }">

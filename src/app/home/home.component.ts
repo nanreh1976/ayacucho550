@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EstadoCajaService } from '../servicios/estado-caja.service';
+
 
 @Component({
   selector: 'app-home',
@@ -14,10 +14,9 @@ export class HomeComponent implements OnInit {
   tarifas!: any;
   collapsed = true;
 
-  constructor(private estadoCaja: EstadoCajaService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    // chequea el estado de las cajas al abrr la app
-     this.estadoCaja.getCajaAbierta()
+
   }
 }

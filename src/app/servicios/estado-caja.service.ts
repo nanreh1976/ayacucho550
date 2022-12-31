@@ -9,90 +9,86 @@ export class EstadoCajaService {
 
 
   constructor(private dbFirebase: DbFirestoreService) {
-  // this.getCajaAbierta()
-    //aca deberia determinar el esatdo de la caja inicial
+    this.getEstadoCajaFirebase()
+    // determinar estado de caja en firebase antes de iniciar la app
   }
 
   modoCaja$ = new BehaviorSubject<string>('');
 
-
-  cerrar() {
-    this.modoCaja$.next('cerrada');
-  }
-
-  abrir() {
-    this.modoCaja$.next('abierta');
-  }
-
-  admin() {
-    this.modoCaja$.next('admin');
-  }
-
-  bloquear() {
-    this.modoCaja$.next('block');
-  }
-
-  setModoCaja(cajaLog:any) {
-
-    let userCaja= cajaLog['usuario']
-
-
-    let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
-    let userLogged = user['uid'];
-
-    console.log ("set modo caja" , userCaja, userLogged)
-
-
-    this.abrir()
-    // si el usuario no coincide con el que abrio la sesion de caja:
-    // si es user la bloquea y que llame al admin
-
-    //this.modoCaja="blocked"
-
-    // si es admin le avisa y le muestra el boton cerrar
-
-    //this.modoCaja="admin"
-
-    // Si la caja esta cerrada, Avisa y muestra la opcion de abrir caja
-
-    //this.modoCaja="cerrada"
-
-    // si la caja esta abierta y el usuario de la sesion es el mismo de la app
-    // procede normalmente
-
-    // this.modoCaja = 'abierta';
-    
-
-  }
-
-
+  // metodo para consultar el observer por otros componentes
   getModoCaja() {
     return this.modoCaja$.asObservable();
   }
 
-  getCajaAbierta() {
+  // metodos para modificar el estado de caja en la app
+
+  modoCajaCerrada() {
+    this.modoCaja$.next('cerrada');
+  }
+
+  modoCajaAbierta() {
+    this.modoCaja$.next('abierta');
+  }
+
+  modoCajaAdmin() {
+    this.modoCaja$.next('admin');
+  }
+
+  modoCajaBlock() {
+    this.modoCaja$.next('block');
+  }
+
+  // en base al estado y usuario de caja en firebase, establecer el estado en la app
+  setModoCaja(cajaLog: any) {
+    let cajaL = JSON.parse(cajaLog)
+    let userCajaUid = cajaL.userUid
+
+    let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
+    let userLoggedUid = user['uid'];
+    let userLoggeEsAdmin = (!user.roles.user)
+
+
+    // si la caja esta abierta en firebase por el mismo usuario en la app
+    // abre caja 
+    // TODO CARGAR LOS DATOS DE LA SESION
+
+    if (userCajaUid === userLoggedUid) {
+      this.modoCajaAbierta()
+      //this.cargarsesiondesdecajaLogenfirebase
+    }
+
+    // si el usuario no coincide con el que abrio la sesion de caja:
+
+    else if
+
+      // si es admin le avisa y le muestra el boton cerrar
+      (userLoggeEsAdmin) {
+      this.modoCajaAdmin()
+    } else {
+
+
+      // si es user la bloquea y que llame al admin
+
+      this.modoCajaBlock()
+
+    }
+  }
+
+  // metodo para consultar el estado de caja en firebase
+  getEstadoCajaFirebase() {
     // si hay una caja abierta en el cajalog la devuelve
     this.dbFirebase
       .getByFieldValue('cajaLog', 'estado', 'abierta')
       .subscribe((ref) => {
 
         let cajaLog = JSON.stringify(ref[0]);
-        if  (cajaLog === undefined) {
+        if (cajaLog === undefined) {
           // Si no hay caja abierta en firebase, cerrar caja en la app
-          this.cerrar()
+          this.modoCajaCerrada()
         } else {
           // Si Hay caja abierta en firebase, determinar estado segun usuarios
           this.setModoCaja(cajaLog)
         }
-      
-      
-        });
+     });
   }
-
-
-
-
-
-
-
 }

@@ -54,21 +54,20 @@ export class CajaControlComponent implements OnInit {
     private modalService: NgbModal,
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
-    private estadoCaja: EstadoCajaService,
-
-    private cajaStorage: CajaStorageService
+    private estadoCajaService: EstadoCajaService,
+    private cajaStorageService: CajaStorageService
   ) { }
 
   ngOnInit(): void {
 
     // this.getAllSorted();
     this.setUser();
-    this.estadoCaja.getCajaAbierta()
-    this.$modoCaja = this.estadoCaja.getModoCaja()
-    this.saldo$ = this.cajaStorage.saldo$
-    this.loading$ = this.cajaStorage.loading$;
-    this.noResults$ = this.cajaStorage.noResults$;
-    this.data$ = this.cajaStorage.data$
+ 
+    this.$modoCaja = this.estadoCajaService.modoCaja$
+    this.saldo$ = this.cajaStorageService.saldo$
+    this.loading$ = this.cajaStorageService.loading$;
+    this.noResults$ = this.cajaStorageService.noResults$;
+    this.data$ = this.cajaStorageService.data$
 
   }
 
