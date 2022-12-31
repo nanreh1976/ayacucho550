@@ -73,7 +73,7 @@ export class CajaControlComponent implements OnInit {
   }
 
   setUser() {
-    let user = JSON.parse(localStorage.getItem('user') || `{}`);
+    let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
     this.usuario = user['displayName'];
   }
 

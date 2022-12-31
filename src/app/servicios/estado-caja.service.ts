@@ -32,7 +32,17 @@ export class EstadoCajaService {
     this.modoCaja$.next('block');
   }
 
-  setmodoCaja() {
+  setModoCaja(cajaLog:any) {
+
+    let userCaja= cajaLog['usuario']
+
+
+    let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
+    let userLogged = user['uid'];
+
+    console.log ("set modo caja" , userCaja, userLogged)
+
+
     this.abrir()
     // si el usuario no coincide con el que abrio la sesion de caja:
     // si es user la bloquea y que llame al admin
@@ -68,11 +78,11 @@ export class EstadoCajaService {
 
         let cajaLog = JSON.stringify(ref[0]);
         if  (cajaLog === undefined) {
-          console.log("servicio caja this.cerrar")
+          // Si no hay caja abierta en firebase, cerrar caja en la app
           this.cerrar()
         } else {
-          console.log("servicio caja this.cerrar")
-          this.abrir()
+          // Si Hay caja abierta en firebase, determinar estado segun usuarios
+          this.setModoCaja(cajaLog)
         }
       
       
