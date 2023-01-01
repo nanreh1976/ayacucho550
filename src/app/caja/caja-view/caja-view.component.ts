@@ -10,7 +10,7 @@ export class CajaViewComponent implements OnInit {
   @Input() data$: any ;  // desde caja service
 
   @Input() usuario?: any;
-  @Input() cajaLog: any;  // sesiones de caja
+  @Input() sesionCaja: any;  // sesiones de caja
   @Input() $modoCaja: any;  //abierta cerrada admin block
   @Input() $estadoCaja: any;
   @Input() loading$: any;  // todavia no recibio datos del server

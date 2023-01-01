@@ -16,7 +16,7 @@ export class LogsComponent implements OnInit {
 
   constructor(
     private logger: LogService,
-    private storageService:StorageService
+    private storageService: StorageService
   ) {}
 
   testLog(): void {
@@ -24,12 +24,11 @@ export class LogsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  this.data=this.storageService.logger$
-this.setDataTable()
+    this.data = this.storageService.logger$;
+    this.setDataTable();
   }
 
-
-  setDataTable(){
+  setDataTable() {
     this.dtOptions = {
       // searching: false,
       dom: 't<"bottom"riflp><"clear">',
@@ -40,7 +39,5 @@ this.setDataTable()
       ],
       responsive: true,
     };
-
   }
-
 }

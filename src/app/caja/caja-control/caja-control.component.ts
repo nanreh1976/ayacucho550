@@ -9,8 +9,7 @@ import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-aper
 import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
 import { Observable } from 'rxjs';
 import { CajaStorageService } from 'src/app/servicios/storage/caja-storage.service';
-
-
+import { StorageService } from 'src/app/servicios/storage/storage.service';
 
 @Component({
   selector: 'app-caja-control',
@@ -20,12 +19,11 @@ import { CajaStorageService } from 'src/app/servicios/storage/caja-storage.servi
       <div>
         <app-caja-view
           [$modoCaja]="$modoCaja"
-   
           [saldo$]="saldo$"
           [usuario]="usuario"
-          [cajaLog]="cajaLog"
+          [sesionCaja]="$sesionCaja"
           [$estadoCaja]="$estadoCaja"
-            [data$]="data$"
+          [data$]="data$"
           (newItemEvent)="getMsg($event)"
         ></app-caja-view>
       </div>
@@ -42,7 +40,7 @@ export class CajaControlComponent implements OnInit {
   // data!: Icaja[];
   $modoCaja: any;
 
-  cajaLog: any;
+  $sesionCaja: any;
   $estadoCaja: any;
 
   saldo$: Observable<any>;
@@ -55,20 +53,19 @@ export class CajaControlComponent implements OnInit {
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
     private estadoCajaService: EstadoCajaService,
-    private cajaStorageService: CajaStorageService
-  ) { }
+    private cajaStorageService: CajaStorageService,
+
+  ) {}
 
   ngOnInit(): void {
-
     // this.getAllSorted();
     this.setUser();
- 
-    this.$modoCaja = this.estadoCajaService.modoCaja$
-    this.saldo$ = this.cajaStorageService.saldo$
+    this.$sesionCaja = this.estadoCajaService.sesionCaja$;
+    this.$modoCaja = this.estadoCajaService.modoCaja$;
+    this.saldo$ = this.cajaStorageService.saldo$;
     this.loading$ = this.cajaStorageService.loading$;
     this.noResults$ = this.cajaStorageService.noResults$;
-    this.data$ = this.cajaStorageService.data$
-
+    this.data$ = this.cajaStorageService.data$;
   }
 
   setUser() {
@@ -132,7 +129,7 @@ export class CajaControlComponent implements OnInit {
       (result) => {
         this.selectCrudOp(result.op, result.item);
       },
-      (reason) => { }
+      (reason) => {}
     );
   }
 
@@ -190,8 +187,6 @@ export class CajaControlComponent implements OnInit {
     //  this.estadoCaja = 'cerrada';
   }
 
-
-
   addItem(componente: string, item: any): void {
     // console.log('add itemcomponent', item);
 
@@ -201,5 +196,4 @@ export class CajaControlComponent implements OnInit {
       // .then(() => this.ngOnInit())
       .catch((e) => console.log(e.message));
   }
-
 }
