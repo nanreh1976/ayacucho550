@@ -47,7 +47,8 @@ export class EstadoCajaService {
       userLoggeEsAdmin
     ) {
       this.modoCaja$.next('admin');
-      this.sesionCaja$.next(cajaL); // pasa info de la sesion abierta al admin
+      this.sesionCaja$.next(cajaLog);
+      console.log ("admin estado caja" , cajaL, cajaLog) // pasa info de la sesion abierta al admin
     } else {
       // si es user la bloquea y que llame al admin
 
