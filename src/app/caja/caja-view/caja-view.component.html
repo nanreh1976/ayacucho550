@@ -13,17 +13,12 @@
   <div *ngIf="($modoCaja | async) === 'admin'">
     <p>La caja esta abierta en otra sesion</p>
     <br />
-    {{ sesionCaja | async}}
-    {{ sesionCaja['id'] }}
+    {{ sesionCaja | async | json}}
+    <div *ngIf="(sesionCaja | async) as sesionCaja">
+      <h3> {{sesionCaja.userDisplayName}} </h3>
+    </div>
 
-    <p>Usuario : {{ sesionCaja[0]?.userDisplayName |async }}</p>
-    <p>Sesion: {{ sesionCaja["id"] |async}}</p>
-    <p>
-      Abierta el :
-      {{
-        sesionCaja["apertura.seconds"] * 1000 | date : "dd/MM/yyyy - hh:mmaaa"
-      }}
-    </p>
+
  
     <br />
     <p>desea cerrarla?</p>
