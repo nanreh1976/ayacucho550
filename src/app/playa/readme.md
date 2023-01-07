@@ -1,9 +1,10 @@
-- en el app.component el router llama a playa control
-- playa control solo maneja el crud
+- Despues del login, en el app.component el router direcciona al home,
+- a su vez el home, rediecciona a playa control
+- playa home recibe las operacioees desde Componente inicio, que valida patentes y tickets antes de ingresar datos u operaciones a playa.
 - para mostrar datos, se los pasa a playa-vista
 - playa vista solo muestra datos, y devuelve las operaciones seleccionadas a playa control que las recibe a traves de getMsg
 - playa control llama a form control con la operacon y el item seleccionado que le paso vista
 - form control cuando el usuario termina las modificaciones la info del form a playa control
 - playa control , a traves de flowOp selecciona
-  - que operaciones de crud hacer y llama a data service
+  - que operaciones de crud hacer y llama al storage, que maneja el data service
   - que operaciones de ticket hacer. ( y deberia llamar a ticket service?)
