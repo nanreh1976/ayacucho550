@@ -135,6 +135,8 @@ export class StorageService {
 
   // METODOS CRUD
 
+  // al suscribirse una vez (getallsorted corre al inicio de la app para cada componente en el initializer) no hace falta actualizar el storage en cada metodo del crud, ya que este se actualiza automaticamente.
+
   getAllSorted(componente: any, campo: any, orden: any) {
     // pasar campo y orden (asc o desc)
     this.dbFirebase.getAllSorted(componente, campo, orden).subscribe((data) => {

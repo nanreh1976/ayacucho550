@@ -43,7 +43,7 @@ export class CajaControlComponent implements OnInit {
   $sesionCaja: any;
   $estadoCaja: any;
 
-  saldo$: Observable<any>;
+  saldo$: number;
   loading$: Observable<boolean>;
   data$: Observable<any>;
   noResults$: Observable<boolean>;
@@ -61,7 +61,8 @@ export class CajaControlComponent implements OnInit {
     this.setUser();
     this.$sesionCaja = this.estadoCajaService.sesionCaja$;
     this.$modoCaja = this.estadoCajaService.modoCaja$;
-    this.saldo$ = this.cajaStorageService.saldo$;
+    this.cajaStorageService.saldo$.subscribe((data) => (this.saldo$ = data));
+    // this.saldo$ = this.cajaStorageService.saldo$;
     this.loading$ = this.cajaStorageService.loading$;
     this.noResults$ = this.cajaStorageService.noResults$;
     this.data$ = this.cajaStorageService.data$;
@@ -155,9 +156,7 @@ export class CajaControlComponent implements OnInit {
       }
 
       case 'Apertura de Caja': {
-        this.aperturaCaja();
-        item.operacion = 'apertura';
-        this.addItem(this.componente, item);
+        this.aperturaCaja(item);
         break;
       }
 
@@ -170,15 +169,23 @@ export class CajaControlComponent implements OnInit {
 
   // operaciones de caja
 
-  aperturaCaja() {
+  aperturaCaja(item: any) {
+    // llama al metodo de estadoCaja para abrir sesion
+    // una vez abierta, estado caja carga la primer operacion que es saldo inicial.
+
+    item.operacion = 'apertura';
+
+    this.estadoCajaService.abrirSesion(item);
+    // this.addItem(this.componente, item);
     // console.log("apertura de caja")
   }
 
   cierreCaja(item: any) {
-    // registra la operacion de cierre y $ que se extrae en la sesion
+    // registra en caja la operacion de cierre y $ que se extraen
     item.operacion = 'cierre';
     this.addItem(this.componente, item);
     console.log('cierre de caja');
+
     // llama al metodo de estadoCaja para el cierre de sesion
     this.estadoCajaService.cerrarSesion();
   }

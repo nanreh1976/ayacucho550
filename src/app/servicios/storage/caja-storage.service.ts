@@ -46,7 +46,16 @@ export class CajaStorageService {
   //   this.bs.next(this.initialValue)
   // }
 
+  addItem(componente: string, item: any): void {
+    item.fechaOp = new Date();
+    console.log(' storage add item ', componente, item);
 
+    this.firestore
+      .create(componente, item)
+      // .then((data) => console.log(data))
+      // .then(() => this.ngOnInit())
+      .catch((e) => console.log(e.message));
+  }
 
 
 
