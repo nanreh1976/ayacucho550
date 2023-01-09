@@ -52,7 +52,7 @@ export class PlayaControlComponent implements OnInit {
 
 
   getuser() {
-    console.log(JSON.parse(localStorage.getItem('user') || `{}`))
+    console.log(JSON.parse(localStorage.getItem('usuario') || `{}`))
 
   }
 

@@ -49,8 +49,8 @@ export class AbonoService {
           vehiculo.estado = 0;
           //console.log("abono service. verificarAbonos: ", vehiculo);
           this.dbFirebase.update("vehiculos", vehiculo)
-            .then((data) => console.log(data))
-            .catch((e) => console.log(e.message));
+            .then(data => console.log(data))
+            .catch(e => console.log(e.message));
         }
       }
 

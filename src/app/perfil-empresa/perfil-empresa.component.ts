@@ -33,7 +33,7 @@ export class PerfilEmpresaComponent implements OnInit {
   }
 
   getuser() {
-    console.log(JSON.parse(localStorage.getItem('user') || `{}`));
+    console.log(JSON.parse(localStorage.getItem('usuario') || `{}`));
   }
 
   /// RECIBE MENSAJE DE LA VISTA ///
