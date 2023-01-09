@@ -72,4 +72,19 @@ export class EstadoCajaService {
         }
       });
   }
+
+
+cerrarSesion(){
+  
+    // tiene que cerrar la sesion de caja actual
+
+    // tiene que pasar el modo de caja a cerrada
+    //  this.estadoCaja = 'cerrada';
+}
+
+abrirSesion(){
+
+  
+}
+
 }

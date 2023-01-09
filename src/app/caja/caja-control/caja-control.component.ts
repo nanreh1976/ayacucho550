@@ -53,8 +53,7 @@ export class CajaControlComponent implements OnInit {
     private fb: FormBuilder,
     private dbFirebase: DbFirestoreService,
     private estadoCajaService: EstadoCajaService,
-    private cajaStorageService: CajaStorageService,
-
+    private cajaStorageService: CajaStorageService
   ) {}
 
   ngOnInit(): void {
@@ -173,18 +172,15 @@ export class CajaControlComponent implements OnInit {
 
   aperturaCaja() {
     // console.log("apertura de caja")
-    // this.logger.log("apertura de caja", "");
   }
 
   cierreCaja(item: any) {
-    // registra el cierre en la caja
+    // registra la operacion de cierre y $ que se extrae en la sesion
     item.operacion = 'cierre';
     this.addItem(this.componente, item);
     console.log('cierre de caja');
-    // tiene que cerrar la sesion de caja actual
-
-    // tiene que pasar el modo de caja a cerrada
-    //  this.estadoCaja = 'cerrada';
+    // llama al metodo de estadoCaja para el cierre de sesion
+    this.estadoCajaService.cerrarSesion();
   }
 
   addItem(componente: string, item: any): void {
