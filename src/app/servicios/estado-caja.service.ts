@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { DbFirestoreService } from './database/db-firestore.service';
 import { CajaStorageService } from './storage/caja-storage.service';
@@ -8,10 +9,12 @@ import { StorageService } from './storage/storage.service';
   providedIn: 'root',
 })
 export class EstadoCajaService {
-  constructor(private dbFirebase: DbFirestoreService,
-    private storageService:StorageService, 
-    private cajaStorageService:CajaStorageService,
-    ) {
+  constructor(
+    private dbFirebase: DbFirestoreService,
+    private storageService: StorageService,
+    private cajaStorageService: CajaStorageService,
+    private angularFirestore: AngularFirestore
+  ) {
     this.getEstadoCajaFirebase();
     // determinar estado de caja en firebase antes de iniciar la app
   }
@@ -37,6 +40,7 @@ export class EstadoCajaService {
         } else {
           // Si Hay caja abierta en firebase, determinar estado segun usuarios
           this.setModoCaja(cajaLog);
+          this.sesionCaja = JSON.parse(cajaLog); //uso interno del servicio
         }
       });
   }
@@ -45,20 +49,19 @@ export class EstadoCajaService {
 
   // en base al estado y usuario de caja en firebase, establecer el estado en la app
   setModoCaja(cajaLog: any) {
+    // cual es el usuario logueado en la caja (firebase)
     let cajaL = JSON.parse(cajaLog);
     let userCajaUid = cajaL.userUid;
 
+    // cual es el usuario logueado en la app
     let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
     let userLoggedUid = user['uid'];
     let userLoggeEsAdmin = !user.roles.user;
 
     // si la caja esta abierta en firebase por el mismo usuario en la app
     // abre caja
-    // TODO CARGAR LOS DATOS DE LA SESION
-
     if (userCajaUid === userLoggedUid) {
       this.modoCaja$.next('abierta');
-      //this.cargarsesiondesdecajaLogenfirebase
     }
 
     // si el usuario no coincide con el que abrio la sesion de caja:
@@ -68,45 +71,62 @@ export class EstadoCajaService {
     ) {
       this.modoCaja$.next('admin');
       this.sesionCaja$.next(cajaL); // cambia estado observer para componentes
-      this.sesionCaja = cajaL; // info de sesion caja para uso interno (abrir y cerrar)
-      console.log('admin estado caja', cajaL, cajaLog); // pasa info de la sesion abierta al admin
-    } else {
-      // si es user le avisa que ya esta abierta y que llame al admin si necesita.
 
+      // pasa info de la sesion abierta al admin
+    } else {
+      // si es user le avisa que ya esta abierta por otro usuario
+      // y que llame al admin si necesita solucionar algo
       this.modoCaja$.next('block');
     }
   }
 
-  // metodos para abrir y cerra caja en la BBDD (cajaLog)
+  // metodos para abrir y cerrar sesion caja en la BBDD (cajaLog)
 
   cerrarSesion() {
-    let nd = new Date()
-    this.sesionCaja.estado="cerrada"
-    this.sesionCaja.cierre=nd
+    // cierra sesion de Caja (cajaLOg) vigente
+    // pasa el modo de caja a cerrado
 
-    this.storageService.updateItem("cajaLog", this.sesionCaja)
+    let nd = new Date();
+    this.sesionCaja.estado = 'cerrada';
+    this.sesionCaja.cierre = nd;
 
-    // tiene que cerrar la sesion de caja actual
-    // tiene que pasar el modo de caja a cerrada
-    //  this.estadoCaja = 'cerrada';
+    this.storageService.updateItem('cajaLog', this.sesionCaja);
   }
 
-  abrirSesion(item:any) {
-    // Abre la sesion en el cajaLog
-    let nd = new Date()
+  abrirSesion(item: any) {
+    // arma los datos de la nueva sesion y Abre la sesion en el cajaLog
+    let nd = new Date();
     let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
     let userLoggedUid = user['uid'];
-    let userDisplayName = user["displayName"]
+    let userDisplayName = user['displayName'];
+
     let nuevaSesionCaja = {
-      "apertura": nd, 
-      "estado" : "abierta",
-      "userDisplayname" : userDisplayName ,
-      "userUid" : userLoggedUid  ,
-       }
-    this.storageService.addItem("cajaLog", nuevaSesionCaja)
+      apertura: nd,
+      estado: 'abierta',
+      userDisplayname: userDisplayName,
+      userUid: userLoggedUid,
+    };
 
-    // carga la primer operacion (saldo inical de caja)
-    this.cajaStorageService.addItem("caja" , item);
+    // esto es un injerto, deberia ir en el servicio database
+    // es para conocer la id de la nueva sesion al momento de crearla
+    // y poder cargarla en la operacion de caja "apertura" sin errores
 
+    // #!!! Pasarlo.
+
+    let dataCollection = `/${this.dbFirebase.coleccion}/datos/${'cajaLog'}`;
+    let nuevaSesionId = this.angularFirestore.createId();
+
+    this.angularFirestore
+      .collection<any>(dataCollection)
+      .doc(nuevaSesionId)
+      .set(nuevaSesionCaja);
+    // this.storageService.addItem("cajaLog", nuevaSesionCaja)
+    console.log('nueva sesion caja', nuevaSesionCaja);
+
+    // carga la primer operacion de la caja en la sesion
+    // (saldo inical de caja)
+    // con la id de sesion que se creo recien
+    item.sesionId = nuevaSesionId;
+    this.cajaStorageService.addItem('caja', item);
   }
 }
