@@ -59,9 +59,10 @@ export class EstadoCajaService {
     let userLoggeEsAdmin = !user.roles.user;
 
     // si la caja esta abierta en firebase por el mismo usuario en la app
-    // abre caja
+    // abre la caja en la app con la misma sesion de Caja de firebase
     if (userCajaUid === userLoggedUid) {
       this.modoCaja$.next('abierta');
+      this.sesionCaja$.next(cajaL);
     }
 
     // si el usuario no coincide con el que abrio la sesion de caja:
