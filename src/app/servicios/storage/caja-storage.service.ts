@@ -12,6 +12,7 @@ export class CajaStorageService {
 
   componente: string = 'caja';
   data: any
+  sesionId:string
 
   protected bs: BehaviorSubject<any>;
   state$: Observable<any>;
@@ -48,6 +49,7 @@ export class CajaStorageService {
 
   addItem(componente: string, item: any): void {
     item.fechaOp = new Date();
+    item.sesionId = this.sesionId
     console.log(' storage add item ', componente, item);
 
     this.firestore
@@ -58,10 +60,10 @@ export class CajaStorageService {
   }
 
 
-
-  getAllSorted() { // pasar campo y orden (asc o desc)
+  getSesionOps(sesionId: string){
+    this.sesionId = sesionId
     this.firestore
-      .getAllSorted(this.componente, 'fecha', 'desc')
+      .getByFieldValue(this.componente, 'sesionId', sesionId)
       .pipe(
         tap(data => {
           this.patch({
@@ -73,6 +75,7 @@ export class CajaStorageService {
       )
       .subscribe();
   }
+
 
   calcularSaldo(data: any) {
     console.log("calcular saldo ", data)

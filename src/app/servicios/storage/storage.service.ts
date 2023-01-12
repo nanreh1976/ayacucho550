@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DbFirestoreService } from '../database/db-firestore.service';
-import { CajaStorageService } from './caja-storage.service';
+// import { CajaStorageService } from './caja-storage.service';
 import { VehiculosStorageService } from './vehiculos-storage.service';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class StorageService {
 
   constructor(
     private dbFirebase: DbFirestoreService,
-    private cajaStorage: CajaStorageService,
+    // private cajaStorage: CajaStorageService,
     private vehiculosStorage: VehiculosStorageService
   ) {}
 
@@ -120,14 +120,14 @@ export class StorageService {
     this.getAllSorted('facturacion', 'fechaOp', 'asc');
     this.getAllSorted('logger', 'Fecha', 'asc');
 
-    this.getCaja();
+    // this.getCaja();
     this.getVehiculos();
   }
 
-  getCaja() {
-    // pasar campo y orden (asc o desc)
-    this.cajaStorage.getAllSorted();
-  }
+  // getCaja() {
+  //   // pasar campo y orden (asc o desc)
+  //   this.cajaStorage.getAllSorted();
+  // }
 
   getVehiculos() {
     this.vehiculosStorage.getAllSorted();

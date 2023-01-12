@@ -63,6 +63,8 @@ export class EstadoCajaService {
     if (userCajaUid === userLoggedUid) {
       this.modoCaja$.next('abierta');
       this.sesionCaja$.next(cajaL);
+      this.cajaStorageService.getSesionOps(cajaL.id)
+
     }
 
     // si el usuario no coincide con el que abrio la sesion de caja:
@@ -129,5 +131,6 @@ export class EstadoCajaService {
     // con la id de sesion que se creo recien
     item.sesionId = nuevaSesionId;
     this.cajaStorageService.addItem('caja', item);
+    this.cajaStorageService.getSesionOps(nuevaSesionId)
   }
 }

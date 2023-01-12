@@ -9,7 +9,6 @@ import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-aper
 import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
 import { Observable } from 'rxjs';
 import { CajaStorageService } from 'src/app/servicios/storage/caja-storage.service';
-import { StorageService } from 'src/app/servicios/storage/storage.service';
 
 @Component({
   selector: 'app-caja-control',
@@ -36,10 +35,7 @@ export class CajaControlComponent implements OnInit {
   componente: string = 'caja';
   usuario!: string;
 
-  // data recibida del crud
-  // data!: Icaja[];
   $modoCaja: any;
-
   $sesionCaja: any;
   $estadoCaja: any;
 
@@ -50,8 +46,6 @@ export class CajaControlComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private fb: FormBuilder,
-    private dbFirebase: DbFirestoreService,
     private estadoCajaService: EstadoCajaService,
     private cajaStorageService: CajaStorageService
   ) {}
@@ -139,13 +133,13 @@ export class CajaControlComponent implements OnInit {
     switch (op) {
       case 'Ingreso': {
         item.operacion = 'ingreso';
-        this.addItem(this.componente, item);
+        this.cajaStorageService.addItem(this.componente, item);
         break;
       }
 
       case 'Egreso': {
         item.operacion = 'egreso';
-        this.addItem(this.componente, item);
+        this.cajaStorageService.addItem(this.componente, item);
         break;
       }
 
@@ -171,32 +165,18 @@ export class CajaControlComponent implements OnInit {
 
   aperturaCaja(item: any) {
     // llama al metodo de estadoCaja para abrir sesion
-    // una vez abierta, estado caja carga la primer operacion que es saldo inicial.
-
+    // una vez abierta, estado caja carga la primer operacion (item) que es saldo inicial.
     item.operacion = 'apertura';
-
     this.estadoCajaService.abrirSesion(item);
-    // this.addItem(this.componente, item);
-    // console.log("apertura de caja")
   }
 
   cierreCaja(item: any) {
     // registra en caja la operacion de cierre y $ que se extraen
     item.operacion = 'cierre';
-    this.addItem(this.componente, item);
+    this.cajaStorageService.addItem(this.componente, item);
     console.log('cierre de caja');
 
     // llama al metodo de estadoCaja para el cierre de sesion
     this.estadoCajaService.cerrarSesion();
-  }
-
-  addItem(componente: string, item: any): void {
-    // console.log('add itemcomponent', item);
-
-    this.dbFirebase
-      .create(componente, item)
-      //   .then((data) => console.log(data))
-      // .then(() => this.ngOnInit())
-      .catch((e) => console.log(e.message));
   }
 }
