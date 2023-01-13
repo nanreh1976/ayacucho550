@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; // servicios modal
 import { CajaStorageService } from 'src/app/servicios/caja/caja-storage.service';
-import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { LogService } from 'src/app/servicios/log.service';
-
 import { StorageService } from 'src/app/servicios/storage/storage.service';
-
 import { TicketEntradaComponent } from 'src/app/ticket-entrada/ticket-entrada.component';
 import { PlayaFormComponent } from '../playa-form/playa-form.component';
 
@@ -36,7 +33,6 @@ export class PlayaControlComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private interOpService: InterOpService,
     private logger: LogService,
     private storageService: StorageService,
     private cajaStorageService: CajaStorageService
@@ -111,7 +107,7 @@ export class PlayaControlComponent implements OnInit {
         //sacar de playa
         this.storageService.deleteItem(this.componente, item);
         // facturar
-        this.interOpService.addItem('facturacion', item);
+        this.storageService.addItem('facturacion', item);
         // Generar el ingreso en Caja
         this.ingresarPagoEnCaja(item);
 

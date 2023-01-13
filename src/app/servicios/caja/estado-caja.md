@@ -1,4 +1,8 @@
+Solo puede haber una sesion de caja abierta en firebase, con un usuario responsable.
+
 - En la base de datos:
+
+
 -- CajaLog  lleva el registro de las sesiones de Caja. 
         {fecha cierre, 
          fecha apertura, 
@@ -19,7 +23,7 @@
 el servicio estado-caja gestiona el estado de la sesion actual en firebase
 y que puede o no hacer el usuario que ingresa a la app. 
 
-Solo puede haber una sesion de caja abierta en firebase, con un usuario responsable.
+
 
 -- modoCaja$ (admin | abierta | cerrada | block )
 Determina el estado de la caja segun quien se loguee a la app y el estado de la caja en firebase

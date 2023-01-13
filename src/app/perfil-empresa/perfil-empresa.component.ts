@@ -92,11 +92,7 @@ export class PerfilEmpresaComponent implements OnInit {
         this.updateItem(this.componente, item);
         break;
       }
-      // case 'Eliminar': {
-      //   this.deleteItem(this.componente, item);
-      //   this.interOpService.addItem("facturacion", item)
-      //   break;
-      // }
+
 
       default: {
         console.log('sin operacion en case crud');
