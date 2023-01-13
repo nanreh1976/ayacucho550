@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; // servicios modal
+import { CajaStorageService } from 'src/app/servicios/caja/caja-storage.service';
 import { InterOpService } from 'src/app/servicios/inter-op.service';
 import { LogService } from 'src/app/servicios/log.service';
-import { CajaStorageService } from 'src/app/servicios/storage/caja-storage.service';
+
 import { StorageService } from 'src/app/servicios/storage/storage.service';
 
 import { TicketEntradaComponent } from 'src/app/ticket-entrada/ticket-entrada.component';

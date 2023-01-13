@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { DbFirestoreService } from './database/db-firestore.service';
-import { CajaStorageService } from './storage/caja-storage.service';
-import { StorageService } from './storage/storage.service';
+import { CajaStorageService } from './caja-storage.service';
+import { DbFirestoreService } from '../database/db-firestore.service';
+
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,8 +36,9 @@ export class EstadoCajaService {
       .subscribe((ref) => {
         let cajaLog = JSON.stringify(ref[0]);
         if (cajaLog === undefined) {
-          // Si no hay caja abierta en firebase, cerrar caja en la app
+          // Si no hay caja abierta en firebase, en la app cerrar caja y limpiar sesion
           this.modoCaja$.next('cerrada');
+          this.sesionCaja$.next('');
         } else {
           // Si Hay caja abierta en firebase, determinar estado segun usuarios
           this.setModoCaja(cajaLog);
@@ -63,8 +65,7 @@ export class EstadoCajaService {
     if (userCajaUid === userLoggedUid) {
       this.modoCaja$.next('abierta');
       this.sesionCaja$.next(cajaL);
-      this.cajaStorageService.getSesionOps(cajaL.id)
-
+      this.cajaStorageService.getSesionOps(cajaL.id);
     }
 
     // si el usuario no coincide con el que abrio la sesion de caja:
@@ -130,7 +131,8 @@ export class EstadoCajaService {
     // (saldo inical de caja)
     // con la id de sesion que se creo recien
     item.sesionId = nuevaSesionId;
+    this.cajaStorageService.getSesionOps(nuevaSesionId);
     this.cajaStorageService.addItem('caja', item);
-    this.cajaStorageService.getSesionOps(nuevaSesionId)
+  
   }
 }

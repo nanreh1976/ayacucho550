@@ -2,7 +2,7 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { EstadoCajaService } from '../servicios/estado-caja.service';
+import { EstadoCajaService } from '../servicios/caja/estado-caja.service';
 import { InterOpService } from '../servicios/inter-op.service';
 
 import { ValidarPatenteService } from '../servicios/patentes/validar-patente.service';
