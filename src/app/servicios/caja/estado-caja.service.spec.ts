@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { EstadoCajaService } from './estado-caja.service';
 
-import { InterOpService } from './inter-op.service';
 
-describe('InterOpService', () => {
-  let service: InterOpService;
+
+describe('EstadoCajaService', () => {
+  let service: EstadoCajaService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(InterOpService);
+    service = TestBed.inject(EstadoCajaService);
   });
 
   it('should be created', () => {

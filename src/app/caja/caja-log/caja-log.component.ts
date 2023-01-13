@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { StorageService } from 'src/app/servicios/storage/storage.service';
 import { LanguageApp } from 'src/app/shared/DTLanguage';
 
@@ -44,9 +43,10 @@ this.setDataTable()
 
 // apertura: 5 de diciembre de 2022, 15:13:36 UTC-3
 // cierre: 6 de diciembre de 2022, 19:09:20 UTC-3
-// estado: "abierto"
-// logId: "x"
-// usuario: ""
+// estado: "abierto  | cerrada "
+// id: firebaseid             // es el id de la sesion para las operaciones de caja
+// userDisplayName: ""        // usuario owner de la sesion
+// userUid:                   // id del usuario owner de la sesion
 
 
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../servicios/autentificacion/auth.service';
 import { StorageService } from '../servicios/storage/storage.service';
 
 @Component({
@@ -12,7 +11,7 @@ export class PerfilUsuarioComponent implements OnInit {
   data$:any
 
   constructor(
-    public authService: AuthService,
+
     private storage:StorageService
 
   ) { }

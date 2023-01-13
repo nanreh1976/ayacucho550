@@ -1,19 +1,12 @@
 import { Component, OnInit, ɵcompileNgModuleFactory } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
-import { Icaja } from 'src/app/interfaces/Icaja';
-
 import { CajaCierreFormComponent } from '../forms/caja-cierre-form/caja-cierre-form.component';
 import { CajaEgresoFormComponent } from '../forms/caja-egreso-form/caja-egreso-form.component';
-
 import { CajaIngresoFormComponent } from '../forms/caja-ingreso-form/caja-ingreso-form.component';
 import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-apertura-form.component';
-import { EstadoCajaService } from 'src/app/servicios/estado-caja.service';
+import { EstadoCajaService } from 'src/app/servicios/caja/estado-caja.service';
 import { Observable } from 'rxjs';
-import { CajaStorageService } from 'src/app/servicios/storage/caja-storage.service';
-
+import { CajaStorageService } from 'src/app/servicios/caja/caja-storage.service';
 
 
 @Component({
@@ -24,12 +17,11 @@ import { CajaStorageService } from 'src/app/servicios/storage/caja-storage.servi
       <div>
         <app-caja-view
           [$modoCaja]="$modoCaja"
-   
           [saldo$]="saldo$"
           [usuario]="usuario"
-          [cajaLog]="cajaLog"
+          [sesionCaja]="$sesionCaja"
           [$estadoCaja]="$estadoCaja"
-            [data$]="data$"
+          [data$]="data$"
           (newItemEvent)="getMsg($event)"
         ></app-caja-view>
       </div>
@@ -42,42 +34,35 @@ export class CajaControlComponent implements OnInit {
   componente: string = 'caja';
   usuario!: string;
 
-  // data recibida del crud
-  // data!: Icaja[];
   $modoCaja: any;
-
-  cajaLog: any;
+  $sesionCaja: any;
   $estadoCaja: any;
 
-  saldo$: Observable<any>;
+  saldo$: number;
   loading$: Observable<boolean>;
   data$: Observable<any>;
   noResults$: Observable<boolean>;
 
   constructor(
     private modalService: NgbModal,
-    private fb: FormBuilder,
-    private dbFirebase: DbFirestoreService,
-    private estadoCaja: EstadoCajaService,
-
-    private cajaStorage: CajaStorageService
-  ) { }
+    private estadoCajaService: EstadoCajaService,
+    private cajaStorageService: CajaStorageService
+  ) {}
 
   ngOnInit(): void {
-
     // this.getAllSorted();
     this.setUser();
-    this.estadoCaja.getCajaAbierta()
-    this.$modoCaja = this.estadoCaja.getModoCaja()
-    this.saldo$ = this.cajaStorage.saldo$
-    this.loading$ = this.cajaStorage.loading$;
-    this.noResults$ = this.cajaStorage.noResults$;
-    this.data$ = this.cajaStorage.data$
-
+    this.$sesionCaja = this.estadoCajaService.sesionCaja$;
+    this.$modoCaja = this.estadoCajaService.modoCaja$;
+    this.cajaStorageService.saldo$.subscribe((data) => (this.saldo$ = data));
+    // this.saldo$ = this.cajaStorageService.saldo$;
+    this.loading$ = this.cajaStorageService.loading$;
+    this.noResults$ = this.cajaStorageService.noResults$;
+    this.data$ = this.cajaStorageService.data$;
   }
 
   setUser() {
-    let user = JSON.parse(localStorage.getItem('user') || `{}`);
+    let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
     this.usuario = user['displayName'];
   }
 
@@ -137,7 +122,7 @@ export class CajaControlComponent implements OnInit {
       (result) => {
         this.selectCrudOp(result.op, result.item);
       },
-      (reason) => { }
+      (reason) => {}
     );
   }
 
@@ -147,13 +132,13 @@ export class CajaControlComponent implements OnInit {
     switch (op) {
       case 'Ingreso': {
         item.operacion = 'ingreso';
-        this.addItem(this.componente, item);
+        this.cajaStorageService.addItem(this.componente, item);
         break;
       }
 
       case 'Egreso': {
         item.operacion = 'egreso';
-        this.addItem(this.componente, item);
+        this.cajaStorageService.addItem(this.componente, item);
         break;
       }
 
@@ -164,9 +149,7 @@ export class CajaControlComponent implements OnInit {
       }
 
       case 'Apertura de Caja': {
-        this.aperturaCaja();
-        item.operacion = 'apertura';
-        this.addItem(this.componente, item);
+        this.aperturaCaja(item);
         break;
       }
 
@@ -179,32 +162,20 @@ export class CajaControlComponent implements OnInit {
 
   // operaciones de caja
 
-  aperturaCaja() {
-    // console.log("apertura de caja")
-    // this.logger.log("apertura de caja", "");
+  aperturaCaja(item: any) {
+    // llama al metodo de estadoCaja para abrir sesion
+    // una vez abierta, estado caja carga la primer operacion (item) que es saldo inicial.
+    item.operacion = 'apertura';
+    this.estadoCajaService.abrirSesion(item);
   }
 
   cierreCaja(item: any) {
-    // registra el cierre en la caja
+    // registra en caja la operacion de cierre y $ que se extraen
     item.operacion = 'cierre';
-    this.addItem(this.componente, item);
+    this.cajaStorageService.addItem(this.componente, item);
     console.log('cierre de caja');
-    // tiene que cerrar la sesion de caja actual
 
-    // tiene que pasar el modo de caja a cerrada
-    //  this.estadoCaja = 'cerrada';
+    // llama al metodo de estadoCaja para el cierre de sesion
+    this.estadoCajaService.cerrarSesion();
   }
-
-
-
-  addItem(componente: string, item: any): void {
-    // console.log('add itemcomponent', item);
-
-    this.dbFirebase
-      .create(componente, item)
-      //   .then((data) => console.log(data))
-      .then(() => this.ngOnInit())
-      .catch((e) => console.log(e.message));
-  }
-
 }

@@ -1,11 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'; // servicios modal
-import { ConsultaFacturacion } from 'src/app/interfaces/consulta-facturacion';
+import { FormBuilder} from '@angular/forms';
+import { NgbModal} from '@ng-bootstrap/ng-bootstrap'; // servicios modal
 import { DbFirestoreService } from 'src/app/servicios/database/db-firestore.service';
 import { ConsultaFacturacionService } from 'src/app/servicios/facturacion/consultaFacturacion/consulta-facturacion.service';
-
-import { ConsultaFacturacionComponent } from '../consulta-facturacion/consulta-facturacion.component';
 import { FacturacionFormComponent } from '../facturacion-form/facturacion-form.component';
 
 @Component({

@@ -1,0 +1,4 @@
+El servicio storage almacena el estado de cada componente (caja abierta, cerrada, etc)
+A su vez, hace de intermediario entre la BBDD y el servicio database (CRUD), actualizando los datos solo cuando hay operaciones y evitando consultas innecesarias a la base (ej, ante un cambio de vista, se consulta al storage y no a la BBDD)
+
+
