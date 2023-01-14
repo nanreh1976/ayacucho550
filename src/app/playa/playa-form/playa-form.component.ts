@@ -304,7 +304,7 @@ export class PlayaFormComponent implements OnInit {
       tarifa: this.tarifaSeleccionada,
       descripcion: this.editForm.value.descripcion,
       saldo: this.saldo,
-      codigoBarras: `${this.barCodeId}${this.fromParent.item.patente}${fechaLimpia}${horaLimpia}`
+      codigoBarras: `${this.barCodeId}-${this.fromParent.item.patente}${fechaLimpia}${horaLimpia}`
     }
 
     this.item = this.puestoEstacionamiento;;                         //gurda el puesto en "item" para poder enviarlo
