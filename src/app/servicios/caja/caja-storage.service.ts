@@ -55,7 +55,6 @@ export class CajaStorageService {
     this.firestore
       .create(componente, item)
       // .then((data) => console.log(data))
-      // .then(() => this.ngOnInit())
       .catch((e) => console.log(e.message));
   }
 

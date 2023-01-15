@@ -124,10 +124,7 @@ export class StorageService {
     this.getVehiculos();
   }
 
-  // getCaja() {
-  //   // pasar campo y orden (asc o desc)
-  //   this.cajaStorage.getAllSorted();
-  // }
+
 
   getVehiculos() {
     this.vehiculosStorage.getAllSorted();

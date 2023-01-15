@@ -96,6 +96,7 @@ import { HeaderComponent } from './home/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PagoAbonoComponent } from './clientes/pago-abono/pago-abono.component';
 import { BtnConsultarComponent } from './shared/btn-consultar/btn-consultar.component';
+import { SesionViewComponent } from './caja/sesion-view/sesion-view.component';
 
 
 
@@ -157,6 +158,7 @@ import { BtnConsultarComponent } from './shared/btn-consultar/btn-consultar.comp
     PagoAbonoComponent,
 
     BtnConsultarComponent,
+      SesionViewComponent,
   ],
   imports: [
     BrowserModule,
