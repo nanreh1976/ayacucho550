@@ -8,9 +8,8 @@ describe('BtnEliminarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BtnEliminarComponent ]
-    })
-    .compileComponents();
+      declarations: [BtnEliminarComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

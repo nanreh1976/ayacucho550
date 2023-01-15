@@ -9,16 +9,8 @@
     >
     </app-btn-agregar>
   </div>
-
-
-
   <div>
-    <table
-      datatable
-      [dtOptions]="dtOptions"
-      class="display table"
- 
-    >
+    <table datatable [dtOptions]="dtOptions" class="display table">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -35,7 +27,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let item of data | async ; let i = index">
+        <tr *ngFor="let item of data | async; let i = index">
           <td class="badge" scope="row">{{ i + 1 }}</td>
           <td>{{ item.apellido }}</td>
           <td>{{ item.nombre }}</td>
@@ -71,5 +63,4 @@
       </tbody>
     </table>
   </div>
-
 </div>

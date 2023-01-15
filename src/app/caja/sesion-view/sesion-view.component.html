@@ -1,0 +1,26 @@
+<p>sesion-view works!</p>
+<!-- {{this.data | json}} -->
+
+
+<div>
+    <table datatable [dtOptions]="dtOptions" class="display table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th>Concepto</th>
+          <th>Fecha</th>
+          <th>Importe</th>
+ 
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of data ; let i = index">
+          <td class="badge" scope="row">{{ i + 1 }}</td>
+          <td>{{ item.concepto }}</td>
+          <td>{{ item.fecha.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa"  }}</td>
+          <td>{{ item.importe }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

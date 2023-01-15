@@ -1,77 +1,73 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder} from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'  // servicios modal
+import { FormBuilder } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; // servicios modal
 import { StorageService } from 'src/app/servicios/storage/storage.service';
 import { ClientesFormComponent } from '../clientes-form/clientes-form.component';
-
-
 
 @Component({
   selector: 'app-clientes-control',
   template: `
-  <app-clientes-view
-  [data]=data$  
- (newItemEvent)="getMsg($event)"
-  ></app-clientes-view>
-  
-              `,
-  styleUrls: ['./clientes-control.component.scss']
+    <app-clientes-view
+      [data]="data$"
+      (newItemEvent)="getMsg($event)"
+    ></app-clientes-view>
+  `,
+  styleUrls: ['./clientes-control.component.scss'],
 })
 export class ClientesControlComponent implements OnInit {
-
-  componente: string = 'clientes'
+  componente: string = 'clientes';
   data$!: any;
 
-  constructor(private modalService: NgbModal,
+  constructor(
+    private modalService: NgbModal,
     private fb: FormBuilder,
-    private storage: StorageService,
-  ) {
-  }
+    private storage: StorageService
+  ) {}
 
   ngOnInit(): void {
-    this.data$ = this.storage.clientes$
-
+    this.data$ = this.storage.clientes$;
   }
 
   getMsg(msg: any) {
-    console.log(msg, "from parent");
-    this.openForm(msg.op, msg.item)
+    console.log(msg, 'from parent');
+    this.openForm(msg.op, msg.item);
   }
 
   openForm(modo: string, item: any) {
     {
-      const modalRef = this.modalService.open(ClientesFormComponent,
-        {
-          windowClass: 'myCustomModalClass',
-          centered: true,
-          size: 'lg',
-        })
+      const modalRef = this.modalService.open(ClientesFormComponent, {
+        windowClass: 'myCustomModalClass',
+        centered: true,
+        size: 'lg',
+      });
 
       let info = {
         modo: modo,
-        item: item
-
-      }
-
+        item: item,
+      };
 
       modalRef.componentInstance.fromParent = info;
-      modalRef.result.then((result) => {
-        console.log("result from control", "op", result.op, "item", result.item);
-        this.selectCrudOp(result.op, result.item)
-          ;
-      }, (reason) => { });
+      modalRef.result.then(
+        (result) => {
+          console.log(
+            'result from control',
+            'op',
+            result.op,
+            'item',
+            result.item
+          );
+          this.selectCrudOp(result.op, result.item);
+        },
+        (reason) => {}
+      );
     }
   }
-
-
 
   // seleccionar operacion CRUD
 
   selectCrudOp(op: string, item: any) {
-
     switch (op) {
       case 'Agregar': {
-
         this.storage.addItem(this.componente, item);
         break;
       }
@@ -90,24 +86,22 @@ export class ClientesControlComponent implements OnInit {
       }
       case 'Vehiculo Agregar': {
         //console.log("llega aca?");
-        this.storage.addItem("vehiculos", item);
+        this.storage.addItem('vehiculos', item);
         break;
       }
       case 'Vehiculo Editar': {
-        this.storage.updateItem("vehiculos", item);
+        this.storage.updateItem('vehiculos', item);
         break;
       }
       case 'Vehiculo Eliminar': {
-        this.storage.deleteItem("vehiculos", item);
+        this.storage.deleteItem('vehiculos', item);
         break;
       }
 
-
       default: {
-        console.log("sin operacion en case crud")
+        console.log('sin operacion en case crud');
         break;
       }
     }
-  };
-
+  }
 }

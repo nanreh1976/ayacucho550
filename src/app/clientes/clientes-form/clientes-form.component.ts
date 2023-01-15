@@ -1,8 +1,6 @@
 import { Component, Input, OnInit,} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, } from '@angular/forms';
-
-import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { Clientes } from 'src/app/interfaces/clientes';
 import Swal from 'sweetalert2';
 
