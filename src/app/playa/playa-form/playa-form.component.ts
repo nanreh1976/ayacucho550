@@ -49,7 +49,7 @@ export class PlayaFormComponent implements OnInit {
     private validacionPatente: ValidarPatenteService,
     private fechaService: CalculoFechasService,
     private estadiaService: EstadiaService,
-    private clientesService: ClientesService,
+    private clientesService: ClientesService
   ) {
     this.createForm();
   }
@@ -85,9 +85,9 @@ export class PlayaFormComponent implements OnInit {
       case 'Agregar': {
         this.saldo = 0;
         this.item.id = '';
-        this.buscarPatente();
+        this.buscarPatenteEnPlaya();
         this.configurarFecha();
-        this.buscarCliente();
+        this.chequearSiEsCliente();
         break;
       }
 
@@ -100,8 +100,8 @@ export class PlayaFormComponent implements OnInit {
         break;
       }
       case 'Eliminar': {
-        this.buscarPatente();
-        this.eliminarVehiculo();
+        this.buscarPatenteEnPlaya();
+        this.egresoVehiculo();
         this.pruebaCierreHora();
         break;
       }
@@ -199,7 +199,7 @@ export class PlayaFormComponent implements OnInit {
     }
   }
 
-  buscarPatente() {
+  buscarPatenteEnPlaya() {
     //console.log("metodo buscar patente. playa: ", this.patentesPlaya);
     let esPatenteNueva = this.validacionPatente.buscarPatentePlaya(
       this.editForm.value.patente,
@@ -218,54 +218,29 @@ export class PlayaFormComponent implements OnInit {
 
   configurarFecha() {
     this.fecha = this.fechaService.fechaActual(); // toma la fecha actual
-    //console.log(this.fecha);
-
     this.fechas.fechaIngreso = this.fechaService.fechaDia(this.fecha); // desgloza la fecha en formato (DD/MM/YYYY) y la guarda en el objeto fechas
-    //console.log(this.fechas.fechaIngreso);
-
     this.fechas.horaIngreso = this.fechaService.fechaHora(this.fecha); // desgloza la fecha en formato (hh:mm:ss) y la guarda en el objeto fechas
-    //console.log(this.fechas.horaIngreso);
-
     this.fechas.fechaDate = this.fecha.toString();
-    ////console.log(this.fechas.fechaDate);
   }
 
   pruebaCierreHora() {
-    //console.log(this.item);
-    //console.log(this.titulo);
-
     this.fechaSalida = this.fechaService.fechaActual(); // entrega la diferencia entre la fecha ingresada y el momento actual en minutos
-    //console.log("esta es la fecha de salida: ", this.fechaSalida);
-
     this.fechas.fechaSalida = this.fechaService.fechaDia(this.fechaSalida);
-    //console.log("esta es el dia de la salida: ", this.fechas.fechaSalida);
-
     this.fechas.horaSalida = this.fechaService.fechaHora(this.fechaSalida);
-    //console.log("esta es la de la salida: ", this.fechas.horaSalida);
-
     this.fechas.estadia = this.fechaService.pruebaCierreHora(
       this.fechas.fechaDate
     );
-    //console.log("esta es la fecha de ingreso date: ", this.fechas.fechaDate)
-    //console.log("esta es la fecha.estadia: ", this.fechas.estadia);
-
     this.fechas.fechaSalidaDate = this.fechaSalida.toString();
-    // console.log("esta es la fecha salida to string: ", this.fechas.fechaSalidaDate);
-
     this.saldoEstadia();
   }
 
   changeTarifa(e: any) {
-    console.log(e.target.value);
     let tarifaForm; //crea una variable para usarlo con la funcion filter
-
     tarifaForm = this.tarifas.filter(function (tarifas: any) {
-      //filter recorre el array tarifas y devuelve otro array con lo que sea q coincida con el parametro
+      //devuelve otro array con lo que sea q coincida con el parametro
       return tarifas.nombre === e.target.value;
     });
-
     this.tarifaSeleccionada = tarifaForm[0]; //se guarda el nombre de la tarifa seleccionada en la variable
-    console.log(this.tarifaSeleccionada);
   }
 
   saldoEstadia() {
@@ -273,7 +248,6 @@ export class PlayaFormComponent implements OnInit {
       this.tarifaSeleccionada,
       this.fechas.estadia
     );
-
     this.armarPuestoEstacionamiento();
   }
 
@@ -290,31 +264,18 @@ export class PlayaFormComponent implements OnInit {
       saldo: this.saldo,
       codigoBarras: `${this.barCodeId}-${this.fromParent.item.patente}${fechaLimpia}${horaLimpia}`,
     };
-
     this.item = this.puestoEstacionamiento; //gurda el puesto en "item" para poder enviarlo
-    //console.log("este es el item final: ", this.puestoEstacionamiento)
-    //this.closeModal();
     this.ventanaConfirmacion();
   }
 
-  buscarCliente() {
-    /* console.log(this.vehiculos);
-    console.log(this.clientes); */
-    let consulta = this.clientesService.buscarPatente(
+  chequearSiEsCliente() {
+    let consulta = this.clientesService.buscarPatenteEnClientes(
       this.fromParent.item.patente
     );
-    console.log('esto es buscar cliente. respuesta a la consulta: ', consulta);
-
     if (consulta.clienteExiste) {
-      //este camino es si el cliente existe en la base de datos
-      //console.log(consulta.datosCliente);
+      //Si el cliente existe en la base de datos
       this.clienteExiste = consulta.datosVehiculo;
-      console.log('esto es clienteExiste: ', this.clienteExiste);
-
-      //this.tarifaSeleccionada = this.buscarTarifa(this.clienteExiste.idTarifa);
       this.tarifaSeleccionada = this.clienteExiste.tarifa;
-      //console.log(this.tarifaSeleccionada);
-
       this.titulo = 'Cliente';
       this.armarPuestoEstacionamiento();
     }
@@ -322,26 +283,20 @@ export class PlayaFormComponent implements OnInit {
 
   buscarTarifa(id: number) {
     let tarifas = JSON.parse(localStorage.getItem('tarifas') || `{}`);
-
     tarifas = tarifas.filter(function (tarifa: any) {
       return tarifa.id === id;
     });
-    //console.log(tarifas[0]);
-
     return tarifas[0];
   }
 
-  eliminarVehiculo() {
-    this.vehiculoEliminar = this.validacionPatente.eliminarVehiculo(
+  egresoVehiculo() {
+    this.vehiculoEliminar = this.validacionPatente.traerVehiculoPorPatente(
       this.editForm.value.patente,
       this.patentesPlaya
     );
     this.fechas = this.vehiculoEliminar.fechas;
-
     this.tarifaSeleccionada = this.vehiculoEliminar.tarifa;
-
     this.item = this.vehiculoEliminar; //gurda el puesto en "item" para poder enviarlo
-
   }
 
   ventanaConfirmacion() {
@@ -349,7 +304,6 @@ export class PlayaFormComponent implements OnInit {
       case 'Agregar': {
         Swal.fire({
           title: '¿Desea confirmar el ingreso?',
-          //text: "You won't be able to revert this!",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
@@ -373,11 +327,6 @@ export class PlayaFormComponent implements OnInit {
           confirmButtonText: 'Confirmar',
         }).then((result) => {
           if (result.isConfirmed) {
-            /*  Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success' 
-            )*/
             this.closeModal();
           }
         });
@@ -420,7 +369,6 @@ export class PlayaFormComponent implements OnInit {
         break;
       }
       default: {
-        //console.log("algo se rompio")
         break;
       }
     }

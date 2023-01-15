@@ -45,6 +45,7 @@ export class ValidarPatenteService implements Validator {
         : { patenteErronea: control.value };
   }
 
+  // patente -> booolea
   validarPatente(patente: string) {
     return (
       this.dominios.patentesViejas.test(patente) ||
@@ -54,7 +55,8 @@ export class ValidarPatenteService implements Validator {
       this.dominios.barCode.test(patente)
     );
   }
-
+ 
+  // patente ->playa -> boolean
   buscarPatentePlaya(patente: string, playa: any) {
     // devuelve TRUE  si la patente existe en playa
     let enPlaya = playa.filter(function (playa: any) {
@@ -64,7 +66,8 @@ export class ValidarPatenteService implements Validator {
     return enPlaya.length === 0;
   }
 
-  eliminarVehiculo(patente: string, playa: any) {
+  // patente -> playa -> vehiculo
+  traerVehiculoPorPatente(patente: string, playa: any) {
     // devuelve el item que coincide con la patente
     let enPlaya = playa.filter(function (playa: any) {
       return playa.patente === patente;
