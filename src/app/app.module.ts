@@ -95,6 +95,7 @@ import { NavbarComponent } from './home/navbar/navbar.component';
 import { HeaderComponent } from './home/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PagoAbonoComponent } from './clientes/pago-abono/pago-abono.component';
+import { BtnConsultarComponent } from './shared/btn-consultar/btn-consultar.component';
 
 
 
@@ -154,6 +155,8 @@ import { PagoAbonoComponent } from './clientes/pago-abono/pago-abono.component';
     CajaLogComponent,
     NavbarComponent,
     PagoAbonoComponent,
+
+    BtnConsultarComponent,
   ],
   imports: [
     BrowserModule,
