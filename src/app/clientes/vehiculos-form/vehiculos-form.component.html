@@ -9,45 +9,21 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+  <div *ngIf="($modoCaja | async) === 'cerrada'">
+    <h5 style="color: red">Caja Cerrada.</h5>
+    <h5 style="color: red">No se puede cobrar Abonos.</h5>
+    <h5 style="color: red">Abrir Caja o consultar con un Administrador.</h5>
+  </div>
+  
+  <div *ngIf="($modoCaja | async) === 'admin'">
+    <h5 style="color: red">Caja Abierta por otro usuario.</h5>
+    <h5 style="color: red">No se puede cobrar abonos.</h5>
+    <h5 style="color: red">
+      Debe cerrar y vovler a abrir sesion para operar.
+    </h5>
+  </div>
 
-  <style type="text/css">
-    .tftable {
-      font-size: 18px;
-      color: #333333;
-      width: 100%;
-      border-width: 1px;
-      border-color: #729ea5;
-      border-collapse: collapse;
-    }
-    .tftable th {
-      font-size: 12px;
-      background-color: #acc8cc;
-      border-width: 1px;
-      padding: 8px;
-      border-style: solid;
-      border-color: #729ea5;
-      text-align: left;
-    }
-    .tftable tr {
-      background-color: #d4e3e5;
-    }
-    .tftable td {
-      font-size: 12px;
-      border-width: 1px;
-      padding: 8px;
-      border-style: solid;
-      border-color: #729ea5;
-    }
-    .tftable tr:hover {
-      background-color: #ffffff;
-    }
-  </style>
-
-  <!-- <div class="form-group mb-4">
-        <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Buscar">
-      </div> -->
-
-  <table class="tftable" border="1">
+  <table class="tftable">
     <colgroup>
       <col width="15%" />
       <col width="15%" />
@@ -68,17 +44,13 @@
     </tr>
 
     <tr *ngFor="let vehiculo of vehiculosPorCliente">
-      <td class="columna-vehiculo">{{ vehiculo.patente }}</td>
-      <td class="columna-vehiculo">{{ vehiculo.marca }}</td>
-      <td class="columna-vehiculo">{{ vehiculo.modelo }}</td>
-      <td class="columna-vehiculo">{{ vehiculo.color }}</td>
-      <td class="columna-vehiculo">{{ vehiculo.tarifa.nombre }}</td>
-      <td class="columna-estado-vehiculo" *ngIf="vehiculo.estado === 1">
-        Pago
-      </td>
-      <td class="columna-estado-vehiculo" *ngIf="vehiculo.estado === 0">
-        Impago
-      </td>
+      <td>{{ vehiculo.patente }}</td>
+      <td>{{ vehiculo.marca }}</td>
+      <td>{{ vehiculo.modelo }}</td>
+      <td>{{ vehiculo.color }}</td>
+      <td>{{ vehiculo.tarifa.nombre }}</td>
+      <td *ngIf="vehiculo.estado === 1">Pago</td>
+      <td *ngIf="vehiculo.estado === 0">Impago</td>
 
       <td class="d-flex">
         <app-btn-editar
@@ -94,12 +66,14 @@
           (click)="eliminarVehiculo(vehiculo)"
         ></app-btn-eliminar>
 
-        <app-btn-eliminar
-          class="right"
-          [name]="'Pagar'"
-          class="d-flex align-items-center"
-          (click)="efectuarPago(vehiculo)"
-        ></app-btn-eliminar>
+        <div *ngIf="($modoCaja | async) === 'abierta'">
+          <app-btn-eliminar
+            class="right"
+            [name]="'Pagar'"
+            class="d-flex align-items-center"
+            (click)="efectuarPago(vehiculo)"
+          ></app-btn-eliminar>
+        </div>
       </td>
     </tr>
   </table>

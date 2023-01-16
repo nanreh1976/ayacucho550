@@ -119,6 +119,7 @@ export class StorageService {
     this.getAllSorted('cajaLog', 'apertura', 'asc');
     this.getAllSorted('facturacion', 'fechaOp', 'asc');
     this.getAllSorted('logger', 'Fecha', 'asc');
+ 
 
     // this.getCaja();
     this.getVehiculos();

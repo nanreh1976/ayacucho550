@@ -145,7 +145,6 @@ guardarDatos() {
   if(this.titulo === "Agregar"){
     Swal.fire({
       title: '¿Desea guardar el cliente?',
-      //text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -153,18 +152,12 @@ guardarDatos() {
       confirmButtonText: 'Confirmar'
     }).then((result) => {
       if (result.isConfirmed) {
-       /*  Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success' 
-        )*/
         this.closeModal();                               //cierra el modal
       }
     })
   } else{
     Swal.fire({
       title: '¿Desea guardar los cambios?',
-      //text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -172,11 +165,6 @@ guardarDatos() {
       confirmButtonText: 'Confirmar'
     }).then((result) => {
       if (result.isConfirmed) {
-       /*  Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success' 
-        )*/
         this.closeModal();                                 //cierra el modal
       }
     })
