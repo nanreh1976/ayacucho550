@@ -7,22 +7,24 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-pago-abono',
   templateUrl: './pago-abono.component.html',
-  styleUrls: ['./pago-abono.component.scss'],
+  styleUrls: ['./pago-abono.component.scss']
 })
 export class PagoAbonoComponent implements OnInit {
+
   @Input() fromParent: any;
   titulo!: any;
   item!: Vehiculo;
   cliente: Clientes;
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal,) { }
 
   ngOnInit(): void {
-    console.log('fromParent: ', this.fromParent);
 
-    this.titulo = this.fromParent.modo;
+    console.log("fromParent: ", this.fromParent );
+    
+    this.titulo = this.fromParent.modo
     this.item = this.fromParent.item;
-    this.cliente = this.fromParent.cliente;
+    this.cliente = this.fromParent.cliente
   }
 
   closeModal() {
@@ -31,12 +33,13 @@ export class PagoAbonoComponent implements OnInit {
     let value = {
       op: this.titulo,
       item: this.item,
+
     };
-    console.log('closemodal', value);
+    console.log("closemodal", value)
     this.activeModal.close(value);
   }
 
-  pago() {
+  pago(){
     Swal.fire({
       title: '¿Desea confirmar el pago?',
       //text: "You won't be able to revert this!",
@@ -44,12 +47,17 @@ export class PagoAbonoComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Confirmar',
+      confirmButtonText: 'Confirmar'
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire('Pago efectuado');
-        this.closeModal();
+        Swal.fire(
+          'Pago efectuado',
+          //'Your file has been deleted.',
+          //'success'          
+        )
+        this.closeModal()
       }
-    });
+    })
   }
+
 }

@@ -9,7 +9,7 @@ import { LanguageApp } from 'src/app/shared/DTLanguage';
   styleUrls: ['./sesion-view.component.scss'],
 })
 export class SesionViewComponent implements OnInit {
-  @Input() fromParent: any;  // recibe la id de sesion para buscar las operaciones en caja.
+  @Input() fromParent: any;
   dtOptions: DataTables.Settings = {};
   data: any;
   constructor(private firestore: DbFirestoreService) {}

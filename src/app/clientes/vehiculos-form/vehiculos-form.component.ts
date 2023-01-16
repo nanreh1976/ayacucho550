@@ -5,9 +5,7 @@ import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { AbonoService } from 'src/app/servicios/abono/abono.service';
 import { CajaStorageService } from 'src/app/servicios/caja/caja-storage.service';
-import { EstadoCajaService } from 'src/app/servicios/caja/estado-caja.service';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
-import { StorageService } from 'src/app/servicios/storage/storage.service';
 import { VehiculosStorageService } from 'src/app/servicios/storage/vehiculos-storage.service';
 import Swal from 'sweetalert2';
 import { PagoAbonoComponent } from '../pago-abono/pago-abono.component';
@@ -31,7 +29,6 @@ export class VehiculosFormComponent implements OnInit {
   form: boolean = false;
   itemVehiculo: Vehiculo;
   vehiculos: any[]; //| Observable<any>;
-  $modoCaja:any
 
   constructor(
     private fb: FormBuilder,
@@ -40,14 +37,13 @@ export class VehiculosFormComponent implements OnInit {
     public vpService: ValidarPatenteService,
     private modalService: NgbModal,
     private cajaStorageService: CajaStorageService,
-    private abonoService: AbonoService,
-    private storageService: StorageService,
-    private estadoCaja: EstadoCajaService
+    private abonoService: AbonoService
   ) {}
 
   ngOnInit(): void {
-    // console.log('componente vehiculo. item: ', this.item);
-    this.$modoCaja = this.estadoCaja.getModoCaja();
+    console.log('componente vehiculo. item: ', this.item);
+    //console.log(this.titulo);
+
     this.createForm();
     this.getAllVehiculos();
     this.getTarifas();
@@ -55,14 +51,20 @@ export class VehiculosFormComponent implements OnInit {
 
   getAllVehiculos(): void {
     this.vehiculosStorage.data$.subscribe((data) => (this.vehiculos = data));
+    // this.vehiculos = this.vehiculosStorage.data$;
+
+    console.log('get all vehiculos', this.vehiculos);
     this.armarTabla();
   }
 
   getTarifas() {
-    this.storageService.tarifas$.subscribe((data) => (this.tarifas = data));
+    this.tarifas = JSON.parse(localStorage.getItem('tarifas') || `{}`);
+    //console.log(`estas son las tarifas: ${this.tarifas}`);
   }
 
   armarTabla() {
+    let vehiculos;
+
     this.vehiculos.forEach((vehiculo) => {
       if (vehiculo.idCliente === this.item.id) {
         this.vehiculosPorCliente.push(vehiculo);
@@ -85,6 +87,8 @@ export class VehiculosFormComponent implements OnInit {
       marca: [''],
       modelo: [''],
       color: [''],
+      // egreso: [''],
+      // ingreso: [''],
       id: [''],
     });
   }
@@ -107,6 +111,10 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   guardarVehiculo() {
+    // console.log(this.editForm.value);
+    // console.log(this.item);
+    // console.log(this.titulo);
+
     if (this.titulo === 'Vehiculo Agregar') {
       //this.titulo = "Vehiculo Agregar";
 
@@ -126,6 +134,7 @@ export class VehiculosFormComponent implements OnInit {
 
       Swal.fire({
         title: '¿Desea agendar el vehiculo?',
+        //text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -133,11 +142,16 @@ export class VehiculosFormComponent implements OnInit {
         confirmButtonText: 'Confirmar',
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('Agendado');
+          Swal.fire(
+            'Agendado'
+            //'Your file has been deleted.',
+            //'success'
+          );
           this.msgBack(this.titulo, vehiculoAgregado);
         }
       });
-
+      //console.log(vehiculoAgregado);
+      //this.msgBack(this.titulo, vehiculoAgregado);
     } else {
       let vehiculoEditado = {
         id: this.editForm.value.id,
@@ -161,10 +175,15 @@ export class VehiculosFormComponent implements OnInit {
         confirmButtonText: 'Confirmar',
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('Guardados');
+          Swal.fire(
+            'Guardados'
+            //'Your file has been deleted.',
+            //success'
+          );
           this.msgBack(this.titulo, vehiculoEditado);
         }
       });
+      //this.msgBack(this.titulo, vehiculoEditado);
     }
   }
 
@@ -183,10 +202,13 @@ export class VehiculosFormComponent implements OnInit {
       if (result.isConfirmed) {
         Swal.fire(
           'Eliminado'
+          //'Your file has been deleted.',
+          //'success'
         );
         this.msgBack(this.titulo, vehiculo);
       }
     });
+    //this.msgBack(this.titulo, vehiculo)
   }
 
   editarVehiculo(vehiculo: Vehiculo) {
@@ -205,6 +227,7 @@ export class VehiculosFormComponent implements OnInit {
     //console.log(vehiculoAgregado);
     this.tarifaSeleccionada = vehiculo.tarifa;
     this.titulo = 'Vehiculo Editar';
+    //this.msgBack(this.titulo, vehiculoEditado)
   }
 
   msgBack(op: string, item: any) {
@@ -230,6 +253,8 @@ export class VehiculosFormComponent implements OnInit {
     const modalRef = this.modalService.open(PagoAbonoComponent, {
       // scrollable: false,
       windowClass: 'myCustomModalClass',
+      // keyboard: false,
+      // backdrop: 'static'
     });
 
     let info = {

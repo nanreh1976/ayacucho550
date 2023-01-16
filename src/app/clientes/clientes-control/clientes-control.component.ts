@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; // servicios modal
-import { EstadoCajaService } from 'src/app/servicios/caja/estado-caja.service';
 import { StorageService } from 'src/app/servicios/storage/storage.service';
 import { ClientesFormComponent } from '../clientes-form/clientes-form.component';
 
@@ -10,9 +9,7 @@ import { ClientesFormComponent } from '../clientes-form/clientes-form.component'
   template: `
     <app-clientes-view
       [data]="data$"
-      [$modoCaja]="$modoCaja"
       (newItemEvent)="getMsg($event)"
-
     ></app-clientes-view>
   `,
   styleUrls: ['./clientes-control.component.scss'],
@@ -20,19 +17,15 @@ import { ClientesFormComponent } from '../clientes-form/clientes-form.component'
 export class ClientesControlComponent implements OnInit {
   componente: string = 'clientes';
   data$!: any;
-  $modoCaja:any
 
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private storage: StorageService,
-    private estadoCaja: EstadoCajaService
-
+    private storage: StorageService
   ) {}
 
   ngOnInit(): void {
     this.data$ = this.storage.clientes$;
-    this.$modoCaja = this.estadoCaja.getModoCaja();
   }
 
   getMsg(msg: any) {

@@ -148,6 +148,9 @@ export class EmpresaFormComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
+          /* 'Deleted!',
+          'Your file has been deleted.',
+          'success'  */
           'Guardados'
         )
         this.closeModal();

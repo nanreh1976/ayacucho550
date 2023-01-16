@@ -58,7 +58,7 @@ export class EstadoCajaService {
     // cual es el usuario logueado en la app
     let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
     let userLoggedUid = user['uid'];
-    let userLoggedEsAdmin = !user.roles.user;
+    let userLoggeEsAdmin = !user.roles.user;
 
     // si la caja esta abierta en firebase por el mismo usuario en la app
     // abre la caja en la app con la misma sesion de Caja de firebase
@@ -71,7 +71,7 @@ export class EstadoCajaService {
     // si el usuario no coincide con el que abrio la sesion de caja:
     else if (
       // si es admin le avisa y le muestra el boton cerrar
-      userLoggedEsAdmin
+      userLoggeEsAdmin
     ) {
       this.modoCaja$.next('admin');
       this.sesionCaja$.next(cajaL); // cambia estado observer para componentes
