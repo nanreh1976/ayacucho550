@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 })
 export class ClientesViewComponent implements OnInit {
 
-  
+  @Input() $modoCaja: any;  //abierta cerrada admin block
   @Input() data?: any 
   @Output() newItemEvent = new EventEmitter<any>();
   titulo: string = 'clientes';
@@ -44,11 +44,6 @@ this.setDataTableOptions()
         confirmButtonText: 'Confirmar'
       }).then((result) => {
         if (result.isConfirmed) {
-         /*  Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success' 
-          )*/
           this.newItemEvent.emit(value);
         }
       })
