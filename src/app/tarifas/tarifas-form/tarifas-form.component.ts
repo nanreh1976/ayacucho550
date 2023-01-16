@@ -66,19 +66,23 @@ export class TarifasFormComponent implements OnInit {
         break;
       }
 
-      case 'Editar': {
-        this.item = this.fromParent.item; //si es editar, se guardan los datos q recibe el componente en this.item
-        this.unidadSeleccionada = this.item.unidad_tiempo; //se guarda la unidad seleccionada en this.unidadSeleccionada
-        this.categoriaSeleccionada = this.item.categoria; //se guarda la categoria en this.categoriaSeleccionada
-        this.configureForm(); //se llama al metodo para configurar el form
-        break;
-      }
-      case 'Eliminar': {
-        this.item = this.fromParent.item;
-        this.closeModal();
-        break;
-      }
-      default: {
+        case 'Editar': {
+          this.item = this.fromParent.item;                        //si es editar, se guardan los datos q recibe el componente en this.item         
+          this.unidadSeleccionada = this.item.unidad_tiempo;      //se guarda la unidad seleccionada en this.unidadSeleccionada
+          this.categoriaSeleccionada = this.item.categoria;        //se guarda la categoria en this.categoriaSeleccionada
+          this.vehiculoSeleccionado = this.item.vehiculo;        //se guarda el vehiculo en this.vehiculoSeleccionado
+          this.configureForm();                                   //se llama al metodo para configurar el form
+          break;
+        }
+        case 'Eliminar': {
+          this.item = this.fromParent.item; 
+          this.closeModal()
+          break;
+        }
+          default: {
+            
+          }
+
       }
     }
   }
