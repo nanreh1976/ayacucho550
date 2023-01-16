@@ -80,7 +80,7 @@ export class CajaAperturaFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      concepto: ['', Validators.pattern(/^[a-zA-Z]{2,256}$/)],
+      concepto: ['', Validators.pattern(/^[A-Za-z0-9\s+]+$/g)],
       importe: [Validators.required,
       Validators.pattern("-?\\d+(?:\\.\\d+)?")
 

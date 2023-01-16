@@ -66,6 +66,7 @@ export class TarifasFormComponent implements OnInit {
         break;
       }
 
+
       case 'Editar': {
         this.item = this.fromParent.item; //si es editar, se guardan los datos q recibe el componente en this.item
         this.unidadSeleccionada = this.item.unidad_tiempo; //se guarda la unidad seleccionada en this.unidadSeleccionada
@@ -80,6 +81,7 @@ export class TarifasFormComponent implements OnInit {
         break;
       }
       default: {
+
       }
     }
   }
