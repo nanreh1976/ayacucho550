@@ -1,5 +1,17 @@
 <!-- <H1 class="display-1" style="text-align: center;">Clientes </H1> -->
+<div *ngIf="($modoCaja | async) === 'cerrada'">
+  <h5 style="color: red">Caja Cerrada.</h5>
+  <h5 style="color: red">No se puede cobrar Abonos.</h5>
+  <h5 style="color: red">Abrir Caja o consultar con un Administrador.</h5>
+</div>
 
+<div *ngIf="($modoCaja | async) === 'admin'">
+  <h5 style="color: red">Caja Abierta por otro usuario.</h5>
+  <h5 style="color: red">No se puede cobrar abonos.</h5>
+  <h5 style="color: red">
+    Debe cerrar y vovler a abrir sesion para operar.
+  </h5>
+</div>
 <div class="container">
   <div style="float: right">
     <app-btn-agregar
