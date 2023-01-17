@@ -51,6 +51,7 @@ export class CajaEgresoFormComponent implements OnInit {
     this.editForm = this.fb.group({
       concepto: ['',  
                 Validators.required,
+                Validators.pattern('[a-zA-Z0-9 ñÑáéíóúÁÉÍÓÚ]*'),
                 Validators.minLength(4),], 
       importe: [''], //, Validators.required, Validators.pattern("-?\\d+(?:\\.\\d+)?"),
     //Validators.max(this.saldo), Validators.min(1),],

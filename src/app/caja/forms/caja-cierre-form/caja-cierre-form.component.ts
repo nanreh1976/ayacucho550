@@ -59,7 +59,7 @@ export class CajaCierreFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      concepto: ['', Validators.pattern(/^[A-Za-z0-9\s+]+$/g)],
+      concepto: ['', Validators.pattern('[a-zA-Z0-9 ñÑáéíóúÁÉÍÓÚ]*')],
       importe: [Validators.required,
       Validators.pattern("-?\\d+(?:\\.\\d+)?")
 
