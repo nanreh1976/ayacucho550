@@ -88,9 +88,12 @@ export class EstadoCajaService {
 
   // metodos para abrir y cerrar sesion caja en la BBDD (cajaLog)
 
-  cerrarSesion() {
+  cerrarSesion(item:any) {
     // cierra sesion de Caja (cajaLOg) vigente
     // pasa el modo de caja a cerrado
+
+   
+    this.cajaStorageService.addItem("caja", item, this.sesionCaja.id)
 
     let nd = new Date();
     this.sesionCaja.estado = 'cerrada';
