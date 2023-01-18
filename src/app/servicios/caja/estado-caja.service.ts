@@ -23,6 +23,7 @@ export class EstadoCajaService {
   modoCaja$ = new BehaviorSubject<string>('');
   sesionCaja$ = new BehaviorSubject<any>('');
   sesionCaja: any = '';
+  sesionACerrar:string
   // metodo para consultar el observer por otros componentes
   getModoCaja() {
     return this.modoCaja$.asObservable();
@@ -75,6 +76,7 @@ export class EstadoCajaService {
     ) {
       this.modoCaja$.next('admin');
       this.sesionCaja$.next(cajaL); // cambia estado observer para componentes
+      this.sesionACerrar = cajaL.id
 
       // pasa info de la sesion abierta al admin
     } else {
