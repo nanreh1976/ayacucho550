@@ -171,11 +171,12 @@ export class CajaControlComponent implements OnInit {
 
   cierreCaja(item: any) {
     // registra en caja la operacion de cierre y $ que se extraen
+    console.log('cierre de caja', item, this.$sesionCaja);
     item.operacion = 'cierre';
-    this.cajaStorageService.addItem(this.componente, item);
-    console.log('cierre de caja');
+    // this.cajaStorageService.addItem(this.componente, item);
+  
 
     // llama al metodo de estadoCaja para el cierre de sesion
-    this.estadoCajaService.cerrarSesion();
+    this.estadoCajaService.cerrarSesion(item);
   }
 }

@@ -23,6 +23,7 @@ export class EstadoCajaService {
   modoCaja$ = new BehaviorSubject<string>('');
   sesionCaja$ = new BehaviorSubject<any>('');
   sesionCaja: any = '';
+  sesionACerrar:string
   // metodo para consultar el observer por otros componentes
   getModoCaja() {
     return this.modoCaja$.asObservable();
@@ -75,6 +76,7 @@ export class EstadoCajaService {
     ) {
       this.modoCaja$.next('admin');
       this.sesionCaja$.next(cajaL); // cambia estado observer para componentes
+      this.sesionACerrar = cajaL.id
 
       // pasa info de la sesion abierta al admin
     } else {
@@ -86,9 +88,12 @@ export class EstadoCajaService {
 
   // metodos para abrir y cerrar sesion caja en la BBDD (cajaLog)
 
-  cerrarSesion() {
+  cerrarSesion(item:any) {
     // cierra sesion de Caja (cajaLOg) vigente
     // pasa el modo de caja a cerrado
+
+   
+    this.cajaStorageService.addItem("caja", item, this.sesionCaja.id)
 
     let nd = new Date();
     this.sesionCaja.estado = 'cerrada';

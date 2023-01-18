@@ -35,23 +35,21 @@ export class CajaCierreFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.now = new Date()
-    //console.log("on init form", this.fromParent);
     this.titulo = this.fromParent.modo
     this.saldo = this.fromParent.saldo
-
+console.log("caja cierre form", this.fromParent)
     this.configureForm(this.titulo, this.item);
   }
 
   configureForm(_titulo: string, item: any) {
 
-    // console.log("configure form", titulo, item), (titulo !=='agregar');
     this.editForm.patchValue({
 
       fecha: this.now,
       concepto: "",
       operacion: "Cierre de Caja",
       importe: this.saldo,
-      // id:""
+
     });
 
   }
@@ -66,8 +64,6 @@ export class CajaCierreFormComponent implements OnInit {
       ],
       operacion: [''],
       fecha: ['',],
-      //id: [''],
-
     });
   }
 
@@ -79,7 +75,6 @@ export class CajaCierreFormComponent implements OnInit {
       op: this.titulo,
       item: this.editForm.value
     };
-    //console.log("closemodal", value)
     this.activeModal.close(value);
   }
 
@@ -96,14 +91,6 @@ export class CajaCierreFormComponent implements OnInit {
 
 
   getMsg(msg: any) {
-
-    /* let value = {
-      op: msg.op,
-      item: msg.item
-      
-    }; */
-
-    //console.log("closemodal", msg)
     this.activeModal.close(msg);
 
   }
