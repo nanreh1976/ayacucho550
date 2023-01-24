@@ -107,7 +107,7 @@ export class DbFirestoreService {
 
   setearColeccion(coleccion: string) {
     this.coleccion = coleccion;
-    console.log('esto es el servicio db. coleccion: ', this.coleccion);
+
   }
 
   getTodo() {

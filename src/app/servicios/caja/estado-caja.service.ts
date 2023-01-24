@@ -116,7 +116,7 @@ export class EstadoCajaService {
       userUid: userLoggedUid,
     };
 
-    // esto es un injerto, deberia ir en el servicio database
+    // #!!! injerto, deberia ir en el servicio database
     // es para conocer la id de la nueva sesion al momento de crearla
     // y poder cargarla en la operacion de caja "apertura" sin errores
 

@@ -40,17 +40,14 @@ export class PlayaControlComponent implements OnInit {
 
   ngOnInit(): void {
     this.data$ = this.storageService.playa$;
-    this.getuser();
+
   }
 
-  getuser() {
-    console.log(JSON.parse(localStorage.getItem('usuario') || `{}`));
-  }
+
 
   /// RECIBE MENSAJE DE LA VISTA ///
 
   getMsg(msg: any) {
-    // console.log(msg, "from parent");
     this.openForm(msg.op, msg.item);
   }
 
@@ -59,10 +56,8 @@ export class PlayaControlComponent implements OnInit {
   openForm(modo: string, item: any) {
     {
       const modalRef = this.modalService.open(PlayaFormComponent, {
-        // scrollable: false,
         windowClass: 'myCustomModalClass',
-        // keyboard: false,
-        // backdrop: 'static'
+
       });
 
       let info = {
@@ -178,7 +173,6 @@ export class PlayaControlComponent implements OnInit {
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then(
         (result) => {
-          // console.log("result from control","op", result.op,"item", result.item);
           this.selectTicketOp(result.op, result.item);
         },
         (reason) => {}

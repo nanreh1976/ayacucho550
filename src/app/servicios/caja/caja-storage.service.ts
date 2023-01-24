@@ -79,7 +79,7 @@ export class CajaStorageService {
   }
 
   calcularSaldo(data: any) {
-    console.log('calcular saldo ', data);
+    // console.log('calcular saldo ', data);
     let saldo = 0;
     for (let item of data) {
       if (item.operacion === 'ingreso' || item.operacion === 'apertura') {

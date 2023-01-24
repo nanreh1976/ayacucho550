@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { EstadoCajaService } from '../servicios/caja/estado-caja.service';
 import { ValidarPatenteService } from '../servicios/patentes/validar-patente.service';
+import { StorageService } from '../servicios/storage/storage.service';
 
 @Component({
   selector: 'app-inicio',
@@ -18,13 +19,16 @@ export class InicioComponent implements OnInit {
   searchText!: string;
   msg: any;
   $modoCaja;
+  playa$: any
 
   constructor(
     private fb: FormBuilder,
     public vpService: ValidarPatenteService,
-    private estadoCaja: EstadoCajaService
+    private estadoCaja: EstadoCajaService,
+    private storageService: StorageService
   ) {
     this.$modoCaja = this.estadoCaja.getModoCaja();
+    this.storageService.playa$.subscribe((data) => (this.playa$ = data));
     this.createForm();
   }
 
@@ -109,7 +113,7 @@ export class InicioComponent implements OnInit {
   }
 
   onScan(code: string) {
-    let playa = JSON.parse(localStorage.getItem('playa')!);
+    let playa = this.playa$
 
     //recorre playa buscando barcode
     for (var it of playa) {

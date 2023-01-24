@@ -92,10 +92,10 @@ export class StorageService {
     this.updateObservable(componente, data);
   }
 
-  loadInfo(componente: any) {
-    const data = JSON.parse(localStorage.getItem(componente) || '');
-    this.updateObservable(componente, data);
-  }
+  // loadInfo(componente: any) {
+  //   const data = JSON.parse(localStorage.getItem(componente) || '');
+  //   this.updateObservable(componente, data);
+  // }
 
   clearInfo(componente: any) {
     localStorage.removeItem('myData');
@@ -140,7 +140,7 @@ export class StorageService {
     this.dbFirebase.getAllSorted(componente, campo, orden).subscribe((data) => {
       this.setInfo(componente, data);
       // this.updateObservable(componente, data)
-      console.log('storage initializer ', componente, data);
+      // console.log('storage initializer ', componente, data);
     });
   }
 

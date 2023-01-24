@@ -59,7 +59,7 @@ componente:string ="vehiculos"
             data,
             saldo: this.abonoService.verificarAbonos(data)
           })
-          localStorage.setItem(`${this.componente}`, JSON.stringify(data))
+          // localStorage.setItem(`${this.componente}`, JSON.stringify(data))
         })
 
       )

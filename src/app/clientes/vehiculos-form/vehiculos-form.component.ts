@@ -226,9 +226,7 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   efectuarPago(vehiculo: Vehiculo) {
-    //console.log("esto es el pago del abono: ", vehiculo);
     const modalRef = this.modalService.open(PagoAbonoComponent, {
-      // scrollable: false,
       windowClass: 'myCustomModalClass',
     });
 

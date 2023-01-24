@@ -36,36 +36,23 @@ export class PerfilEmpresaComponent implements OnInit {
     console.log(JSON.parse(localStorage.getItem('usuario') || `{}`));
   }
 
-  /// RECIBE MENSAJE DE LA VISTA ///
-
-  // getMsg(msg: any) {
-  //   // console.log(msg, "from parent");
-  //   this.openForm(msg.op, msg.item)
-  // }
-
   /// MODAL DEL FORM SEGUN INFO DE LA VISTA ////
 
   openForm(modo: string, item: any) {
     {
       const modalRef = this.modalService.open(EmpresaFormComponent, {
-        // scrollable: false,
         windowClass: 'myCustomModalClass',
-        // keyboard: false,
-        // backdrop: 'static'
       });
 
       let info = {
         modo: modo,
         item: item,
       };
-      console.log('esto es info: ', info);
+
 
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then(
         (result) => {
-          //console.log("result from control","op", result.op,"item", result.item);
-
-          // this.getXps();
           this.flowOp(result.op, result.item);
         },
         (reason) => {}
@@ -106,24 +93,13 @@ export class PerfilEmpresaComponent implements OnInit {
 
   getAll(): void {
     this.dbFirebase.getAll(this.componente).subscribe((data) => {
-      console.log('esto es la data: ', data);
+
 
       this.data = data[0];
       console.log(this.data);
     });
   }
 
-  // deleteItem(componente: string, item: any): void {
-
-  //   console.log("delete itemcomponent", item,)
-
-  //     this.dbFirebase.delete(componente, item.id)
-  //     .then((data) => console.log(data))
-  //     .then(() => this.ngOnInit())
-  //     .then(() => console.log("pasa por delete metodo?")   )
-  //     .catch((e) => console.log(e.message));
-
-  // }
 
   addItem(componente: string, item: any): void {
     console.log('add itemcomponent', item);

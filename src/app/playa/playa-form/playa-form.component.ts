@@ -8,6 +8,7 @@ import { CalculoFechasService } from 'src/app/servicios/Fechas/calculo-fechas.se
 import { EstadiaService } from 'src/app/servicios/facturacion/estadia.service';
 import { ClientesService } from 'src/app/servicios/clientes.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/servicios/storage/storage.service';
 
 @Component({
   selector: 'app-playa-form',
@@ -49,7 +50,8 @@ export class PlayaFormComponent implements OnInit {
     private validacionPatente: ValidarPatenteService,
     private fechaService: CalculoFechasService,
     private estadiaService: EstadiaService,
-    private clientesService: ClientesService
+    private clientesService: ClientesService,
+    private storageService: StorageService
   ) {
     this.createForm();
   }
@@ -126,16 +128,15 @@ export class PlayaFormComponent implements OnInit {
   }
 
   getPlaya() {
-    this.patentesPlaya = JSON.parse(localStorage.getItem('playa') || `{}`);
+    this.storageService.playa$.subscribe((data) => (this.patentesPlaya = data));
   }
 
   getTarifas() {
-    this.tarifas = JSON.parse(localStorage.getItem('tarifas') || `{}`);
+    this.storageService.tarifas$.subscribe((data) => (this.tarifas = data));
     console.log('estas son las tarifas: ', this.tarifas);
   }
 
   configurarForm() {
-    //se configura el form con los datos del objeto
     this.editForm.patchValue({
       patente: this.item.patente,
       descripcion: this.item.descripcion,
@@ -153,22 +154,18 @@ export class PlayaFormComponent implements OnInit {
         break;
       }
       case 'Editar': {
-        //this.validarPatente() ;
         this.getPlaya();
         this.validarTarifa();
 
         break;
       }
       default: {
-        //console.log("algo se rompio")
         break;
       }
     }
   }
 
   closeModal() {
-    //console.log(this.puestoEstacionamiento);
-
     let value = {
       op: this.titulo,
       item: this.puestoEstacionamiento,
@@ -200,7 +197,6 @@ export class PlayaFormComponent implements OnInit {
   }
 
   buscarPatenteEnPlaya() {
-    //console.log("metodo buscar patente. playa: ", this.patentesPlaya);
     let esPatenteNueva = this.validacionPatente.buscarPatentePlaya(
       this.editForm.value.patente,
       this.patentesPlaya
@@ -273,7 +269,6 @@ export class PlayaFormComponent implements OnInit {
       this.fromParent.item.patente
     );
     if (consulta.clienteExiste) {
-      //Si el cliente existe en la base de datos
       this.clienteExiste = consulta.datosVehiculo;
       this.tarifaSeleccionada = this.clienteExiste.tarifa;
       this.titulo = 'Cliente';
@@ -282,8 +277,8 @@ export class PlayaFormComponent implements OnInit {
   }
 
   buscarTarifa(id: number) {
-    let tarifas = JSON.parse(localStorage.getItem('tarifas') || `{}`);
-    tarifas = tarifas.filter(function (tarifa: any) {
+    let tarifas = this.tarifas
+    tarifas = this.tarifas.filter(function (tarifa: any) {
       return tarifa.id === id;
     });
     return tarifas[0];

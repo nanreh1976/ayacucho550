@@ -50,12 +50,11 @@ export class CajaControlComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.getAllSorted();
+
     this.setUser();
     this.$sesionCaja = this.estadoCajaService.sesionCaja$;
     this.$modoCaja = this.estadoCajaService.modoCaja$;
     this.cajaStorageService.saldo$.subscribe((data) => (this.saldo$ = data));
-    // this.saldo$ = this.cajaStorageService.saldo$;
     this.loading$ = this.cajaStorageService.loading$;
     this.noResults$ = this.cajaStorageService.noResults$;
     this.data$ = this.cajaStorageService.data$;

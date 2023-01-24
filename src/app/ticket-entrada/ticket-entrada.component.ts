@@ -95,9 +95,8 @@ export class TicketEntradaComponent implements OnInit {
     this.patente = this.item.patente;
     this.estadia = this.item.fechas.estadia;
     this.tarifaFraccion = this.item.tarifa.fraccion;
-    console.log(`esto es la tarifa fraccion: ${this.tarifaFraccion}`);
+
     this.tarifaValor = this.item.tarifa.valor;
-    console.log(`esto es la tarifa valor: ${this.tarifaValor}`);    
     this.saldo = this.item.saldo;
     this.value = this.item.codigoBarras;
     

@@ -61,7 +61,7 @@ export class EmpresaFormComponent implements OnInit {
       
     });
 
-    console.log("esto es editForm: ", this.editForm.value);
+
     
 
   }
@@ -81,7 +81,7 @@ export class EmpresaFormComponent implements OnInit {
 
 
   closeModal() {
-   //console.log("esto es closeModal:", this.editForm.value);
+
    
     let value = {
       op: this.titulo,
