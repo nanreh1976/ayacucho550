@@ -13,7 +13,7 @@
   </h5>
 </div>
 <div class="container">
-  <div style="float: right">
+  <div style="float: right" >
     <app-btn-agregar
       class="right"
       (click)="msgBack('Agregar', [])"
@@ -34,7 +34,7 @@
           <th>Comentario</th>
           <th></th>
           <th></th>
-          <th></th>
+          <th ></th>
         </tr>
       </thead>
 
@@ -48,7 +48,7 @@
           <td>{{ item.email }}</td>
           <td>{{ item.comentario }}</td>
           <td>
-            <app-btn-editar
+            <app-btn-editar 
               class="right"
               (click)="msgBack('Editar', item)"
               class="d-flex align-items-center"
@@ -63,7 +63,7 @@
             >
             </app-btn-eliminar>
           </td>
-          <td>
+          <td >
             <app-btn-agregar
               class="right"
               (click)="msgBack('Vehiculo', item)"

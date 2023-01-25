@@ -31,7 +31,8 @@ export class VehiculosFormComponent implements OnInit {
   form: boolean = false;
   itemVehiculo: Vehiculo;
   vehiculos: any[]; //| Observable<any>;
-  $modoCaja:any
+  $modoCaja:any;
+  
 
   constructor(
     private fb: FormBuilder,
@@ -48,6 +49,7 @@ export class VehiculosFormComponent implements OnInit {
   ngOnInit(): void {
     // console.log('componente vehiculo. item: ', this.item);
     this.$modoCaja = this.estadoCaja.getModoCaja();
+   
     this.createForm();
     this.getAllVehiculos();
     this.getTarifas();

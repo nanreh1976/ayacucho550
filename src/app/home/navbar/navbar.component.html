@@ -31,7 +31,7 @@
                     <a routerLink="./clientes" routerLinkActive="active" ariaCurrentWhenActive="page"
                         class="nav-link">Clientes</a>
                 </li>
-                <li class="nav-item" ngbDropdown>
+                <li class="nav-item" ngbDropdown *ngIf="!user$.source._value.roles.user">
                     <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown2" role="button">
                         Dashboard
                     </a>

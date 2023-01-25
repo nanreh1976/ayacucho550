@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { StorageService } from 'src/app/servicios/storage/storage.service';
 import { LanguageApp } from 'src/app/shared/DTLanguage';
 import Swal from 'sweetalert2';
 
@@ -15,12 +16,13 @@ export class TarifasViewComponent implements OnInit {
   titulo: string = 'tarifas'
   msg: any
   dtOptions: DataTables.Settings = {};
+  user$!:any;
 
 
-  constructor() { }
+  constructor(private storageService: StorageService) { }
 
   ngOnInit(): void {
-
+    this.user$ = this.storageService.usuario$
     this.setupDataTable()
   }
 
