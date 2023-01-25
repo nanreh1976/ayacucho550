@@ -17,7 +17,7 @@ export class ClientesViewComponent implements OnInit {
   vehiculo: string = 'Vehiculo';
   dtOptions: DataTables.Settings = {};
   msg: any
-  user$!:any;
+  
 
 
 
@@ -26,7 +26,7 @@ export class ClientesViewComponent implements OnInit {
   
   ngOnInit(): void {
     this.setDataTableOptions();
-    this.user$ = this.storageService.usuario$
+    
 }
 
 
