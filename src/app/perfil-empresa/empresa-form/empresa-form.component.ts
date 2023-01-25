@@ -34,14 +34,14 @@ export class EmpresaFormComponent implements OnInit {
 
   ngOnInit(): void {
     {
-      console.log("on init form", this.fromParent);
+      // console.log("on init form", this.fromParent);
       this.titulo = this.fromParent.modo
 
       if (this.titulo === 'Agregar') {
         this.item.id = "";
       } else {        
         this.item = this.fromParent.item;
-        console.log(this.item);
+        // console.log(this.item);
         
         this.configureForm();
       }
@@ -50,7 +50,7 @@ export class EmpresaFormComponent implements OnInit {
 
   configureForm() {
 
-    console.log("configure form", this.item);
+    // console.log("configure form", this.item);
     this.editForm.patchValue({
 
       cuit: this.item.cuit,
@@ -61,7 +61,7 @@ export class EmpresaFormComponent implements OnInit {
       
     });
 
-    console.log("esto es editForm: ", this.editForm.value);
+
     
 
   }
@@ -81,7 +81,7 @@ export class EmpresaFormComponent implements OnInit {
 
 
   closeModal() {
-   //console.log("esto es closeModal:", this.editForm.value);
+
    
     let value = {
       op: this.titulo,
@@ -116,7 +116,7 @@ export class EmpresaFormComponent implements OnInit {
   
 
   getMsg(msg: any) {
-    console.log(msg, "from vehiculos-form");
+    // console.log(msg, "from vehiculos-form");
     /* let value = {
       op: msg.op,
       item: msg.item

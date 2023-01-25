@@ -12,7 +12,6 @@ import { ClientesFormComponent } from '../clientes-form/clientes-form.component'
       [data]="data$"
       [$modoCaja]="$modoCaja"
       (newItemEvent)="getMsg($event)"
-
     ></app-clientes-view>
   `,
   styleUrls: ['./clientes-control.component.scss'],
@@ -20,14 +19,13 @@ import { ClientesFormComponent } from '../clientes-form/clientes-form.component'
 export class ClientesControlComponent implements OnInit {
   componente: string = 'clientes';
   data$!: any;
-  $modoCaja:any
+  $modoCaja: any;
 
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
     private storage: StorageService,
     private estadoCaja: EstadoCajaService
-
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +34,7 @@ export class ClientesControlComponent implements OnInit {
   }
 
   getMsg(msg: any) {
-    console.log(msg, 'from parent');
+    // console.log(msg, 'from parent');
     this.openForm(msg.op, msg.item);
   }
 
@@ -56,13 +54,13 @@ export class ClientesControlComponent implements OnInit {
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then(
         (result) => {
-          console.log(
-            'result from control',
-            'op',
-            result.op,
-            'item',
-            result.item
-          );
+          // console.log(
+          //   'result from control',
+          //   'op',
+          //   result.op,
+          //   'item',
+          //   result.item
+          // );
           this.selectCrudOp(result.op, result.item);
         },
         (reason) => {}

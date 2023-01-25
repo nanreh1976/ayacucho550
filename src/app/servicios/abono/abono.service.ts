@@ -59,28 +59,28 @@ export class AbonoService {
         let finAbono = moment(vehiculo.abonoInicio)
           .add(vehiculo.tarifa.fraccion, 'months')
           .toDate();
-        console.log('servicio abono, fecha fin abono', finAbono);
+        // console.log('servicio abono, fecha fin abono', finAbono);
         return finAbono;
       }
       case 'semana': {
         let finAbono = moment(vehiculo.abonoInicio)
           .add(vehiculo.tarifa.fraccion, 'weeks')
           .toDate();
-        console.log('servicio abono, fecha fin abono', finAbono);
+        // console.log('servicio abono, fecha fin abono', finAbono);
         return finAbono;
       }
       case 'hora': {
         let finAbono = moment(vehiculo.abonoInicio)
           .add(vehiculo.tarifa.fraccion, 'hours')
           .toDate();
-        console.log('servicio abono, fecha fin abono', finAbono);
+        // console.log('servicio abono, fecha fin abono', finAbono);
         return finAbono;
       }
       case 'minutos': {
         let finAbono = moment(vehiculo.abonoInicio)
           .add(vehiculo.tarifa.fraccion, 'minutes')
           .toDate();
-        console.log('servicio abono, fecha fin abono', finAbono);
+        // console.log('servicio abono, fecha fin abono', finAbono);
         return finAbono;
       }
       default: {

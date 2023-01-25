@@ -17,7 +17,7 @@ export class SesionViewComponent implements OnInit {
   ngOnInit(): void {
     this.getSesionCajaOps(this.fromParent.id);
     this.setDataTable();
-    console.log("from parent", this.fromParent, this.fromParent.id)
+    // console.log("from parent", this.fromParent, this.fromParent.id)
   }
 
 
@@ -33,7 +33,7 @@ export class SesionViewComponent implements OnInit {
       .pipe(
         tap((data) => {
           this.data = data;
-          console.log('this sesion ops', this.data);
+          // console.log('this sesion ops', this.data);
           // saldo: this.calcularSaldo(data)
         })
       )

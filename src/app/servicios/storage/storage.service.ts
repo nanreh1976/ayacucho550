@@ -88,14 +88,14 @@ export class StorageService {
   setInfo(componente: any, data: any) {
     // interface mydata en vez de any
     let jsonData = JSON.stringify(data);
-    localStorage.setItem(`${componente}`, jsonData); //local storage trabaja solo con strings
+    // localStorage.setItem(`${componente}`, jsonData); //local storage trabaja solo con strings
     this.updateObservable(componente, data);
   }
 
-  loadInfo(componente: any) {
-    const data = JSON.parse(localStorage.getItem(componente) || '');
-    this.updateObservable(componente, data);
-  }
+  // loadInfo(componente: any) {
+  //   const data = JSON.parse(localStorage.getItem(componente) || '');
+  //   this.updateObservable(componente, data);
+  // }
 
   clearInfo(componente: any) {
     localStorage.removeItem('myData');
@@ -140,13 +140,13 @@ export class StorageService {
     this.dbFirebase.getAllSorted(componente, campo, orden).subscribe((data) => {
       this.setInfo(componente, data);
       // this.updateObservable(componente, data)
-      console.log('storage initializer ', componente, data);
+      // console.log('storage initializer ', componente, data);
     });
   }
 
   addItem(componente: string, item: any): void {
     item.fechaOp = new Date();
-    console.log(' storage add item ', componente, item);
+    // console.log(' storage add item ', componente, item);
 
     this.dbFirebase
       .create(componente, item)

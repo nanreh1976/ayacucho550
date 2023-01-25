@@ -117,7 +117,7 @@ export class AuthService {
   // PORQUE NO ANDA???  USAR LOGOUT MIENTRAS
   // // Sign out
   SignOut() {
-    console.log("saliendo signout")
+    // console.log("saliendo signout")
     return this.afAuth.signOut().then(() => {
       this.storage.clearInfo('usuario');
       this.storage.clearAllLocalStorage()
@@ -155,6 +155,7 @@ export class AuthService {
     this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
       this.usuario = data;
       this.storage.setInfo(`usuario`, data);
+      localStorage.setItem(`usuario`, JSON.stringify(data)) //local storage trabaja solo con strings
       this.setearColeccion();
     });
   }

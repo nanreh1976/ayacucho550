@@ -15,7 +15,7 @@ export class ScannerComponent implements OnInit {
   }
   onKey(event: any) {
     this.barcode=event.target.value;
-    console.log(this.barcode)
+    // console.log(this.barcode)
 }
 
 }

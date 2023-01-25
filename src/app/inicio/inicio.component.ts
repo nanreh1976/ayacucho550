@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { EstadoCajaService } from '../servicios/caja/estado-caja.service';
 import { ValidarPatenteService } from '../servicios/patentes/validar-patente.service';
+import { StorageService } from '../servicios/storage/storage.service';
 
 @Component({
   selector: 'app-inicio',
@@ -18,13 +19,16 @@ export class InicioComponent implements OnInit {
   searchText!: string;
   msg: any;
   $modoCaja;
+  playa$: any
 
   constructor(
     private fb: FormBuilder,
     public vpService: ValidarPatenteService,
-    private estadoCaja: EstadoCajaService
+    private estadoCaja: EstadoCajaService,
+    private storageService: StorageService
   ) {
     this.$modoCaja = this.estadoCaja.getModoCaja();
+    this.storageService.playa$.subscribe((data) => (this.playa$ = data));
     this.createForm();
   }
 
@@ -58,7 +62,7 @@ export class InicioComponent implements OnInit {
 
     // CHEQUEA VALIDEZ FORM AL ENVIAR, SI PASA VEMOS QUE HACEMOS
     if (this.patenteForm.valid) {
-      console.log('form valido?', this.patenteForm.valid);
+      // console.log('form valido?', this.patenteForm.valid);
 
       // chequea si el str ingresado es barcode o patente
       if (this.vpService.isBarCode(str)) {
@@ -72,12 +76,12 @@ export class InicioComponent implements OnInit {
             confirmButtonText: 'Confirmar',
           }).then((result) => {
             if (result.isConfirmed) {
-              console.log('submitted barcode');
+              // console.log('submitted barcode');
               this.onScan(str); //va a chequear el scan
             }
           });
         } else {
-          console.log('submitted barcode');
+          // console.log('submitted barcode');
           this.onScan(str); //va a chequear el scan
         }
       } else {
@@ -92,12 +96,12 @@ export class InicioComponent implements OnInit {
             confirmButtonText: 'Confirmar',
           }).then((result) => {
             if (result.isConfirmed) {
-              console.log('submited patente');
+              // console.log('submited patente');
               this.msgBack(this.op, str); //manda el form al parent
             }
           });
         } else {
-          console.log('submited patente');
+          // console.log('submited patente');
           this.msgBack(this.op, str); //manda el form al parent
         }
       }
@@ -109,22 +113,22 @@ export class InicioComponent implements OnInit {
   }
 
   onScan(code: string) {
-    let playa = JSON.parse(localStorage.getItem('playa')!);
+    let playa = this.playa$
 
     //recorre playa buscando barcode
     for (var it of playa) {
-      console.log(it);
+      // console.log(it);
 
       let cod = it['codigoBarras'];
       let pat = it['patente'];
-      console.log(cod, pat);
+      // console.log(cod, pat);
 
       if (code === cod) {
-        console.log('esta en playa', pat);
+        // console.log('esta en playa', pat);
         this.msgBack(this.op, String(pat));
         break;
       } else {
-        console.log('NO esta en playa');
+        // console.log('NO esta en playa');
       }
     }
   }

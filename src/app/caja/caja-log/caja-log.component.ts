@@ -37,7 +37,7 @@ export class CajaLogComponent implements OnInit {
   msgBack(item: any) {
   
     {
-      console.log ("msgback", item, "id", item.id)
+      // console.log ("msgback", item, "id", item.id)
       const modalRef = this.modalService.open(SesionViewComponent, {
         scrollable: true,
         windowClass: 'myCustomModalClass',

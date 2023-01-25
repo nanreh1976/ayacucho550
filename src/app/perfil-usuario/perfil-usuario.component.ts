@@ -22,7 +22,7 @@ export class PerfilUsuarioComponent implements OnInit {
 
     this.storage.usuario$
     .subscribe(data => this.data$ = data);
-    console.log(this.data$)
+    // console.log(this.data$)
   }
 
 

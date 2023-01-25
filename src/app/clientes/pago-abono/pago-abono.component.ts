@@ -32,7 +32,7 @@ export class PagoAbonoComponent implements OnInit {
       op: this.titulo,
       item: this.item,
     };
-    console.log('closemodal', value);
+    // console.log('closemodal', value);
     this.activeModal.close(value);
   }
 
