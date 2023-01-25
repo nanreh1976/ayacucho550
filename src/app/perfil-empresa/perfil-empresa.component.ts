@@ -29,12 +29,9 @@ export class PerfilEmpresaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll(); 
-    this.getuser();
+
   }
 
-  getuser() {
-    console.log(JSON.parse(localStorage.getItem('usuario') || `{}`));
-  }
 
   /// MODAL DEL FORM SEGUN INFO DE LA VISTA ////
 
@@ -82,7 +79,7 @@ export class PerfilEmpresaComponent implements OnInit {
 
 
       default: {
-        console.log('sin operacion en case crud');
+        // console.log('sin operacion en case crud');
         break;
       }
     }
@@ -96,13 +93,13 @@ export class PerfilEmpresaComponent implements OnInit {
 
 
       this.data = data[0];
-      console.log(this.data);
+      // console.log(this.data);
     });
   }
 
 
   addItem(componente: string, item: any): void {
-    console.log('add itemcomponent', item);
+    // console.log('add itemcomponent', item);
 
     this.dbFirebase
       .create(componente, item)
@@ -112,7 +109,7 @@ export class PerfilEmpresaComponent implements OnInit {
   }
 
   updateItem(componente: string, item: any): void {
-    console.log('update itemcomponent', item);
+    // console.log('update itemcomponent', item);
 
     this.dbFirebase
       .update(componente, item)

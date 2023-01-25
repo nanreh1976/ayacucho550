@@ -133,7 +133,7 @@ export class PlayaFormComponent implements OnInit {
 
   getTarifas() {
     this.storageService.tarifas$.subscribe((data) => (this.tarifas = data));
-    console.log('estas son las tarifas: ', this.tarifas);
+    // console.log('estas son las tarifas: ', this.tarifas);
   }
 
   configurarForm() {
@@ -170,7 +170,7 @@ export class PlayaFormComponent implements OnInit {
       op: this.titulo,
       item: this.puestoEstacionamiento,
     };
-    console.log('closemodal', value);
+    // console.log('closemodal', value);
     this.activeModal.close(value);
   }
 
@@ -180,7 +180,7 @@ export class PlayaFormComponent implements OnInit {
     );
 
     if (patenteValida) {
-      console.log('es una patente valida');
+      // console.log('es una patente valida');
       //this.validarTarifa()
     } else {
       console.log('no es una patente valida');

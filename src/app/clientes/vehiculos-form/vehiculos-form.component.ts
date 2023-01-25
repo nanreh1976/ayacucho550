@@ -66,7 +66,7 @@ export class VehiculosFormComponent implements OnInit {
     this.vehiculos.forEach((vehiculo) => {
       if (vehiculo.idCliente === this.item.id) {
         this.vehiculosPorCliente.push(vehiculo);
-        console.log('vehiculos por cliente', this.vehiculosPorCliente);
+        // console.log('vehiculos por cliente', this.vehiculosPorCliente);
       }
     });
     //console.log(this.vehiculosPorCliente);
@@ -269,15 +269,15 @@ export class VehiculosFormComponent implements OnInit {
 
   fechasAbono(vehiculo: Vehiculo) {
     vehiculo.abonoInicio = new Date();
-    console.log(
-      'esta es la fecha de inicio del abono: ',
-      vehiculo.abonoInicio.toLocaleString()
-    );
+    // console.log(
+    //   'esta es la fecha de inicio del abono: ',
+    //   vehiculo.abonoInicio.toLocaleString()
+    // );
 
     vehiculo.abonoFin = this.abonoService.setearFinAbono(vehiculo);
-    console.log(
-      'esta es la fecha de fin del abono: ',
-      vehiculo.abonoFin.toLocaleString()
-    );
+    // console.log(
+    //   'esta es la fecha de fin del abono: ',
+    //   vehiculo.abonoFin.toLocaleString()
+    // );
   }
 }

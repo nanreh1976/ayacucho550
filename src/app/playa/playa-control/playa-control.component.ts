@@ -110,7 +110,7 @@ export class PlayaControlComponent implements OnInit {
       }
 
       default: {
-        console.log('sin operacion en case crud');
+        // console.log('sin operacion en case crud');
         break;
       }
     }

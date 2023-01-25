@@ -127,27 +127,27 @@ export class TarifasFormComponent implements OnInit {
 
   //esto selecciona la unidad de tiempo
   changeUnidadTiempo(e: any) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     /* como en la interface tarifa, el atributo unidad_tiempoes un string, no hace falta hacer
     todo lo de abajo. con guardar el valor que recibe del evento (e.target.value) alcanza*/
     
     this.unidadSeleccionada = e.target.value;
-    console.log(this.unidadSeleccionada);
+    // console.log(this.unidadSeleccionada);
   }
 
   //esto selecciona la unidad de tiempo
   changeCategoria(e: any) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
 
     this.categoriaSeleccionada = e.target.value;
-    console.log(this.categoriaSeleccionada);
+    // console.log(this.categoriaSeleccionada);
   }
 
   changeVehiculo(e: any) {
-    console.log(e.target.value);
+    // console.log(e.target.value);
 
     this.vehiculoSeleccionado = e.target.value;
-    console.log(this.vehiculoSeleccionado);
+    // console.log(this.vehiculoSeleccionado);
   }
 
   //esto llama el form para guardar los datos

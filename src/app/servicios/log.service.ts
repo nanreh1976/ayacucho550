@@ -5,16 +5,20 @@ import { StorageService } from './storage/storage.service';
 
 export class LogService {
 
+    user$:any
+    usuario:string
     newLog: any = {}
 
     constructor(
     private storageService:StorageService
     ) {
+        this.setUser()
     }
+    setUser() {
+        this.storageService.usuario$.subscribe((data) => (this.user$ = data));
+        this.usuario = this.user$['displayName'];
+      }
 
-
-    user= JSON.parse(localStorage.getItem("user")||`{}`)
-    usuario = (this.user['displayName'])
 
     log(tipo: any, msg: any) {
         console.log("logger" + ": " + new Date() + ": " + JSON.stringify(this.usuario) + ":" + JSON.stringify(tipo) + ": " + msg.patente);
@@ -27,13 +31,13 @@ export class LogService {
             
         }
 
-        console.log(this.newLog)
+        // console.log(this.newLog)
         this.addItem("logger", this.newLog)
     }
 
     addItem(componente: string, item: any): void {
 
-        console.log("add itemcomponent", item,)
+        // console.log("add itemcomponent", item,)
 
         this.storageService.addItem(componente, item)
     }

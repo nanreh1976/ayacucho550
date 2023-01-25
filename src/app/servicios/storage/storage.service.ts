@@ -88,7 +88,7 @@ export class StorageService {
   setInfo(componente: any, data: any) {
     // interface mydata en vez de any
     let jsonData = JSON.stringify(data);
-    localStorage.setItem(`${componente}`, jsonData); //local storage trabaja solo con strings
+    // localStorage.setItem(`${componente}`, jsonData); //local storage trabaja solo con strings
     this.updateObservable(componente, data);
   }
 
@@ -146,7 +146,7 @@ export class StorageService {
 
   addItem(componente: string, item: any): void {
     item.fechaOp = new Date();
-    console.log(' storage add item ', componente, item);
+    // console.log(' storage add item ', componente, item);
 
     this.dbFirebase
       .create(componente, item)

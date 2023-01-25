@@ -7,6 +7,7 @@ import { CajaAperturaFormComponent } from '../forms/caja-apertura-form/caja-aper
 import { EstadoCajaService } from 'src/app/servicios/caja/estado-caja.service';
 import { Observable } from 'rxjs';
 import { CajaStorageService } from 'src/app/servicios/caja/caja-storage.service';
+import { StorageService } from 'src/app/servicios/storage/storage.service';
 
 
 @Component({
@@ -33,6 +34,7 @@ import { CajaStorageService } from 'src/app/servicios/caja/caja-storage.service'
 export class CajaControlComponent implements OnInit {
   componente: string = 'caja';
   usuario!: string;
+  user$:any
 
   $modoCaja: any;
   $sesionCaja: any;
@@ -46,7 +48,8 @@ export class CajaControlComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private estadoCajaService: EstadoCajaService,
-    private cajaStorageService: CajaStorageService
+    private cajaStorageService: CajaStorageService,
+    private storageService:StorageService
   ) {}
 
   ngOnInit(): void {
@@ -61,8 +64,11 @@ export class CajaControlComponent implements OnInit {
   }
 
   setUser() {
-    let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
-    this.usuario = user['displayName'];
+
+    this.storageService.usuario$
+    .subscribe(data => this.user$ = data);
+
+    this.usuario = this.user$['displayName'];
   }
 
   getMsg(msg: any) {
@@ -170,7 +176,7 @@ export class CajaControlComponent implements OnInit {
 
   cierreCaja(item: any) {
     // registra en caja la operacion de cierre y $ que se extraen
-    console.log('cierre de caja', item, this.$sesionCaja);
+    // console.log('cierre de caja', item, this.$sesionCaja);
     item.operacion = 'cierre';
     // this.cajaStorageService.addItem(this.componente, item);
   

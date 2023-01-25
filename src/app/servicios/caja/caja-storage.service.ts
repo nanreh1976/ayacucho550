@@ -50,7 +50,7 @@ export class CajaStorageService {
       item.sesionId = this.sesionId;
     }
 
-    console.log(' storage add item ', componente, item);
+    // console.log(' storage add item ', componente, item);
     this.addToFirestore(componente, item);
   }
 

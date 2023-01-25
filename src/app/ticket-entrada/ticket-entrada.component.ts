@@ -30,7 +30,7 @@ export class TicketEntradaComponent implements OnInit {
   constructor(public print: NgxPrintElementService, public activeModal: NgbActiveModal, private fechaService: CalculoFechasService, private estadiaService :EstadiaService) {}
 
   ngOnInit(): void {
-    console.log("on init form", this.fromParent);
+    // console.log("on init form", this.fromParent);
     this.modo = this.fromParent.modo
     this.item = this.fromParent.item;    
 

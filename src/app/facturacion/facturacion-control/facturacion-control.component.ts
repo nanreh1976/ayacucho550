@@ -94,7 +94,7 @@ export class FacturacionControlComponent implements OnInit {
 
   facturacionDia() {
     let facturacion = this.facturacion$;
-    console.log(facturacion);
+    // console.log(facturacion);
 
     let hora2 = 23;
     let min2 = 59;
