@@ -53,21 +53,21 @@
       <td *ngIf="vehiculo.estado === 0">Impago</td>
 
       <td class="d-flex">
-        <app-btn-editar
+        <app-btn-editar *ngIf="!user$.source._value.roles.user"
           class="right"
           class="d-flex align-items-center"
           (click)="editarVehiculo(vehiculo)"
           (click)="toggle()"
         >
         </app-btn-editar>
-        <app-btn-eliminar
+        <app-btn-eliminar *ngIf="!user$.source._value.roles.user"
           class="right"
           class="d-flex align-items-center"
           (click)="eliminarVehiculo(vehiculo)"
         ></app-btn-eliminar>
 
         <div *ngIf="($modoCaja | async) === 'abierta'">
-          <app-btn-eliminar
+          <app-btn-eliminar *ngIf="vehiculo.estado === 0"
             class="right"
             [name]="'Pagar'"
             class="d-flex align-items-center"
@@ -78,7 +78,7 @@
     </tr>
   </table>
 
-  <div class="d-flex justify-content-between mx-4 my-2">
+  <div class="d-flex justify-content-between mx-4 my-2" *ngIf="!user$.source._value.roles.user">
     <h2>Asignar vehiculo</h2>
     <button class="btn btn-primary" (click)="setearTitulo()" (click)="toggle()">
       <i *ngIf="!form" class="fa fa-plus"></i>

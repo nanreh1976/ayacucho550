@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { StorageService } from 'src/app/servicios/storage/storage.service';
 import { LanguageApp } from 'src/app/shared/DTLanguage';
 import Swal from 'sweetalert2';
 
@@ -16,15 +17,16 @@ export class ClientesViewComponent implements OnInit {
   vehiculo: string = 'Vehiculo';
   dtOptions: DataTables.Settings = {};
   msg: any
-  
+  user$!:any;
 
 
 
 
-  constructor() { }
+  constructor(private storageService: StorageService,) { }
   
   ngOnInit(): void {
-this.setDataTableOptions()
+    this.setDataTableOptions();
+    this.user$ = this.storageService.usuario$
 }
 
 
