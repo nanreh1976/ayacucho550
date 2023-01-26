@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 // import { User } from '../services/user';
 import * as auth from 'firebase/auth';
-import { AngularFireAuth, } from '@angular/fire/compat/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
@@ -13,16 +13,13 @@ import { StorageService } from '../storage/storage.service';
   providedIn: 'root',
 })
 export class AuthService {
-
   userData: any; // Save logged in user data
-
 
   // PROPIEDAD PARA LA APP NO DEL LOGIN
 
   usuario: any;
 
   constructor(
-
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
@@ -30,8 +27,10 @@ export class AuthService {
 
     // SERVICIOS DE LA APP
     private storage: StorageService,
-    private dbFirebase: DbFirestoreService,
+    private dbFirebase: DbFirestoreService
   ) {
+    /* Saving user data in localstorage when 
+    logged in and setting up null when logged out */
 
   }
 
@@ -40,12 +39,11 @@ export class AuthService {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.SetUserData(result.user);
-        this.afAuth.authState.subscribe((user) => {
-          if (user) {
+            console.log ("mail user", result.user)
+            this.SetUserData(result.user);
             this.router.navigate(['/home']);
-          }
-        });
+          
+    
       })
       .catch((error) => {
         window.alert(error.message);
@@ -88,13 +86,9 @@ export class AuthService {
       });
   }
 
-
-
   // Sign in with Google
   GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
-
-    });
+    return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {});
   }
 
   // Auth logic to run auth providers
@@ -102,17 +96,12 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-
-
         this.SetUserData(result.user);
-
-
       })
       .catch((error) => {
         window.alert(error);
       });
   }
-
 
   // PORQUE NO ANDA???  USAR LOGOUT MIENTRAS
   // // Sign out
@@ -120,10 +109,10 @@ export class AuthService {
     // console.log("saliendo signout")
     return this.afAuth.signOut().then(() => {
       this.storage.clearInfo('usuario');
-      this.storage.clearAllLocalStorage()
+      this.storage.clearAllLocalStorage();
       // this.router.navigate(['']);
-      //Reload Angular to refresh components and prevent old data from loading up for a 
-      //another user after login. This especially applies lazy loading cases. 
+      //Reload Angular to refresh components and prevent old data from loading up for a
+      //another user after login. This especially applies lazy loading cases.
       location.reload();
     });
   }
@@ -135,19 +124,19 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
-    const userData: any = {   //aca va la interface usuario
+    const userData: any = {
+      //aca va la interface usuario
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
     };
-    this.getUsuario(user.uid)
+    this.getUsuario(user.uid);
     return userRef.set(userData, {
       merge: true,
     });
   }
-
 
   // METODOS DE LA APP NO DEL LOGIN
 
@@ -155,18 +144,14 @@ export class AuthService {
     this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
       this.usuario = data;
       this.storage.setInfo(`usuario`, data);
-      localStorage.setItem(`usuario`, JSON.stringify(data)) //local storage trabaja solo con strings
+      localStorage.setItem(`usuario`, JSON.stringify(data)); //local storage trabaja solo con strings
       this.setearColeccion();
     });
   }
 
   setearColeccion() {
     this.dbFirebase.setearColeccion(this.usuario.coleccion);
-    this.storage.initializer()
+    this.storage.initializer();
     this.router.navigate(['/home']);
   }
-
-
-
-
 }

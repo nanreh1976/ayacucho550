@@ -3,6 +3,7 @@ import { redirectUnauthorizedTo, redirectLoggedInTo, canActivate } from '@angula
 import { RouterModule, Routes } from '@angular/router';
 import { ForgotPasswordComponent } from './appLogin/forgot-password/forgot-password.component';
 import { LoginComponent } from './appLogin/login/login.component';
+import { SignUpComponent } from './appLogin/sign-up/sign-up.component';
 import { VerifyEmailComponent } from './appLogin/verify-email/verify-email.component';
 import { CajaControlComponent } from './caja/caja-control/caja-control.component';
 import { CajaLogComponent } from './caja/caja-log/caja-log.component';
@@ -91,6 +92,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent }, // la ruta al login
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
+  { path: 'register-user', component: SignUpComponent },
   {
     path: 'inicio',
     component: InicioComponent,
