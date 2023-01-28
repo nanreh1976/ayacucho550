@@ -51,7 +51,6 @@ export class AuthService {
         this.afAuth.authState.subscribe((user) => {
           if (user) {
             this.SetUserData(result.user);
-  
           }
         });
       })
@@ -153,9 +152,14 @@ export class AuthService {
   getUsuario(id: string) {
     this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
       this.usuario = data;
-      this.storage.setInfo(`usuario`, data);
-      localStorage.setItem(`usuario`, JSON.stringify(data)); //local storage trabaja solo con strings
-      this.setearColeccion();
+      if (this.usuario.hasOwnProperty('roles')) {
+        console.log('usuario con roles');
+        this.storage.setInfo(`usuario`, data);
+        localStorage.setItem(`usuario`, JSON.stringify(data)); //local storage trabaja solo con strings
+        this.setearColeccion();
+      } else {
+        console.log('usuario sin roles');
+      }
     });
   }
 
