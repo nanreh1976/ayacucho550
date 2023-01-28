@@ -155,13 +155,24 @@ export class AuthService {
       this.usuario = data;
       this.storage.setInfo(`usuario`, data);
       localStorage.setItem(`usuario`, JSON.stringify(data)); //local storage trabaja solo con strings
-      this.setearColeccion();
+      this.comprobarRoles();
     });
   }
 
   setearColeccion() {
-    this.dbFirebase.setearColeccion(this.usuario.coleccion);
+    this.dbFirebase.setearColeccion(this.usuario.coleccion);    
     this.storage.initializer();
     this.router.navigate(['/home']);
+  }
+
+  comprobarRoles() {
+    console.log("este es el usuario: ", this.usuario);
+    
+      if(this.usuario.hasOwnProperty("roles")) {
+        this.setearColeccion()    
+      } else{
+        this.router.navigate(['/limbo']);
+      }         
+        
   }
 }

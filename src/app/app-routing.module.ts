@@ -11,6 +11,7 @@ import { ClientesControlComponent } from './clientes/clientes-control/clientes-c
 import { FacturacionControlComponent } from './facturacion/facturacion-control/facturacion-control.component';
 import { HomeComponent } from './home/home.component';
 import { InicioComponent } from './inicio/inicio.component';
+import { LimboComponent } from './limbo/limbo.component';
 import { LogsComponent } from './logs/logs.component';
 import { OcupacionComponent } from './ocupacion/ocupacion.component';
 import { PerfilEmpresaComponent } from './perfil-empresa/perfil-empresa.component';
@@ -89,6 +90,7 @@ const appRoutes: Routes = [
       },
     ],
   },
+  { path: 'limbo', component: LimboComponent }, // la ruta al login
   { path: 'login', component: LoginComponent }, // la ruta al login
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },

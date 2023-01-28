@@ -86,6 +86,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PagoAbonoComponent } from './clientes/pago-abono/pago-abono.component';
 import { BtnConsultarComponent } from './shared/btn-consultar/btn-consultar.component';
 import { SesionViewComponent } from './caja/sesion-view/sesion-view.component';
+import { LimboComponent } from './limbo/limbo.component';
 
 
 
@@ -148,6 +149,7 @@ import { SesionViewComponent } from './caja/sesion-view/sesion-view.component';
 
     BtnConsultarComponent,
       SesionViewComponent,
+      LimboComponent,
   ],
   imports: [
     BrowserModule,
