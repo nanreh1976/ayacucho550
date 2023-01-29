@@ -87,6 +87,7 @@ import { PagoAbonoComponent } from './clientes/pago-abono/pago-abono.component';
 import { BtnConsultarComponent } from './shared/btn-consultar/btn-consultar.component';
 import { SesionViewComponent } from './caja/sesion-view/sesion-view.component';
 import { LimboComponent } from './limbo/limbo.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 
 
@@ -150,6 +151,7 @@ import { LimboComponent } from './limbo/limbo.component';
     BtnConsultarComponent,
       SesionViewComponent,
       LimboComponent,
+      UsuariosComponent,
   ],
   imports: [
     BrowserModule,

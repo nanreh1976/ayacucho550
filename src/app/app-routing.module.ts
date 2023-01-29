@@ -9,6 +9,7 @@ import { CajaControlComponent } from './caja/caja-control/caja-control.component
 import { CajaLogComponent } from './caja/caja-log/caja-log.component';
 import { ClientesControlComponent } from './clientes/clientes-control/clientes-control.component';
 import { FacturacionControlComponent } from './facturacion/facturacion-control/facturacion-control.component';
+import { IsSuperAdminGuard } from './guards/is-super-admin.guard';
 import { HomeComponent } from './home/home.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { LimboComponent } from './limbo/limbo.component';
@@ -18,6 +19,7 @@ import { PerfilEmpresaComponent } from './perfil-empresa/perfil-empresa.componen
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { PlayaControlComponent } from './playa/playa-control/playa-control.component';
 import { TarifasControlComponent } from './tarifas/tarifas-control/tarifas-control.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 // const routes: Routes = [];
 
@@ -87,6 +89,12 @@ const appRoutes: Routes = [
         path: 'cajaLog',
         component: CajaLogComponent,
         ...canActivate(redirectUnauthorizedToLogin),
+      },
+      {
+        path: 'usuarios',
+        component: UsuariosComponent,
+        ...canActivate(redirectUnauthorizedToLogin),
+        canActivate:[IsSuperAdminGuard], 
       },
     ],
   },
