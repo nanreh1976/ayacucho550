@@ -115,7 +115,7 @@ export class AuthService {
   // PORQUE NO ANDA???  USAR LOGOUT MIENTRAS
   // // Sign out
   SignOut() {
-    // console.log("saliendo signout")
+    console.log("saliendo signout")
     return this.afAuth.signOut().then(() => {
       this.storage.clearInfo('usuario');
       this.storage.clearAllLocalStorage();
@@ -141,7 +141,8 @@ export class AuthService {
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
     };
-    this.getUsuario(user.uid);
+    this.checkEmail(user);
+    //this.getUsuario(user.uid);
     return userRef.set(userData, {
       merge: true,
     });
@@ -174,4 +175,14 @@ export class AuthService {
       }         
         
   }
+
+  checkEmail(user:any) {
+    if(!user.emailVerified){
+      this.router.navigate(['verify-email-address'])
+    }  else{
+      this.getUsuario(user.uid);
+    }
+  }
+
+  
 }
