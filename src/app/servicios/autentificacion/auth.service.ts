@@ -38,6 +38,7 @@ export class AuthService {
         JSON.parse(localStorage.getItem('user')!);
       } else {
         localStorage.setItem('user', 'null');
+        localStorage.setItem('ususario', 'null');
         JSON.parse(localStorage.getItem('user')!);
       }
     });
