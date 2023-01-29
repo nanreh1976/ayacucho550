@@ -15,10 +15,6 @@ export class SignUpComponent implements OnInit {
     this.authService
       .GoogleAuth()
       // .then(() => this.authService.getCurrentUser())
-
-      //.then(() => this.router.navigate(['/playa']))
-      //.then(() => this.accionAsincrona())
-
       //.then(() => this.router.navigate(['/home']))
       .catch((e) => console.log(e.message));
   }

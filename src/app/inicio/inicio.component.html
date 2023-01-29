@@ -2,18 +2,18 @@
   <label for="patente">Ingresar Patente</label><br />
   <div *ngIf="($modoCaja | async) === 'cerrada'">
     <h5 style="color: red">Caja Cerrada.</h5>
-    <h5 style="color: red">Solo se permite ingreso de vehiculos.</h5>
+    <h5 style="color: red"></h5>
     <h5 style="color: red">Abrir Caja o consultar con un Administrador.</h5>
   </div>
 
   <div *ngIf="($modoCaja | async) === 'admin'">
     <h5 style="color: red">Caja Abierta por otro usuario.</h5>
-    <h5 style="color: red">Solo se permite ingreso de vehiculos.</h5>
+    <h5 style="color: red"></h5>
     <h5 style="color: red">
-      Debe cerrar y vovler a abrir sesion para Egresos.
+      Puede cerrar y volver a abrir sesion de Caja a su nombre.
     </h5>
   </div>
-  <input
+  <input *ngIf="($modoCaja | async) === 'abierta'"
     type="text"
     formControlName="patente"
     class="form-control mt-3"
@@ -34,7 +34,7 @@
     Patente no valida
   </div>
   <div class="d-flex justify-content-evenly mt-2">
-    <div>
+    <div *ngIf="($modoCaja | async) === 'abierta'">
       <app-btn-agregar
         type="submit"
         name="Ingreso"

@@ -1,18 +1,15 @@
-
-
-
 <div class="container">
-
   <app-login-header></app-login-header>
 
-<div class="displayTable">
+  <div class="displayTable">
     <div class="displayTableCell">
       <div class="authBlock">
         <h3>Thank You for Registering</h3>
-  
+
         <div class="formGroup" *ngIf="authService.userData as user">
           <p class="text-center">
-            We have sent a confirmation email to <strong>{{ user.email }}</strong
+            We have sent a confirmation email to
+            <strong>{{ user.email }}</strong
             >.
           </p>
           <p class="text-center">
@@ -20,7 +17,7 @@
             address.
           </p>
         </div>
-  
+
         <!-- Calling SendVerificationMail() method using authService Api -->
         <div class="formGroup">
           <button
@@ -33,15 +30,15 @@
           </button>
         </div>
       </div>
-  
+
       <div class="redirectToLogin">
         <span
-          >Go back to?<span class="redirect" routerLink="/sign-in">
+          >Go back to?<span class="redirect" routerLink="/login">
             Sign in</span
           ></span
         >
       </div>
     </div>
   </div>
-  
-</div>>
+</div>
+>

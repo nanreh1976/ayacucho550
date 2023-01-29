@@ -1,12 +1,14 @@
-<div class="container" >
-
-<!-- <div class="container" *ngIf="!spinner; else spinnerCarga"> -->
+<div class="container">
   <app-login-header></app-login-header>
 
   <div class="displayTable">
     <div class="displayTableCell">
       <div class="authBlock">
         <h2>Bienvenido</h2>
+
+
+        <!-- LOGIN CON MAIL / USUARIO -->
+
         <div class="formGroup">
           <input
             type="text"
@@ -25,7 +27,9 @@
             required
           />
         </div>
-        <!-- Calling SignIn Api from AuthService -->
+
+       <!-- LLAMADA AL SERVICIO SIGN IN DE AUTH (USER MAIL) -->
+
         <div class="formGroup">
           <input
             type="button"
@@ -34,36 +38,42 @@
             (click)="authService.SignIn(userName.value, userPassword.value)"
           />
         </div>
+
+        <!-- SEPARADOR -->
         <div class="formGroup">
           <span class="or"><span class="orInner">O</span></span>
         </div>
-        <!-- Calling GoogleAuth Api from AuthService --->
 
-        <!-- <p>Ingrese con su cuenta de google</p> -->
-        <!-- <app-btn-agregar [name]="'Google'" (click)="loginWithGoogle()"></app-btn-agregar> -->
+       <!-- LOGIN CON GOOGLE -->
 
         <div class="formGroup">
           <button
             type="button"
             class="btn googleBtn"
-            (click)="loginWithGoogle()"
+            
+            (click)="authService.GoogleAuth()"
+
           >
             <i class="fab fa-google-plus-g"></i>
             Ingresar con Google
           </button>
         </div>
 
+        <!-- RECUPERAR CLAVE -->
+
         <div class="forgotPassword">
           <span routerLink="/forgot-password">Olvide mi contraseña</span>
         </div>
       </div>
+
+      <!-- REGISTRARSE -->
       <div class="redirectToLogin">
-        <!-- <span>Registrese<span class="redirect" routerLink="/register-user"> Sign Up</span></span> -->
+        <span
+          >Registrese<span class="redirect" routerLink="/register-user">
+            Sign Up</span
+          ></span
+        >
       </div>
     </div>
   </div>
 </div>
-
-<!-- <ng-template #spinnerCarga>
-  <app-spinner></app-spinner>
-</ng-template> -->

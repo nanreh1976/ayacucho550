@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 
 import { OcupacionComponent } from './ocupacion/ocupacion.component';
 
-import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -37,11 +36,7 @@ import { FacturacionFormComponent } from './facturacion/facturacion-form/factura
 import { InicioComponent } from './inicio/inicio.component';
 import { VehiculosFormComponent } from './clientes/vehiculos-form/vehiculos-form.component';
 
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+
 import { environment } from '../environments/environment';
 import { ConsultaFacturacionComponent } from './facturacion/consulta-facturacion/consulta-facturacion.component';
 import { CustomAdapterService } from './servicios/Fechas/calendario/custom-adapter.service';
@@ -57,19 +52,13 @@ import { ScannerComponent } from './scanner/scanner.component';
 import { LogsComponent } from './logs/logs.component';
 import { LogService } from './servicios/log.service';
 
-import { SpinnerComponent } from './spinner/spinner.component';
+
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 // LOGIN
 import { LoginComponent } from './appLogin/login/login.component';
 import { LogoutComponent } from './appLogin/logout/logout.component';
 import { AuthService } from './servicios/autentificacion/auth.service';
-import {
-  AuthGuard,
-  canActivate,
-  redirectLoggedInTo,
-  redirectUnauthorizedTo,
-} from '@angular/fire/auth-guard';
 
 // BOTONES
 import { BtnAgregarComponent } from './shared/btn-agregar/btn-agregar.component';
@@ -97,6 +86,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PagoAbonoComponent } from './clientes/pago-abono/pago-abono.component';
 import { BtnConsultarComponent } from './shared/btn-consultar/btn-consultar.component';
 import { SesionViewComponent } from './caja/sesion-view/sesion-view.component';
+import { LimboComponent } from './limbo/limbo.component';
 
 
 
@@ -137,7 +127,7 @@ import { SesionViewComponent } from './caja/sesion-view/sesion-view.component';
     ScannerComponent,
     LogsComponent,
 
-    SpinnerComponent,
+
     LogoutComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
@@ -159,6 +149,7 @@ import { SesionViewComponent } from './caja/sesion-view/sesion-view.component';
 
     BtnConsultarComponent,
       SesionViewComponent,
+      LimboComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { redirectUnauthorizedTo, redirectLoggedInTo, canActivate } from '@angula
 import { RouterModule, Routes } from '@angular/router';
 import { ForgotPasswordComponent } from './appLogin/forgot-password/forgot-password.component';
 import { LoginComponent } from './appLogin/login/login.component';
+import { SignUpComponent } from './appLogin/sign-up/sign-up.component';
 import { VerifyEmailComponent } from './appLogin/verify-email/verify-email.component';
 import { CajaControlComponent } from './caja/caja-control/caja-control.component';
 import { CajaLogComponent } from './caja/caja-log/caja-log.component';
@@ -10,6 +11,7 @@ import { ClientesControlComponent } from './clientes/clientes-control/clientes-c
 import { FacturacionControlComponent } from './facturacion/facturacion-control/facturacion-control.component';
 import { HomeComponent } from './home/home.component';
 import { InicioComponent } from './inicio/inicio.component';
+import { LimboComponent } from './limbo/limbo.component';
 import { LogsComponent } from './logs/logs.component';
 import { OcupacionComponent } from './ocupacion/ocupacion.component';
 import { PerfilEmpresaComponent } from './perfil-empresa/perfil-empresa.component';
@@ -88,9 +90,11 @@ const appRoutes: Routes = [
       },
     ],
   },
+  { path: 'limbo', component: LimboComponent }, // la ruta al login
   { path: 'login', component: LoginComponent }, // la ruta al login
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
+  { path: 'register-user', component: SignUpComponent },
   {
     path: 'inicio',
     component: InicioComponent,

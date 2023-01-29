@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 // import { User } from '../services/user';
 import * as auth from 'firebase/auth';
-import { AngularFireAuth, } from '@angular/fire/compat/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
@@ -13,16 +13,13 @@ import { StorageService } from '../storage/storage.service';
   providedIn: 'root',
 })
 export class AuthService {
-
   userData: any; // Save logged in user data
-
 
   // PROPIEDAD PARA LA APP NO DEL LOGIN
 
   usuario: any;
 
   constructor(
-
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
@@ -30,9 +27,21 @@ export class AuthService {
 
     // SERVICIOS DE LA APP
     private storage: StorageService,
-    private dbFirebase: DbFirestoreService,
+    private dbFirebase: DbFirestoreService
   ) {
-
+    /* Saving user data in localstorage when 
+    logged in and setting up null when logged out */
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user')!);
+      } else {
+        localStorage.setItem('user', 'null');
+        localStorage.setItem('ususario', 'null');
+        JSON.parse(localStorage.getItem('user')!);
+      }
+    });
   }
 
   // Sign in with email/password
@@ -40,10 +49,9 @@ export class AuthService {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.SetUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
-            this.router.navigate(['/home']);
+            this.SetUserData(result.user);
           }
         });
       })
@@ -88,13 +96,9 @@ export class AuthService {
       });
   }
 
-
-
   // Sign in with Google
   GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
-
-    });
+    return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {});
   }
 
   // Auth logic to run auth providers
@@ -102,28 +106,23 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-
-
         this.SetUserData(result.user);
-
-
       })
       .catch((error) => {
         window.alert(error);
       });
   }
 
-
   // PORQUE NO ANDA???  USAR LOGOUT MIENTRAS
   // // Sign out
   SignOut() {
-    // console.log("saliendo signout")
+    console.log("saliendo signout")
     return this.afAuth.signOut().then(() => {
       this.storage.clearInfo('usuario');
-      this.storage.clearAllLocalStorage()
+      this.storage.clearAllLocalStorage();
       // this.router.navigate(['']);
-      //Reload Angular to refresh components and prevent old data from loading up for a 
-      //another user after login. This especially applies lazy loading cases. 
+      //Reload Angular to refresh components and prevent old data from loading up for a
+      //another user after login. This especially applies lazy loading cases.
       location.reload();
     });
   }
@@ -135,19 +134,20 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
-    const userData: any = {   //aca va la interface usuario
+    const userData: any = {
+      //aca va la interface usuario
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
     };
-    this.getUsuario(user.uid)
+    this.checkEmail(user);
+    //this.getUsuario(user.uid);
     return userRef.set(userData, {
       merge: true,
     });
   }
-
 
   // METODOS DE LA APP NO DEL LOGIN
 
@@ -155,18 +155,35 @@ export class AuthService {
     this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
       this.usuario = data;
       this.storage.setInfo(`usuario`, data);
-      localStorage.setItem(`usuario`, JSON.stringify(data)) //local storage trabaja solo con strings
-      this.setearColeccion();
+      localStorage.setItem(`usuario`, JSON.stringify(data)); //local storage trabaja solo con strings
+      this.comprobarRoles();
     });
   }
 
   setearColeccion() {
-    this.dbFirebase.setearColeccion(this.usuario.coleccion);
-    this.storage.initializer()
+    this.dbFirebase.setearColeccion(this.usuario.coleccion);    
+    this.storage.initializer();
     this.router.navigate(['/home']);
   }
 
+  comprobarRoles() {
+    console.log("este es el usuario: ", this.usuario);
+    
+      if(this.usuario.hasOwnProperty("roles")) {
+        this.setearColeccion()    
+      } else{
+        this.router.navigate(['/limbo']);
+      }         
+        
+  }
 
+  checkEmail(user:any) {
+    if(!user.emailVerified){
+      this.router.navigate(['verify-email-address'])
+    }  else{
+      this.getUsuario(user.uid);
+    }
+  }
 
-
+  
 }
