@@ -155,7 +155,7 @@ export class AuthService {
     this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
       this.usuario = data;
       this.storage.setInfo(`usuario`, data);
-      localStorage.setItem(`usuario`, JSON.stringify(data)); //local storage trabaja solo con strings
+      localStorage.setItem(`usuario`, JSON.stringify(data)); //local storage trabaja solo con strings      
       this.comprobarRoles();
     });
   }
@@ -167,9 +167,20 @@ export class AuthService {
   }
 
   comprobarRoles() {
-    console.log("este es el usuario: ", this.usuario);
+    //console.log("este es el usuario: ", this.usuario);
     
       if(this.usuario.hasOwnProperty("roles")) {
+        this.comprobarColeccion();        
+      } else{
+        this.router.navigate(['/limbo']);
+      }         
+        
+  }
+
+  comprobarColeccion() {
+    console.log("este es el usuario: ", this.usuario);
+    
+      if(this.usuario.hasOwnProperty("coleccion")) {
         this.setearColeccion()    
       } else{
         this.router.navigate(['/limbo']);

@@ -4,7 +4,7 @@
         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div id="navbarCollapse" class="collapse navbar-collapse" *ngIf="user$.source._value.hasOwnProperty('roles')">
+        <div id="navbarCollapse" class="collapse navbar-collapse" *ngIf="user$.source._value.hasOwnProperty('roles') && user$.source._value.hasOwnProperty('coleccion')">
             <ul class="nav navbar-nav" >
                 <li class="nav-item">
                     <a routerLink="./playa" routerLinkActive="active" class="nav-link"
