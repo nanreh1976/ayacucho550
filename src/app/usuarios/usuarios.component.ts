@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from '../servicios/storage/storage.service';
+import { LanguageApp } from 'src/app/shared/DTLanguage';
 
 @Component({
   selector: 'app-usuarios',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuariosComponent implements OnInit {
 
-  constructor() { }
+data$:any
+dtOptions: DataTables.Settings = {};
+  constructor(
+    private storageService:StorageService
+  ) { }
 
   ngOnInit(): void {
+    this.data$ = this.storageService.usuarios$;
+
+        //opciones para dataTable
+        this.dtOptions = {
+          searching: true,
+          dom: 't<"bottom"riflp><"clear">',
+          language: LanguageApp.spanish_datatables,
+          columnDefs: [
+            //   { orderable: false, targets: [7,8,9] },
+            // { searchable: false, targets: [ 7,8,9] },
+          ],
+          responsive: true,
+        };
   }
 
 }
