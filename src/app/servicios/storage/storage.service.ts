@@ -41,6 +41,9 @@ export class StorageService {
   private _logger$ = new BehaviorSubject<any>(null); //aca va interface my data
   public logger$ = this._logger$.asObservable();
 
+  private _usuarios$ = new BehaviorSubject<any>(null); //aca va interface my data
+  public usuarios$ = this._usuarios$.asObservable();
+
   updateObservable(componente: any, data: any) {
     switch (componente) {
       case 'playa': {
@@ -74,6 +77,12 @@ export class StorageService {
       case 'logger': {
         this._logger$.next(data);
         break;
+      }
+
+      case 'usuarios':{
+        this._usuarios$.next(data);
+        break;
+
       }
 
       default: {
@@ -119,11 +128,12 @@ export class StorageService {
     this.getAllSorted('cajaLog', 'apertura', 'asc');
     this.getAllSorted('facturacion', 'fechaOp', 'asc');
     this.getAllSorted('logger', 'Fecha', 'asc');
- 
-
-    // this.getCaja();
+    this.getUsuarios()
+     // this.getCaja();
     this.getVehiculos();
   }
+
+
 
 
 
@@ -131,6 +141,11 @@ export class StorageService {
     this.vehiculosStorage.getAllSorted();
   }
 
+  getUsuarios(){
+    this.dbFirebase.getUsersByColecion().subscribe((data) => {
+      this.setInfo('usuarios', data);
+  });
+}
   // METODOS CRUD
 
   // al suscribirse una vez (getallsorted corre al inicio de la app para cada componente en el initializer) no hace falta actualizar el storage en cada metodo del crud, ya que este se actualiza automaticamente.

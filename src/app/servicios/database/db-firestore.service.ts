@@ -63,6 +63,17 @@ export class DbFirestoreService {
       .valueChanges({ idField: 'id' });
   }
 
+  getUsersByColecion() {
+    // devuelve los docs  de la coleccion que tengan un campo con un valor determinado
+    // campo debe existir en la coleccion, si esta anidado pasar ruta separada por puntso (field.subfield)
+    // orden solo asc o desc
+
+    // let dataCollection = `/${this.coleccion}/datos/${componente}`;
+    return this.firestore2
+      .collection('users', (ref) => ref.where('coleccion', '==', this.coleccion))
+      .valueChanges({ idField: 'id' });
+  }
+
   get(id: string) {
     const estacionamiento1DocumentReference = doc(
       this.firestore,
