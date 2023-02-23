@@ -17,7 +17,7 @@ import { StorageService } from 'src/app/servicios/storage/storage.service';
 })
 export class PlayaFormComponent implements OnInit {
   @Input() fromParent: any;
-  barCodeId: string = 'BCN';
+  barCodeId: string = 'BC';
   editForm!: any;
   titulo!: string;
   item!: any;
@@ -258,7 +258,10 @@ export class PlayaFormComponent implements OnInit {
       tarifa: this.tarifaSeleccionada,
       descripcion: this.editForm.value.descripcion,
       saldo: this.saldo,
-      codigoBarras: `${this.barCodeId}-${this.fromParent.item.patente}${fechaLimpia}${horaLimpia}`,
+      // codigoBarras: `${this.barCodeId}-${this.fromParent.item.patente}${fechaLimpia}${horaLimpia}`,
+      codigoBarras: `${this.barCodeId}-${this.fromParent.item.patente}`,
+
+
     };
     this.item = this.puestoEstacionamiento; //gurda el puesto en "item" para poder enviarlo
     this.ventanaConfirmacion();
