@@ -19,7 +19,7 @@ export class InicioComponent implements OnInit {
   searchText!: string;
   msg: any;
   $modoCaja;
-  playa$: any
+  playa$: any;
 
   constructor(
     private fb: FormBuilder,
@@ -57,6 +57,9 @@ export class InicioComponent implements OnInit {
     this.op = op;
   }
 
+  // FUNCION QUE TOMA EL DATO INGRESADO EN EL CAMPO
+  // AL PULSAR ENTER O CUALQUIERA DE LOS BOTONES DE INGRESO O EGRESO
+
   onSubmit() {
     let str = this.patenteForm.value.patente;
 
@@ -66,43 +69,13 @@ export class InicioComponent implements OnInit {
 
       // chequea si el str ingresado es barcode o patente
       if (this.vpService.isBarCode(str)) {
-        if (this.op === 'Eliminar') {
-          Swal.fire({
-            title: '¿Desea realizar la salida del vehículo?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Confirmar',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // console.log('submitted barcode');
-              this.onScan(str); //va a chequear el scan
-            }
-          });
-        } else {
-          // console.log('submitted barcode');
-          this.onScan(str); //va a chequear el scan
-        }
+        this.confirmarEgresoBC(str);
       } else {
+        console.log('submited patente');
         if (this.op === 'Eliminar') {
-          Swal.fire({
-            title: '¿Desea realizar la salida del vehículo?',
-            //text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Confirmar',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // console.log('submited patente');
-              this.msgBack(this.op, str); //manda el form al parent
-            }
-          });
+          this.confirmarEgresoPat(str);
         } else {
-          // console.log('submited patente');
-          this.msgBack(this.op, str); //manda el form al parent
+          this.confirmarIngresoPat(str);
         }
       }
     } else {
@@ -112,8 +85,11 @@ export class InicioComponent implements OnInit {
     }
   }
 
+  // SI ON SUBMIT RECONOCE UN TICKET, ONSCAN  CHEQUEA QUE ESTE AUTO EN PLAYA
+  // PORQUE PUEDE SER UN TICKET VIEJO
+
   onScan(code: string) {
-    let playa = this.playa$
+    let playa = this.playa$;
 
     //recorre playa buscando barcode
     for (var it of playa) {
@@ -125,7 +101,7 @@ export class InicioComponent implements OnInit {
 
       if (code === cod) {
         // console.log('esta en playa', pat);
-        this.msgBack(this.op, String(pat));
+        this.msgBack("Eliminar", String(pat));
         break;
       } else {
         // console.log('NO esta en playa');
@@ -142,5 +118,63 @@ export class InicioComponent implements OnInit {
     console.log('MSGbACK, aca emite el msj con el valor ', value);
     this.newItemEvent.emit(value);
     this.patenteForm.reset();
+  }
+
+  confirmarEgresoBC(str: string) {
+    Swal.fire({
+      title: '¿Desea realizar la salida del vehículo?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('submitted barcode para egreso');
+        this.onScan(str); //va a chequear el scan
+      } else {
+        console.log('operacion cancelada');
+      }
+    });
+  }
+
+  confirmarEgresoPat(str: string) {
+    Swal.fire({
+      title: '¿Desea realizar la salida del vehículo?',
+      //text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('submited patente para egreso');
+        this.msgBack(this.op, str); //manda el form al parent
+      } else {
+        console.log('Egreso cancelado');
+      }
+    });
+  }
+
+  confirmarIngresoPat(str: string) {
+    Swal.fire({
+      title: '¿Desea realizar el ingreso del vehículo?',
+      //text: "You won't be able to revert this!",
+      icon: 'warning',
+      confirmButtonText: '<i class="fa fa-thumbs-up"></i> ',
+      confirmButtonAriaLabel: 'Thumbs up, great!',
+      cancelButtonText: '<i class="fa fa-thumbs-down"></i>',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      // confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('submited patente para ingreso');
+        this.msgBack(this.op, str); //manda el form al parent
+      } else {
+        console.log('Ingreso cancelado');
+      }
+    });
   }
 }

@@ -13,7 +13,8 @@
       Puede cerrar y volver a abrir sesion de Caja a su nombre.
     </h5>
   </div>
-  <input *ngIf="($modoCaja | async) === 'abierta'"
+  <input
+    *ngIf="($modoCaja | async) === 'abierta'"
     type="text"
     formControlName="patente"
     class="form-control mt-3"
