@@ -35,14 +35,16 @@ export class TarifasFormComponent implements OnInit {
     { id: 0, nombre: 'moto' },
     { id: 1, nombre: 'auto' },
     { id: 2, nombre: 'utilitario' },
-    { id: 3, nombre: 'otro' },
+    { id: 3, nombre: 'camioneta' },
+    { id: 4, nombre: 'otro' },
   ];
 
   categorias = [
     { id: 0, nombre: 'moto-base' },
     { id: 1, nombre: 'auto-base' },
     { id: 2, nombre: 'utilitario-base' },
-    { id: 3, nombre: 'promo' },
+    { id: 3, nombre: 'camioneta-base' },
+    { id: 4, nombre: 'promo' },
   ];
 
   constructor(
