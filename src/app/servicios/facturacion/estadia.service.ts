@@ -58,13 +58,13 @@ export class EstadiaService {
       case 'hora':
         if (this.unidadesFraccion <= 1) {
           //si es menos de la fraccion de la promo, se cobra la tarifa minima
-          this.saldo = this.valorTarifa * tarifas.fraccion;
+          this.saldo = this.valorTarifa;
           return this.saldo;
         } else {
           let minutosExtra = minutosEstadia - tarifas.fraccion * 60; //calcula cuantos minutos se excede de la promo
           if (minutosExtra <= this.minutosTolerancia) {
             //si esta dentro del margen de tolerancia inicial, calcula el saldo con las fracciones enteras ya consumidas
-            this.saldo = this.valorTarifa * tarifas.fraccion;
+            this.saldo = this.valorTarifa ;
             return this.saldo;
           } else {
             //si esta por fuera del margen de tolerancia, le agrega una fraccion mas y calcula el saldo
@@ -76,15 +76,18 @@ export class EstadiaService {
             ); //esto transforma en un entero el resto de la division
             if (minutosExtraResto <= this.minutosTolerancia) {
               //si esta dentro del margen de tolerancia, calcula el saldo con las fracciones enteras ya consumidas
-              this.saldo =
-                this.valorTarifa * tarifas.fraccion +
-                this.tarifaBase.valor * unidadesExtraFraccion;
+              let adicional:number = this.tarifaBase.valor * unidadesExtraFraccion
+              this.saldo = this.sumar(this.valorTarifa, adicional);
+              console.log(this.saldo);
+              //this.saldo = this.valorTarifa+(this.tarifaBase.valor * unidadesExtraFraccion);
               return this.saldo;
             } else {
               //si esta por fuera del margen de tolerancia, le agrega una fraccion mas y calcula el saldo
-              this.saldo =
-                this.valorTarifa * tarifas.fraccion +
-                this.tarifaBase.valor * (unidadesExtraFraccion + 1);
+              let adicional:number = this.tarifaBase.valor * (unidadesExtraFraccion + 1)
+              this.saldo = this.sumar(this.valorTarifa, adicional);
+              console.log(this.saldo);
+              
+              //this.saldo = this.valorTarifa+(this.tarifaBase.valor * (unidadesExtraFraccion + 1));
               return this.saldo;
             }
           }
@@ -117,4 +120,9 @@ export class EstadiaService {
     this.tarifaBase = tarifasGuardadas[0];
     console.log(this.tarifaBase);
   }
+
+  sumar(valor1:number, valor2:number): number {
+    return valor1+valor2;
+  }
+  
 }
