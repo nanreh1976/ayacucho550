@@ -23,10 +23,10 @@ export class EstadiaService {
       this.getTarifaBasica(tarifas.vehiculo);
     }
 
-    this.valorTarifa = tarifas.valor;
+    this.valorTarifa = parseInt(tarifas.valor);
     this.unidadesFraccion = this.fraccionMinutos(tarifas, minutosEstadia);
-    this.minutosTolerancia = tarifas.tolerancia;
-    this.minutosResto = Math.floor(minutosEstadia % tarifas.fraccion); //esto transforma en un entero el resto de la division
+    this.minutosTolerancia = parseInt(tarifas.tolerancia);
+    this.minutosResto = Math.floor(minutosEstadia % parseInt(tarifas.fraccion)); //esto transforma en un entero el resto de la division
 
     switch (tarifas.unidad_tiempo) {
       case 'dia':
@@ -68,26 +68,28 @@ export class EstadiaService {
             return this.saldo;
           } else {
             //si esta por fuera del margen de tolerancia, le agrega una fraccion mas y calcula el saldo
-            let fraccionesExtras = minutosExtra / this.tarifaBase.fraccion; //las minutos q exceden la promo estadia dividido la fraccion minima de la tarifa base, da cuantas fracciones se consumieron
+            let fraccionesExtras = minutosExtra / parseInt(this.tarifaBase.fraccion); //las minutos q exceden la promo estadia dividido la fraccion minima de la tarifa base, da cuantas fracciones se consumieron
 
             let unidadesExtraFraccion = Math.floor(fraccionesExtras); //averigua cuantas fracciones enteras se consumieron
             let minutosExtraResto = Math.floor(
-              minutosExtra % this.tarifaBase.fraccion
+              minutosExtra % parseInt(this.tarifaBase.fraccion)
             ); //esto transforma en un entero el resto de la division
-            if (minutosExtraResto <= this.minutosTolerancia) {
+            if (minutosExtraResto <= parseInt(this.tarifaBase.tolerancia)) {
               //si esta dentro del margen de tolerancia, calcula el saldo con las fracciones enteras ya consumidas
-              let adicional:number = this.tarifaBase.valor * unidadesExtraFraccion
-              this.saldo = this.sumar(this.valorTarifa, adicional);
-              console.log(this.saldo);
-              //this.saldo = this.valorTarifa+(this.tarifaBase.valor * unidadesExtraFraccion);
+              //let adicional:number = this.tarifaBase.valor * unidadesExtraFraccion
+              //this.saldo = this.sumar(this.valorTarifa, adicional);
+              //console.log(this.saldo);
+              this.saldo = this.valorTarifa+(parseInt(this.tarifaBase.valor) * unidadesExtraFraccion);
+              console.log(this.saldo)
               return this.saldo;
             } else {
               //si esta por fuera del margen de tolerancia, le agrega una fraccion mas y calcula el saldo
-              let adicional:number = this.tarifaBase.valor * (unidadesExtraFraccion + 1)
-              this.saldo = this.sumar(this.valorTarifa, adicional);
-              console.log(this.saldo);
+              //let adicional:number = this.tarifaBase.valor * (unidadesExtraFraccion + 1)
+              //this.saldo = this.sumar(this.valorTarifa, adicional);
+             
               
-              //this.saldo = this.valorTarifa+(this.tarifaBase.valor * (unidadesExtraFraccion + 1));
+              this.saldo = this.valorTarifa+(parseInt(this.tarifaBase.valor) * (unidadesExtraFraccion + 1));
+              console.log(this.saldo);
               return this.saldo;
             }
           }
@@ -118,7 +120,7 @@ export class EstadiaService {
     });
 
     this.tarifaBase = tarifasGuardadas[0];
-    console.log(this.tarifaBase);
+    console.log("esta es la tarifa base: ", this.tarifaBase);
   }
 
   sumar(valor1:number, valor2:number): number {
