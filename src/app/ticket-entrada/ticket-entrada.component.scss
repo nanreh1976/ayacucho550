@@ -8,14 +8,14 @@ p {
 
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'helvetica', sans-serif;
     margin: 0px;
     padding: 0px;
   }
   
   .receipt {
-      padding: 3mm;
-      width: 80mm;
+      // padding: 3mm;
+      width: 100mm;
       border: 1px solid black;
   }
   .orderNo {
@@ -53,7 +53,8 @@ body {
   #date {
     margin: 5pt 0px;
     text-align: center;
-    font-size: 8pt;
+    font-weight: bold;
+    font-size: 22pt;
   }
   
   #barcode {
@@ -288,5 +289,5 @@ body {
   }
 
   #ticket{
-   // width: 100%;
+   width: 100%;
   }

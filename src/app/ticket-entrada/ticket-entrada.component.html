@@ -1,90 +1,77 @@
-<!-- START RECEIPT -->
-
-<!-- <p> Aparece como modal en playa?</p>
-<p> ticket de salida con el saldo ? </p>
-<p> los tickets deberian estar relacionados a un numero de operacion en facturacion/playa log? (control empleados)</p> -->
-
-<button type="button" class="close" class="btn btn-primary" (click)="activeModal.dismiss('Cross click')">
-    <span aria-hidden="true">&times;</span>
+<button
+  type="button"
+  class="close"
+  class="btn btn-primary"
+  (click)="activeModal.dismiss('Cross click')"
+>
+  <span aria-hidden="true">&times;</span>
 </button>
 <div class="d-flex justify-content-center" id="ticket">
-
-    <div id="ticket" class="receipt">
-        <i class="fa fa-car" ></i>
-        <div class="orderNo">
+  <div id="ticket" class="receipt">
+    <i class="fa fa-car"></i>
+    <!-- <div class="orderNo">
             Estacionamiento <span id="Cochera">71</span>
-        </div>
-        <div class="headerSubTitle">
-            TICKET RETIRO
-        </div>
-        <div class="headerTitle">
-            LINKIN PARK
-        </div>
-        <div class="headerSubTitle">
-            Siempreviva 2687
-        </div>
-        <div class="location">
-            Datos Vehiculo
-        </div>
-        <div class="location">
-            {{patente}}
-        </div>    
-        <div class="date">
-            Ingreso:
-        </div>    
-        <div id="date">
-            {{fechaIngreso}}
-            {{horaIngreso}} hs
-        </div>
-        <div *ngIf="modo === 'Ticket Salida'">
-            <div class="date">
-                Salida:
-            </div>    
-            <div>
-                Fecha:
-                {{fechaSalida}}                
-            </div>
-            <div>                
-                Hora:
-                {{horaSalida}} hs
-            </div>
-            <div>
-                Estadia:
-                {{estadiaHoras}} hs
-            </div>
-            <div class="saldo">
-                Importe:
-            </div> 
-            <div>
-                ${{saldo}}
-            </div>   
-        </div>
+        </div> -->
+    <div class="location">TICKET RETIRO</div>
+    <div class="headerTitle">PLAYA SAN LUIS</div>
+    <div class="location">San Luis 428 </div>
+    <div class="location">Ciudad de CORDOBA</div>
 
-        <hr>
+    <div *ngIf="modo !== 'Ticket Salida'" else salida>
+      <!-- Cod Barras / QR -->
+      <div style="text-align: center">
+        <ngx-barcode6
+          [bc-format]="format"
+          [bc-value]="value"
+          [bc-display-value]="displayValue"
+          [bc-width]="width"
+          [bc-font-size]="fontSize"
+        >
+        </ngx-barcode6>
+      </div>
 
-        <div *ngIf="modo !== 'Ticket Salida'" else salida>
-        <!-- Cod Barras / QR -->
-            <div style="text-align:center">
-                <ngx-barcode6
-                    [bc-format]="format"
-                    [bc-value]="value"
-                    [bc-display-value]="displayValue"
-                    [bc-width]="width"
-                    [bc-font-size]="fontSize"
-                >
-                </ngx-barcode6>
-            </div>
-        
-            <!-- <p class="headerSubTitle"> aca va el qr</p> -->
+      <!-- <p class="headerSubTitle"> aca va el qr</p> -->
 
-            <div class="keepIt">
-                No pierda este ticket
-            </div>
-            <div class="keepItBody">
-                Este recibo original es necesario para retirar su vehiculo.
-            </div>
-        </div>       
+      <div class="keepIt">No pierda este ticket</div>
+      <div class="keepIt">Presente cedula para retirar</div>
+      <!-- <div class="keepItBody">
+                    Este recibo original es necesario para retirar su vehiculo.
+                </div> -->
     </div>
+    <!-- <div class="location">
+            Datos Vehiculo
+        </div> -->
+    <div class="headerTitle">
+      {{ patente }}
+    </div>
+    <!-- <div class="date">
+            Ingreso:
+        </div>     -->
+    <div id="date">
+      {{ fechaIngreso }}
+      <br>
+      {{ horaIngreso }} hs
+    </div>
+    <div *ngIf="modo === 'Ticket Salida'">
+      <div class="date">Salida:</div>
+      <div>
+        Fecha:
+        {{ fechaSalida }}
+      </div>
+      <div>
+        Hora:
+        {{ horaSalida }} hs
+      </div>
+      <div>
+        Estadia:
+        {{ estadiaHoras }} hs
+      </div>
+      <div class="saldo">Importe:</div>
+      <div>${{ saldo }}</div>
+    </div>
+
+    <hr />
+  </div>
 </div>
 <button [print]="['ticket']">Print</button>
 <button (click)="closeModal()">Cerrar</button>
