@@ -1,5 +1,9 @@
 /* TODO: optimize */
 
+#ticket{
+  width: 100%;
+ }
+
 
 p {
   /* el tamaño por defecto es 14px */
@@ -15,7 +19,7 @@ body {
   
   .receipt {
       // padding: 3mm;
-      width: 100mm;
+      width: 80mm;
       border: 1px solid black;
   }
   .orderNo {
@@ -288,6 +292,3 @@ body {
       margin-top: -36px;
   }
 
-  #ticket{
-   width: 100%;
-  }

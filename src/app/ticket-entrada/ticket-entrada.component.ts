@@ -45,6 +45,8 @@ export class TicketEntradaComponent implements OnInit {
     }
   }
 
+// SOLO PARA EL BARCODE
+
   format = 'CODE128B';
   value = ``;
   width = 2.0;
@@ -77,6 +79,10 @@ export class TicketEntradaComponent implements OnInit {
   }
 
 */
+
+
+
+// SOLO PARA EL PLUGIN DE IMPRESION 
 
   public config = {
     printMode: 'template-popup',
