@@ -1,5 +1,9 @@
 /* TODO: optimize */
 
+#ticket{
+  width: 100%;
+ }
+
 
 p {
   /* el tamaño por defecto es 14px */
@@ -8,13 +12,13 @@ p {
 
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'helvetica', sans-serif;
     margin: 0px;
     padding: 0px;
   }
   
   .receipt {
-      padding: 3mm;
+      // padding: 3mm;
       width: 80mm;
       border: 1px solid black;
   }
@@ -53,7 +57,8 @@ body {
   #date {
     margin: 5pt 0px;
     text-align: center;
-    font-size: 8pt;
+    font-weight: bold;
+    font-size: 22pt;
   }
   
   #barcode {
@@ -287,6 +292,3 @@ body {
       margin-top: -36px;
   }
 
-  #ticket{
-   // width: 100%;
-  }

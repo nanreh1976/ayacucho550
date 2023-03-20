@@ -71,7 +71,7 @@ export class InicioComponent implements OnInit {
       if (this.vpService.isBarCode(str)) {
         this.confirmarEgresoBC(str);
       } else {
-        console.log('submited patente');
+        // console.log('submited patente');
         if (this.op === 'Eliminar') {
           this.confirmarEgresoPat(str);
         } else {
@@ -93,14 +93,14 @@ export class InicioComponent implements OnInit {
 
     //recorre playa buscando barcode
     for (var it of playa) {
-      // console.log(it);
+       console.log("on Scan" ,it);
 
       let cod = it['codigoBarras'];
       let pat = it['patente'];
       // console.log(cod, pat);
 
       if (code === cod) {
-        // console.log('esta en playa', pat);
+     //    console.log('esta en playa', pat);
         this.msgBack("Eliminar", String(pat));
         break;
       } else {
@@ -130,10 +130,10 @@ export class InicioComponent implements OnInit {
       confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('submitted barcode para egreso');
+      //  console.log('submitted barcode para egreso');
         this.onScan(str); //va a chequear el scan
       } else {
-        console.log('operacion cancelada');
+      //  console.log('operacion cancelada');
       }
     });
   }
@@ -149,10 +149,10 @@ export class InicioComponent implements OnInit {
       confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('submited patente para egreso');
+        // console.log('submited patente para egreso');
         this.msgBack(this.op, str); //manda el form al parent
       } else {
-        console.log('Egreso cancelado');
+       // console.log('Egreso cancelado');
       }
     });
   }
@@ -170,10 +170,10 @@ export class InicioComponent implements OnInit {
       // confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('submited patente para ingreso');
+        // console.log('submited patente para ingreso');
         this.msgBack(this.op, str); //manda el form al parent
       } else {
-        console.log('Ingreso cancelado');
+        // console.log('Ingreso cancelado');
       }
     });
   }
