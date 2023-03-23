@@ -20,6 +20,7 @@ export class PlayaFormComponent implements OnInit {
   barCodeId: string = 'BC';
   editForm!: any;
   titulo!: string;
+  formTitle: string
   item!: any;
   fecha!: Date;
   fechas: Fechas = {
@@ -79,12 +80,17 @@ export class PlayaFormComponent implements OnInit {
   setearComponente() {
     this.titulo = this.fromParent.modo;
     this.item = this.fromParent.item;
+    
     this.editForm.patchValue({
       patente: this.fromParent.item.patente,
     });
 
+    
+
+
     switch (this.titulo) {
       case 'Agregar': {
+        this.formTitle="Ingresar"
         this.saldo = 0;
         this.item.id = '';
         this.buscarPatenteEnPlaya();
@@ -94,6 +100,7 @@ export class PlayaFormComponent implements OnInit {
       }
 
       case 'Editar': {
+        this.formTitle="Editar"
         this.sinEdicion = false;
         this.saldo = 0;
         this.tarifaSeleccionada = this.item.tarifa;
@@ -102,6 +109,7 @@ export class PlayaFormComponent implements OnInit {
         break;
       }
       case 'Eliminar': {
+        this.formTitle="Egreso"
         this.buscarPatenteEnPlaya();
         this.egresoVehiculo();
         this.pruebaCierreHora();
@@ -109,6 +117,7 @@ export class PlayaFormComponent implements OnInit {
       }
 
       case 'Reimprimir': {
+        this.formTitle="Reimprimir"
         this.saldo = 0;
         this.tarifaSeleccionada = this.item.tarifa;
         this.fechas = this.item.fechas;
@@ -300,18 +309,19 @@ export class PlayaFormComponent implements OnInit {
   ventanaConfirmacion() {
     switch (this.titulo) {
       case 'Agregar': {
-        Swal.fire({
-          title: '¿Desea confirmar el ingreso?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Confirmar',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.closeModal();
-          }
-        });
+        this.closeModal();
+        // Swal.fire({
+        //   title: '¿Desea confirmar el ingreso?',
+        //   icon: 'warning',
+        //   showCancelButton: true,
+        //   confirmButtonColor: '#3085d6',
+        //   cancelButtonColor: '#d33',
+        //   confirmButtonText: 'Confirmar',
+        // }).then((result) => {
+        //   if (result.isConfirmed) {
+        //     this.closeModal();
+        //   }
+        // });
         break;
       }
       case 'Editar': {
