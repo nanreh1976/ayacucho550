@@ -75,7 +75,9 @@ export class InicioComponent implements OnInit {
         if (this.op === 'Eliminar') {
           this.confirmarEgresoPat(str);
         } else {
-          this.confirmarIngresoPat(str);
+          // this.confirmarIngresoPat(str); // comenatod para ahorrar un paso
+          
+          this.msgBack(this.op, str); //manda el form al parent para ingreso
         }
       }
     } else {

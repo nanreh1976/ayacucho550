@@ -2,7 +2,7 @@
   type="button"
   class="close"
   class="btn btn-primary"
-  (click)="activeModal.dismiss('Cross click')"
+  (click)="closeModal()"
 >
   <span aria-hidden="true">&times;</span>
 </button>
@@ -50,6 +50,11 @@
       {{ fechaIngreso }}
       <br>
       {{ horaIngreso }} hs
+
+      <br>
+
+      Tarifa: {{tarifaNombre}}
+
     </div>
     <div *ngIf="modo === 'Ticket Salida'">
       <div class="location">Salida:</div>
@@ -76,6 +81,6 @@
     <br>
   </div>
 </div>
-<button [print]="['ticket']">Print</button>
-<button (click)="closeModal()">Cerrar</button>
+<button [print]="['ticket']" (click)="activeModal.close()">Confirma</button>
+<button  (click)="closeModal()">Cancela</button>
 

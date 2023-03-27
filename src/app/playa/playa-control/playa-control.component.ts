@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; // servicios modal
 import { CajaStorageService } from 'src/app/servicios/caja/caja-storage.service';
 import { LogService } from 'src/app/servicios/log.service';
@@ -32,7 +31,6 @@ export class PlayaControlComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private fb: FormBuilder,
     private logger: LogService,
     private storageService: StorageService,
     private cajaStorageService: CajaStorageService
@@ -68,9 +66,6 @@ export class PlayaControlComponent implements OnInit {
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then(
         (result) => {
-          //console.log("result from control","op", result.op,"item", result.item);
-
-          // this.getXps();
           this.flowOp(result.op, result.item);
         },
         (reason) => {}
@@ -81,7 +76,7 @@ export class PlayaControlComponent implements OnInit {
   //// FLUJO DE OPERACIONES SEGUN OP FORM /////
 
   flowOp(op: string, item: any) {
-    this.selectCrudOp(op, item); // hace el crud
+    // this.selectCrudOp(op, item); // hace el crud
     this.selectTicketOp(op, item); // hace operacion de ticket si corresponde
   }
 
@@ -134,17 +129,17 @@ export class PlayaControlComponent implements OnInit {
   selectTicketOp(op: string, item: any) {
     switch (op) {
       case 'Agregar': {
-        this.openTicket('Ticket Ingreso', item);
+        this.openTicket('Ticket Ingreso', item,op);
         break;
       }
 
       case 'Eliminar': {
-        this.openTicket('Ticket Salida', item);
+        this.openTicket('Ticket Salida', item,op);
         break;
       }
 
       case 'Reimprimir': {
-        this.openTicket('Reimprimir', item);
+        this.openTicket('Reimprimir', item,op);
         this.logger.log('ticket-reimpresion', item);
 
         break;
@@ -159,8 +154,9 @@ export class PlayaControlComponent implements OnInit {
 
   /////  ABRIR FORMULARIO TICKET //////
 
-  openTicket(modo: string, item: any) {
+  openTicket(modo: string, item: any, op:any) {
     {
+   
       const modalRef = this.modalService.open(TicketEntradaComponent, {
         windowClass: 'myCustomModalClass',
       });
@@ -173,9 +169,13 @@ export class PlayaControlComponent implements OnInit {
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then(
         (result) => {
-          this.selectTicketOp(result.op, result.item);
+          console.log (modo, item)
+          this.selectCrudOp(op, item);
+          // this.selectTicketOp(result.op, result.item);
         },
-        (reason) => {}
+        (reason) => {
+          console.log (reason)
+        }
       );
     }
   }

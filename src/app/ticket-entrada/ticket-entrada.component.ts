@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPrintElementService } from 'ngx-print-element';
+import Swal from 'sweetalert2';
 import { CalculoFechasService } from '../servicios/Fechas/calculo-fechas.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class TicketEntradaComponent implements OnInit {
   saldo!: number;
   estadia!: number;
   estadiaHoras: any = '';
-
+  tarifaNombre: string;
   tarifaFraccion!: number;
   tarifaValor!: number;
 
@@ -112,15 +113,17 @@ export class TicketEntradaComponent implements OnInit {
     this.patente = this.item.patente;
     this.estadia = this.item.fechas.estadia;
     this.tarifaFraccion = this.item.tarifa.fraccion;
-
+    this.tarifaNombre = this.item.tarifa.nombre
     this.tarifaValor = this.item.tarifa.valor;
     this.saldo = this.item.saldo;
     this.value = this.item.codigoBarras;
   }
 
-  closeModal() {
-    this.activeModal.close();
-  }
+closeModal(){
+Swal.fire('Operacion Cancelada')
+  this.activeModal.dismiss('Operacion cancelada')
+
+}
 
   tiempoEstadia() {
     this.estadiaHoras = this.fechaService.tiempoEstadia(this.estadia);
