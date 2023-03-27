@@ -8,21 +8,17 @@
 </button>
 <div class="d-flex justify-content-center" id="ticket">
   <div id="ticket" class="receipt">
-   
     <div *ngIf="modo !== 'Ticket Salida'">
       <div class="location">TICKET ENTRADA</div>
-
     </div>
     <div *ngIf="modo === 'Ticket Salida'">
       <div class="location">TICKET SALIDA</div>
-
     </div>
 
- 
-    <div class="headerTitle"> <i class="fa fa-car"></i> PLAYA SAN LUIS</div>
-    <div class="location">San Luis 428 </div>
+    <div class="headerTitle"><i class="fa fa-car"></i> PLAYA SAN LUIS</div>
+    <div class="location">San Luis 428</div>
     <div class="location">Ciudad de CORDOBA</div>
-
+    <hr />
     <div *ngIf="modo !== 'Ticket Salida'">
       <!-- Cod Barras / QR -->
       <div style="text-align: center">
@@ -36,10 +32,8 @@
         </ngx-barcode6>
       </div>
 
-
       <div class="keepIt">No pierda este ticket</div>
       <div class="keepIt">Presente cedula para retirar</div>
-
     </div>
 
     <div class="headerTitle">
@@ -48,39 +42,32 @@
 
     <div id="date">
       {{ fechaIngreso }}
-      <br>
+      <br />
       {{ horaIngreso }} hs
 
-      <br>
+      <br />
 
-      Tarifa: {{tarifaNombre}}
-
+      Tarifa: {{ tarifaNombre }}
     </div>
     <div *ngIf="modo === 'Ticket Salida'">
       <div class="location">Salida:</div>
-      <div  id="date">
+      <div id="date">
         {{ fechaSalida }}
       </div>
-      <div  id="date">
-        {{ horaSalida }} hs
-      </div>
-      <div class="location">
-        Estadia:
-
-      </div>
-       <div id="date">        {{ estadiaHoras }} hs</div>
+      <div id="date">{{ horaSalida }} hs</div>
+      <div class="location">Estadia:</div>
+      <div id="date">{{ estadiaHoras }} hs</div>
       <div class="location">Importe:</div>
       <div id="date">${{ saldo }}</div>
     </div>
 
     <hr />
 
-    <br>
-    <br>
-    <br>
-    <br>
+    <br />
+    <br />
+    <br />
+    <br />
   </div>
 </div>
 <button [print]="['ticket']" (click)="activeModal.close()">Confirma</button>
-<button  (click)="closeModal()">Cancela</button>
-
+<button (click)="closeModal()">Cancela</button>

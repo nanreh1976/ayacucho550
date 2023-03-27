@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPrintElementService } from 'ngx-print-element';
 import { StorageService } from 'src/app/servicios/storage/storage.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class CajaCierreFormComponent implements OnInit {
   constructor(
     public activeModal: NgbActiveModal,
     private storageService: StorageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public print: NgxPrintElementService,
   ) {
     this.createForm();
     this.setUser();
@@ -33,6 +35,7 @@ export class CajaCierreFormComponent implements OnInit {
     this.saldo = this.fromParent.saldo;
     // console.log('caja cierre form', this.fromParent);
     this.configureForm(this.titulo, this.item);
+    console.log("cierre caja", this.fromParent)
   }
 
   setUser() {
