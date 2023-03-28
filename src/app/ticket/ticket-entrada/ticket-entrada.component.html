@@ -1,3 +1,8 @@
+<!-- TICKET ENTRADA - SALIDA DEL ESTACIONAMIENTO -->
+<!-- EL TICKET CIERRE DE CAJA SE ARMA EN EL FORM CIERRE CAJA -->
+
+<!-- BOTON CERRAR MODAL -->
+
 <button
   type="button"
   class="close"
@@ -6,6 +11,11 @@
 >
   <span aria-hidden="true">&times;</span>
 </button>
+
+<!-- INICIO TICKET -->
+
+<!-- TITULO DEL TICKET  -->
+
 <div class="d-flex justify-content-center" id="ticket">
   <div id="ticket" class="receipt">
     <div *ngIf="modo !== 'Ticket Salida'">
@@ -15,10 +25,10 @@
       <div class="location">TICKET SALIDA</div>
     </div>
 
-    <div class="headerTitle"><i class="fa fa-car"></i> PLAYA SAN LUIS</div>
-    <div class="location">San Luis 428</div>
-    <div class="location">Ciudad de CORDOBA</div>
-    <hr />
+    <!-- HEADER -->
+    <app-ticket-header></app-ticket-header>
+
+    <!-- CONTENIDO -->
     <div *ngIf="modo !== 'Ticket Salida'">
       <!-- Cod Barras / QR -->
       <div style="text-align: center">
@@ -63,11 +73,18 @@
 
     <hr />
 
+    <!-- ESPACIO PARA SEPARAR TICKETS -->
+
     <br />
     <br />
     <br />
     <br />
   </div>
 </div>
+
+<!-- FIN TICKET -->
+
+<!-- BOTONES IMPRIMIR Y DISMISS -->
+
 <button [print]="['ticket']" (click)="activeModal.close()">Confirma</button>
 <button (click)="closeModal()">Cancela</button>

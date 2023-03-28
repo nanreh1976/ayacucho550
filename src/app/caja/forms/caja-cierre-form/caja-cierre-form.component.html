@@ -1,8 +1,14 @@
 <div class="modal-header">
-  <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+  <button
+    type="button"
+    class="close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+
+<!-- CAMPO OBSERVACIONES DEL FORM -->
 
 <div class="modal-body">
   <div class="modal-body">
@@ -10,56 +16,60 @@
       <div class="form-group">
         <label for="Concepto">Comentarios</label>
         <div class="input-group">
-          <input formControlName="concepto" class="form-control" required type="text" [ngClass]="{
+          <input
+            formControlName="concepto"
+            class="form-control"
+            required
+            type="text"
+            [ngClass]="{
               'is-invalid': Concepto?.errors && Concepto?.touched,
               'is-valid': !Concepto?.errors && !Concepto?.touched
-            }" />
+            }"
+          />
         </div>
       </div>
     </form>
   </div>
+
+  <!-- INICIO TICKET -->
+
+  <!-- TITULO -->
   <div class="d-flex justify-content-center" id="ticket">
     <div id="ticket" class="receipt">
       <div class="location">CIERRE DE CAJA</div>
 
+      <!-- HEADER -->
+      <app-ticket-header></app-ticket-header>
 
-      <div class="headerTitle"><i class="fa fa-car"></i> PLAYA SAN LUIS</div>
-      <div class="location">San Luis 428</div>
-      <div class="location">Ciudad de CORDOBA</div>
-
-      <hr />
-      <div class="location">Operador: XXXXXXX XXXXXX </div>
+      <!-- CONTENIDO -->
+      <div class="location">Operador: XXXXXXX XXXXXX</div>
       <div class="location">Id Sesion: XXZXX4XX</div>
       <div class="location">Abrio: XX/XX/XX 00:00</div>
       <div class="location">Cerro: XX/XX/XX 00:00</div>
 
-
-      <div class="location">
-        Apertura : 
-      </div>
+      <div class="location">Apertura :</div>
       <div class="location">
         Saldo De Caja :
         {{ saldo | currency : "ARS" : "symbol-narrow" : "1.0-0" }}
       </div>
-      <div class="location">
-        Ingresos Turno:
-      </div>
+      <div class="location">Ingresos Turno:</div>
 
       <hr />
 
-      <div class="location">
-        Vehiculos en playa : 12
-  
-      </div>
-      <div class="location">
-        Listado de patentes
-      </div>
+      <div class="location">Vehiculos en playa : 12</div>
+      <div class="location">Listado de patentes</div>
     </div>
   </div>
 
+  <!-- FIN TICKET -->
 
   <div class="modal-footer">
-    <button class="btn btn-success" [disabled]="editForm.invalid" [print]="['ticket']" (click)="closeModal()">
+    <button
+      class="btn btn-success"
+      [disabled]="editForm.invalid"
+      [print]="['ticket']"
+      (click)="closeModal()"
+    >
       {{ titulo }}
     </button>
     <button (click)="activeModal.dismiss()">Cancelar</button>

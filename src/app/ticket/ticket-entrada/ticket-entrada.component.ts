@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPrintElementService } from 'ngx-print-element';
 import Swal from 'sweetalert2';
-import { CalculoFechasService } from '../servicios/Fechas/calculo-fechas.service';
+import { CalculoFechasService } from 'src/app/servicios/Fechas/calculo-fechas.service';
 
 @Component({
   selector: 'app-ticket-entrada',
