@@ -1,0 +1,1 @@
+Cuando un componente (ej Forms) necesita info adicional a la que le pasan, usa este servicio para simplificar importaciones.
