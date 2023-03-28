@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPrintElementService } from 'ngx-print-element';
-import { StorageService } from 'src/app/servicios/storage/storage.service';
+import { GetInfoService } from 'src/app/servicios/get-info/get-info.service';
+
 
 @Component({
   selector: 'app-caja-cierre-form',
@@ -11,37 +12,34 @@ import { StorageService } from 'src/app/servicios/storage/storage.service';
 })
 export class CajaCierreFormComponent implements OnInit {
   @Input() fromParent: any;
-  usuario!: string;
-  user$: any;
+
   editForm!: any;
   titulo!: string;
   item: any;
   now!: Date;
   saldo!: number;
 
+
   constructor(
     public activeModal: NgbActiveModal,
-    private storageService: StorageService,
+    public getInfo:GetInfoService,
     private fb: FormBuilder,
     public print: NgxPrintElementService,
   ) {
     this.createForm();
-    this.setUser();
+
   }
 
   ngOnInit(): void {
+    this.getInfo.getCierreCaja()
     this.now = new Date();
     this.titulo = this.fromParent.modo;
     this.saldo = this.fromParent.saldo;
-    // console.log('caja cierre form', this.fromParent);
     this.configureForm(this.titulo, this.item);
-    console.log("cierre caja", this.fromParent)
+
   }
 
-  setUser() {
-    this.storageService.usuario$.subscribe((data) => (this.user$ = data));
-    this.usuario = this.user$['displayName'];
-  }
+ 
   configureForm(_titulo: string, item: any) {
     this.editForm.patchValue({
       fecha: this.now,
@@ -60,7 +58,7 @@ export class CajaCierreFormComponent implements OnInit {
     });
   }
 
-  closeModal() {
+  enviarInfo() {
     let value = {
       op: this.titulo,
       item: this.editForm.value,
@@ -76,7 +74,5 @@ export class CajaCierreFormComponent implements OnInit {
     return this.editForm.get('concepto');
   }
 
-  getMsg(msg: any) {
-    this.activeModal.close(msg);
-  }
+
 }

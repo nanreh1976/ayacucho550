@@ -1,1 +1,2 @@
-Cuando un componente (ej Forms) necesita info adicional a la que le pasan, usa este servicio para simplificar importaciones.
+Cuando un componente (ej Forms) necesita data adicional y puntual  de otra coleccion
+para usar en el momento (sin suscripcion), usa este servicio para simplificar importaciones y restringir la info a la que accede.
