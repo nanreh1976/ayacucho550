@@ -89,6 +89,7 @@ import { SesionViewComponent } from './caja/sesion-view/sesion-view.component';
 import { LimboComponent } from './limbo/limbo.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TicketHeaderComponent } from './ticket/ticket-header/ticket-header.component';
+import { TicketCierreCajaComponent } from './ticket/ticket-cierre-caja/ticket-cierre-caja.component';
 
 
 
@@ -154,6 +155,7 @@ import { TicketHeaderComponent } from './ticket/ticket-header/ticket-header.comp
       LimboComponent,
       UsuariosComponent,
       TicketHeaderComponent,
+      TicketCierreCajaComponent,
   ],
   imports: [
     BrowserModule,

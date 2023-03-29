@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPrintElementService } from 'ngx-print-element';
-import { GetInfoService } from 'src/app/servicios/get-info/get-info.service';
+
 
 
 @Component({
@@ -14,15 +14,14 @@ export class CajaCierreFormComponent implements OnInit {
   @Input() fromParent: any;
 
   editForm!: any;
-  titulo!: string;
+
   item: any;
   now!: Date;
-  saldo!: number;
+
 
 
   constructor(
     public activeModal: NgbActiveModal,
-    public getInfo:GetInfoService,
     private fb: FormBuilder,
     public print: NgxPrintElementService,
   ) {
@@ -31,21 +30,18 @@ export class CajaCierreFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getInfo.getCierreCaja()
+
     this.now = new Date();
-    this.titulo = this.fromParent.modo;
-    this.saldo = this.fromParent.saldo;
-    this.configureForm(this.titulo, this.item);
+    this.configureForm( this.item);
 
   }
 
  
-  configureForm(_titulo: string, item: any) {
+  configureForm( item: any) {
     this.editForm.patchValue({
       fecha: this.now,
       concepto: '',
       operacion: 'Cierre de Caja',
-      importe: this.saldo,
     });
   }
 
@@ -60,7 +56,7 @@ export class CajaCierreFormComponent implements OnInit {
 
   enviarInfo() {
     let value = {
-      op: this.titulo,
+      op: this.fromParent.modo,
       item: this.editForm.value,
     };
     this.activeModal.close(value);
