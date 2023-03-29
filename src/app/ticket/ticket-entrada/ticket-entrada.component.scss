@@ -1,4 +1,19 @@
 /* TODO: optimize */
+.containerRotado{
+  text-align: center;
+  width: 100%;
+  overflow: hidden; /* Prevent overflowing of nested elements */
+}
+
+.rotado {
+  display: block;
+  transform: rotate(-90deg);
+  margin: 50px auto; /* account for 100px width/height difference */
+}
+  // transform: rotate(90deg);
+  // overflow: hidden;
+  // padding : 50px;
+
 
 #ticket{
   width: 100%;
