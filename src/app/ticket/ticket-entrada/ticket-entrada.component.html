@@ -32,9 +32,14 @@
 
     <div *ngIf="modo !== 'Ticket Salida'">
       <!-- Cod Barras / QR -->
+      <br>
+      <br>
+      <br>
       <div class="containerRotado">
         <div class="rotado">
           <div style="text-align: center">
+            >
+            
             <ngx-barcode6
               [bc-format]="format"
               [bc-value]="value"
@@ -47,6 +52,10 @@
         </div>
       </div>
     </div>
+    <br>
+      <br>
+      <br>
+      <br>
     <div class="keepIt">No pierda este ticket</div>
     <div class="keepIt">Presente cedula para retirar</div>
 

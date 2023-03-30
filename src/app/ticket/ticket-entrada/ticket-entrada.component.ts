@@ -50,7 +50,7 @@ export class TicketEntradaComponent implements OnInit {
 
   format = 'CODE128B';
   value = ``;
-  width = 2.0;
+  width = 2.5;
   height = 100;
   displayValue = true;
   fontSize = 25;
