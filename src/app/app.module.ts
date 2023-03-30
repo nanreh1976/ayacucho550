@@ -22,7 +22,7 @@ import { PlayaControlComponent } from './playa/playa-control/playa-control.compo
 import { ClientesViewComponent } from './clientes/clientes-view/clientes-view.component';
 import { ClientesControlComponent } from './clientes/clientes-control/clientes-control.component';
 
-import { TicketEntradaComponent } from './ticket-entrada/ticket-entrada.component';
+import { TicketEntradaComponent } from './ticket/ticket-entrada/ticket-entrada.component';
 import { NgxPrintElementModule } from 'ngx-print-element';
 import { NgxBarcode6Module } from 'ngx-barcode6';
 import { BtnReimpresionComponent } from './shared/btn-reimpresion/btn-reimpresion.component';
@@ -88,6 +88,8 @@ import { BtnConsultarComponent } from './shared/btn-consultar/btn-consultar.comp
 import { SesionViewComponent } from './caja/sesion-view/sesion-view.component';
 import { LimboComponent } from './limbo/limbo.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { TicketHeaderComponent } from './ticket/ticket-header/ticket-header.component';
+import { TicketCierreCajaComponent } from './ticket/ticket-cierre-caja/ticket-cierre-caja.component';
 
 
 
@@ -152,6 +154,8 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
       SesionViewComponent,
       LimboComponent,
       UsuariosComponent,
+      TicketHeaderComponent,
+      TicketCierreCajaComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 import { CajaStorageService } from 'src/app/servicios/caja/caja-storage.service';
 import { StorageService } from 'src/app/servicios/storage/storage.service';
 
-
 @Component({
   selector: 'app-caja-control',
 
@@ -34,7 +33,7 @@ import { StorageService } from 'src/app/servicios/storage/storage.service';
 export class CajaControlComponent implements OnInit {
   componente: string = 'caja';
   usuario!: string;
-  user$:any
+  user$: any;
 
   $modoCaja: any;
   $sesionCaja: any;
@@ -49,11 +48,10 @@ export class CajaControlComponent implements OnInit {
     private modalService: NgbModal,
     private estadoCajaService: EstadoCajaService,
     private cajaStorageService: CajaStorageService,
-    private storageService:StorageService
+    private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
-
     this.setUser();
     this.$sesionCaja = this.estadoCajaService.sesionCaja$;
     this.$modoCaja = this.estadoCajaService.modoCaja$;
@@ -64,9 +62,7 @@ export class CajaControlComponent implements OnInit {
   }
 
   setUser() {
-
-    this.storageService.usuario$
-    .subscribe(data => this.user$ = data);
+    this.storageService.usuario$.subscribe((data) => (this.user$ = data));
 
     this.usuario = this.user$['displayName'];
   }
@@ -115,6 +111,7 @@ export class CajaControlComponent implements OnInit {
       size: 'lg',
     });
 
+    // data para usar en el modal
     let info = {
       modo: modo,
       item: item,
@@ -130,6 +127,10 @@ export class CajaControlComponent implements OnInit {
       (reason) => {}
     );
   }
+
+  // tomar datos para el ticket de cierre de caja
+
+
 
   // seleccionar operacion CRUD
 
@@ -179,7 +180,6 @@ export class CajaControlComponent implements OnInit {
     // console.log('cierre de caja', item, this.$sesionCaja);
     item.operacion = 'cierre';
     // this.cajaStorageService.addItem(this.componente, item);
-  
 
     // llama al metodo de estadoCaja para el cierre de sesion
     this.estadoCajaService.cerrarSesion(item);

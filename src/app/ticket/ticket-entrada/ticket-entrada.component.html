@@ -1,0 +1,103 @@
+<!-- TICKET ENTRADA - SALIDA DEL ESTACIONAMIENTO -->
+<!-- EL TICKET CIERRE DE CAJA SE ARMA EN EL FORM CIERRE CAJA -->
+
+<!-- BOTON CERRAR MODAL -->
+
+<button
+  type="button"
+  class="close"
+  class="btn btn-primary"
+  (click)="closeModal()"
+>
+  <span aria-hidden="true">&times;</span>
+</button>
+
+<!-- INICIO TICKET -->
+
+<!-- TITULO DEL TICKET  -->
+
+<div class="d-flex justify-content-center" id="ticket">
+  <div id="ticket" class="receipt">
+    <div *ngIf="modo !== 'Ticket Salida'">
+      <div class="location">TICKET ENTRADA</div>
+    </div>
+    <div *ngIf="modo === 'Ticket Salida'">
+      <div class="location">TICKET SALIDA</div>
+    </div>
+
+    <!-- HEADER -->
+    <app-ticket-header></app-ticket-header>
+
+    <!-- CONTENIDO -->
+
+    <div *ngIf="modo !== 'Ticket Salida'">
+      <!-- Cod Barras / QR -->
+      <br>
+      <br>
+      <br>
+      <div class="containerRotado">
+        <div class="rotado">
+          <div style="text-align: center">
+            >
+            
+            <ngx-barcode6
+              [bc-format]="format"
+              [bc-value]="value"
+              [bc-display-value]="displayValue"
+              [bc-width]="width"
+              [bc-font-size]="fontSize"
+            >
+            </ngx-barcode6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+      <br>
+      <br>
+      <br>
+    <div class="keepIt">No pierda este ticket</div>
+    <div class="keepIt">Presente cedula para retirar</div>
+
+    <div class="headerTitle">
+      {{ patente }}
+    </div>
+
+    <div id="date">
+      {{ fechaIngreso }}
+      <br />
+      {{ horaIngreso }} hs
+
+      <br />
+
+      Tarifa: {{ tarifaNombre }}
+    </div>
+    <div *ngIf="modo === 'Ticket Salida'">
+      <div class="location">Salida:</div>
+      <div id="date">
+        {{ fechaSalida }}
+      </div>
+      <div id="date">{{ horaSalida }} hs</div>
+      <div class="location">Estadia:</div>
+      <div id="date">{{ estadiaHoras }} hs</div>
+      <div class="location">Importe:</div>
+      <div id="date">${{ saldo }}</div>
+    </div>
+
+    <hr />
+
+    <!-- ESPACIO PARA SEPARAR TICKETS -->
+
+    <br />
+    <br />
+    <br />
+    <br />
+  </div>
+</div>
+
+<!-- FIN TICKET -->
+
+<!-- BOTONES IMPRIMIR Y DISMISS -->
+
+<button [print]="['ticket']" (click)="activeModal.close()">Confirma</button>
+<button (click)="closeModal()">Cancela</button>
