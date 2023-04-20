@@ -94,9 +94,16 @@ export class GetInfoService {
     this.countEgresosVehiculos()  
   }
 
+  // countEgresosVehiculos() {
+  //   this.getCajaOps();
+  //   this.cantEgresosVehiculos = this.cajaOps.filter((t) => t['operacion'] === 'egreso').length;
+  // }
+
   countEgresosVehiculos() {
     this.getCajaOps();
-    this.cantEgresosVehiculos = this.cajaOps.filter((t) => t['operacion'] === 'egreso').length;
+    const regex = /\begreso\b/i; // Expresión regular que busca la palabra "egreso" como una palabra completa, ignorando mayúsculas y minúsculas
+    this.cantEgresosVehiculos = this.cajaOps.filter((t) => regex.test(t['concepto'])).length;
   }
+  
 
 }
