@@ -32,6 +32,8 @@ export class VehiculosFormComponent implements OnInit {
   itemVehiculo: Vehiculo;
   vehiculos: any[]; //| Observable<any>;
   $modoCaja:any;
+  vehiculoExistente = false;
+
   
 
   constructor(
@@ -53,6 +55,10 @@ export class VehiculosFormComponent implements OnInit {
     this.createForm();
     this.getAllVehiculos();
     this.getTarifas();
+
+    this.editForm.get('patente')?.valueChanges.subscribe((value: string) => {
+      this.vehiculoExistente = this.comprobarExistenciaVehiculo(value);
+    });
   }
 
   getAllVehiculos(): void {
@@ -108,6 +114,14 @@ export class VehiculosFormComponent implements OnInit {
     this.titulo = 'Vehiculo Agregar';
   }
 
+
+
+  comprobarExistenciaVehiculo(patente: string) {
+    return this.vehiculos.some((vehiculo) => vehiculo.patente === patente);
+  }
+  
+
+  // se agrega o se edita el vehiculo
   guardarVehiculo() {
     if (this.titulo === 'Vehiculo Agregar') {
       //this.titulo = "Vehiculo Agregar";
@@ -193,6 +207,7 @@ export class VehiculosFormComponent implements OnInit {
 
   editarVehiculo(vehiculo: Vehiculo) {
     //console.log(vehiculo);
+  
     this.itemVehiculo = vehiculo;
     this.editForm.patchValue({
       id: vehiculo.id,

@@ -14,13 +14,11 @@
     <h5 style="color: red">No se puede cobrar Abonos.</h5>
     <h5 style="color: red">Abrir Caja o consultar con un Administrador.</h5>
   </div>
-  
+
   <div *ngIf="($modoCaja | async) === 'admin'">
     <h5 style="color: red">Caja Abierta por otro usuario.</h5>
     <h5 style="color: red">No se puede cobrar abonos.</h5>
-    <h5 style="color: red">
-      Debe cerrar y vovler a abrir sesion para operar.
-    </h5>
+    <h5 style="color: red">Debe cerrar y vovler a abrir sesion para operar.</h5>
   </div>
 
   <table class="tftable">
@@ -53,21 +51,30 @@
       <td *ngIf="vehiculo.estado === 0">Impago</td>
 
       <td class="d-flex">
-        <app-btn-editar 
+        <app-btn-editar
           class="right"
           class="d-flex align-items-center"
           (click)="editarVehiculo(vehiculo)"
           (click)="toggle()"
         >
         </app-btn-editar>
-        <app-btn-eliminar 
+        <app-btn-eliminar
           class="right"
           class="d-flex align-items-center"
           (click)="eliminarVehiculo(vehiculo)"
         ></app-btn-eliminar>
 
+        <button
+          class="btn btn-primary"
+          (click)="setearTitulo()"
+          (click)="toggle()"
+        >
+          <i class="fa fa-plus"></i>
+        </button>
+
         <div *ngIf="($modoCaja | async) === 'abierta'">
-          <app-btn-eliminar *ngIf="vehiculo.estado === 0"
+          <app-btn-eliminar
+            *ngIf="vehiculo.estado === 0"
             class="right"
             [name]="'Pagar'"
             class="d-flex align-items-center"
@@ -78,14 +85,14 @@
     </tr>
   </table>
 
-  <div class="d-flex justify-content-between mx-4 my-2" >
-    <h2>Asignar vehiculo</h2>
-    <button class="btn btn-primary" (click)="setearTitulo()" (click)="toggle()">
-      <i *ngIf="!form" class="fa fa-plus"></i>
-      <i *ngIf="form" class="fa fa-minus"></i>
-    </button>
-  </div>
+  <div class="d-flex justify-content-between mx-4 my-2"></div>
   <ng-container *ngIf="form">
+    <h2>
+      {{
+        titulo === "Vehiculo Agregar" ? "Agregar Vehiculo" : "Editar Vehiculo"
+      }}
+    </h2>
+
     <div class="modal-body">
       <form [formGroup]="editForm" novalidate>
         <div class="form-group">
@@ -101,6 +108,10 @@
                 'is-valid': !Patente?.errors && !Patente?.touched
               }"
             />
+          </div>
+
+          <div *ngIf="vehiculoExistente" style="color: red">
+            Patente ya ingresada como cliente.
           </div>
         </div>
         <div class="form-group">
@@ -156,7 +167,11 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-success" (click)="guardarVehiculo()">
+      <button
+        class="btn btn-primary"
+        [disabled]="vehiculoExistente"
+        (click)="guardarVehiculo()"
+      >
         Guardar
       </button>
     </div>
