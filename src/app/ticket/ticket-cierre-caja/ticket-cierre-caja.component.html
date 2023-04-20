@@ -8,9 +8,7 @@
 
     <!-- CONTENIDO -->
     <div class="location">Operador: {{ this.getInfo.nombreUsuario }}</div>
-    <div class="location">
-      Sesion: {{ this.getInfo.sesionCajaId | json }}
-    </div>
+    <div class="location">Sesion: {{ this.getInfo.sesionCajaId | json }}</div>
     <div class="location">
       Inicio:
       {{
@@ -21,7 +19,10 @@
 
     <div class="location">
       Sdo Inicial :
-      {{ this.getInfo.saldoInicialCaja | currency : "ARS" : "symbol-narrow" : "1.0-0"}}
+      {{
+        this.getInfo.saldoInicialCaja
+          | currency : "ARS" : "symbol-narrow" : "1.0-0"
+      }}
     </div>
 
     <div class="location">
@@ -35,7 +36,6 @@
         this.getInfo.saldoCaja | currency : "ARS" : "symbol-narrow" : "1.0-0"
       }}
     </div>
- 
 
     <hr />
     <div class="location">
@@ -51,4 +51,5 @@
       </p>
     </div>
   </div>
-</div>
+  </div>
+
