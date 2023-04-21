@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { AbonoService } from 'src/app/servicios/abono/abono.service';
-import { CajaStorageService } from 'src/app/servicios/caja/caja-storage.service';
 import { EstadoCajaService } from 'src/app/servicios/caja/estado-caja.service';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
 import { StorageService } from 'src/app/servicios/storage/storage.service';
@@ -40,7 +39,7 @@ export class VehiculosFormComponent implements OnInit {
     public activeModal: NgbActiveModal,
     public vpService: ValidarPatenteService,
     private modalService: NgbModal,
-    private cajaStorageService: CajaStorageService,
+
     private abonoService: AbonoService,
     private storageService: StorageService,
     private estadoCaja: EstadoCajaService
@@ -51,27 +50,6 @@ export class VehiculosFormComponent implements OnInit {
     this.createForm();
     this.getAllVehiculos();
     this.getTarifas();
-
-    this.editForm.get('patente')?.valueChanges.subscribe((value: string) => {
-      this.vehiculoExistente = this.comprobarExistenciaVehiculo(value);
-    });
-  }
-  
-  async patenteUnica(control: AbstractControl): Promise<{ [key: string]: boolean } | null> {
-    const patente = control.value;
-    const vehiculos = this.vehiculos;
-    const vehiculoExistente = vehiculos.some(
-      (vehiculo) => vehiculo.patente === patente
-    );
-    const patenteValida = await this.vpService.evaluarPatente(); // wait for the async function to complete
-  
-    if (vehiculoExistente) {
-      return { patenteExistente: true };
-    } else if (!patenteValida) {
-      return { patenteInvalida: true };
-    } else {
-      return null;
-    }
   }
 
   getAllVehiculos(): void {
@@ -91,7 +69,7 @@ export class VehiculosFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      patente: ['', Validators.required, this.patenteUnica.bind(this)],
+      patente: ['', Validators.required],
       marca: [''],
       modelo: [''],
       color: [''],
@@ -111,12 +89,6 @@ export class VehiculosFormComponent implements OnInit {
     this.tarifaSeleccionada = tarifaForm[0]; //se guarda el nombre de la tarifa seleccionada en la variable
     // console.log(this.tarifaSeleccionada);
   }
-
-  comprobarExistenciaVehiculo(patente: string) {
-    return this.vehiculos.some((vehiculo) => vehiculo.patente === patente);
-  }
-
-
 
   agregarVehiculo() {
     this.toggleFormView();
@@ -220,8 +192,6 @@ export class VehiculosFormComponent implements OnInit {
     });
   }
 
-
-
   editarVehiculo(vehiculo: Vehiculo) {
     this.toggleFormView();
     this.itemVehiculo = vehiculo;
@@ -237,7 +207,6 @@ export class VehiculosFormComponent implements OnInit {
       tarifa: vehiculo.tarifa.nombre,
       estado: vehiculo.estado,
     });
-    this.editForm.get('patente')?.disable();
   }
   msgBack(op: string, item: any) {
     let value = {
@@ -245,7 +214,7 @@ export class VehiculosFormComponent implements OnInit {
       item: item,
     };
     this.newItemEvent.emit(value);
-    // console.log(value);
+
   }
 
   get Patente() {
@@ -270,36 +239,10 @@ export class VehiculosFormComponent implements OnInit {
     modalRef.componentInstance.fromParent = info;
     modalRef.result.then(
       (result) => {
-        //console.log("result from control","op", result);
-
-        this.cambiarEstadoAbono(vehiculo);
-        this.fechasAbono(vehiculo);
-        this.ingresarPagoEnCaja(result);
+        this.abonoService.pagarAbonoVehiculo(vehiculo, result);
         this.msgBack(this.titulo, vehiculo);
       },
       (reason) => {}
     );
-  }
-
-  ingresarPagoEnCaja(result: any) {
-    let ndate = new Date();
-    let opCaja = {
-      concepto: 'Pago Abono: ' + result.item.patente,
-      fecha: ndate, // item.fechas["fechaSalidaDate"],
-      importe: result.item.tarifa.valor,
-      operacion: 'ingreso',
-    };
-
-    this.cajaStorageService.addItem('caja', opCaja);
-  }
-
-  cambiarEstadoAbono(vehiculo: Vehiculo) {
-    vehiculo.estado = 1;
-    this.titulo = 'Vehiculo Editar';
-  }
-
-  fechasAbono(vehiculo: Vehiculo) {
-    vehiculo.abonoInicio = new Date();
-    vehiculo.abonoFin = this.abonoService.setearFinAbono(vehiculo);
   }
 }
