@@ -71,13 +71,9 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   armarTabla() {
-    this.vehiculos.forEach((vehiculo) => {
-      if (vehiculo.idCliente === this.item.id) {
-        this.vehiculosPorCliente.push(vehiculo);
-        // console.log('vehiculos por cliente', this.vehiculosPorCliente);
-      }
-    });
-    //console.log(this.vehiculosPorCliente);
+    this.vehiculosPorCliente = this.vehiculos.filter(
+      (vehiculo) => vehiculo.idCliente === this.item.id
+    );
   }
 
   createForm() {
@@ -219,7 +215,7 @@ export class VehiculosFormComponent implements OnInit {
       tarifa: vehiculo.tarifa.nombre,
       estado: vehiculo.estado,
     });
-    //console.log(vehiculoAgregado);
+
     this.tarifaSeleccionada = vehiculo.tarifa;
     this.titulo = 'Vehiculo Editar';
   }
