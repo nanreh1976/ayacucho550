@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
@@ -30,11 +30,9 @@ export class VehiculosFormComponent implements OnInit {
   componente: string = 'vehiculos';
   form: boolean = false;
   itemVehiculo: Vehiculo;
-  vehiculos: any[]; //| Observable<any>;
-  $modoCaja:any;
+  vehiculos: any[];
+  $modoCaja: any;
   vehiculoExistente = false;
-
-  
 
   constructor(
     private fb: FormBuilder,
@@ -49,9 +47,7 @@ export class VehiculosFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // console.log('componente vehiculo. item: ', this.item);
     this.$modoCaja = this.estadoCaja.getModoCaja();
-   
     this.createForm();
     this.getAllVehiculos();
     this.getTarifas();
@@ -59,6 +55,23 @@ export class VehiculosFormComponent implements OnInit {
     this.editForm.get('patente')?.valueChanges.subscribe((value: string) => {
       this.vehiculoExistente = this.comprobarExistenciaVehiculo(value);
     });
+  }
+  
+  async patenteUnica(control: AbstractControl): Promise<{ [key: string]: boolean } | null> {
+    const patente = control.value;
+    const vehiculos = this.vehiculos;
+    const vehiculoExistente = vehiculos.some(
+      (vehiculo) => vehiculo.patente === patente
+    );
+    const patenteValida = await this.vpService.evaluarPatente(); // wait for the async function to complete
+  
+    if (vehiculoExistente) {
+      return { patenteExistente: true };
+    } else if (!patenteValida) {
+      return { patenteInvalida: true };
+    } else {
+      return null;
+    }
   }
 
   getAllVehiculos(): void {
@@ -78,14 +91,7 @@ export class VehiculosFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({
-      patente: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          this.vpService.evaluarPatente(),
-        ],
-      ],
+      patente: ['', Validators.required, this.patenteUnica.bind(this)],
       marca: [''],
       modelo: [''],
       color: [''],
@@ -106,78 +112,63 @@ export class VehiculosFormComponent implements OnInit {
     // console.log(this.tarifaSeleccionada);
   }
 
-  setearTitulo() {
-    this.titulo = 'Vehiculo Agregar';
-  }
-
-
-
   comprobarExistenciaVehiculo(patente: string) {
     return this.vehiculos.some((vehiculo) => vehiculo.patente === patente);
   }
-  
+
+
+
+  agregarVehiculo() {
+    this.toggleFormView();
+    this.titulo = 'Vehiculo Agregar';
+    this.editForm.reset({
+      patente: '',
+      marca: '',
+      modelo: '',
+      color: '',
+      idCliente: '',
+      tarifa: '',
+      estado: '',
+    });
+    this.editForm.get('patente')?.enable(); // Habilitar el control del formulario patente
+  }
 
   // se agrega o se edita el vehiculo
   guardarVehiculo() {
     if (this.titulo === 'Vehiculo Agregar') {
-      //this.titulo = "Vehiculo Agregar";
-
-      let vehiculoAgregado = {
-        //id: this.item.id,
-        patente: this.editForm.value.patente,
-        marca: this.editForm.value.marca,
-        modelo: this.editForm.value.modelo,
-        color: this.editForm.value.color,
-        idCliente: this.item.id,
-        tarifa: this.tarifaSeleccionada,
-        abonoInicio: null,
-        abonoFin: null,
-        estado: 0,
-      };
-      //console.log(vehiculoAgregado);
-
-      Swal.fire({
-        title: '¿Desea agendar el vehiculo?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Confirmar',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire('Agendado');
-          this.msgBack(this.titulo, vehiculoAgregado);
-        }
-      });
-
+      this.agregarVehiculoAlCliente();
     } else {
-      let vehiculoEditado = {
-        id: this.editForm.value.id,
-        patente: this.editForm.value.patente,
-        marca: this.editForm.value.marca,
-        modelo: this.editForm.value.modelo,
-        color: this.editForm.value.color,
-        idCliente: this.item.id,
-        tarifa: this.tarifaSeleccionada,
-        abonoInicio: this.itemVehiculo.abonoInicio,
-        abonoFin: this.itemVehiculo.abonoFin,
-        estado: this.itemVehiculo.estado,
-      };
-      Swal.fire({
-        title: '¿Desea guardar los cambios?',
-        //text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Confirmar',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire('Guardados');
-          this.msgBack(this.titulo, vehiculoEditado);
-        }
-      });
+      this.guardarVehiculoEditado();
     }
+  }
+
+  guardarVehiculoEditado() {
+    let vehiculoEditado = {
+      id: this.editForm.value.id,
+      patente: this.editForm.value.patente,
+      marca: this.editForm.value.marca,
+      modelo: this.editForm.value.modelo,
+      color: this.editForm.value.color,
+      idCliente: this.item.id,
+      tarifa: this.tarifaSeleccionada,
+      abonoInicio: this.itemVehiculo.abonoInicio,
+      abonoFin: this.itemVehiculo.abonoFin,
+      estado: this.itemVehiculo.estado,
+    };
+    Swal.fire({
+      title: '¿Desea guardar los cambios?',
+      //text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Guardados');
+        this.msgBack(this.titulo, vehiculoEditado);
+      }
+    });
   }
 
   eliminarVehiculo(vehiculo: Vehiculo) {
@@ -193,18 +184,49 @@ export class VehiculosFormComponent implements OnInit {
       confirmButtonText: 'Confirmar',
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Eliminado'
-        );
+        Swal.fire('Eliminado');
         this.msgBack(this.titulo, vehiculo);
       }
     });
   }
 
+  agregarVehiculoAlCliente() {
+    let vehiculoAgregado = {
+      //id: this.item.id,
+      patente: this.editForm.value.patente,
+      marca: this.editForm.value.marca,
+      modelo: this.editForm.value.modelo,
+      color: this.editForm.value.color,
+      idCliente: this.item.id,
+      tarifa: this.tarifaSeleccionada,
+      abonoInicio: null,
+      abonoFin: null,
+      estado: 0,
+    };
+    //console.log(vehiculoAgregado);
+
+    Swal.fire({
+      title: '¿Desea agendar el vehiculo?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Agendado');
+        this.msgBack(this.titulo, vehiculoAgregado);
+      }
+    });
+  }
+
+
+
   editarVehiculo(vehiculo: Vehiculo) {
-    //console.log(vehiculo);
-  
+    this.toggleFormView();
     this.itemVehiculo = vehiculo;
+    this.tarifaSeleccionada = vehiculo.tarifa;
+    this.titulo = 'Vehiculo Editar';
     this.editForm.patchValue({
       id: vehiculo.id,
       patente: vehiculo.patente,
@@ -215,11 +237,8 @@ export class VehiculosFormComponent implements OnInit {
       tarifa: vehiculo.tarifa.nombre,
       estado: vehiculo.estado,
     });
-
-    this.tarifaSeleccionada = vehiculo.tarifa;
-    this.titulo = 'Vehiculo Editar';
+    this.editForm.get('patente')?.disable();
   }
-
   msgBack(op: string, item: any) {
     let value = {
       op: op,
@@ -233,9 +252,8 @@ export class VehiculosFormComponent implements OnInit {
     return this.editForm.get('patente');
   }
 
-  toggle() {
+  toggleFormView() {
     this.form = !this.form;
-    //console.log(this.form);
   }
 
   efectuarPago(vehiculo: Vehiculo) {
@@ -282,15 +300,6 @@ export class VehiculosFormComponent implements OnInit {
 
   fechasAbono(vehiculo: Vehiculo) {
     vehiculo.abonoInicio = new Date();
-    // console.log(
-    //   'esta es la fecha de inicio del abono: ',
-    //   vehiculo.abonoInicio.toLocaleString()
-    // );
-
     vehiculo.abonoFin = this.abonoService.setearFinAbono(vehiculo);
-    // console.log(
-    //   'esta es la fecha de fin del abono: ',
-    //   vehiculo.abonoFin.toLocaleString()
-    // );
   }
 }
