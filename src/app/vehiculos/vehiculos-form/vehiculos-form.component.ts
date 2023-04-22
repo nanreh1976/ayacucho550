@@ -8,7 +8,6 @@ import { AbonoService } from 'src/app/servicios/abono/abono.service';
 import { EstadoCajaService } from 'src/app/servicios/caja/estado-caja.service';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
 import { StorageService } from 'src/app/servicios/storage/storage.service';
-import { VehiculosStorageService } from 'src/app/servicios/storage/vehiculos-storage.service';
 import Swal from 'sweetalert2';
 
 
@@ -36,7 +35,7 @@ export class VehiculosFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private vehiculosStorage: VehiculosStorageService,
+  
     public activeModal: NgbActiveModal,
     public vpService: ValidarPatenteService,
     private modalService: NgbModal,
@@ -48,27 +47,19 @@ export class VehiculosFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.$modoCaja = this.estadoCaja.getModoCaja();
-    this.createForm();
-    this.getAllVehiculos();
+    this.vehiculosPorCliente = this.vpService.vehiculosPorCliente(this.item.id)   
     this.getTarifas();
   }
 
-  getAllVehiculos(): void {
-    this.vehiculosStorage.data$.subscribe((data) => (this.vehiculos = data));
-    this.armarTabla();
-  }
+
 
   getTarifas() {
     this.storageService.tarifas$.subscribe((data) => (this.tarifas = data));
   }
 
-  armarTabla() {
-    this.vehiculosPorCliente = this.vehiculos.filter(
-      (vehiculo) => vehiculo.idCliente === this.item.id
-    );
-  }
 
-  createForm() {
+
+  createEditarVehiculoForm() {
     this.editForm = this.fb.group({
       patente: ['', Validators.required],
       marca: [''],
@@ -78,6 +69,17 @@ export class VehiculosFormComponent implements OnInit {
     });
   }
 
+
+  
+  createAgregarVehiculoForm() {
+    this.editForm = this.fb.group({
+      patente: ['', Validators.required],
+      marca: [''],
+      modelo: [''],
+      color: [''],
+      id: [''],
+    });
+  }
   changeTarifa(e: any) {
     //console.log(e.target.value)
     let tarifaForm; //crea una variable para usarlo con la funcion filter
@@ -92,7 +94,9 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   agregarVehiculo() {
+    this.createAgregarVehiculoForm()
     this.toggleFormView();
+
     this.titulo = 'Vehiculo Agregar';
     this.editForm.reset({
       patente: '',
@@ -194,7 +198,9 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   editarVehiculo(vehiculo: Vehiculo) {
+    this.createEditarVehiculoForm()
     this.toggleFormView();
+
     this.itemVehiculo = vehiculo;
     this.tarifaSeleccionada = vehiculo.tarifa;
     this.titulo = 'Vehiculo Editar';

@@ -1,1 +1,75 @@
-<p>agregar-vehiculo works!</p>
+<div class="modal-header">
+  <h2 class="modal-title">{{ title }}</h2>
+  <button type="button" class="btn-close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label for="patente" class="form-label">Patente</label>
+        <input
+          formControlName="patente"
+          class="form-control"
+          [ngClass]="{'is-invalid': editForm.controls['patente'].invalid && (editForm.controls['patente'].dirty || editForm.controls['patente'].touched)}"
+          required
+          type="text"
+          id="patente"
+        />
+        <div class="invalid-feedback" *ngIf="editForm.controls['patente'].invalid && (editForm.controls['patente'].dirty || editForm.controls['patente'].touched)">
+          <div *ngIf="editForm.controls['patente'].hasError('required')">
+            Patente es requerido
+          </div>
+          <div *ngIf="editForm.controls['patente'].hasError('invalidPatente')">
+            Patente no es válida
+          </div>
+        </div>
+      </div>
+    <div class="mb-3">
+      <label for="marca" class="form-label">Marca</label>
+      <input
+        formControlName="marca"
+        class="form-control"
+        required
+        type="text"
+        id="marca"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="modelo" class="form-label">Modelo</label>
+      <input
+        formControlName="modelo"
+        class="form-control"
+        required
+        type="text"
+        id="modelo"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="color" class="form-label">Color</label>
+      <input
+        formControlName="color"
+        class="form-control"
+        required
+        type="text"
+        id="color"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="tarifa" class="form-label">Tarifa</label>
+      <select
+        class="form-select"
+        formControlName="tarifa"
+        (change)="changeTarifa($event)"
+        id="tarifa"
+      >
+        <option value="">Elegir Tarifa</option>
+        <option *ngFor="let tarifa of tarifas" [value]="tarifa.nombre">
+          {{ tarifa.nombre }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <input formControlName="id" class="form-control" type="hidden" id="id" />
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="editForm.invalid">Guardar</button>
+  </form>
+</div>

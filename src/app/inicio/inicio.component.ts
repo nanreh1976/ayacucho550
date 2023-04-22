@@ -41,7 +41,7 @@ export class InicioComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(6),
-          this.vpService.evaluarPatente(),
+          this.vpService.evaluarFormatoPatente(),
         ],
       ],
     });

@@ -6,11 +6,14 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { PlayaI } from 'src/app/interfaces/playaI';
+import { VehiculosStorageService } from '../storage/vehiculos-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ValidarPatenteService implements Validator {
+  vehiculosClientes: any[];
+
   dominios: any = {
     patentesViejas: /^[a-zA-Z]{3}[\d]{3}$/,
     patentesNuevas: /^[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{2}$/,
@@ -30,7 +33,11 @@ export class ValidarPatenteService implements Validator {
   patentesPlaya!: any;
   vehiculo: PlayaI[];
 
-  constructor() {}
+  constructor(private vehiculosStorage: VehiculosStorageService) {
+    this.vehiculosStorage.data$.subscribe(
+      (data) => (this.vehiculosClientes = data)
+    );
+  }
   validate(control: AbstractControl<any, any>): ValidationErrors | null {
     throw new Error('Method not implemented.');
   }
@@ -38,11 +45,23 @@ export class ValidarPatenteService implements Validator {
     throw new Error('Method not implemented.');
   }
 
-  evaluarPatente(): ValidatorFn {
+  // VALIDATORS PARA FORMS
+
+  evaluarFormatoPatente(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null =>
       this.validarPatente(control.value)
         ? null
         : { patenteErronea: control.value };
+  }
+
+
+
+  //METODOS VARIOS
+
+  vehiculosPorCliente(idCliente: any) {
+    return this.vehiculosClientes.filter(
+      (vehiculo) => vehiculo.idCliente === idCliente
+    );
   }
 
   // patente -> booolea
@@ -55,7 +74,7 @@ export class ValidarPatenteService implements Validator {
       this.dominios.barCode.test(patente)
     );
   }
- 
+
   // patente ->playa -> boolean
   buscarPatentePlaya(patente: string, playa: any) {
     // devuelve TRUE  si la patente existe en playa
@@ -76,4 +95,6 @@ export class ValidarPatenteService implements Validator {
     console.log(this.patentesPlaya);
     return enPlaya[0];
   }
+
+
 }
