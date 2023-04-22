@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { PagoAbonoComponent } from 'src/app/clientes/pago-abono/pago-abono.component';
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { AbonoService } from 'src/app/servicios/abono/abono.service';
@@ -9,7 +10,7 @@ import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patent
 import { StorageService } from 'src/app/servicios/storage/storage.service';
 import { VehiculosStorageService } from 'src/app/servicios/storage/vehiculos-storage.service';
 import Swal from 'sweetalert2';
-import { PagoAbonoComponent } from '../pago-abono/pago-abono.component';
+
 
 @Component({
   selector: 'app-vehiculos-form',
@@ -245,4 +246,20 @@ export class VehiculosFormComponent implements OnInit {
       (reason) => {}
     );
   }
+
+// prueba modal
+showInnerComponent = false;
+innerTitle = 'Inner Component';
+innerMessage = 'This is the inner component.';
+
+
+
+toggleInnerComponent(): void {
+  this.showInnerComponent = !this.showInnerComponent;
+}
+
+onInnerComponentClosed(): void {
+  this.showInnerComponent = false;
+}
+
 }

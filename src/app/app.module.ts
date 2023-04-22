@@ -34,7 +34,6 @@ import { FacturacionControlComponent } from './facturacion/facturacion-control/f
 import { FacturacionViewComponent } from './facturacion/facturacion-view/facturacion-view.component';
 import { FacturacionFormComponent } from './facturacion/facturacion-form/facturacion-form.component';
 import { InicioComponent } from './inicio/inicio.component';
-import { VehiculosFormComponent } from './clientes/vehiculos-form/vehiculos-form.component';
 
 
 import { environment } from '../environments/environment';
@@ -90,6 +89,8 @@ import { LimboComponent } from './limbo/limbo.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TicketHeaderComponent } from './ticket/ticket-header/ticket-header.component';
 import { TicketCierreCajaComponent } from './ticket/ticket-cierre-caja/ticket-cierre-caja.component';
+import { VehiculosFormComponent } from './vehiculos/vehiculos-form/vehiculos-form.component';
+import { AgregarVehiculoComponent } from './vehiculos/agregar-vehiculo/agregar-vehiculo.component';
 
 
 
@@ -156,6 +157,7 @@ import { TicketCierreCajaComponent } from './ticket/ticket-cierre-caja/ticket-ci
       UsuariosComponent,
       TicketHeaderComponent,
       TicketCierreCajaComponent,
+      AgregarVehiculoComponent,
   ],
   imports: [
     BrowserModule,

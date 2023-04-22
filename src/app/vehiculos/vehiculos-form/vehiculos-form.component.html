@@ -161,4 +161,14 @@
       </button>
     </div>
   </ng-container>
+
+  <!-- prueba modal -->
+
+  <div>
+    <h1>Outer Component</h1>
+    <button (click)="toggleInnerComponent()">Show/Hide Inner Component</button>
+    <ng-container *ngIf="showInnerComponent">
+      <app-agregar-vehiculo [title]="innerTitle" [message]="innerMessage" (closed)="onInnerComponentClosed()"></app-agregar-vehiculo>
+    </ng-container>
+  </div>
 </div>
