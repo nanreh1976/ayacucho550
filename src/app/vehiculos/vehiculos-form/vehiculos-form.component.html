@@ -51,38 +51,48 @@
       <td *ngIf="vehiculo.estado === 0">Impago</td>
 
       <td class="d-flex align-items-center">
-        <app-btn-editar class="right" (click)="editarVehiculo(vehiculo)"></app-btn-editar>
-        <app-btn-eliminar class="right" (click)="eliminarVehiculo(vehiculo)"></app-btn-eliminar>
-        <app-btn-agregar class="right" (click)="agregarVehiculo()"></app-btn-agregar>
+        <app-btn-editar
+          class="right"
+          (click)="toggleEditarVehiculoComponent(vehiculo)"
+        ></app-btn-editar>
+        <app-btn-eliminar
+          class="right"
+          (click)="eliminarVehiculo(vehiculo)"
+        ></app-btn-eliminar>
+        <app-btn-agregar
+          class="right"
+          (click)="toggleAgregarVehiculoComponent()"
+        ></app-btn-agregar>
         <div *ngIf="($modoCaja | async) === 'abierta'">
-          <app-btn-eliminar *ngIf="vehiculo.estado === 0" class="right" [name]="'Pagar'" (click)="efectuarPago(vehiculo)"></app-btn-eliminar>
+          <app-btn-eliminar
+            *ngIf="vehiculo.estado === 0"
+            class="right"
+            [name]="'Pagar'"
+            (click)="efectuarPago(vehiculo)"
+          ></app-btn-eliminar>
         </div>
       </td>
-      
     </tr>
   </table>
 
   <div class="d-flex justify-content-between mx-4 my-2"></div>
   <ng-container *ngIf="form">
-
     <div class="modal-header">
       <h5 class="modal-title" id="modal-basic-title">
-        
         {{
           titulo === "Vehiculo Agregar" ? "Agregar Vehiculo" : "Editar Vehiculo"
-        }} </h5>
-      <button type="button" class="close"    (click)="toggleFormView()">
+        }}
+      </h5>
+      <button type="button" class="close" (click)="toggleFormView()">
         <span aria-hidden="true">&times;</span>
-    </button>
+      </button>
     </div>
 
     <div class="modal-body">
       <form [formGroup]="editForm" novalidate>
         <div class="form-group">
-
-
           <label for="Patente">Patente</label>
-          
+
           <div class="input-group">
             <input
               formControlName="patente"
@@ -95,10 +105,8 @@
                 'is-valid': !Patente?.errors && !Patente?.touched,
                 'readonly-input': titulo !== 'Vehiculo Agregar'
               }"
-              
             />
           </div>
-
         </div>
         <div class="form-group">
           <label for="Marca">Marca</label>
@@ -153,10 +161,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button
-        class="btn btn-primary"
-        (click)="guardarVehiculo()"
-      >
+      <button class="btn btn-primary" (click)="guardarVehiculo()">
         Guardar
       </button>
     </div>
@@ -166,9 +171,25 @@
 
   <div>
     <h1>Outer Component</h1>
-    <button (click)="toggleInnerComponent()">Show/Hide Inner Component</button>
-    <ng-container *ngIf="showInnerComponent">
-      <app-agregar-vehiculo [title]="innerTitle" [message]="innerMessage" (closed)="onInnerComponentClosed()"></app-agregar-vehiculo>
+
+    <ng-container *ngIf="showAgregarComponent">
+      <app-agregar-vehiculo
+        [title]="innerTitle"
+        (formSubmit)="agregarVehiculoAlCliente($event)"
+        [message]="innerMessage"
+        (closed)="onAgregarVehiculoClosed()"
+      ></app-agregar-vehiculo>
+    </ng-container>
+
+    <ng-container *ngIf="showEditarComponent">
+      <app-editar-vehiculo
+        [title]="innerTitle"
+        (formSubmit)="editarVehiculoAlCliente($event)"
+        
+        [vehiculoParaEditar]="vehiculoParaEditar"
+        [message]="innerMessage"
+        (closed)="onAgregarVehiculoClosed()"
+      ></app-editar-vehiculo>
     </ng-container>
   </div>
 </div>

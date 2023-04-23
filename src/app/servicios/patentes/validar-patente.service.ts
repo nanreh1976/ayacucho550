@@ -54,7 +54,17 @@ export class ValidarPatenteService implements Validator {
         : { patenteErronea: control.value };
   }
 
+  patenteExistsInVehiculosValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const patente = control.value;
+      const patenteExists = this.patenteExistsInVehiculosClientes(patente);
+      return patenteExists ? {'patenteExists': {value: patente}} : null;
+    };
+  }
 
+  patenteExistsInVehiculosClientes(patente: string): boolean {
+    return this.vehiculosClientes.some((v: { patente: string; }) => v.patente === patente);
+  }
 
   //METODOS VARIOS
 

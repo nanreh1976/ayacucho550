@@ -21,6 +21,7 @@ export class VehiculosFormComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<any>();
 
   //vehiculos!: Vehiculo [];
+
   vehiculosPorCliente: Vehiculo[] = [];
   editForm!: any;
   tarifas!: Tarifas[];
@@ -59,27 +60,6 @@ export class VehiculosFormComponent implements OnInit {
 
 
 
-  createEditarVehiculoForm() {
-    this.editForm = this.fb.group({
-      patente: ['', Validators.required],
-      marca: [''],
-      modelo: [''],
-      color: [''],
-      id: [''],
-    });
-  }
-
-
-  
-  createAgregarVehiculoForm() {
-    this.editForm = this.fb.group({
-      patente: ['', Validators.required],
-      marca: [''],
-      modelo: [''],
-      color: [''],
-      id: [''],
-    });
-  }
   changeTarifa(e: any) {
     //console.log(e.target.value)
     let tarifaForm; //crea una variable para usarlo con la funcion filter
@@ -93,27 +73,12 @@ export class VehiculosFormComponent implements OnInit {
     // console.log(this.tarifaSeleccionada);
   }
 
-  agregarVehiculo() {
-    this.createAgregarVehiculoForm()
-    this.toggleFormView();
 
-    this.titulo = 'Vehiculo Agregar';
-    this.editForm.reset({
-      patente: '',
-      marca: '',
-      modelo: '',
-      color: '',
-      idCliente: '',
-      tarifa: '',
-      estado: '',
-    });
-    this.editForm.get('patente')?.enable(); // Habilitar el control del formulario patente
-  }
 
   // se agrega o se edita el vehiculo
   guardarVehiculo() {
     if (this.titulo === 'Vehiculo Agregar') {
-      this.agregarVehiculoAlCliente();
+     console.log("hola")
     } else {
       this.guardarVehiculoEditado();
     }
@@ -167,15 +132,17 @@ export class VehiculosFormComponent implements OnInit {
     });
   }
 
-  agregarVehiculoAlCliente() {
+  agregarVehiculoAlCliente(value: any) {
+    console.log('Form submitted with value:', value);
+    
     let vehiculoAgregado = {
       //id: this.item.id,
-      patente: this.editForm.value.patente,
-      marca: this.editForm.value.marca,
-      modelo: this.editForm.value.modelo,
-      color: this.editForm.value.color,
+      patente: value.patente,
+      marca: value.marca,
+      modelo: value.modelo,
+      color: value.color,
       idCliente: this.item.id,
-      tarifa: this.tarifaSeleccionada,
+      tarifa: value.tarifa,
       abonoInicio: null,
       abonoFin: null,
       estado: 0,
@@ -192,28 +159,13 @@ export class VehiculosFormComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire('Agendado');
-        this.msgBack(this.titulo, vehiculoAgregado);
+        this.msgBack('Vehiculo Agregar', vehiculoAgregado);
       }
     });
   }
 
   editarVehiculo(vehiculo: Vehiculo) {
-    this.createEditarVehiculoForm()
-    this.toggleFormView();
-
-    this.itemVehiculo = vehiculo;
-    this.tarifaSeleccionada = vehiculo.tarifa;
-    this.titulo = 'Vehiculo Editar';
-    this.editForm.patchValue({
-      id: vehiculo.id,
-      patente: vehiculo.patente,
-      marca: vehiculo.marca,
-      modelo: vehiculo.modelo,
-      color: vehiculo.color,
-      idCliente: vehiculo.idCliente,
-      tarifa: vehiculo.tarifa.nombre,
-      estado: vehiculo.estado,
-    });
+    const vehiculoParaEditar = vehiculo;
   }
   msgBack(op: string, item: any) {
     let value = {
@@ -253,19 +205,42 @@ export class VehiculosFormComponent implements OnInit {
     );
   }
 
-// prueba modal
-showInnerComponent = false;
-innerTitle = 'Inner Component';
-innerMessage = 'This is the inner component.';
+// Modal forms
+showAgregarComponent = false;
+showEditarComponent = false;
+vehiculoParaEditar:any
+innerTitle: string
+innerMessage: string
 
+// Agregar Vehiculo
 
-
-toggleInnerComponent(): void {
-  this.showInnerComponent = !this.showInnerComponent;
+toggleAgregarVehiculoComponent(): void {
+  this.showAgregarComponent = !this.showAgregarComponent;
+  this.innerTitle = 'Agregar Vehiculo';
+this.innerMessage = 'This is the inner component.';
 }
 
-onInnerComponentClosed(): void {
-  this.showInnerComponent = false;
+onAgregarVehiculoClosed(): void {
+  this.showAgregarComponent = false;
 }
 
+// Editar Vehiculo
+
+
+editarVehiculoAlCliente(vehiculo: any) {
+
+  console.log('Form submitted with value:', vehiculo);
+  // handle the form value as needed
+}
+
+toggleEditarVehiculoComponent(vehiculo: any): void {
+  this.showEditarComponent = !this.showEditarComponent;
+  this.vehiculoParaEditar = vehiculo;
+  this.innerTitle = 'Editar Vehiculo';
+  this.innerMessage = 'This is the inner component.';
+}
+
+onEditarVehiculoClosed(): void {
+  this.showEditarComponent = false;
+}
 }

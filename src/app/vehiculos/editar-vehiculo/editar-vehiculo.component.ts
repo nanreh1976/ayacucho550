@@ -1,19 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { tap, catchError, of } from 'rxjs';
-
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
 import { StorageService } from 'src/app/servicios/storage/storage.service';
 
 @Component({
-  selector: 'app-agregar-vehiculo',
-  templateUrl: './agregar-vehiculo.component.html',
-  styleUrls: ['./agregar-vehiculo.component.scss'],
+  selector: 'app-editar-vehiculo',
+  templateUrl: './editar-vehiculo.component.html',
+  styleUrls: ['./editar-vehiculo.component.scss']
 })
-export class AgregarVehiculoComponent implements OnInit {
+export class EditarVehiculoComponent implements OnInit {
+
   @Input() title!: string;
   @Input() message!: string;
+  @Input() vehiculoParaEditar!: any;
   @Output() closed = new EventEmitter<void>();
   @Output() formSubmit = new EventEmitter<any>();
 
@@ -25,7 +26,8 @@ export class AgregarVehiculoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTarifas();
-    this.createAgregarVehiculoForm();
+    this.createEditarVehiculoForm();
+    console.log(this.vehiculoParaEditar)
   }
   constructor(
     private storageService: StorageService,
@@ -52,14 +54,14 @@ export class AgregarVehiculoComponent implements OnInit {
       .subscribe();
   }
 
-  createAgregarVehiculoForm() {
+  createEditarVehiculoForm() {
     this.editForm = this.fb.group({
       patente: [
         '',
         [
           Validators.required,
           this.vpService.evaluarFormatoPatente(),
-          this.vpService.patenteExistsInVehiculosValidator(), 
+
         ],
       ],
       marca: [''],
@@ -68,7 +70,30 @@ export class AgregarVehiculoComponent implements OnInit {
       tarifa: ['', Validators.required],
       id: [''],
     });
-  }
+
+    if (this.vehiculoParaEditar) {
+      this.editForm.patchValue({
+        id: this.vehiculoParaEditar.id,
+        patente: this.vehiculoParaEditar.patente,
+        marca: this.vehiculoParaEditar.marca,
+        modelo: this.vehiculoParaEditar.modelo,
+        color: this.vehiculoParaEditar.color,
+        idCliente: this.vehiculoParaEditar.idCliente,
+        tarifa: this.vehiculoParaEditar.tarifa.nombre,
+        estado: this.vehiculoParaEditar.estado,
+      });
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
   changeTarifa(event: any) {
     const selectedTarifa = this.tarifas.find((tarifa: any) => {
