@@ -5,24 +5,35 @@
 <div class="modal-body">
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
-        <label for="patente" class="form-label">Patente</label>
-        <input
-          formControlName="patente"
-          class="form-control"
-          [ngClass]="{'is-invalid': editForm.controls['patente'].invalid && (editForm.controls['patente'].dirty || editForm.controls['patente'].touched)}"
-          required
-          type="text"
-          id="patente"
-        />
-        <div class="invalid-feedback" *ngIf="editForm.controls['patente'].invalid && (editForm.controls['patente'].dirty || editForm.controls['patente'].touched)">
-          <div *ngIf="editForm.controls['patente'].hasError('required')">
-            Patente es requerido
-          </div>
-          <div *ngIf="editForm.controls['patente'].hasError('invalidPatente')">
-            Patente no es válida
-          </div>
+      <label for="patente" class="form-label">Patente</label>
+      <input
+        formControlName="patente"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid':
+            editForm.controls['patente'].invalid &&
+            (editForm.controls['patente'].dirty ||
+              editForm.controls['patente'].touched)
+        }"
+        required
+        type="text"
+        id="patente"
+      />
+      <div
+        class="invalid-feedback"
+        *ngIf="editForm.controls['patente'].invalid"
+      >
+        <div *ngIf="editForm.controls['patente'].hasError('required')">
+          Patente es requerido
+        </div>
+        <div *ngIf="editForm.controls['patente'].hasError('invalidPatente')">
+          Formato Patente no es válida
+        </div>
+        <div *ngIf="editForm.controls['patente'].hasError('patenteExists')">
+          Patente ya existe en clientes
         </div>
       </div>
+    </div>
     <div class="mb-3">
       <label for="marca" class="form-label">Marca</label>
       <input

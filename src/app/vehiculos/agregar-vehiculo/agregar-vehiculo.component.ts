@@ -5,10 +5,12 @@ import {
   ValidatorFn,
   AbstractControl,
 } from '@angular/forms';
+import { tap, catchError, of } from 'rxjs';
 
 import { Tarifas } from 'src/app/interfaces/tarifas';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
 import { StorageService } from 'src/app/servicios/storage/storage.service';
+import { VehiculosStorageService } from 'src/app/servicios/storage/vehiculos-storage.service';
 
 @Component({
   selector: 'app-agregar-vehiculo',
@@ -16,48 +18,81 @@ import { StorageService } from 'src/app/servicios/storage/storage.service';
   styleUrls: ['./agregar-vehiculo.component.scss'],
 })
 export class AgregarVehiculoComponent implements OnInit {
+
+  @Input() title!: string;
+  @Input() message!: string;
+  @Output() closed = new EventEmitter<void>();
   editForm: any;
   tarifas!: Tarifas[];
   tarifaSeleccionada!: any;
+  vehiculosClientes:any
+
 
   ngOnInit(): void {
     this.getTarifas();
     this.createAgregarVehiculoForm();
   }
-  @Input() title!: string;
-  @Input() message!: string;
-  @Output() closed = new EventEmitter<void>();
-
-  close(): void {
-    this.closed.emit();
-  }
   constructor(
     private storageService: StorageService,
     public vpService: ValidarPatenteService,
+    private vehiculosStorage: VehiculosStorageService,
     private fb: FormBuilder
-  ) {}
-
-  getTarifas() {
-    this.storageService.tarifas$.subscribe(
+  ) {
+    this.vehiculosStorage.data$.subscribe(
       (data) => {
-        this.tarifas = data || []; // set a default value if data is undefined or empty
-      },
-      (error) => {
-        console.error('Error getting tarifas:', error);
-        this.tarifas = []; // set a default value if an error occurs
+        this.vehiculosClientes = data;
+        console.log(this.vehiculosClientes);
       }
     );
   }
+
+  patenteExistsValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const patente = control.value;
+      const patenteExists = this.patenteExistsInVehiculosClientes(patente);
+      return patenteExists ? {'patenteExists': {value: patente}} : null;
+    };
+  }
+
+  patenteExistsInVehiculosClientes(patente: string): boolean {
+    return this.vehiculosClientes.some((v: { patente: string; }) => v.patente === patente);
+  }
+
+
+    close(): void {
+      this.closed.emit();
+    }
+
+
+    getTarifas() {
+      this.storageService.tarifas$.pipe(
+        tap((data) => {
+          this.tarifas = data || [];
+        }),
+        catchError((error) => {
+          console.error('Error getting tarifas:', error);
+          this.tarifas = [];
+          return of(null);
+        })
+      ).subscribe();
+    }
+  
+  
+  
+  
+  
+  
+  
 
   createAgregarVehiculoForm() {
     this.editForm = this.fb.group({
       patente: [
         '',
-        [Validators.required, 
+        [
+          Validators.required,
           this.vpService.evaluarFormatoPatente(),
- 
-        ],
-      ],
+          this.patenteExistsValidator() // add custom validator here
+        ], ],
       marca: [''],
       modelo: [''],
       color: [''],
