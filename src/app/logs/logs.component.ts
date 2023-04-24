@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LogService } from '../servicios/log.service';
+
 import { StorageService } from '../servicios/storage/storage.service';
 import { LanguageApp } from '../shared/DTLanguage';
 
@@ -15,13 +15,11 @@ export class LogsComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
 
   constructor(
-    private logger: LogService,
+
     private storageService: StorageService
   ) {}
 
-  testLog(): void {
-    this.logger.log('console', 'Test the `log()` Method');
-  }
+
 
   ngOnInit(): void {
     this.data = this.storageService.logger$;

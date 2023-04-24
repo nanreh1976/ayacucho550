@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LanguageApp } from 'src/app/shared/DTLanguage';
 
@@ -25,7 +26,8 @@ export class CajaViewComponent implements OnInit {
   searchText!: string;
   dtOptions: DataTables.Settings = {};
 
-  constructor() {}
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
 
@@ -43,6 +45,12 @@ export class CajaViewComponent implements OnInit {
       responsive: true,
     };
   }
+
+  // navigateToClientes() {
+  //   this.router.navigate(['home/clientes']);
+  // }
+
+
 
   msgBack(op: string, item: any) {
     let value = {

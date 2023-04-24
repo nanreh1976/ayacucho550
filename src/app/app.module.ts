@@ -92,6 +92,7 @@ import { TicketCierreCajaComponent } from './ticket/ticket-cierre-caja/ticket-ci
 import { VehiculosFormComponent } from './vehiculos/vehiculos-form/vehiculos-form.component';
 import { AgregarVehiculoComponent } from './vehiculos/agregar-vehiculo/agregar-vehiculo.component';
 import { EditarVehiculoComponent } from './vehiculos/editar-vehiculo/editar-vehiculo.component';
+import { ListadoVehiculosComponent } from './vehiculos/listado-vehiculos/listado-vehiculos.component';
 
 
 
@@ -160,6 +161,7 @@ import { EditarVehiculoComponent } from './vehiculos/editar-vehiculo/editar-vehi
       TicketCierreCajaComponent,
       AgregarVehiculoComponent,
       EditarVehiculoComponent,
+      ListadoVehiculosComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,12 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PagoAbonoComponent } from 'src/app/clientes/pago-abono/pago-abono.component';
-import { Tarifas } from 'src/app/interfaces/tarifas';
+
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { AbonoService } from 'src/app/servicios/abono/abono.service';
 import { EstadoCajaService } from 'src/app/servicios/caja/estado-caja.service';
 import { ValidarPatenteService } from 'src/app/servicios/patentes/validar-patente.service';
-import { StorageService } from 'src/app/servicios/storage/storage.service';
+
 import Swal from 'sweetalert2';
 
 
@@ -24,8 +24,8 @@ export class VehiculosFormComponent implements OnInit {
 
   vehiculosPorCliente: Vehiculo[] = [];
 
-  tarifas!: Tarifas[];
-  tarifaSeleccionada!: any;
+ 
+
   titulo!: string;
   componente: string = 'vehiculos';
   form: boolean = false;
@@ -40,39 +40,17 @@ export class VehiculosFormComponent implements OnInit {
     public activeModal: NgbActiveModal,
     public vpService: ValidarPatenteService,
     private modalService: NgbModal,
-
     private abonoService: AbonoService,
-    private storageService: StorageService,
     private estadoCaja: EstadoCajaService
   ) {}
 
   ngOnInit(): void {
     this.$modoCaja = this.estadoCaja.getModoCaja();
     this.vehiculosPorCliente = this.vpService.vehiculosPorCliente(this.item.id)   
-    this.getTarifas();
+
   }
 
-  getTarifas() {
-    this.storageService.tarifas$.subscribe((data) => (this.tarifas = data));
-  }
-
-  changeTarifa(e: any) {
-    //console.log(e.target.value)
-    let tarifaForm; //crea una variable para usarlo con la funcion filter
-
-    tarifaForm = this.tarifas.filter(function (tarifas: any) {
-      //filter recorre el array tarifas y devuelve otro array con lo que sea q coincida con el parametro
-      return tarifas.nombre === e.target.value;
-    });
-
-    this.tarifaSeleccionada = tarifaForm[0]; //se guarda el nombre de la tarifa seleccionada en la variable
-    // console.log(this.tarifaSeleccionada);
-  }
-
-
-
-
-  eliminarVehiculo(vehiculo: Vehiculo) {
+   eliminarVehiculo(vehiculo: Vehiculo) {
     //console.log(vehiculo);
     this.titulo = 'Vehiculo Eliminar';
     Swal.fire({
@@ -90,13 +68,6 @@ export class VehiculosFormComponent implements OnInit {
       }
     });
   }
-
-
-
- 
-
- 
-
 
 
   efectuarPago(vehiculo: Vehiculo) {
