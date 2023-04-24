@@ -54,13 +54,7 @@ export class ClientesControlComponent implements OnInit {
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then(
         (result) => {
-          // console.log(
-          //   'result from control',
-          //   'op',
-          //   result.op,
-          //   'item',
-          //   result.item
-          // );
+
           this.selectCrudOp(result.op, result.item);
         },
         (reason) => {}
@@ -95,6 +89,7 @@ export class ClientesControlComponent implements OnInit {
         break;
       }
       case 'Vehiculo Editar': {
+        console.log("vehiculo editar", item)
         this.storage.updateItem('vehiculos', item);
         break;
       }

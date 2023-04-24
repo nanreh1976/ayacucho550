@@ -75,102 +75,12 @@
     </tr>
   </table>
 
-  <div class="d-flex justify-content-between mx-4 my-2"></div>
-  <ng-container *ngIf="form">
-    <div class="modal-header">
-      <h5 class="modal-title" id="modal-basic-title">
-        {{
-          titulo === "Vehiculo Agregar" ? "Agregar Vehiculo" : "Editar Vehiculo"
-        }}
-      </h5>
-      <button type="button" class="close" (click)="toggleFormView()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
 
-    <div class="modal-body">
-      <form [formGroup]="editForm" novalidate>
-        <div class="form-group">
-          <label for="Patente">Patente</label>
-
-          <div class="input-group">
-            <input
-              formControlName="patente"
-              class="form-control"
-              required
-              type="text"
-              [readonly]="titulo !== 'Vehiculo Agregar'"
-              [ngClass]="{
-                'is-invalid': Patente?.errors && Patente?.touched,
-                'is-valid': !Patente?.errors && !Patente?.touched,
-                'readonly-input': titulo !== 'Vehiculo Agregar'
-              }"
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="Marca">Marca</label>
-          <div class="input-group">
-            <input
-              formControlName="marca"
-              class="form-control"
-              required
-              type="text"
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="Modelo">Modelo</label>
-          <div class="input-group">
-            <input
-              formControlName="modelo"
-              class="form-control"
-              required
-              type="text"
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="Color">Color</label>
-          <div class="input-group">
-            <input
-              formControlName="color"
-              class="form-control"
-              required
-              type="text"
-            />
-          </div>
-        </div>
-        <div>
-          <label for="Tarifa">Tarifa</label>
-          <select
-            class="form-select form-select-md mb-3"
-            (change)="changeTarifa($event)"
-          >
-            <option value="{{ tarifaSeleccionada }}">Elegir Tarifa</option>
-            <option *ngFor="let tarifa of tarifas">
-              {{ tarifa.nombre }}
-            </option>
-          </select>
-        </div>
-        <div class="form-group">
-          <div class="input-group">
-            <input formControlName="id" class="form-control" type="hidden" />
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-primary" (click)="guardarVehiculo()">
-        Guardar
-      </button>
-    </div>
-  </ng-container>
 
   <!-- prueba modal -->
 
   <div>
-    <h1>Outer Component</h1>
+
 
     <ng-container *ngIf="showAgregarComponent">
       <app-agregar-vehiculo
@@ -185,7 +95,6 @@
       <app-editar-vehiculo
         [title]="innerTitle"
         (formSubmit)="editarVehiculoAlCliente($event)"
-        
         [vehiculoParaEditar]="vehiculoParaEditar"
         [message]="innerMessage"
         (closed)="onAgregarVehiculoClosed()"

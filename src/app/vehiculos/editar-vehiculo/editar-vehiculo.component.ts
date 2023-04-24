@@ -8,17 +8,15 @@ import { StorageService } from 'src/app/servicios/storage/storage.service';
 @Component({
   selector: 'app-editar-vehiculo',
   templateUrl: './editar-vehiculo.component.html',
-  styleUrls: ['./editar-vehiculo.component.scss']
+  styleUrls: ['./editar-vehiculo.component.scss'],
 })
 export class EditarVehiculoComponent implements OnInit {
-
   @Input() title!: string;
   @Input() message!: string;
   @Input() vehiculoParaEditar!: any;
   @Output() closed = new EventEmitter<void>();
   @Output() formSubmit = new EventEmitter<any>();
 
-  
   editForm: any;
   tarifas!: Tarifas[];
   tarifaSeleccionada!: any;
@@ -27,7 +25,7 @@ export class EditarVehiculoComponent implements OnInit {
   ngOnInit(): void {
     this.getTarifas();
     this.createEditarVehiculoForm();
-    console.log(this.vehiculoParaEditar)
+    console.log(this.vehiculoParaEditar);
   }
   constructor(
     private storageService: StorageService,
@@ -58,17 +56,17 @@ export class EditarVehiculoComponent implements OnInit {
     this.editForm = this.fb.group({
       patente: [
         '',
-        [
-          Validators.required,
-          this.vpService.evaluarFormatoPatente(),
-
-        ],
+        [Validators.required, this.vpService.evaluarFormatoPatente()],
       ],
       marca: [''],
       modelo: [''],
       color: [''],
       tarifa: ['', Validators.required],
-      id: [''],
+      id: [''],        
+      estado: [''],
+      abonoInicio: [''],
+      abonoFin: [''],
+      idCliente: [''],
     });
 
     if (this.vehiculoParaEditar) {
@@ -81,19 +79,11 @@ export class EditarVehiculoComponent implements OnInit {
         idCliente: this.vehiculoParaEditar.idCliente,
         tarifa: this.vehiculoParaEditar.tarifa.nombre,
         estado: this.vehiculoParaEditar.estado,
+        abonoInicio: this.vehiculoParaEditar.abonoInicio,
+        abonoFin: this.vehiculoParaEditar.abonoFin,
       });
     }
-}
-
-
-
-
-
-
-
-
-
-
+  }
 
   changeTarifa(event: any) {
     const selectedTarifa = this.tarifas.find((tarifa: any) => {
