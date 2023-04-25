@@ -3,7 +3,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { CajaStorageService } from './caja-storage.service';
 import { DbFirestoreService } from '../database/db-firestore.service';
-
 import { StorageService } from '../storage/storage.service';
 
 @Injectable({
@@ -99,7 +98,9 @@ export class EstadoCajaService {
     this.sesionCaja.estado = 'cerrada';
     this.sesionCaja.cierre = nd;
 
-    this.storageService.updateItem('cajaLog', this.sesionCaja);
+    this.storageService.updateItem('cajaLog', this.sesionCaja)
+    this.cajaStorageService.moveDocs(this.sesionCaja.id)
+    console.log("moviendo sesion ", this.sesionCaja.id)
   }
 
   abrirSesion(item: any) {

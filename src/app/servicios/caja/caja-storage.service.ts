@@ -116,4 +116,18 @@ export class CajaStorageService {
   get saldo$(): Observable<number> {
     return this.state$.pipe(map((state) => state.saldo));
   }
+
+// MOVER TODA LA SESION AL LOG AL CERRAR.
+
+  async moveDocs(value:string) {
+    const componenteA = 'caja';
+    const componenteB = 'cajaOps';
+    const field = 'sesionId';
+    
+
+    await this.firestore.moveDocsToSubcollection(componenteA, componenteB, field, value);
+    console.log('Documents moved successfully!');
+  }
 }
+  
+
