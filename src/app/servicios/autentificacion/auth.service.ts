@@ -178,7 +178,7 @@ export class AuthService {
   }
 
   comprobarColeccion() {
-    console.log("este es el usuario: ", this.usuario);
+   // console.log("este es el usuario: ", this.usuario);
     
       if(this.usuario.hasOwnProperty("coleccion")) {
         this.setearColeccion()    

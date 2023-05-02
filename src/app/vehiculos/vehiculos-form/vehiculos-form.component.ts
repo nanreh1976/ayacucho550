@@ -111,7 +111,7 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   agregarVehiculoAlCliente(value: any) {
-    console.log('Form submitted with value:', value);
+   // console.log('Form submitted with value:', value);
 
     let vehiculoAgregado = {
       //id: this.item.id,
@@ -146,7 +146,7 @@ export class VehiculosFormComponent implements OnInit {
   toggleEditarVehiculoComponent(vehiculo: any): void {
     this.showEditarComponent = !this.showEditarComponent;
     this.vehiculoParaEditar = vehiculo;
-    console.log('vehiculo para editar', this.vehiculoParaEditar);
+    //console.log('vehiculo para editar', this.vehiculoParaEditar);
     this.innerTitle = 'Editar Vehiculo';
     this.innerMessage = 'This is the inner component.';
   }
@@ -156,7 +156,7 @@ export class VehiculosFormComponent implements OnInit {
   }
 
   editarVehiculoAlCliente(value: any) {
-    console.log('Form submitted with value:', value);
+    //console.log('Form submitted with value:', value);
 
     let vehiculoEditado = {
       id: value.id,

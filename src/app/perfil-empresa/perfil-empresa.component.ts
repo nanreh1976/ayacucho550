@@ -103,7 +103,7 @@ export class PerfilEmpresaComponent implements OnInit {
 
     this.dbFirebase
       .create(componente, item)
-      .then((data) => console.log(data))
+     // .then((data) => console.log(data))
       .then(() => this.ngOnInit())
       .catch((e) => console.log(e.message));
   }
@@ -113,8 +113,8 @@ export class PerfilEmpresaComponent implements OnInit {
 
     this.dbFirebase
       .update(componente, item)
-      .then((data) => console.log(data))
+     // .then((data) => console.log(data))
       .then(() => this.ngOnInit())
-      .catch((e) => console.log(e.message));
+     // .catch((e) => console.log(e.message));
   }
 }

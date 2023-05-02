@@ -59,7 +59,7 @@ export class CajaStorageService {
     this.firestore
       .create(componente, item)
       // .then((data) => console.log(data))
-      .catch((e) => console.log(e.message));
+    //  .catch((e) => console.log(e.message));
   }
 
   getSesionOps(sesionId: string) {
@@ -126,7 +126,7 @@ export class CajaStorageService {
     
 
     await this.firestore.moveDocsToSubcollection(componenteA, componenteB, field, value);
-    console.log('Documents moved successfully!');
+    //console.log('Documents moved successfully!');
   }
 }
   

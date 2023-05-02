@@ -79,7 +79,7 @@ componente: string = 'tarifas'
       }
  
        default: {
-        console.log("sin operacion en el case crud")
+      //  console.log("sin operacion en el case crud")
         break;
       }
     }

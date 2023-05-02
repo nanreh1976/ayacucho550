@@ -78,7 +78,7 @@ export class AgregarVehiculoComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editForm.value);
+   // console.log(this.editForm.value);
     this.formSubmit.emit(this.editForm.value); // emit event with form value
   }
 }

@@ -89,7 +89,8 @@ export class ClientesControlComponent implements OnInit {
         break;
       }
       case 'Vehiculo Editar': {
-        console.log("vehiculo editar", item)
+        
+        //console.log("vehiculo editar", item)
         this.storage.updateItem('vehiculos', item);
         break;
       }
@@ -99,7 +100,7 @@ export class ClientesControlComponent implements OnInit {
       }
 
       default: {
-        console.log('sin operacion en case crud');
+        //console.log('sin operacion en case crud');
         break;
       }
     }

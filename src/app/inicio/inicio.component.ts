@@ -95,7 +95,7 @@ export class InicioComponent implements OnInit {
 
     //recorre playa buscando barcode
     for (var it of playa) {
-       console.log("on Scan" ,it);
+       //console.log("on Scan" ,it);
 
       let cod = it['codigoBarras'];
       let pat = it['patente'];

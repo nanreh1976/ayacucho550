@@ -25,7 +25,7 @@ export class PagoAbonoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('fromParent: ', this.fromParent);
+    //console.log('fromParent: ', this.fromParent);
 
     this.titulo = this.fromParent.modo;
     this.item = this.fromParent.item;

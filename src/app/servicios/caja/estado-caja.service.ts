@@ -100,7 +100,7 @@ export class EstadoCajaService {
 
     this.storageService.updateItem('cajaLog', this.sesionCaja)
     this.cajaStorageService.moveDocs(this.sesionCaja.id)
-    console.log("moviendo sesion ", this.sesionCaja.id)
+   // console.log("moviendo sesion ", this.sesionCaja.id)
   }
 
   abrirSesion(item: any) {
@@ -131,7 +131,7 @@ export class EstadoCajaService {
       .doc(nuevaSesionId)
       .set(nuevaSesionCaja);
     // this.storageService.addItem("cajaLog", nuevaSesionCaja)
-    console.log('nueva sesion caja', nuevaSesionCaja);
+    //console.log('nueva sesion caja', nuevaSesionCaja);
 
     // carga la primer operacion de la caja en la sesion
     // (saldo inical de caja)

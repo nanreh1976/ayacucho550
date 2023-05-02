@@ -159,7 +159,7 @@ export class PlayaControlComponent implements OnInit {
       }
 
       default: {
-        console.log('sin operacion en case crud');
+      //  console.log('sin operacion en case crud');
         break;
       }
     }
@@ -182,12 +182,12 @@ export class PlayaControlComponent implements OnInit {
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then(
         (result) => {
-          console.log (modo, item)
+         // console.log (modo, item)
           this.selectCrudOp(op, item);
           // this.selectTicketOp(result.op, result.item);
         },
         (reason) => {
-          console.log (reason)
+          // (reason)
         }
       );
     }

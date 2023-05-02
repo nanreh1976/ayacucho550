@@ -25,7 +25,7 @@ export class EditarVehiculoComponent implements OnInit {
   ngOnInit(): void {
     this.getTarifas();
     this.createEditarVehiculoForm();
-    console.log(this.vehiculoParaEditar);
+   // console.log(this.vehiculoParaEditar);
   }
   constructor(
     private storageService: StorageService,
@@ -93,7 +93,7 @@ export class EditarVehiculoComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editForm.value);
+   // console.log(this.editForm.value);
     this.formSubmit.emit(this.editForm.value); // emit event with form value
   }
 }
