@@ -20,7 +20,10 @@
     <h5 style="color: red">No se puede cobrar abonos.</h5>
     <h5 style="color: red">Debe cerrar y vovler a abrir sesion para operar.</h5>
   </div>
-
+  <app-btn-agregar
+  class="right"
+  (click)="toggleAgregarVehiculoComponent()"
+></app-btn-agregar>
   <table class="tftable">
     <colgroup>
       <col width="15%" />
@@ -59,10 +62,7 @@
           class="right"
           (click)="eliminarVehiculo(vehiculo)"
         ></app-btn-eliminar>
-        <app-btn-agregar
-          class="right"
-          (click)="toggleAgregarVehiculoComponent()"
-        ></app-btn-agregar>
+
         <div *ngIf="($modoCaja | async) === 'abierta'">
           <app-btn-eliminar
             *ngIf="vehiculo.estado === 0"
