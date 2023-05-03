@@ -37,11 +37,27 @@ export class AgregarVehiculoComponent implements OnInit {
     this.closed.emit();
   }
 
+  // getTarifas() {
+  //   this.storageService.tarifas$
+  //     .pipe(
+  //       tap((data) => {
+  //         this.tarifas = data || [];
+  //       }),
+  //       catchError((error) => {
+  //         console.error('Error getting tarifas:', error);
+  //         this.tarifas = [];
+  //         return of(null);
+  //       })
+  //     )
+  //     .subscribe();
+  // }
+
+
   getTarifas() {
     this.storageService.tarifas$
       .pipe(
         tap((data) => {
-          this.tarifas = data || [];
+          this.tarifas = data.filter((tarifa: { categoria: string; }) => tarifa.categoria === 'abono');
         }),
         catchError((error) => {
           console.error('Error getting tarifas:', error);
@@ -51,7 +67,6 @@ export class AgregarVehiculoComponent implements OnInit {
       )
       .subscribe();
   }
-
   createAgregarVehiculoForm() {
     this.editForm = this.fb.group({
       patente: [
