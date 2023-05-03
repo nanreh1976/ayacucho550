@@ -45,6 +45,7 @@ export class TarifasFormComponent implements OnInit {
     { id: 2, nombre: 'utilitario-base' },
     { id: 3, nombre: 'camioneta-base' },
     { id: 4, nombre: 'promo' },
+    { id: 5, nombre: 'abono' },
   ];
 
   constructor(

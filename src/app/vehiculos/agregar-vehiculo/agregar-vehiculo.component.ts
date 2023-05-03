@@ -75,10 +75,27 @@ export class AgregarVehiculoComponent implements OnInit {
       return tarifa.nombre === event.target.value;
     });
     this.tarifaSeleccionada = selectedTarifa;
+    console.log("tarifa seleccionada", this.tarifaSeleccionada)
   }
 
+  // onSubmit() {
+  //  // console.log(this.editForm.value);
+  //   this.formSubmit.emit(this.editForm.value); // emit event with form value
+  // }
+
   onSubmit() {
-   // console.log(this.editForm.value);
-    this.formSubmit.emit(this.editForm.value); // emit event with form value
+
+
+    if (this.editForm.invalid) {
+      return;
+    }
+  
+    const formValue = {
+      ...this.editForm.value,
+      tarifa: this.tarifaSeleccionada, // Agregar la tarifa seleccionada al objeto del formulario
+    };
+  
+    this.formSubmit.emit(formValue); // emit event with updated form value
   }
+  
 }

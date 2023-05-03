@@ -92,8 +92,25 @@ export class EditarVehiculoComponent implements OnInit {
     this.tarifaSeleccionada = selectedTarifa;
   }
 
+  // onSubmit() {
+  //  // console.log(this.editForm.value);
+  //   this.formSubmit.emit(this.editForm.value); // emit event with form value
+  // }
+
+
   onSubmit() {
-   // console.log(this.editForm.value);
-    this.formSubmit.emit(this.editForm.value); // emit event with form value
+
+
+    if (this.editForm.invalid) {
+      return;
+    }
+  
+    const formValue = {
+      ...this.editForm.value,
+      tarifa: this.tarifaSeleccionada, // Agregar la tarifa seleccionada al objeto del formulario
+    };
+  
+    this.formSubmit.emit(formValue); // emit event with updated form value
   }
+  
 }
