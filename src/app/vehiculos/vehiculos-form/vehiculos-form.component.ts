@@ -76,7 +76,7 @@ export class VehiculosFormComponent implements OnInit {
     });
 
     let info = {
-      modo: 'Agregar',
+      modo: '',
       item: vehiculo,
       cliente: this.item,
     };
@@ -85,7 +85,7 @@ export class VehiculosFormComponent implements OnInit {
     modalRef.result.then(
       (result) => {
         this.abonoService.pagarAbonoVehiculo(vehiculo, result);
-        this.msgBack(this.titulo, vehiculo);
+        this.msgBack('Vehiculo Editar', vehiculo);
       },
       (reason) => {}
     );

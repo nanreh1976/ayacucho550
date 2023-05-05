@@ -8,8 +8,10 @@ import { CajaStorageService } from '../caja/caja-storage.service';
   providedIn: 'root',
 })
 export class AbonoService {
-  constructor(private dbFirebase: DbFirestoreService,
-    private cajaStorageService:CajaStorageService) {}
+  constructor(
+    private dbFirebase: DbFirestoreService,
+    private cajaStorageService: CajaStorageService
+  ) {}
 
   verificarAbonos(data: any) {
     let vehiculos = data;
@@ -91,12 +93,11 @@ export class AbonoService {
     }
   }
 
-  pagarAbonoVehiculo(vehiculo:any, result:any){
+  pagarAbonoVehiculo(vehiculo: any, result: any) {
     this.cambiarEstadoAbono(vehiculo);
     this.fechasAbono(vehiculo);
     this.ingresarPagoEnCaja(result);
   }
-
 
   ingresarPagoEnCaja(result: any) {
     let ndate = new Date();
@@ -112,7 +113,7 @@ export class AbonoService {
 
   cambiarEstadoAbono(vehiculo: Vehiculo) {
     vehiculo.estado = 1;
-    }
+  }
 
   fechasAbono(vehiculo: Vehiculo) {
     vehiculo.abonoInicio = new Date();

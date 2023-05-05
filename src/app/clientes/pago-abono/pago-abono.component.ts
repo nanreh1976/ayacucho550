@@ -30,6 +30,7 @@ export class PagoAbonoComponent implements OnInit {
     this.titulo = this.fromParent.modo;
     this.item = this.fromParent.item;
     this.cliente = this.fromParent.cliente;
+    console.log("pago abono", this.titulo)
 
     setInterval(() => {
       this.fechaHoraActual = new Date();
