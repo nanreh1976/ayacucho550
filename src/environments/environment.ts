@@ -2,7 +2,7 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-
+////// DEMO ///////////////////////////////////////////////////////////////////////////////////
 // Dummypark para devel
 export const environment = {
   firebase: {
@@ -17,6 +17,7 @@ export const environment = {
   
 };
 
+///////////////////PLAYA SanLuisCba ////////////////////////////////////////////////////////////////////////
 // pfpark app database para prod
 
 // export const environment = {
