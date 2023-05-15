@@ -4,7 +4,7 @@
 
 ////// DEMO ///////////////////////////////////////////////////////////////////////////////////
 // Dummypark para devel
-export const environment = {
+/* export const environment = {
   firebase: {
       apiKey: "AIzaSyDyrikGh_AIpTIoIhOaawgGOdk1YrQhSDw",
       authDomain: "dummy-park.firebaseapp.com",
@@ -15,25 +15,25 @@ export const environment = {
   },
   production: false,
   
-};
+}; */
 
 ///////////////////PLAYA SanLuisCba ////////////////////////////////////////////////////////////////////////
 // pfpark app database para prod
 
-// export const environment = {
-//   firebase: {
-//     projectId: 'pfparkapp',
-//     appId: '1:1004743501223:web:a0ad3783b0075ea8764282',
-//     storageBucket: 'pfparkapp.appspot.com',
-//     locationId: 'southamerica-east1',
-//     apiKey: 'AIzaSyAU7c6aWYQPt4Z-d6fMkK1m-zhFzhVbwbA',
-//     authDomain: 'pfparkapp.firebaseapp.com',
-//     messagingSenderId: '1004743501223',
-//     measurementId: 'G-E9BWNVQKEG',
-//   },
-//   production: false,
+ export const environment = {
+   firebase: {
+     projectId: 'pfparkapp',
+     appId: '1:1004743501223:web:a0ad3783b0075ea8764282',
+     storageBucket: 'pfparkapp.appspot.com',
+     locationId: 'southamerica-east1',
+     apiKey: 'AIzaSyAU7c6aWYQPt4Z-d6fMkK1m-zhFzhVbwbA',
+     authDomain: 'pfparkapp.firebaseapp.com',
+     messagingSenderId: '1004743501223',
+     measurementId: 'G-E9BWNVQKEG',
+   },
+   production: false,
   
-// };
+ };
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

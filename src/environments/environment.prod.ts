@@ -1,5 +1,5 @@
-////// DEMO ///////////////////////////////////////////////////////////////////////////////////
-export const environment = {
+////// DEMO DUMMY ///////////////////////////////////////////////////////////////////////////////////
+/* export const environment = {
   firebase: {
       apiKey: "AIzaSyDyrikGh_AIpTIoIhOaawgGOdk1YrQhSDw",
       authDomain: "dummy-park.firebaseapp.com",
@@ -10,11 +10,11 @@ export const environment = {
   },
   production: true,
   
-};
+}; */
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////PLAYA SanLuisCba ////////////////////////////////////////////////////////////////////////
-/* export const environment = {
+export const environment = {
   firebase: {
     projectId: 'pfparkapp',
     appId: '1:1004743501223:web:a0ad3783b0075ea8764282',
@@ -27,4 +27,4 @@ export const environment = {
   },
   production: true,
  
-}; */
+};
