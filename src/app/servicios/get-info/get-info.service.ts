@@ -15,6 +15,7 @@ export class GetInfoService {
   saldoCaja: number;
   cajaOps = [];
   saldoInicialCaja:number;
+  cantEgresosVehiculos: number
 
   private user$: any;
   private playa$: any;
@@ -68,6 +69,7 @@ export class GetInfoService {
     this.saldoCaja = 0;
     this.cajaOps = [];
     this.saldoInicialCaja=0
+    this.cantEgresosVehiculos=0
   }
 
   getCajaOps() {
@@ -89,5 +91,19 @@ export class GetInfoService {
     this.sesionCajaCierre = new Date();
     this.getCajaOps();
     this.getSaldoInicialCaja()
+    this.countEgresosVehiculos()  
   }
+
+  // countEgresosVehiculos() {
+  //   this.getCajaOps();
+  //   this.cantEgresosVehiculos = this.cajaOps.filter((t) => t['operacion'] === 'egreso').length;
+  // }
+
+  countEgresosVehiculos() {
+    this.getCajaOps();
+    const regex = /\begreso\b/i; // Expresión regular que busca la palabra "egreso" como una palabra completa, ignorando mayúsculas y minúsculas
+    this.cantEgresosVehiculos = this.cajaOps.filter((t) => regex.test(t['concepto'])).length;
+  }
+  
+
 }

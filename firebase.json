@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/linkinpark",
+    "public": "dist/LinkinPark",
     "ignore": [
       "firebase.json",
       "**/.*",

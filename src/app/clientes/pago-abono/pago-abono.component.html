@@ -1,16 +1,47 @@
 <div class="d-flex justify-content-end">
-    <button type="button" class="close mt-2 me-2" (click)="activeModal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-    </button>
+  <button
+    type="button"
+    class="close mt-2 me-2"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
-<h1 class="text-center">Ventana de Pago</h1>
 
-<h3>Cliente: {{cliente.apellido}}  {{cliente.nombre}}</h3>
+<div id="ticket" class="receipt">
+  <div class="location">Ticket Abono</div>
 
-<h3>Patente: {{item.patente}} </h3>
+  <app-ticket-header></app-ticket-header>
 
-<h3>Tarifa: {{item.tarifa.nombre}} </h3>
+  <div class="location">
+    Emitido: <br />
+    {{ fechaHoraActual | date : "dd/MM/yyyy HH:mm:ss" : "local" }}
+  </div>
+  <div class="location">
+    Cliente: <br />
+    {{ cliente.apellido }} {{ cliente.nombre }}
+  </div>
 
-<h3>Importe: {{item.tarifa.valor}} </h3>
+  <div class="location">
+    Patente: <br />
+    {{ item.patente }}
+  </div>
 
-<app-btn-agregar [name] = "'Confirmar'" class="left" (click)="pago()"></app-btn-agregar>
+  <div class="location">
+    Tarifa: <br />
+    {{ item.tarifa.nombre }}
+  </div>
+
+  <div class="location">Importe: <br />{{ item.tarifa.valor }}</div>
+</div>
+>
+<div>
+
+  <div>
+    <app-btn-agregar
+      [name]="'Confirmar'"
+      class="left"
+      (click)="pago()"
+    ></app-btn-agregar>
+  </div>
+</div>

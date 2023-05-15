@@ -167,7 +167,7 @@ export class StorageService {
       .create(componente, item)
       // .then((data) => console.log(data))
       // .then(() => this.ngOnInit())
-      .catch((e) => console.log(e.message));
+    //  .catch((e) => console.log(e.message));
   }
 
   deleteItem(componente: string, item: any): void {
@@ -178,7 +178,7 @@ export class StorageService {
       // .then((data) => console.log(data))
       // .then(() => this.ngOnInit())
       // .then(() => console.log("pasa por delete metodo?"))
-      .catch((e) => console.log(e.message));
+    //  .catch((e) => console.log(e.message));
   }
 
   updateItem(componente: string, item: any): void {
@@ -188,6 +188,6 @@ export class StorageService {
       .update(componente, item)
       // .then((data) => console.log(data))
       // .then(() => this.ngOnInit())
-      .catch((e) => console.log(e.message));
+    //  .catch((e) => console.log(e.message));
   }
 }

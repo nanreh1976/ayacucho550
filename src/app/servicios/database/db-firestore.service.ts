@@ -70,7 +70,9 @@ export class DbFirestoreService {
 
     // let dataCollection = `/${this.coleccion}/datos/${componente}`;
     return this.firestore2
-      .collection('users', (ref) => ref.where('coleccion', '==', this.coleccion))
+      .collection('users', (ref) =>
+        ref.where('coleccion', '==', this.coleccion)
+      )
       .valueChanges({ idField: 'id' });
   }
 
@@ -118,7 +120,6 @@ export class DbFirestoreService {
 
   setearColeccion(coleccion: string) {
     this.coleccion = coleccion;
-
   }
 
   getTodo() {
@@ -128,4 +129,21 @@ export class DbFirestoreService {
       idField: 'id',
     }) as Observable<any[]>;
   }
+
+  async moveDocsToSubcollection(componenteA: string, componenteB: string, field: string, string: string) {
+    const collectionRef = this.firestore2.collection(`${this.coleccion}/datos/${componenteA}`);
+    const query = collectionRef.ref.where(field, '==', string);
+    const querySnapshot = await query.get();
+  
+    const batch = this.firestore2.firestore.batch();
+  
+    querySnapshot.forEach((doc) => {
+      const newDocRef = this.firestore2.collection(`${this.coleccion}/datos/${componenteB}/${doc.id}`).doc();
+      batch.set(newDocRef.ref, doc.data());
+      batch.delete(doc.ref); // deletes the original document from componenteA
+    });
+  
+    await batch.commit();
+  }
+  
 }

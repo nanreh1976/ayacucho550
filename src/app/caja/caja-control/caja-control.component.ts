@@ -128,10 +128,6 @@ export class CajaControlComponent implements OnInit {
     );
   }
 
-  // tomar datos para el ticket de cierre de caja
-
-
-
   // seleccionar operacion CRUD
 
   selectCrudOp(op: string, item: any) {

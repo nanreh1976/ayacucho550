@@ -107,14 +107,14 @@ export class ClientesFormComponent implements OnInit {
   }
 
   getMsg(msg: any) {
-    console.log(msg, 'from vehiculos-form');
+    //console.log(msg, 'from vehiculos-form');
     /* let value = {
     op: msg.op,
     item: msg.item
     
   }; */
 
-    console.log('closemodal', msg);
+    //console.log('closemodal', msg);
     this.activeModal.close(msg);
   }
 

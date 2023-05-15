@@ -50,7 +50,7 @@ export class ClientesViewComponent implements OnInit {
         }
       })
     }else{
-      console.log(value);
+      //console.log(value);
       
       this.newItemEvent.emit(value);
     }

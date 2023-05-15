@@ -42,12 +42,6 @@ componente:string ="vehiculos"
     this.bs.next(newState)
   }
 
-  // reset() {
-  //   this.bs.next(this.initialValue)
-  // }
-
-
-
 
   getAllSorted() { // pasar campo y orden (asc o desc)
     this.firestore
@@ -67,11 +61,6 @@ componente:string ="vehiculos"
   }
 
 
-
-  // restart() {
-  //   this.store.reset()
-  //   this.getAllSorted2()
-  // }
 
   get data$(): Observable<any> {
     return this.state$.pipe(map(state => state.loading ? [] : state.data))

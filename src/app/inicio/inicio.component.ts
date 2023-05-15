@@ -41,7 +41,7 @@ export class InicioComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(6),
-          this.vpService.evaluarPatente(),
+          this.vpService.evaluarFormatoPatente(),
         ],
       ],
     });
@@ -95,7 +95,7 @@ export class InicioComponent implements OnInit {
 
     //recorre playa buscando barcode
     for (var it of playa) {
-       console.log("on Scan" ,it);
+       //console.log("on Scan" ,it);
 
       let cod = it['codigoBarras'];
       let pat = it['patente'];

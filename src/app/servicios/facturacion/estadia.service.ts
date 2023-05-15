@@ -80,7 +80,7 @@ export class EstadiaService {
               //this.saldo = this.sumar(this.valorTarifa, adicional);
               //console.log(this.saldo);
               this.saldo = this.valorTarifa+(parseInt(this.tarifaBase.valor) * unidadesExtraFraccion);
-              console.log(this.saldo)
+             // console.log(this.saldo)
               return this.saldo;
             } else {
               //si esta por fuera del margen de tolerancia, le agrega una fraccion mas y calcula el saldo
@@ -89,7 +89,7 @@ export class EstadiaService {
              
               
               this.saldo = this.valorTarifa+(parseInt(this.tarifaBase.valor) * (unidadesExtraFraccion + 1));
-              console.log(this.saldo);
+            //  console.log(this.saldo);
               return this.saldo;
             }
           }
@@ -120,7 +120,7 @@ export class EstadiaService {
     });
 
     this.tarifaBase = tarifasGuardadas[0];
-    console.log("esta es la tarifa base: ", this.tarifaBase);
+   // console.log("esta es la tarifa base: ", this.tarifaBase);
   }
 
   sumar(valor1:number, valor2:number): number {

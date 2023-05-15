@@ -20,6 +20,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 import { PlayaControlComponent } from './playa/playa-control/playa-control.component';
 import { TarifasControlComponent } from './tarifas/tarifas-control/tarifas-control.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { ListadoVehiculosComponent } from './vehiculos/listado-vehiculos/listado-vehiculos.component';
 
 // const routes: Routes = [];
 
@@ -84,6 +85,12 @@ const appRoutes: Routes = [
         path: 'empresa',
         component: PerfilEmpresaComponent,
         ...canActivate(redirectUnauthorizedToLogin),
+      },
+      {
+        path: 'vehiculos',
+        component: ListadoVehiculosComponent,
+        ...canActivate(redirectUnauthorizedToLogin),
+        canActivate:[IsSuperAdminGuard], 
       },
       {
         path: 'cajaLog',

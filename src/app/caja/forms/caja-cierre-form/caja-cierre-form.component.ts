@@ -36,6 +36,9 @@ export class CajaCierreFormComponent implements OnInit {
 
   }
 
+  ngOnChanges(): void {
+    this.configureForm(this.item);
+  }
  
   configureForm( item: any) {
     this.editForm.patchValue({

@@ -44,18 +44,7 @@
               [ngClass]="{'is-invalid':Fraccion?.errors && Fraccion?.touched, 'is-valid': !Fraccion?.errors && !Fraccion?.touched }"> 
             </div>
           </div>
-         <!--  <div class="form-group">
-            <label for="unidad de fraccion">unidad de fraccion</label>
-            <div class="input-group">
-              <input formControlName="fraccion" class="form-control" required type="text">
-            </div>
-          </div> -->
-          <!-- <div class="form-group">
-            <label for="descuento">categoria</label>
-            <div class="input-group">
-              <input formControlName="categoria" class="form-control" required type="text">
-            </div>
-          </div> -->
+
           <div>
             <label for="descuento">categoria de la tarifa</label>
             <select class="form-select form-select-md mb-3" (change)="changeCategoria($event)">

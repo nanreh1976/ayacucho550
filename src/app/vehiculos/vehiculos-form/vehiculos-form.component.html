@@ -1,0 +1,131 @@
+<div class="vehiculos">
+  <div class="modal-header">
+    <h1>Vehiculos asignados al Cliente</h1>
+    <button
+      type="button"
+      class="close"
+      (click)="activeModal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <!-- <div *ngIf="($modoCaja | async) === 'cerrada'">
+    <h5 style="color: red">Caja Cerrada.</h5>
+    <h5 style="color: red">No se puede cobrar Abonos.</h5>
+    <h5 style="color: red">Abrir Caja o consultar con un Administrador.</h5>
+  </div>
+
+  <div *ngIf="($modoCaja | async) === 'admin'">
+    <h5 style="color: red">Caja Abierta por otro usuario.</h5>
+    <h5 style="color: red">No se puede cobrar abonos.</h5>
+    <h5 style="color: red">Debe cerrar y vovler a abrir sesion para operar.</h5>
+  </div> -->
+
+  <div style="margin-top: 10px; text-align: center">
+    <h5
+      *ngIf="
+        ($modoCaja | async) === 'cerrada' || ($modoCaja | async) === 'admin'
+      "
+      style="color: red; font-size: 160%"
+    >
+      Caja {{ ($modoCaja | async) === "cerrada" ? "Cerrada" : "Abierta" }}. No
+      se puede cobrar abonos.
+      {{
+        ($modoCaja | async) === "cerrada"
+          ? "Abrir Caja o consultar con un Administrador."
+          : "Debe cerrar y volver a abrir sesión para operar."
+      }}
+    </h5>
+  </div>
+
+  <app-btn-agregar
+    class="right"
+    (click)="toggleAgregarVehiculoComponent()"
+  ></app-btn-agregar>
+  <table class="tftable">
+    <colgroup>
+      <col width="15%" />
+      <col width="15%" />
+      <col width="15%" />
+      <col width="15%" />
+      <col width="15%" />
+      <col width="15%" />
+      <col width="10%" />
+    </colgroup>
+    <tr>
+      <th>patente</th>
+      <th>marca</th>
+      <th>modelo</th>
+      <th>color</th>
+      <th>tarifa</th>
+      <th>Abono</th>
+      <th><i class="bi bi-pencil-fill"></i></th>
+    </tr>
+
+    <tr *ngFor="let vehiculo of vehiculosPorCliente">
+      <td>{{ vehiculo.patente }}</td>
+      <td>{{ vehiculo.marca }}</td>
+      <td>{{ vehiculo.modelo }}</td>
+      <td>{{ vehiculo.color }}</td>
+      <td>{{ vehiculo.tarifa.nombre }}</td>
+      <!-- <td *ngIf="vehiculo.estado === 1">Pago</td>
+      <td *ngIf="($modoCaja | async) === 'abierta'">
+        <app-btn-eliminar
+          *ngIf="vehiculo.estado === 0"
+          class="right"
+          [name]="'Pagar'"
+          (click)="efectuarPago(vehiculo)"
+        ></app-btn-eliminar>
+      </td> -->
+
+      <td  style="text-align: center">
+        <ng-container *ngIf="vehiculo.estado === 1; else pagar">
+          <span style="color: green">Pago</span>
+        </ng-container>
+        <ng-container *ngIf="vehiculo.estado === 0">
+          <app-btn-eliminar
+            class="right"
+            [name]="'Pagar'"
+            (click)="efectuarPago(vehiculo)"
+            [disabled]="($modoCaja | async) !== 'abierta'"
+          ></app-btn-eliminar>
+        </ng-container>
+        <ng-template #pagar></ng-template>
+      </td>
+
+      <td class="d-flex align-items-center">
+        <app-btn-editar
+          class="right"
+          (click)="toggleEditarVehiculoComponent(vehiculo)"
+        ></app-btn-editar>
+        <app-btn-eliminar
+          class="right"
+          (click)="eliminarVehiculo(vehiculo)"
+        ></app-btn-eliminar>
+      </td>
+    </tr>
+  </table>
+
+  <!-- prueba modal -->
+
+  <div>
+    <ng-container *ngIf="showAgregarComponent">
+      <app-agregar-vehiculo
+        [title]="innerTitle"
+        (formSubmit)="agregarVehiculoAlCliente($event)"
+        [message]="innerMessage"
+        (closed)="onAgregarVehiculoClosed()"
+      ></app-agregar-vehiculo>
+    </ng-container>
+
+    <ng-container *ngIf="showEditarComponent">
+      <app-editar-vehiculo
+        [title]="innerTitle"
+        (formSubmit)="editarVehiculoAlCliente($event)"
+        [vehiculoParaEditar]="vehiculoParaEditar"
+        [message]="innerMessage"
+        (closed)="onAgregarVehiculoClosed()"
+      ></app-editar-vehiculo>
+    </ng-container>
+  </div>
+</div>

@@ -70,7 +70,7 @@ export class PlayaFormComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(6),
-          this.validacionPatente.evaluarPatente(),
+          this.validacionPatente.evaluarFormatoPatente(),
         ],
       ],
       descripcion: [''],

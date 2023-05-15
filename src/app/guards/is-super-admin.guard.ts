@@ -26,7 +26,7 @@ export class IsSuperAdminGuard implements CanActivate {
     if (this.userLoggedEsSuperAdmin) {
       return true;
     } else {
-      console.log('No tiene permiso para ver esta pagina');
+     // console.log('No tiene permiso para ver esta pagina');
       return false;
     }
   }

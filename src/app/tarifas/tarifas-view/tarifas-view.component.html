@@ -11,11 +11,12 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">nombre</th>
-          <th scope="col">fraccion</th>
+          <th scope="col">Categoria</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Fraccion</th>
           <th scope="col">UT</th>
           <th scope="col">Valor</th>
-          <th scope="col">tolerancia</th>
+          <th scope="col">Tolerancia</th>
           <th scope="col" *ngIf="!user$.source._value.roles.user"></th>
           <th scope="col" *ngIf="!user$.source._value.roles.user"></th>
         </tr>
@@ -24,6 +25,7 @@
       <tbody>
         <tr *ngFor="let item of data | async ; let i = index">
           <td class="badge" scope="row">{{ i + 1 }}</td>
+          <td>{{ item.categoria }}</td>
           <td>{{ item.nombre }}</td>
           <td>{{ item.fraccion }}</td>
           <td>{{ item.unidad_tiempo }}</td>

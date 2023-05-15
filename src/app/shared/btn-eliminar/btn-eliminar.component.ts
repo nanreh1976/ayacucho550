@@ -4,12 +4,10 @@ import { Component, Input, OnInit } from '@angular/core';
   selector: 'app-btn-eliminar',
 
   template: `
-    <button
-      class="btn btn-primary"
-      style="border-radius: 10%; margin: 10px ; "
-      [disabled]="disabled"
-    >
-      <svg
+<button class="btn btn-primary" style="border-radius: 10%; margin: 10px; display: flex; align-items: center;" [disabled]="disabled">
+  <svg *ngIf="name === 'Pagar'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 16 16">
+   
+ 
         *ngIf="name === 'Pagar'"
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -23,9 +21,9 @@ import { Component, Input, OnInit } from '@angular/core';
         />
       </svg>
 
-      <i *ngIf="name !== 'Pagar'" class="fa fa-minus"> </i>
+      <i *ngIf="name !== 'Pagar'" class="fa fa-minus" style="margin-right: 5px;"></i>
 
-      {{ name || 'Eliminar' }}
+      <span style="vertical-align: middle;">{{ name || 'Eliminar' }}</span>
     </button>
   `,
 

@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
 import { DbFirestoreService } from '../database/db-firestore.service';
+import { CajaStorageService } from '../caja/caja-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AbonoService {
-  constructor(private dbFirebase: DbFirestoreService) {}
+  constructor(
+    private dbFirebase: DbFirestoreService,
+    private cajaStorageService: CajaStorageService
+  ) {}
 
   verificarAbonos(data: any) {
     let vehiculos = data;
@@ -87,5 +91,32 @@ export class AbonoService {
         return null;
       }
     }
+  }
+
+  pagarAbonoVehiculo(vehiculo: any, result: any) {
+    this.cambiarEstadoAbono(vehiculo);
+    this.fechasAbono(vehiculo);
+    this.ingresarPagoEnCaja(result);
+  }
+
+  ingresarPagoEnCaja(result: any) {
+    let ndate = new Date();
+    let opCaja = {
+      concepto: 'Pago Abono: ' + result.item.patente,
+      fecha: ndate, // item.fechas["fechaSalidaDate"],
+      importe: result.item.tarifa.valor,
+      operacion: 'ingreso',
+    };
+
+    this.cajaStorageService.addItem('caja', opCaja);
+  }
+
+  cambiarEstadoAbono(vehiculo: Vehiculo) {
+    vehiculo.estado = 1;
+  }
+
+  fechasAbono(vehiculo: Vehiculo) {
+    vehiculo.abonoInicio = new Date();
+    vehiculo.abonoFin = this.setearFinAbono(vehiculo);
   }
 }

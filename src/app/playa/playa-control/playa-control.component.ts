@@ -111,18 +111,31 @@ export class PlayaControlComponent implements OnInit {
     }
   }
 
+  // ingresarPagoEnCaja(item: { patente: any; saldo: any }) {
+  //   let ndate = new Date();
+  //   let opCaja = {
+  //     concepto: item.patente,
+  //     fecha: ndate, // item.fechas["fechaSalidaDate"],
+  //     importe: item.saldo,
+  //     operacion: 'ingreso',
+  //   };
+
+  //   this.cajaStorageService.addItem('caja', opCaja);
+  // }
+
   ingresarPagoEnCaja(item: { patente: any; saldo: any }) {
     let ndate = new Date();
     let opCaja = {
-      concepto: item.patente,
+      concepto: 'egreso ' + item.patente, // Se agrega la palabra "egreso" seguida de la patente
       fecha: ndate, // item.fechas["fechaSalidaDate"],
       importe: item.saldo,
       operacion: 'ingreso',
     };
-
     this.cajaStorageService.addItem('caja', opCaja);
   }
+  
 
+  
   /////////////////////////////////////////
   ///// ELEGIR OPERACION DE TICKET/////////
 
@@ -146,7 +159,7 @@ export class PlayaControlComponent implements OnInit {
       }
 
       default: {
-        console.log('sin operacion en case crud');
+      //  console.log('sin operacion en case crud');
         break;
       }
     }
@@ -169,12 +182,12 @@ export class PlayaControlComponent implements OnInit {
       modalRef.componentInstance.fromParent = info;
       modalRef.result.then(
         (result) => {
-          console.log (modo, item)
+         // console.log (modo, item)
           this.selectCrudOp(op, item);
           // this.selectTicketOp(result.op, result.item);
         },
         (reason) => {
-          console.log (reason)
+          // (reason)
         }
       );
     }
