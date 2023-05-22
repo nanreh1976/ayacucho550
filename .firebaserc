@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "dummy-park"
-  }
+    "default": "dummy-park",
+    "prod": "pfparkapp"
+  },
+  "targets": {},
+  "etags": {}
 }
