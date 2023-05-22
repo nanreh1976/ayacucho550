@@ -115,7 +115,7 @@ export class DbFirestoreService {
       this.firestore,
       `/${this.coleccion}/datos/${componente}`
     );
-    return addDoc(dataCollection, item);
+    return addDoc(dataCollection, item).then(() => console.log('Ceate. Escritura en la base de datos en: ', componente));
   }
 
   update(componente: string, item: any) {
@@ -124,7 +124,8 @@ export class DbFirestoreService {
       this.firestore,
       `/${this.coleccion}/datos/${componente}/${item.id}`
     );
-    return updateDoc(estacionamiento1DocumentReference, { ...item });
+    return updateDoc(estacionamiento1DocumentReference, { ...item }).then(() => console.log('Update. Escritura en la base de datos en: ', componente))
+    ;
   }
 
   delete(componente: string, id: string) {

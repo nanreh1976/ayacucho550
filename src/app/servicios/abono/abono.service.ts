@@ -45,10 +45,13 @@ export class AbonoService {
             //si la fecha es del abono es menor q la fecha actual, significa q el abono esta vencido
             //se cambia el estado del abono vencido.
 
-            vehiculo.estado = 0;
-            //console.log("abono service. verificarAbonos: ", vehiculo);
-            this.dbFirebase.update('vehiculos', vehiculo);
-            // console.log ("abono service update " ,vehiculo)
+            if(vehiculo.estado !== 0){
+              vehiculo.estado = 0;
+              //console.log("abono service. verificarAbonos: ", vehiculo);
+              this.dbFirebase.update('vehiculos', vehiculo);
+              // console.log ("abono service update " ,vehiculo)
+            }
+            
           }
         }
       }
