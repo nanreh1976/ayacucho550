@@ -12,7 +12,7 @@ import {
   Firestore,
   updateDoc,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +35,32 @@ export class DbFirestoreService {
     return collectionData(dataCollection, {
       idField: 'id',
     }) as Observable<any[]>;
+  }
+
+  getAllSortedToday(componente: any, campo: any, orden: any) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Establecer la fecha al comienzo del día
+  
+    const startOfDay = new Date(today);
+    const endOfDay = new Date(today);
+    endOfDay.setDate(endOfDay.getDate() + 1); // Establecer el final del día sumando un día
+  
+    let dataCollection = `/${this.coleccion}/datos/${componente}`;
+  
+    return this.firestore2
+      .collection(dataCollection, (ref) =>
+        ref
+          .where(campo, '>=', startOfDay)
+          .where(campo, '<', endOfDay)
+          .orderBy(campo, orden)
+          .limit(10)
+      )
+      .valueChanges({ idField: 'id' })
+      .pipe(
+        tap((data) => {
+          // console.log(`Total documents read: ${data.length}`, componente);
+        })
+      );
   }
 
   // GET ALL ORDENADO POR CAMPO Y ORDEN

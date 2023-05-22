@@ -125,9 +125,9 @@ export class StorageService {
     this.getAllSorted('playa', 'fechas.fechaDate', 'asc');
     this.getAllSorted('tarifas', 'categoria', 'asc');
     this.getAllSorted('clientes', 'apellido', 'asc');
-    this.getAllSorted('cajaLog', 'apertura', 'asc');
-    this.getAllSorted('facturacion', 'fechaOp', 'asc');
-    this.getAllSorted('logger', 'Fecha', 'asc');
+    this.getAllSortedToday('cajaLog', 'apertura', 'asc');
+    this.getAllSortedToday('facturacion', 'fechaOp', 'asc');
+    this.getAllSortedToday('logger', 'Fecha', 'asc');
     this.getUsuarios()
      // this.getCaja();
     this.getVehiculos();
@@ -153,6 +153,15 @@ export class StorageService {
   getAllSorted(componente: any, campo: any, orden: any) {
     // pasar campo y orden (asc o desc)
     this.dbFirebase.getAllSorted(componente, campo, orden).subscribe((data) => {
+      this.setInfo(componente, data);
+      // this.updateObservable(componente, data)
+      // console.log('storage initializer ', componente, data);
+    });
+  }
+
+  getAllSortedToday(componente: any, campo: any, orden: any) {
+    // pasar campo y orden (asc o desc)
+    this.dbFirebase.getAllSortedToday(componente, campo, orden).subscribe((data) => {
       this.setInfo(componente, data);
       // this.updateObservable(componente, data)
       // console.log('storage initializer ', componente, data);
