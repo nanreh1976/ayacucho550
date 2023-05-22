@@ -58,7 +58,7 @@ export class DbFirestoreService {
       .valueChanges({ idField: 'id' })
       .pipe(
         tap((data) => {
-          // console.log(`Total documents read: ${data.length}`, componente);
+          console.log(`Total documents read: ${data.length}`, componente);
         })
       );
   }
