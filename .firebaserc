@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "dummy-park",
+    "dev": "dummy-park",
     "prod": "pfparkapp"
   },
   "targets": {},
