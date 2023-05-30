@@ -63,6 +63,30 @@ export class DbFirestoreService {
       );
   }
 
+  getAllSortedBetweenDates(componente: any, campo: any, orden: any, fechaInicio: number, fechaFin: number) {
+    const startOfDate = new Date(fechaInicio);
+    const endOfDate = new Date(fechaFin);
+  
+    let dataCollection = `/${this.coleccion}/datos/${componente}`;
+  
+    return this.firestore2
+      .collection(dataCollection, (ref) =>
+        ref
+          .where(campo, '>=', startOfDate)
+          .where(campo, '<=', endOfDate)
+          .orderBy(campo, orden)
+          .limit(10)
+      )
+      .valueChanges({ idField: 'id' })
+      .pipe(
+        tap((data) => {
+          console.log(`Total documents read: ${data.length}`, componente);
+        })
+      );
+  }
+  
+
+
   // GET ALL ORDENADO POR CAMPO Y ORDEN
   getAllSorted(componente: string, campo: string, orden: any) {
     // campo debe existir en la coleccion, si esta anidado pasar ruta separada por puntso (field.subfield)

@@ -4,4 +4,22 @@ form {
     width: 20rem;
   }
 
+  input::placeholder {
+    color: #999999; /* Color del texto del placeholder */
+    opacity: 0.8; /* Opacidad del texto del placeholder */
+  }
  
+  .question-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #949597; /* Color de fondo del círculo */
+  color: #fff; /* Color del ícono */
+  cursor: pointer;
+}
+.question-circle i {
+  font-size: 12px; /* Ajustar el tamaño del ícono */
+}

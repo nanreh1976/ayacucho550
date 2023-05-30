@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { DbFirestoreService } from '../../database/db-firestore.service';
+import { take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,7 @@ export class ConsultaFacturacionService {
     cantidadOperacion: 0,
     total: 0,
   };
-  constructor() {}
+  constructor(private dbFirestoreService : DbFirestoreService) {}
 
   calcularFacturacion(fechas: any, facturacion: any) {
     let facturacionFiltrada = facturacion.filter((factura: any) => {
@@ -43,6 +45,33 @@ export class ConsultaFacturacionService {
     return respuestaFacturacion;
   }
 
+  // calcularFacturacion2(fechas: any,) {
+  // this.dbFirestoreService.getAllSortedBetweenDates('facturacion', 'fechaOp', 'asc', fechas.fechaDesde,fechas.fechaHasta)
+  // .pipe(take(1))
+  // .subscribe((data) => {
+  //   // Aquí puedes realizar la lógica con la data obtenida
+  //   console.log(data)
+  //   return data;
+  // });
+
+  async calcularFacturacion2(fechas: any) {
+    try {
+      const data = await this.dbFirestoreService
+        .getAllSortedBetweenDates('facturacion', 'fechaOp', 'asc', fechas.fechaDesde, fechas.fechaHasta)
+        .pipe(take(1))
+        .toPromise();
+
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+
+
+  
   convertirMilisegundosAFecha(numero: number) {
     let date = moment(numero).format('DD MMM YYYY hh:mm a');
     return date;
@@ -58,3 +87,4 @@ export class ConsultaFacturacionService {
     return acumulador;
   }
 }
+

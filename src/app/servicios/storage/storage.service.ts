@@ -168,6 +168,8 @@ export class StorageService {
     });
   }
 
+
+
   addItem(componente: string, item: any): void {
     item.fechaOp = new Date();
     // console.log(' storage add item ', componente, item);

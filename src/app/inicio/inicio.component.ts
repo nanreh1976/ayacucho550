@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { EstadoCajaService } from '../servicios/caja/estado-caja.service';
 import { ValidarPatenteService } from '../servicios/patentes/validar-patente.service';
 import { StorageService } from '../servicios/storage/storage.service';
+import { NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-inicio',
@@ -12,7 +13,7 @@ import { StorageService } from '../servicios/storage/storage.service';
 })
 export class InicioComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<any>();
-
+  formatosAdmitidos = 'ab123cd, abc123';
   op!: string;
   private code: string = '';
   patenteForm: any;
@@ -22,14 +23,16 @@ export class InicioComponent implements OnInit {
   playa$: any;
 
   constructor(
+    config: NgbPopoverConfig,
     private fb: FormBuilder,
     public vpService: ValidarPatenteService,
     private estadoCaja: EstadoCajaService,
     private storageService: StorageService
   ) {
+    config.autoClose = 'outside'; // Configuración para cerrar el popover al hacer clic fuera de él
     this.$modoCaja = this.estadoCaja.getModoCaja();
     this.storageService.playa$.subscribe((data) => (this.playa$ = data));
-    this.createForm();
+    this.createForm()
   }
 
   ngOnInit(): void {}

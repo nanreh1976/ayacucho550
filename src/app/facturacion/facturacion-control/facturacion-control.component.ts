@@ -68,12 +68,26 @@ export class FacturacionControlComponent implements OnInit {
     this.facturacionDia();
   }
 
+  // getMsg(msg: any) {
+  //   console.log("consulta facturacion", msg.item)
+  //   this.consultaFacturacion = 
+  //     this.consultaFacturacionService.calcularFacturacion2(
+  //       msg.item,
+
+  //     );
+  //     console.log("consulta facturacion en componente", this.consultaFacturacion)
+  // }
+
   getMsg(msg: any) {
-    this.consultaFacturacion =
-      this.consultaFacturacionService.calcularFacturacion(
-        msg.item,
-        this.facturacion$
-      );
+    console.log("consulta facturacion", msg.item);
+    this.consultaFacturacionService.calcularFacturacion2(msg.item)
+      .then((data) => {
+        console.log("consulta facturacion en componente", data);
+        this.consultaFacturacion = data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   getAll(): void {
