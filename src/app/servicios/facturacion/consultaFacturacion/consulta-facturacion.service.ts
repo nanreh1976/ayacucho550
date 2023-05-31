@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { DbFirestoreService } from '../../database/db-firestore.service';
-import { take } from 'rxjs';
+import { firstValueFrom, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -54,20 +54,38 @@ export class ConsultaFacturacionService {
   //   return data;
   // });
 
+
+
   async calcularFacturacion2(fechas: any) {
     try {
-      const data = await this.dbFirestoreService
-        .getAllSortedBetweenDates('facturacion', 'fechaOp', 'asc', fechas.fechaDesde, fechas.fechaHasta)
-        .pipe(take(1))
-        .toPromise();
-
+      const data = await firstValueFrom(
+        this.dbFirestoreService.getAllSortedBetweenDates('facturacion', 'fechaOp', 'asc', fechas.fechaDesde, fechas.fechaHasta)
+          .pipe(take(1))
+      );
+  
       console.log(data);
-      return data;
+      this.consultaFacturacion.fechaDesde = this.convertirMilisegundosAFecha(
+        fechas.fechaDesde
+      );
+      this.consultaFacturacion.fechaHasta = this.convertirMilisegundosAFecha(
+        fechas.fechaHasta
+      );
+      this.consultaFacturacion.cantidadOperacion = data.length;
+      this.consultaFacturacion.total = this.calularTotal(data);
+  
+      let respuestaFacturacion = {
+        consultaFacturacion: this.consultaFacturacion,
+        facturacion: data,
+      };
+  
+      return respuestaFacturacion;
+
     } catch (error) {
       console.error(error);
       throw error;
     }
   }
+  
 
 
 

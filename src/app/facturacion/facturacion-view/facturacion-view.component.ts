@@ -44,7 +44,7 @@ export class FacturacionViewComponent implements OnInit {
    }
   msg: any
   ngOnInit(): void {
-    // console.log(this.respuestaFacturacion);
+    console.log(this.respuestaFacturacion);
     
   }
 }
