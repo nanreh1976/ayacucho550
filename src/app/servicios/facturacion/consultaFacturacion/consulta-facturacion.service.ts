@@ -56,35 +56,35 @@ export class ConsultaFacturacionService {
 
 
 
-  async calcularFacturacion2(fechas: any) {
-    try {
-      const data = await firstValueFrom(
-        this.dbFirestoreService.getAllSortedBetweenDates('facturacion', 'fechaOp', 'asc', fechas.fechaDesde, fechas.fechaHasta)
-          .pipe(take(1))
-      );
+  // async calcularFacturacion2(fechas: any) {
+  //   try {
+  //     const data = await firstValueFrom(
+  //       this.dbFirestoreService.getAllSortedBetweenDates('facturacion', 'fechaOp', 'asc', fechas.fechaDesde, fechas.fechaHasta)
+  //         .pipe(take(1))
+  //     );
   
-      console.log(data);
-      this.consultaFacturacion.fechaDesde = this.convertirMilisegundosAFecha(
-        fechas.fechaDesde
-      );
-      this.consultaFacturacion.fechaHasta = this.convertirMilisegundosAFecha(
-        fechas.fechaHasta
-      );
-      this.consultaFacturacion.cantidadOperacion = data.length;
-      this.consultaFacturacion.total = this.calularTotal(data);
+  //     console.log(data);
+  //     this.consultaFacturacion.fechaDesde = this.convertirMilisegundosAFecha(
+  //       fechas.fechaDesde
+  //     );
+  //     this.consultaFacturacion.fechaHasta = this.convertirMilisegundosAFecha(
+  //       fechas.fechaHasta
+  //     );
+  //     this.consultaFacturacion.cantidadOperacion = data.length;
+  //     this.consultaFacturacion.total = this.calularTotal(data);
   
-      let respuestaFacturacion = {
-        consultaFacturacion: this.consultaFacturacion,
-        facturacion: data,
-      };
+  //     let respuestaFacturacion = {
+  //       consultaFacturacion: this.consultaFacturacion,
+  //       facturacion: data,
+  //     };
   
-      return respuestaFacturacion;
+  //     return respuestaFacturacion;
 
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
+  //   } catch (error) {
+  //     console.error(error);
+  //     throw error;
+  //   }
+  // }
   
 
 
@@ -104,5 +104,59 @@ export class ConsultaFacturacionService {
     });
     return acumulador;
   }
+
+
+// IMPLEMENTACION NUEVA CON CONSULTA A ddbb Y CACHE
+
+private cache: Map<string, any> = new Map<string, any>();
+
+async calcularFacturacion2(fechas: any) {
+  try {
+    const cacheKey = this.generateCacheKey(fechas);
+
+    if (this.cache.has(cacheKey)) {
+      // Si la consulta está en caché, se devuelve el resultado almacenado en caché
+      return this.cache.get(cacheKey);
+    }
+
+    const data = await firstValueFrom(
+      this.dbFirestoreService.getAllSortedBetweenDates('facturacion', 'fechaOp', 'asc', fechas.fechaDesde, fechas.fechaHasta)
+        .pipe(take(1))
+    );
+
+    console.log(data);
+    this.consultaFacturacion.fechaDesde = this.convertirMilisegundosAFecha(
+      fechas.fechaDesde
+    );
+    this.consultaFacturacion.fechaHasta = this.convertirMilisegundosAFecha(
+      fechas.fechaHasta
+    );
+    this.consultaFacturacion.cantidadOperacion = data.length;
+    this.consultaFacturacion.total = this.calularTotal(data);
+
+    let respuestaFacturacion = {
+      consultaFacturacion: this.consultaFacturacion,
+      facturacion: data,
+    };
+
+    // Se almacena el resultado en la caché utilizando la clave generada
+    this.cache.set(cacheKey, respuestaFacturacion);
+
+    return respuestaFacturacion;
+
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+private generateCacheKey(params: any): string {
+  // Genera una clave única para cada combinación de parámetros
+  // Puedes utilizar una función de hash o concatenar y formatear los parámetros en una cadena
+  // Asegúrate de implementar una lógica que genere claves únicas para diferentes combinaciones de parámetros
+  // En este ejemplo, se utiliza JSON.stringify para convertir los parámetros en una cadena
+  return JSON.stringify(params);
+}
+
 }
 
