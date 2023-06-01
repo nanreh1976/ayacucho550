@@ -20,10 +20,9 @@ import { StorageService } from 'src/app/servicios/storage/storage.service';
       ></app-consulta-facturacion>
     </ng-container>
     <app-facturacion-view
-      [data]="facturacion$"
-      [totalFacturacion]="totalFacturacion"
+      [facturacionDelDia]="facturacionDelDia$"
+      [totalFacturacionDelDia]="totalFacturacionDelDia"
       [respuestaFacturacion]="consultaFacturacion"
-      [facturacionDeldia]="facturacionDeldia"
       (newItemEvent)="getMsg($event)"
     >
     </app-facturacion-view>
@@ -34,29 +33,18 @@ import { StorageService } from 'src/app/servicios/storage/storage.service';
 export class FacturacionControlComponent implements OnInit {
   componente: string = 'facturacion';
 
-  facturacion$: any;
-
-  totalFacturacion!: number;
+  facturacionDelDia$: any;
 
   consultaFacturacion!: any;
+  totalFacturacionDelDia!: number;
 
-  facturacionDeldia!: any;
+  public show: boolean = false;
+  public buttonName: any = 'Consultar Facturacion';
 
   fechasConsulta: any = {
     fechaDesde: 0,
     fechaHasta: 0,
   };
-
-  totalFacturacionDia!: number;
-
-  public show: boolean = false;
-  public buttonName: any = 'Consultar Facturacion';
-
-  toggle() {
-    this.show = !this.show;
-    if (this.show) this.buttonName = 'Cerrar';
-    else this.buttonName = 'Consultar Facturacion';
-  }
 
   constructor(
     private consultaFacturacionService: ConsultaFacturacionService,
@@ -64,25 +52,15 @@ export class FacturacionControlComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAll(); //tomar datos de los vehiculos en playa
-    this.facturacionDia();
+    this.getAll(); //toma la facturacion del dia
   }
 
-  // getMsg(msg: any) {
-  //   console.log("consulta facturacion", msg.item)
-  //   this.consultaFacturacion = 
-  //     this.consultaFacturacionService.calcularFacturacion2(
-  //       msg.item,
-
-  //     );
-  //     console.log("consulta facturacion en componente", this.consultaFacturacion)
-  // }
-
   getMsg(msg: any) {
-    console.log("consulta facturacion", msg.item);
-    this.consultaFacturacionService.calcularFacturacion2(msg.item)
+    // console.log("consulta facturacion", msg.item);
+    this.consultaFacturacionService
+      .calcularFacturacion2(msg.item)
       .then((data) => {
-        console.log("consulta facturacion en componente", data);
+        // console.log("consulta facturacion en componente", data);
         this.consultaFacturacion = data;
       })
       .catch((error) => {
@@ -90,49 +68,24 @@ export class FacturacionControlComponent implements OnInit {
       });
   }
 
+  toggle() {
+    this.show = !this.show;
+    if (this.show) this.buttonName = 'Cerrar';
+    else this.buttonName = 'Consultar Facturacion';
+  }
   getAll(): void {
     let acumulador: number = 0;
     let dato: any;
 
     this.storageService.facturacion$.subscribe(
-      (data) => (this.facturacion$ = data)
+      (data) => (this.facturacionDelDia$ = data)
     );
-
-    this.facturacion$.forEach((datos: any) => {
+    // console.log(this.facturacion$)
+    this.facturacionDelDia$.forEach((datos: any) => {
       //por cada data de facturacion
       dato = datos; //lo guarda en una nueva variable (pq sino no lo reconocia)
       acumulador = acumulador + dato.saldo; //saca el saldo y lo guarda en un acumulador
     });
-    this.totalFacturacion = acumulador; //guarda el valor del acumulador en una variable para enviar al view
-  }
-
-  facturacionDia() {
-    let facturacion = this.facturacion$;
-    // console.log(facturacion);
-
-    let hora2 = 23;
-    let min2 = 59;
-
-    let hoy = new Date().toLocaleDateString('es').split('/');
-    this.fechasConsulta.fechaDesde = new Date(
-      parseInt(hoy[2]),
-      parseInt(hoy[1]) - 1,
-      parseInt(hoy[0])
-    );
-    this.fechasConsulta.fechaHasta = new Date(
-      parseInt(hoy[2]),
-      parseInt(hoy[1]) - 1,
-      parseInt(hoy[0]),
-      hora2,
-      min2
-    );
-
-    this.facturacionDeldia =
-      this.consultaFacturacionService.calcularFacturacion(
-        this.fechasConsulta,
-        facturacion
-      );
-
-
+    this.totalFacturacionDelDia = acumulador; //guarda el valor del acumulador en una variable para enviar al view
   }
 }
