@@ -4,5 +4,7 @@ export interface Empresa {
     direccion: string;
     mail: string;
     razonSocial: string;
-    telefono: number;    
+    telefono: number;  
+    localidad:string;
+    provincia:string;  
 }

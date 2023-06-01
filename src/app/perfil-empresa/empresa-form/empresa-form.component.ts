@@ -16,11 +16,15 @@ export class EmpresaFormComponent implements OnInit {
   titulo!: string;
   item: Empresa = {
     id: "",
+    razonSocial: "",
     cuit: "",
     direccion: "",
+    localidad:"",
+    provincia:"",
     mail: "",
-    razonSocial: "",
+
     telefono: 0,
+
   }
 
 
@@ -52,12 +56,15 @@ export class EmpresaFormComponent implements OnInit {
 
     // console.log("configure form", this.item);
     this.editForm.patchValue({
-
+      razonSocial: this.item.razonSocial,
       cuit: this.item.cuit,
       direccion: this.item.direccion,
+      localidad:this.item.localidad,
+      provincia:this.item.provincia,
       mail: this.item.mail,
-      razonSocial: this.item.razonSocial,
       telefono: this.item.telefono,
+      id:this.item.id
+  
       
     });
 
@@ -69,11 +76,14 @@ export class EmpresaFormComponent implements OnInit {
 
   createForm() {
     this.editForm = this.fb.group({    
+      razonSocial: ['', Validators.required],
       cuit: ['', [Validators.required, Validators.pattern(/^([0-9]{11}|[0-9]{2}-[0-9]{8}-[0-9]{1})$/)]],
       direccion: ['', Validators.required],
+      localidad: ['', Validators.required],
+      provincia: ['', Validators.required],
       mail: ['', Validators.email],
-      razonSocial: ['', Validators.required],
       telefono: ['', Validators.pattern(/^[0-9]{5,12}$/)],
+      id: [''],
      
     });
   }
@@ -114,6 +124,13 @@ export class EmpresaFormComponent implements OnInit {
     return this.editForm.get("direccion");
   }
   
+  get Localidad() {
+    return this.editForm.get("localidad");
+  }
+
+  get Provincia() {
+    return this.editForm.get("provincia");
+  }
 
   getMsg(msg: any) {
     // console.log(msg, "from vehiculos-form");
@@ -130,11 +147,13 @@ export class EmpresaFormComponent implements OnInit {
 
   guardarDatos(){
     //console.log(this.item);
-    
+    this.item.razonSocial = this.editForm.value.razonSocial;
     this.item.cuit = this.editForm.value.cuit;
     this.item.direccion = this.editForm.value.direccion;
+    this.item.localidad=this.editForm.value.localidad;
+    this.item.provincia=this.editForm.value.provincia;
     this.item.mail = this.editForm.value.mail;
-    this.item.razonSocial = this.editForm.value.razonSocial;
+
     this.item.telefono = this.editForm.value.telefono;
 
     Swal.fire({

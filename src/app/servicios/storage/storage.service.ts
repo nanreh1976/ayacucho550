@@ -44,6 +44,9 @@ export class StorageService {
   private _usuarios$ = new BehaviorSubject<any>(null); //aca va interface my data
   public usuarios$ = this._usuarios$.asObservable();
 
+  private _empresa$ = new BehaviorSubject<any>(null); //aca va interface my data
+  public empresa$ = this._empresa$.asObservable();
+
   updateObservable(componente: any, data: any) {
     switch (componente) {
       case 'playa': {
@@ -84,6 +87,10 @@ export class StorageService {
         break;
 
       }
+      case 'empresa': {
+        this._empresa$.next(data);
+        break;
+      }
 
       default: {
         //statements;
@@ -122,6 +129,7 @@ export class StorageService {
   // al estar suscripto, cualquier cambio en la base se refleja en el storage.
 
   initializer() {
+    this.getAll('empresa')
     this.getAllSorted('playa', 'fechas.fechaDate', 'asc');
     this.getAllSorted('tarifas', 'categoria', 'asc');
     this.getAllSorted('clientes', 'apellido', 'asc');
@@ -150,6 +158,19 @@ export class StorageService {
 
   // al suscribirse una vez (getallsorted corre al inicio de la app para cada componente en el initializer) no hace falta actualizar el storage en cada metodo del crud, ya que este se actualiza automaticamente.
 
+  getAll(componente: string): void {
+    this.dbFirebase.getAll(componente).subscribe((data) => {
+
+
+      this.setInfo(componente, data[0])
+      // console.log(this.data);
+    });
+  }
+
+
+
+
+
   getAllSorted(componente: any, campo: any, orden: any) {
     // pasar campo y orden (asc o desc)
     this.dbFirebase.getAllSorted(componente, campo, orden).subscribe((data) => {
@@ -158,6 +179,8 @@ export class StorageService {
       // console.log('storage initializer ', componente, data);
     });
   }
+
+
 
   getAllSortedToday(componente: any, campo: any, orden: any) {
     // pasar campo y orden (asc o desc)
