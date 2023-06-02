@@ -13,7 +13,7 @@ export class StorageService {
   // los observables mantienen la info sincronizada entre comp y storage.
 
   constructor(
-    private dbFirebase: DbFirestoreService,
+    private dbFirestoreService: DbFirestoreService,
     // private cajaStorage: CajaStorageService,
     private vehiculosStorage: VehiculosStorageService
   ) {}
@@ -82,10 +82,9 @@ export class StorageService {
         break;
       }
 
-      case 'usuarios':{
+      case 'usuarios': {
         this._usuarios$.next(data);
         break;
-
       }
       case 'empresa': {
         this._empresa$.next(data);
@@ -129,99 +128,87 @@ export class StorageService {
   // al estar suscripto, cualquier cambio en la base se refleja en el storage.
 
   initializer() {
-    this.getAll('empresa')
+    this.getAll('empresa');
     this.getAllSorted('playa', 'fechas.fechaDate', 'asc');
     this.getAllSorted('tarifas', 'categoria', 'asc');
     this.getAllSorted('clientes', 'apellido', 'asc');
     this.getAllSortedToday('cajaLog', 'apertura', 'asc');
     this.getAllSortedToday('facturacion', 'fechaOp', 'asc');
     this.getAllSortedToday('logger', 'Fecha', 'asc');
-    this.getUsuarios()
-     // this.getCaja();
+    this.getUsuarios();
+    // this.getCaja();
     this.getVehiculos();
   }
-
-
-
-
 
   getVehiculos() {
     this.vehiculosStorage.getAllSorted();
   }
 
-  getUsuarios(){
-    this.dbFirebase.getUsersByColecion().subscribe((data) => {
+  getUsuarios() {
+    this.dbFirestoreService.getUsersByColecion().subscribe((data) => {
       this.setInfo('usuarios', data);
-  });
-}
+    });
+  }
   // METODOS CRUD
 
   // al suscribirse una vez (getallsorted corre al inicio de la app para cada componente en el initializer) no hace falta actualizar el storage en cada metodo del crud, ya que este se actualiza automaticamente.
 
   getAll(componente: string): void {
-    this.dbFirebase.getAll(componente).subscribe((data) => {
-
-
-      this.setInfo(componente, data[0])
+    this.dbFirestoreService.getAll(componente).subscribe((data) => {
+      this.setInfo(componente, data[0]);
       // console.log(this.data);
     });
   }
 
-
-
-
-
   getAllSorted(componente: any, campo: any, orden: any) {
     // pasar campo y orden (asc o desc)
-    this.dbFirebase.getAllSorted(componente, campo, orden).subscribe((data) => {
-      this.setInfo(componente, data);
-      // this.updateObservable(componente, data)
-      // console.log('storage initializer ', componente, data);
-    });
+    this.dbFirestoreService
+      .getAllSorted(componente, campo, orden)
+      .subscribe((data) => {
+        this.setInfo(componente, data);
+        // this.updateObservable(componente, data)
+        // console.log('storage initializer ', componente, data);
+      });
   }
-
-
 
   getAllSortedToday(componente: any, campo: any, orden: any) {
     // pasar campo y orden (asc o desc)
-    this.dbFirebase.getAllSortedToday(componente, campo, orden).subscribe((data) => {
-      this.setInfo(componente, data);
-      // this.updateObservable(componente, data)
-      // console.log('storage initializer ', componente, data);
-    });
+    this.dbFirestoreService
+      .getAllSortedToday(componente, campo, orden)
+      .subscribe((data) => {
+        this.setInfo(componente, data);
+        // this.updateObservable(componente, data)
+        // console.log('storage initializer ', componente, data);
+      });
   }
-
 
 
   addItem(componente: string, item: any): void {
     item.fechaOp = new Date();
     // console.log(' storage add item ', componente, item);
 
-    this.dbFirebase
-      .create(componente, item)
-      // .then((data) => console.log(data))
-      // .then(() => this.ngOnInit())
+    this.dbFirestoreService.create(componente, item);
+    // .then((data) => console.log(data))
+    // .then(() => this.ngOnInit())
     //  .catch((e) => console.log(e.message));
   }
 
   deleteItem(componente: string, item: any): void {
     console.log(' storage delete item ', componente, item);
 
-    this.dbFirebase
-      .delete(componente, item.id)
-      // .then((data) => console.log(data))
-      // .then(() => this.ngOnInit())
-      // .then(() => console.log("pasa por delete metodo?"))
+    this.dbFirestoreService.delete(componente, item.id);
+    // .then((data) => console.log(data))
+    // .then(() => this.ngOnInit())
+    // .then(() => console.log("pasa por delete metodo?"))
     //  .catch((e) => console.log(e.message));
   }
 
   updateItem(componente: string, item: any): void {
     console.log(' storage update item ', componente, item);
 
-    this.dbFirebase
-      .update(componente, item)
-      // .then((data) => console.log(data))
-      // .then(() => this.ngOnInit())
+    this.dbFirestoreService.update(componente, item);
+    // .then((data) => console.log(data))
+    // .then(() => this.ngOnInit())
     //  .catch((e) => console.log(e.message));
   }
 }

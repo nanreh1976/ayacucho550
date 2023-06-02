@@ -64,7 +64,7 @@ export class DbFirestoreService {
   }
 
   getAllSortedBetweenDates(componente: any, campo: any, orden: any, fechaInicio: number, fechaFin: number) {
-    const startOfDate = new Date(fechaInicio);
+    const startOfDate = new Date(fechaInicio);   // viene en milisegundos
     const endOfDate = new Date(fechaFin);
   
     let dataCollection = `/${this.coleccion}/datos/${componente}`;
@@ -75,7 +75,7 @@ export class DbFirestoreService {
           .where(campo, '>=', startOfDate)
           .where(campo, '<=', endOfDate)
           .orderBy(campo, orden)
-          .limit(10)
+          // .limit(10)
       )
       .valueChanges({ idField: 'id' })
       .pipe(

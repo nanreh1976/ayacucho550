@@ -25,7 +25,7 @@ export class PerfilEmpresaComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private dbFirebase: DbFirestoreService,
+    private dbFirestoreService: DbFirestoreService,
     private storageService:StorageService
   ) {}
 
@@ -103,7 +103,7 @@ export class PerfilEmpresaComponent implements OnInit {
   addItem(componente: string, item: any): void {
     // console.log('add itemcomponent', item);
 
-    this.dbFirebase
+    this.dbFirestoreService
       .create(componente, item)
      // .then((data) => console.log(data))
       .then(() => this.ngOnInit())
@@ -113,7 +113,7 @@ export class PerfilEmpresaComponent implements OnInit {
   updateItem(componente: string, item: any): void {
     console.log('update itemcomponent', item);
 
-    this.dbFirebase
+    this.dbFirestoreService
       .update(componente, item)
      // .then((data) => console.log(data))
       .then(() => this.ngOnInit())

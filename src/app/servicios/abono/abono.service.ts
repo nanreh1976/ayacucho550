@@ -9,7 +9,7 @@ import { CajaStorageService } from '../caja/caja-storage.service';
 })
 export class AbonoService {
   constructor(
-    private dbFirebase: DbFirestoreService,
+    private dbFirestoreService: DbFirestoreService,
     private cajaStorageService: CajaStorageService
   ) {}
 
@@ -45,13 +45,12 @@ export class AbonoService {
             //si la fecha es del abono es menor q la fecha actual, significa q el abono esta vencido
             //se cambia el estado del abono vencido.
 
-            if(vehiculo.estado !== 0){
+            if (vehiculo.estado !== 0) {
               vehiculo.estado = 0;
               //console.log("abono service. verificarAbonos: ", vehiculo);
-              this.dbFirebase.update('vehiculos', vehiculo);
+              this.dbFirestoreService.update('vehiculos', vehiculo);
               // console.log ("abono service update " ,vehiculo)
             }
-            
           }
         }
       }

@@ -22,7 +22,7 @@ export class CajaStorageService {
     saldo: 0,
   };
 
-  constructor(private firestore: DbFirestoreService) {
+  constructor(private dbFirestoreService: DbFirestoreService) {
     this.bs = new BehaviorSubject<any>(this.initialValue as any);
     this.state$ = this.bs.asObservable();
     this.state = this.initialValue;
@@ -56,7 +56,7 @@ export class CajaStorageService {
 
 
   addToFirestore(componente: string, item: any): void {
-    this.firestore
+    this.dbFirestoreService
       .create(componente, item)
       // .then((data) => console.log(data))
     //  .catch((e) => console.log(e.message));
@@ -64,7 +64,7 @@ export class CajaStorageService {
 
   getSesionOps(sesionId: string) {
     this.sesionId = sesionId
-    this.firestore
+    this.dbFirestoreService
       .getByFieldValue(this.componente, 'sesionId', sesionId)
       .pipe(
         tap((data) => {
@@ -125,7 +125,7 @@ export class CajaStorageService {
     const field = 'sesionId';
     
 
-    await this.firestore.moveDocsToSubcollection(componenteA, componenteB, field, value);
+    await this.dbFirestoreService.moveDocsToSubcollection(componenteA, componenteB, field, value);
     //console.log('Documents moved successfully!');
   }
 }
