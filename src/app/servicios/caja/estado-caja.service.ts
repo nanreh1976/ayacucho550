@@ -10,7 +10,7 @@ import { StorageService } from '../storage/storage.service';
 })
 export class EstadoCajaService {
   constructor(
-    private dbFirebase: DbFirestoreService,
+    private dbFirestoreService: DbFirestoreService,
     private storageService: StorageService,
     private cajaStorageService: CajaStorageService,
     private angularFirestore: AngularFirestore
@@ -31,7 +31,7 @@ export class EstadoCajaService {
   // metodo para consultar el estado de caja en firebase
   getEstadoCajaFirebase() {
     // si hay una caja abierta en el cajalog la devuelve
-    this.dbFirebase
+    this.dbFirestoreService
       .getByFieldValue('cajaLog', 'estado', 'abierta')
       .subscribe((ref) => {
         let cajaLog = JSON.stringify(ref[0]);
@@ -103,42 +103,66 @@ export class EstadoCajaService {
    // console.log("moviendo sesion ", this.sesionCaja.id)
   }
 
+  // abrirSesion(item: any) {
+  //   // arma los datos de la nueva sesion y Abre la sesion en el cajaLog
+  //   let nd = new Date();
+  //   let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
+  //   let userLoggedUid = user['uid'];
+  //   let userDisplayName = user['displayName'];
+
+  //   let nuevaSesionCaja = {
+  //     apertura: nd,
+  //     estado: 'abierta',
+  //     userDisplayname: userDisplayName,
+  //     userUid: userLoggedUid,
+  //   };
+
+  //   // #!!! injerto, deberia ir en el servicio database
+  //   // es para conocer la id de la nueva sesion al momento de crearla
+  //   // y poder cargarla en la operacion de caja "apertura" sin errores
+
+  //   // #!!! Pasarlo.
+
+  //   let dataCollection = `/${this.dbFirebase.coleccion}/datos/${'cajaLog'}`;
+  //   let nuevaSesionId = this.angularFirestore.createId();
+
+  //   this.angularFirestore
+  //     .collection<any>(dataCollection)
+  //     .doc(nuevaSesionId)
+  //     .set(nuevaSesionCaja);
+  //   // this.storageService.addItem("cajaLog", nuevaSesionCaja)
+  //   //console.log('nueva sesion caja', nuevaSesionCaja);
+
+  //   // carga la primer operacion de la caja en la sesion
+  //   // (saldo inical de caja)
+  //   // con la id de sesion que se creo recien
+  //   item.sesionId = nuevaSesionId;
+  //   this.cajaStorageService.getSesionOps(nuevaSesionId);
+  //   this.cajaStorageService.addItem('caja', item);
+  
+  // }
+
+
   abrirSesion(item: any) {
     // arma los datos de la nueva sesion y Abre la sesion en el cajaLog
     let nd = new Date();
     let user = JSON.parse(localStorage.getItem('usuario') || `{}`);
     let userLoggedUid = user['uid'];
     let userDisplayName = user['displayName'];
-
+  
     let nuevaSesionCaja = {
       apertura: nd,
       estado: 'abierta',
       userDisplayname: userDisplayName,
       userUid: userLoggedUid,
     };
-
-    // #!!! injerto, deberia ir en el servicio database
-    // es para conocer la id de la nueva sesion al momento de crearla
-    // y poder cargarla en la operacion de caja "apertura" sin errores
-
-    // #!!! Pasarlo.
-
-    let dataCollection = `/${this.dbFirebase.coleccion}/datos/${'cajaLog'}`;
-    let nuevaSesionId = this.angularFirestore.createId();
-
-    this.angularFirestore
-      .collection<any>(dataCollection)
-      .doc(nuevaSesionId)
-      .set(nuevaSesionCaja);
-    // this.storageService.addItem("cajaLog", nuevaSesionCaja)
-    //console.log('nueva sesion caja', nuevaSesionCaja);
-
-    // carga la primer operacion de la caja en la sesion
-    // (saldo inical de caja)
-    // con la id de sesion que se creo recien
-    item.sesionId = nuevaSesionId;
-    this.cajaStorageService.getSesionOps(nuevaSesionId);
-    this.cajaStorageService.addItem('caja', item);
   
+    this.dbFirestoreService.crearNuevaSesionCaja(nuevaSesionCaja).then(() => {
+      let nuevaSesionId = this.angularFirestore.createId();
+  
+      item.sesionId = nuevaSesionId;
+      this.cajaStorageService.getSesionOps(nuevaSesionId);
+      this.cajaStorageService.addItem('caja', item);
+    });
   }
 }

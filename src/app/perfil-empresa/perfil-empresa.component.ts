@@ -4,6 +4,7 @@ import { EmpresaFormComponent } from './empresa-form/empresa-form.component';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Empresa } from '../interfaces/empresa';
+import { StorageService } from '../servicios/storage/storage.service';
 
 @Component({
   selector: 'app-perfil-empresa',
@@ -24,7 +25,8 @@ export class PerfilEmpresaComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private dbFirebase: DbFirestoreService
+    private dbFirestoreService: DbFirestoreService,
+    private storageService:StorageService
   ) {}
 
   ngOnInit(): void {
@@ -89,10 +91,10 @@ export class PerfilEmpresaComponent implements OnInit {
   ///// OPERACIONES CRUD ////////
 
   getAll(): void {
-    this.dbFirebase.getAll(this.componente).subscribe((data) => {
+    this.storageService.empresa$.subscribe((data) => {
 
 
-      this.data = data[0];
+      this.data = data;
       // console.log(this.data);
     });
   }
@@ -101,7 +103,7 @@ export class PerfilEmpresaComponent implements OnInit {
   addItem(componente: string, item: any): void {
     // console.log('add itemcomponent', item);
 
-    this.dbFirebase
+    this.dbFirestoreService
       .create(componente, item)
      // .then((data) => console.log(data))
       .then(() => this.ngOnInit())
@@ -109,9 +111,9 @@ export class PerfilEmpresaComponent implements OnInit {
   }
 
   updateItem(componente: string, item: any): void {
-    // console.log('update itemcomponent', item);
+    console.log('update itemcomponent', item);
 
-    this.dbFirebase
+    this.dbFirestoreService
       .update(componente, item)
      // .then((data) => console.log(data))
       .then(() => this.ngOnInit())

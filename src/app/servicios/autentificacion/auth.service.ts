@@ -27,7 +27,7 @@ export class AuthService {
 
     // SERVICIOS DE LA APP
     private storage: StorageService,
-    private dbFirebase: DbFirestoreService
+    private dbFirestoreService: DbFirestoreService
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
@@ -116,7 +116,7 @@ export class AuthService {
   // PORQUE NO ANDA???  USAR LOGOUT MIENTRAS
   // // Sign out
   SignOut() {
-    console.log("saliendo signout")
+    console.log('saliendo signout');
     return this.afAuth.signOut().then(() => {
       this.storage.clearInfo('usuario');
       this.storage.clearAllLocalStorage();
@@ -152,49 +152,45 @@ export class AuthService {
   // METODOS DE LA APP NO DEL LOGIN
 
   getUsuario(id: string) {
-    this.dbFirebase.getUsuarioUid(id).subscribe((data) => {
+    this.dbFirestoreService.getUsuarioUid(id).subscribe((data) => {
       this.usuario = data;
       this.storage.setInfo(`usuario`, data);
-      localStorage.setItem(`usuario`, JSON.stringify(data)); //local storage trabaja solo con strings      
+      localStorage.setItem(`usuario`, JSON.stringify(data)); //local storage trabaja solo con strings
       this.comprobarRoles();
     });
   }
 
   setearColeccion() {
-    this.dbFirebase.setearColeccion(this.usuario.coleccion);    
+    this.dbFirestoreService.setearColeccion(this.usuario.coleccion);
     this.storage.initializer();
     this.router.navigate(['/home']);
   }
 
   comprobarRoles() {
     //console.log("este es el usuario: ", this.usuario);
-    
-      if(this.usuario.hasOwnProperty("roles")) {
-        this.comprobarColeccion();        
-      } else{
-        this.router.navigate(['/limbo']);
-      }         
-        
-  }
 
-  comprobarColeccion() {
-   // console.log("este es el usuario: ", this.usuario);
-    
-      if(this.usuario.hasOwnProperty("coleccion")) {
-        this.setearColeccion()    
-      } else{
-        this.router.navigate(['/limbo']);
-      }         
-        
-  }
-
-  checkEmail(user:any) {
-    if(!user.emailVerified){
-      this.router.navigate(['verify-email-address'])
-    }  else{
-      this.getUsuario(user.uid);
+    if (this.usuario.hasOwnProperty('roles')) {
+      this.comprobarColeccion();
+    } else {
+      this.router.navigate(['/limbo']);
     }
   }
 
-  
+  comprobarColeccion() {
+    // console.log("este es el usuario: ", this.usuario);
+
+    if (this.usuario.hasOwnProperty('coleccion')) {
+      this.setearColeccion();
+    } else {
+      this.router.navigate(['/limbo']);
+    }
+  }
+
+  checkEmail(user: any) {
+    if (!user.emailVerified) {
+      this.router.navigate(['verify-email-address']);
+    } else {
+      this.getUsuario(user.uid);
+    }
+  }
 }

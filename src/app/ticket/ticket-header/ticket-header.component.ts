@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from 'src/app/servicios/storage/storage.service';
 
 @Component({
   selector: 'app-ticket-header',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TicketHeaderComponent implements OnInit {
 
-  constructor() { }
+data:any
+
+  constructor(private storageService: StorageService) { }
 
   ngOnInit(): void {
+    this.getAll()
   }
+
+  getAll(): void {
+    this.storageService.empresa$.subscribe((data) => {
+
+
+      this.data = data;
+      // console.log(this.data);
+    });
+
+}
 
 }

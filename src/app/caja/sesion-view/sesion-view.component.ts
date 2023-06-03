@@ -12,7 +12,7 @@ export class SesionViewComponent implements OnInit {
   @Input() fromParent: any;  // recibe la id de sesion para buscar las operaciones en caja.
   dtOptions: DataTables.Settings = {};
   data: any;
-  constructor(private firestore: DbFirestoreService) {}
+  constructor(private dbfirestoreService: DbFirestoreService) {}
 
   ngOnInit(): void {
     this.getSesionCajaOps(this.fromParent.id);
@@ -28,7 +28,7 @@ export class SesionViewComponent implements OnInit {
     };
   }
   getSesionCajaOps(sesionId: string) {
-    this.firestore
+    this.dbfirestoreService
       .getByFieldValue('caja', 'sesionId', sesionId)
       .pipe(
         tap((data) => {

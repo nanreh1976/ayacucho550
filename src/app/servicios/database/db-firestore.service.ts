@@ -63,6 +63,36 @@ export class DbFirestoreService {
       );
   }
 
+  getAllSortedBetweenDates(componente: any, campo: any, orden: any, fechaInicio: number, fechaFin: number) {
+    const startOfDate = new Date(fechaInicio);   // viene en milisegundos
+    const endOfDate = new Date(fechaFin);
+  
+    let dataCollection = `/${this.coleccion}/datos/${componente}`;
+  
+    return this.firestore2
+      .collection(dataCollection, (ref) =>
+        ref
+          .where(campo, '>=', startOfDate)
+          .where(campo, '<=', endOfDate)
+          .orderBy(campo, orden)
+          // .limit(10)
+      )
+      .valueChanges({ idField: 'id' })
+      .pipe(
+        tap((data) => {
+          console.log(`Total documents read: ${data.length}`, componente);
+        })
+      );
+  }
+  
+  getNLatestOperations(componente: string, campo: string, orden: 'asc' | 'desc', cant:number): Observable<any[]> {
+    let dataCollection = `/${this.coleccion}/datos/${componente}`;
+  
+    return this.firestore2
+      .collection(dataCollection, (ref) => ref.orderBy(campo, orden).limit(cant))
+      .valueChanges({ idField: 'id' });
+  }
+
   // GET ALL ORDENADO POR CAMPO Y ORDEN
   getAllSorted(componente: string, campo: string, orden: any) {
     // campo debe existir en la coleccion, si esta anidado pasar ruta separada por puntso (field.subfield)
@@ -102,12 +132,24 @@ export class DbFirestoreService {
       .valueChanges({ idField: 'id' });
   }
 
+
+  
   get(id: string) {
     const estacionamiento1DocumentReference = doc(
       this.firestore,
       `/${this.coleccion}/datos/${id}`
     );
     return docData(estacionamiento1DocumentReference, { idField: 'id' });
+  }
+
+  crearNuevaSesionCaja(nuevaSesionCaja: any) {
+    let dataCollection = `/${this.coleccion}/datos/${'cajaLog'}`;
+    let nuevaSesionId = this.firestore2.createId();
+
+    return this.firestore2
+      .collection<any>(dataCollection)
+      .doc(nuevaSesionId)
+      .set(nuevaSesionCaja);
   }
 
   create(componente: string, item: any) {

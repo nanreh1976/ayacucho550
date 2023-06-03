@@ -8,11 +8,13 @@
     
     <table>
       <tbody *ngIf="data !== undefined else SinDatos">
-
+        <tr>Razon Social: {{data.razonSocial|| 'Sin Datos'}}</tr>
         <tr>Cuit: {{data.cuit|| 'Sin Datos'}}</tr>
         <tr>Direccion: {{data.direccion|| 'Sin Datos'}}</tr>
+        <tr>Localidad: {{data.localidad|| 'Sin Datos'}}</tr>
+        <tr>Provincia: {{data.provincia|| 'Sin Datos'}}</tr>
         <tr>Mail: {{data.mail|| 'Sin Datos'}}</tr>
-        <tr>Razon Social: {{data.razonSocial|| 'Sin Datos'}}</tr>
+     
         <tr>Telefono: {{data.telefono|| 'Sin Datos'}}</tr>
 
         <tr>
