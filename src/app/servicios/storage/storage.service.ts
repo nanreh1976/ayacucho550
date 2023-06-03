@@ -132,9 +132,9 @@ export class StorageService {
     this.getAllSorted('playa', 'fechas.fechaDate', 'asc');
     this.getAllSorted('tarifas', 'categoria', 'asc');
     this.getAllSorted('clientes', 'apellido', 'asc');
-    this.getAllSortedToday('cajaLog', 'apertura', 'asc');
+    this.getNLatestOperations('cajaLog', 'apertura', 'asc',10);
     this.getAllSortedToday('facturacion', 'fechaOp', 'asc');
-    this.getAllSortedToday('logger', 'Fecha', 'asc');
+    this.getNLatestOperations('logger', 'Fecha', 'asc', 10);
     this.getUsuarios();
     // this.getCaja();
     this.getVehiculos();
@@ -160,6 +160,10 @@ export class StorageService {
     });
   }
 
+
+
+
+
   getAllSorted(componente: any, campo: any, orden: any) {
     // pasar campo y orden (asc o desc)
     this.dbFirestoreService
@@ -182,6 +186,16 @@ export class StorageService {
       });
   }
 
+  getNLatestOperations(componente: any, campo: any, orden: any, cant:number) {
+    // pasar campo y orden (asc o desc)
+    this.dbFirestoreService
+      .getNLatestOperations  (componente, campo, orden, cant)
+      .subscribe((data) => {
+        this.setInfo(componente, data);
+        // this.updateObservable(componente, data)
+        // console.log('storage initializer ', componente, data);
+      });
+  }
 
   addItem(componente: string, item: any): void {
     item.fechaOp = new Date();

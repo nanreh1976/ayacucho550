@@ -9,7 +9,7 @@ export class LanguageApp {
       infoPostFix: "",
       loadingRecords: "Cargando registros...",
       zeroRecords: "No se encontraron registros",
-      emptyTable: "No hay datos disponibles en la tabla",
+      emptyTable: "No hay mas datos disponibles",
       paginate: {
         first: "Primero",
         previous: "Anterior",

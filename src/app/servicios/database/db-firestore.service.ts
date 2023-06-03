@@ -85,7 +85,13 @@ export class DbFirestoreService {
       );
   }
   
-
+  getNLatestOperations(componente: string, campo: string, orden: 'asc' | 'desc', cant:number): Observable<any[]> {
+    let dataCollection = `/${this.coleccion}/datos/${componente}`;
+  
+    return this.firestore2
+      .collection(dataCollection, (ref) => ref.orderBy(campo, orden).limit(cant))
+      .valueChanges({ idField: 'id' });
+  }
 
   // GET ALL ORDENADO POR CAMPO Y ORDEN
   getAllSorted(componente: string, campo: string, orden: any) {
@@ -126,12 +132,24 @@ export class DbFirestoreService {
       .valueChanges({ idField: 'id' });
   }
 
+
+  
   get(id: string) {
     const estacionamiento1DocumentReference = doc(
       this.firestore,
       `/${this.coleccion}/datos/${id}`
     );
     return docData(estacionamiento1DocumentReference, { idField: 'id' });
+  }
+
+  crearNuevaSesionCaja(nuevaSesionCaja: any) {
+    let dataCollection = `/${this.coleccion}/datos/${'cajaLog'}`;
+    let nuevaSesionId = this.firestore2.createId();
+
+    return this.firestore2
+      .collection<any>(dataCollection)
+      .doc(nuevaSesionId)
+      .set(nuevaSesionCaja);
   }
 
   create(componente: string, item: any) {
