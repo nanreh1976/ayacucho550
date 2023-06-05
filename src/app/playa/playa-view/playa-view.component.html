@@ -6,31 +6,43 @@
         <th scope="col">Patente</th>
         <th scope="col">Ingreso</th>
         <th scope="col">Tarifa</th>
-        <th scope="col">Descripcion></th>
+        <th scope="col" class="pantallasGrandes">Descripcion></th>
         <th></th>
-        <th></th>
+        <th class="pantallasGrandes"></th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let item of data | async; let i = index">
         <th class="badge" scope="row">{{ i + 1 }}</th>
-        <td>{{ item.patente }}</td>
-        <td>
+        <td class="align-middle">{{ item.patente }}</td>
+        <td class="align-middle">
           {{ item.fechaOp.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}
         </td>
-        <td>{{ item.tarifa.nombre }}</td>
-        <td>{{ item.descripcion }}</td>
-        <td>
+        <td class="align-middle">{{ item.tarifa.nombre }}</td>
+        <td class="align-middle pantallasGrandes">{{ item.descripcion }}</td>       
+        <td class="align-middle pantallasGrandes">
           <app-btn-editar class="right" (click)="msgBack('Editar', item)">
           </app-btn-editar>
         </td>
-        <td>
-          <app-btn-reimpresion
+        <td class="align-middle pantallasGrandes">          
+            <app-btn-reimpresion
             class="right"
             (click)="msgBack('Reimprimir', item)"
           >
           </app-btn-reimpresion>
+        </td>
+        <td class="aling-middle pantallasPequenias">
+          
+          <app-btn-editar (click)="msgBack('Editar', item)" [name]="'nada'" >
+          </app-btn-editar>       
+        
+          <app-btn-reimpresion
+            (click)="msgBack('Reimprimir', item)"
+            [nombre]="'nada'"           
+          >
+          </app-btn-reimpresion>
+        
         </td>
         <!-- </div> -->
       </tr>

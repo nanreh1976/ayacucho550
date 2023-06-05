@@ -1,26 +1,26 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav class="navbar navbar-expand navbar-light bg-light">
 
   <div class="container-fluid">
-    <a class="navbar-brand">Logo</a>
-    <button
+   <!--  <a class="navbar-brand">Logo</a> -->
+   <!--  <button
       type="button"
       class="navbar-toggler"
       data-bs-toggle="collapse"
       data-bs-target="#navbarCollapse"
     >
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
     <div
       id="navbarCollapse"
       class="collapse navbar-collapse"
       *ngIf="user$.source._value.hasOwnProperty('roles')"
     >
       <ul class="nav navbar-nav">
-        <li class="nav-item">
+        <li class="nav-item align-middle">
           <a
             routerLink="./playa"
             routerLinkActive="active"
-            class="nav-link"
+            class="nav-link align-middle"
             ariaCurrentWhenActive="page"
             >Playa</a
           >
@@ -30,7 +30,7 @@
             routerLink="./caja"
             routerLinkActive="active"
             ariaCurrentWhenActive="page"
-            class="nav-link"
+            class="nav-link align-middle"
             >Caja</a
           >
         </li>
@@ -41,7 +41,7 @@
             routerLink="./tarifas"
             routerLinkActive="active"
             ariaCurrentWhenActive="page"
-            class="nav-link"
+            class="nav-link align-middle"
             >Tarifas</a
           >
         </li>
@@ -51,7 +51,7 @@
             routerLink="./clientes"
             routerLinkActive="active"
             ariaCurrentWhenActive="page"
-            class="nav-link"
+            class="nav-link align-middle"
             >Clientes</a
           >
         </li>
@@ -61,7 +61,7 @@
           *ngIf="!user$.source._value.roles.user"
         >
           <a
-            class="nav-link"
+          class="nav-link align-middle"
             tabindex="0"
             ngbDropdownToggle
             id="navbarDropdown2"
@@ -134,9 +134,10 @@
           </div>
         </li>
       </ul>
-      <ul class="nav navbar-nav ms-auto">
-        <app-logout></app-logout>
-      </ul>
+     
     </div>
+    <ul class="nav navbar-nav ms-auto">
+      <app-logout></app-logout>
+    </ul>
   </div>
 </nav>

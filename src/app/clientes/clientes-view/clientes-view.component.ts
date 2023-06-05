@@ -63,8 +63,9 @@ setDataTableOptions(){
     dom: 't<"bottom"riflp><"clear">',
     language: LanguageApp.spanish_datatables,
     columnDefs: [
-      { orderable: false, targets: [7,8,9] },
-      { searchable: false, targets: [ 7,8,9] },
+      { orderable: false, targets: [7] },
+      { searchable: false, targets: [7] },
+      /* { width: '3rem', targets: 0}, */
   ]
   };
 }
