@@ -14,7 +14,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////PLAYA SanLuisCba ////////////////////////////////////////////////////////////////////////
-export const environment = {
+/* export const environment = {
   firebase: {
     projectId: 'pfparkapp',
     appId: '1:1004743501223:web:a0ad3783b0075ea8764282',
@@ -24,6 +24,23 @@ export const environment = {
     authDomain: 'pfparkapp.firebaseapp.com',
     messagingSenderId: '1004743501223',
     measurementId: 'G-E9BWNVQKEG',
+  },
+  production: true,
+ 
+}; */
+
+
+///////////////////////PLAYA RIVERA CBA //////////////////////////////////////////
+
+export const environment = {
+  firebase: {
+    apiKey: "AIzaSyD81Ze6jBon9RyqHXavLWGHmUYFCOD_XX4",
+    authDomain: "rivera-cba.firebaseapp.com",  
+    projectId: "rivera-cba",  
+    storageBucket: "rivera-cba.appspot.com",  
+    messagingSenderId: "699739361796",  
+    appId: "1:699739361796:web:510043b9de320da2699b51",  
+    measurementId: "G-KC28CREFPY"     
   },
   production: true,
  

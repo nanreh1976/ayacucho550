@@ -34,6 +34,26 @@ export const environment = {
    production: false,
   
  }; */
+
+///////////////////PLAYA RIVERA CBA  ////////////////////////////////////////////////////////////////////////
+// pfpark app database para prod
+
+/*  export const environment = {
+   firebase: {
+    apiKey: "AIzaSyD81Ze6jBon9RyqHXavLWGHmUYFCOD_XX4",
+    authDomain: "rivera-cba.firebaseapp.com",  
+    projectId: "rivera-cba",  
+    storageBucket: "rivera-cba.appspot.com",  
+    messagingSenderId: "699739361796",  
+    appId: "1:699739361796:web:510043b9de320da2699b51",  
+    measurementId: "G-KC28CREFPY"  
+   },
+   production: false,
+  
+ }; */
+
+
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
