@@ -28,42 +28,42 @@
           <th scope="col">#</th>
           <th>Apellido</th>
           <th>Nombre</th>
-          <th>telefono</th>
-          <th>Direccion</th>
-          <th>email</th>
-          <th>Comentario</th>
+          <th class="pantallasPequenias2">telefono</th>
+          <th class="pantallasPequenias">Direccion</th>
+          <th class="pantallasPequenias">email</th>
+          <th class="pantallasPequenias">Comentario</th>
           <th></th>
-          <th></th>
-          <th ></th>
+        <!--   <th></th>
+          <th ></th> -->
         </tr>
       </thead>
 
       <tbody>
         <tr *ngFor="let item of data | async; let i = index">
-          <td class="badge" scope="row">{{ i + 1 }}</td>
-          <td>{{ item.apellido }}</td>
-          <td>{{ item.nombre }}</td>
-          <td>{{ item.telefono }}</td>
-          <td>{{ item.direccion }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.comentario }}</td>
-          <td>
+          <td class="badge text-center align-middlee" scope="row">{{ i + 1 }}</td>
+          <td class="align-middle">{{ item.apellido }}</td>
+          <td class="align-middle">{{ item.nombre }}</td>
+          <td class="align-middle pantallasPequenias2">{{ item.telefono }}</td>
+          <td class="align-middle pantallasPequenias">{{ item.direccion }}</td>
+          <td class="align-middle pantallasPequenias">{{ item.email }}</td>
+          <td class="align-middle pantallasPequenias">{{ item.comentario }}</td>
+          <td class="align-middle botones">
             <app-btn-editar 
               class="right"
               (click)="msgBack('Editar', item)"
               class="d-flex align-items-center"
             >
             </app-btn-editar>
-          </td>
-          <td>
+         
+        
             <app-btn-eliminar
               class="right"
               (click)="msgBack('Eliminar', item)"
               class="d-flex align-items-center"
             >
             </app-btn-eliminar>
-          </td>
-          <td >
+        
+          
             <app-btn-agregar
               class="right"
               (click)="msgBack('Vehiculo', item)"
