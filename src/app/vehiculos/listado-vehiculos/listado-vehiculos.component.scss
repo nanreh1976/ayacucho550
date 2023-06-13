@@ -1,0 +1,49 @@
+.badge {
+    padding: 1em 1.25em;
+    color: white;
+    background-color: #435B60;
+    min-width: 11px;
+    /* margin-top: .2em;
+    margin-right: .8em; */
+    border-radius: 8px 0 0 8px;
+  }
+
+  .pantallasPequenias{
+    display:none;
+  }
+
+@media screen and (max-width: 1199.9px) and (min-width: 992px) {
+    table{
+      font-size: 2rem;
+      /* background-color: red; */
+      /* max-width: 50rem; */
+    }  
+    h1{
+      font-size: 3.5rem;
+     /*  font-weight: bold; */
+    }
+    
+  }
+  
+  @media screen and (max-width: 991.9px) and (min-width: 768px) {
+    table{
+      font-size: 1.75rem;
+      /* background-color: red; */
+      /* max-width: 50rem; */
+    }  
+    h1{
+        font-size: 3rem;
+       /*  font-weight: bold; */
+      }
+    
+  }
+  
+  @media screen and (max-width: 767.9px)  {
+    .pantallasGrandes{
+      display:none;
+    }
+    
+    .pantallasPequenias{
+      display:block;
+    }
+  }

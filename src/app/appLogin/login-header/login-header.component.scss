@@ -27,5 +27,28 @@
     text-align: right;
 vertical-align: middle;
     
-    
+}
+
+@media screen and (max-width: 992px) and (min-width: 768px) {
+   #text{
+    font-size: 150px;
+   }
+  }
+
+@media screen and (max-width: 767.9px) and (min-width: 576px) {
+    #text{
+        font-size: 110px;
+    }
+}
+
+@media screen and (max-width: 575.9px) and (min-width: 400px) {
+    #text{
+        font-size: 85px;
+    }
+}
+
+@media screen and (max-width: 399.9px) {
+    #text{
+        font-size: 70px;
+    }
 }

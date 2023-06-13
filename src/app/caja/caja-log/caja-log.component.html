@@ -1,6 +1,6 @@
-<h1 class="display-1" style="text-align: center">Historial de Caja</h1>
+<h1 class="display-1 pantallasGrandes" style="text-align: center">Historial de Caja</h1>
 
-<div class="container">
+<div class="container pantallasGrandes">
   <div>
     <table datatable [dtOptions]="dtOptions" class="display table">
       <thead>
@@ -17,22 +17,22 @@
 
       <tbody>
         <tr *ngFor="let item of data | async; let i = index">
-          <td class="badge" scope="row">{{ i + 1 }}</td>
-          <td>
+          <td class="badge align-middle" scope="row">{{ i + 1 }}</td>
+          <td class="align-middle">
             {{ item.apertura.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}
           </td>
 
-          <td *ngIf="item?.cierre; else elsePerfId">
+          <td class="align-middle" *ngIf="item?.cierre; else elsePerfId">
             {{ item.cierre.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}
           </td>
           <ng-template #elsePerfId>
-            <td>-- --</td>
+            <td class="align-middle">-- --</td>
           </ng-template>
 
-          <td>{{ item.estado }}</td>
-          <td>{{ item.id }}</td>
-          <td>{{ item.userDisplayname }}</td>
-          <td>
+          <td class="align-middle">{{ item.estado }}</td>
+          <td class="align-middle">{{ item.id }}</td>
+          <td class="align-middle">{{ item.userDisplayname }}</td>
+          <td class="align-middle">
             <app-btn-consultar
               class="left"
               name="Consultar"
@@ -46,4 +46,8 @@
       </tbody>
     </table>
   </div>
+</div>
+
+<div class="pantallasPequenias">
+  <app-pagenotfound></app-pagenotfound>
 </div>

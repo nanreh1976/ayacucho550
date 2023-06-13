@@ -57,39 +57,9 @@ export class PlayaViewComponent implements OnInit {
       dom: 't<"bottom"riflp><"clear">',
       language: LanguageApp.spanish_datatables,
       columnDefs: [
-        { orderable: false, targets: [5, 6] },
-        { searchable: false, targets: [5, 6] },
-       /*  { width: '10rem', targets: 3}, */
-      /*   { width: '3rem', targets: 0},
-        { width: '2rem', targets: 1},
-        { width: '10rem', targets: 3}, */
-        
-      ],
-      
-      /* responsive: {
-        breakpoints: [
-          { name: 'desktop', width: Infinity },
-          { name: 'desktop',  width: 1024 },
-          { name: 'desktop',  width: 768 },
-          { name: 'desktop',   width: 480 }
-        ]
-    } */
-
-/* 
-Extra extra large 	xxl 	≥1400px
-Extra large 	xl 	≥1200px
-Large 	lg 	≥992px
-Medium 	md 	≥768px
-Small 	sm 	≥576px
-X-Small 	None 	<576px
-
-
-
-
-
- */
-
-     /*  responsive: true, */
+        { orderable: false, targets: [5] },
+        { searchable: false, targets: [5] },              
+      ],           
     }
 
   }

@@ -13,15 +13,15 @@
   </h5>
 </div>
 <div class="container">
-  <div style="float: right" >
-    <app-btn-agregar
+  <div style="float: right" class="pantallasPequenias2" >
+    <app-btn-ingreso
       class="right"
       (click)="msgBack('Agregar', [])"
       class="d-flex align-items-center"
     >
-    </app-btn-agregar>
+    </app-btn-ingreso>
   </div>
-  <div>
+  <div class="mt-5">
     <table datatable [dtOptions]="dtOptions" class="display table">
       <thead>
         <tr>
@@ -30,9 +30,9 @@
           <th>Nombre</th>
           <th class="pantallasPequenias2">telefono</th>
           <th class="pantallasPequenias">Direccion</th>
-          <th class="pantallasPequenias">email</th>
+          <th class="pantallasPequenias2">email</th>
           <th class="pantallasPequenias">Comentario</th>
-          <th></th>
+          <th id="colBtn"></th>
         <!--   <th></th>
           <th ></th> -->
         </tr>
@@ -45,8 +45,8 @@
           <td class="align-middle">{{ item.nombre }}</td>
           <td class="align-middle pantallasPequenias2">{{ item.telefono }}</td>
           <td class="align-middle pantallasPequenias">{{ item.direccion }}</td>
-          <td class="align-middle pantallasPequenias">{{ item.email }}</td>
-          <td class="align-middle pantallasPequenias">{{ item.comentario }}</td>
+          <td class="align-middle pantallasPequenias2" id="correo">{{ item.email }}</td>
+          <td class="align-middle pantallasPequenias" id="comentario">{{ item.comentario }}</td>
           <td class="align-middle botones">
             <app-btn-editar 
               class="right"
@@ -54,22 +54,28 @@
               class="d-flex align-items-center"
             >
             </app-btn-editar>
-         
-        
-            <app-btn-eliminar
-              class="right"
-              (click)="msgBack('Eliminar', item)"
-              class="d-flex align-items-center"
-            >
-            </app-btn-eliminar>
-        
-          
+
             <app-btn-agregar
               class="right"
               (click)="msgBack('Vehiculo', item)"
               [name]="vehiculo"
             >
             </app-btn-agregar>
+
+            <app-btn-eliminar
+            class="right"
+            (click)="msgBack('Eliminar', item)"
+            class="d-flex align-items-center"
+            >
+            </app-btn-eliminar>
+            
+            <app-btn-show 
+              class="align-middle"
+              (click)="msgBack('Mostrar', item)"
+              >
+
+            </app-btn-show>
+
           </td>
         </tr>
       </tbody>

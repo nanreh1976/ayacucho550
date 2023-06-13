@@ -12,14 +12,46 @@
   margin-right: .8em; */
   border-radius: 8px 0 0 8px;
 }
-.pantallasPequenias{
-  display:none !important;
+
+#colBtn{
+  width: 120px;
 }
 
-/* table{
+.pantallasPequenias{
+  display:none;
+}
+
+.botones{
+  display:flex !important;
+  flex-direction: row !important;
+  align-items:flex-start;
+}
+
+#patente{
+  max-width: 10rem;
+}
+
+#descripcion{
+  max-width: 10rem; 
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /* transition: 5s */
+}
+
+
+/* #descripcion:hover{
+  overflow: visible;
+  position:relative; 
+  z-index:3;
  
-  background-color: red;
 } */
+
+/* #descripcion:hover ~ .botones{
+  visibility: hidden;  
+} */
+
+
 
 @media screen and (max-width: 1200px) and (min-width: 992px) {
   table{
@@ -27,9 +59,9 @@
     /* background-color: red;
     max-width: 50rem; */
   }
-  .pantallasPequenias{
-    display:none !important;
-  }
+  /* .pantallasPequenias{
+    display:none;
+  } */
 }
 
  @media screen and (max-width: 991.9px) and (min-width: 768px) {
@@ -38,9 +70,9 @@
     /* background-color: green;
     max-width: 50rem; */
   }
-  .pantallasPequenias{
-    display:none !important;
-  }
+  /* .pantallasPequenias{
+    display:none;
+  } */
 }
 
 
@@ -58,9 +90,10 @@
     display:none !important;
   }
   .pantallasPequenias{
-    display:flex !important;
-    flex-direction: row !important;
-    align-items:flex-start;
+    display:block !important;
+    
+ /*    flex-direction: row !important;
+    align-items:flex-start; */
   }  
   app-btn-editar{
     margin-right: -15px;
@@ -73,17 +106,21 @@
     padding: 0;
   }
   table{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 /*     background-color: cyan;
     max-width: 15rem; */
   }
   .pantallasGrandes{
     display:none !important;
   }
+
+  .tarifa{
+    display: none;
+  }
   .pantallasPequenias{
-    display:flex !important;
-    flex-direction: row !important;
-    align-items:flex-start;
+    display:block !important;
+    /* flex-direction: row !important;
+    align-items:flex-start; */
   }  
   app-btn-editar{
     margin-right: -15px;

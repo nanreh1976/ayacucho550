@@ -14,6 +14,7 @@ export class ClientesFormComponent implements OnInit {
   editForm!: any;
   titulo!: string;
   item: Clientes;
+  soloVista: boolean = false;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -35,6 +36,12 @@ export class ClientesFormComponent implements OnInit {
         case 'Editar': {
           this.item = this.fromParent.item;
           this.configureForm(this.titulo, this.item);
+          break;
+        }
+        case 'Mostrar': {
+          this.item = this.fromParent.item;
+          this.configureForm(this.titulo, this.item);
+          this.soloVista = true;
           break;
         }
         case 'Eliminar': {

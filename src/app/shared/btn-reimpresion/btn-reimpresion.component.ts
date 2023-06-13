@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'app-btn-reimpresion',
   template: `
-    <button *ngIf="nombre === 'nada'" class="btn btn-success" style="border-radius: 10%; margin: 10px">
+    <button *ngIf="nombre === 'nada'" class="btn btn-outline-success" style="border-radius: 10%; margin: 10px">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -18,7 +18,7 @@ import { Component, Input, OnInit } from '@angular/core';
         />
       </svg>      
     </button>
-    <button *ngIf="nombre !== 'nada'" class="btn btn-success" style="border-radius: 10%; margin: 10px">
+    <button *ngIf="nombre !== 'nada'" class="btn btn-outline-success" style="border-radius: 10%; margin: 10px">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -36,7 +36,12 @@ import { Component, Input, OnInit } from '@angular/core';
     </button>
   `,
 
-  styles: [``],
+  styles: [`
+   button{
+    width:40px;
+    height:40px;
+  }
+  `],
 })
 export class BtnReimpresionComponent implements OnInit {
   @Input() nombre?: string;

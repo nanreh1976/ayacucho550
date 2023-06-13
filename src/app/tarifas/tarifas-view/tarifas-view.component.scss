@@ -16,3 +16,100 @@
 table.dataTable {
   margin: 0 auto;
 }
+
+#colBtn{
+  width: 120px;
+}
+#texto:before{
+  content: "Tolerancia";
+}
+
+app-btn-editar, app-btn-eliminar, app-btn-agregar{
+  margin-right: -10px;  
+} 
+app-btn-show{
+  display:none !important;
+}
+
+
+
+@media screen and (max-width: 1400px) and (min-width: 1200px) {
+  table{
+    font-size: 2rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+/*   .pantallasPequenias{
+    display:none !important;
+  } */
+}
+
+@media screen and (max-width: 1199.9px) and (min-width: 992px) {
+  table{
+    font-size: 1.8rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }  
+
+/*   .pantallasPequenias{
+    display:none !important;
+  } */
+}
+
+@media screen and (max-width: 991.9px) and (min-width: 768px) {
+  table{
+    font-size: 1.8rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
+  #texto:before {
+    content: "Tol";
+  }
+  
+  #correo:hover ~ .botones{
+    visibility: hidden; 
+  }
+}
+
+@media screen and (max-width: 767.9px) and (min-width: 576px) {
+  table{
+    font-size: 1.5rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
+  app-btn-show{
+    display: block !important; 
+  }
+  
+  app-btn-editar, app-btn-eliminar, app-btn-agregar, app-btn-ingreso{
+    display:none !important;
+  } 
+
+  #texto{
+    display:none !important;
+  }  
+ 
+}
+
+@media screen and (max-width: 575.9px)  {
+  table{
+    font-size: 1.4rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
+  app-btn-show{
+    display: block !important; 
+  }
+  
+  app-btn-editar, app-btn-eliminar, app-btn-agregar, app-btn-ingreso{
+    display:none !important;
+  } 
+
+  .pantallasPequenias, #texto{
+    display:none !important;
+  }  
+ 
+}

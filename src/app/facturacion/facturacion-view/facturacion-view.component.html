@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pantallasGrandes">
   <div class="form-group mb-4">
     <input
       class="form-control"
@@ -24,14 +24,14 @@
     <table class="table table-hover table-condensed">
       <colgroup>
         <col width="5%" />
-        <col width="30%" />
+       <!--  <col width="30%" />
         <col width="35%" />
-        <col width="15%" />
+        <col width="15%" /> -->
       </colgroup>
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Patente</th>
+          <th scope="col" id="patente">Patente</th>
           <th scope="col">Ingreso</th>
           <th scope="col">Egreso</th>
           <th scope="col">Tarifa</th>
@@ -48,13 +48,13 @@
             let i = index
           "
           >
-          <th class="badge" scope="row">{{ i + 1 }}</th>
-          <td>{{ item.patente }}</td>
-          <td>{{ item.fechas.fechaIngreso }} {{ item.fechas.horaIngreso }}</td>
-          <td>{{ item.fechas.fechaSalida }} {{ item.fechas.horaSalida }}</td>
-          <td>{{ item.tarifa.nombre }}</td>
-          <td>{{ item.saldo }}</td>
-          <td>{{ item.descripcion }}</td>
+          <th class="badge align-middle" scope="row">{{ i + 1 }}</th>
+          <td class="align-middle">{{ item.patente }}</td>
+          <td class="align-middle">{{ item.fechas.fechaIngreso }} {{ item.fechas.horaIngreso }}</td>
+          <td class="align-middle">{{ item.fechas.fechaSalida }} {{ item.fechas.horaSalida }}</td>
+          <td class="align-middle">{{ item.tarifa.nombre }}</td>
+          <td class="align-middle">{{ item.saldo }}</td>
+          <td class="align-middle">{{ item.descripcion }}</td>
         </tr>
       </tbody>
       <tfoot *ngIf="respuestaFacturacion !== undefined">
@@ -94,4 +94,8 @@
       </tr>
     </tfoot>
   </ng-template>
+</div>
+
+<div class="pantallasPequenias">
+  <app-pagenotfound></app-pagenotfound>
 </div>

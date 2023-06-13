@@ -16,6 +16,10 @@ table.dataTable {
   margin: 0 auto;
 }
 
+#colBtn{
+  max-width: 190px;
+}
+
 .botones{
   display:flex !important;
   flex-direction: row !important;
@@ -23,8 +27,50 @@ table.dataTable {
 }
 
 app-btn-editar, app-btn-eliminar, app-btn-agregar{
-  margin-right: -10px;
+  margin-right: -10px;  
 } 
+app-btn-show{
+  display:none !important;
+}
+
+#correo{
+  max-width: 10rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /* transition-delay: 5s overflow */
+}
+
+#correo:hover{
+  overflow: visible;
+  position:relative; 
+  z-index:3;
+  /* transition-delay:5s; */
+}
+
+#correo:hover ~ #comentario{
+  color: white;
+}
+
+#comentario{
+  max-width: 10rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /* transition: 5s */
+}
+
+
+#comentario:hover{
+  overflow: visible;
+  position:relative; 
+  z-index:3;
+ /*  transition-delay:5s; */
+}
+
+#comentario:hover ~ .botones{
+  visibility: hidden;  
+}
 
 
 @media screen and (max-width: 1400px) and (min-width: 1200px) {
@@ -33,34 +79,29 @@ app-btn-editar, app-btn-eliminar, app-btn-agregar{
     /* background-color: red;
     max-width: 50rem; */
   }
-  .pantallasPequenias{
+/*   .pantallasPequenias{
     display:none !important;
-  }
+  } */
 }
 
 @media screen and (max-width: 1199.9px) and (min-width: 992px) {
   table{
-    font-size: 1.9rem;
+    font-size: 1.7rem;
     /* background-color: red;
     max-width: 50rem; */
   }
+  table .fuentesPequenias {
+    font-size: 1.7rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
 /*   .pantallasPequenias{
     display:none !important;
   } */
 }
 
 @media screen and (max-width: 991.9px) and (min-width: 768px) {
-  table{
-    font-size: 1.9rem;
-    /* background-color: red;
-    max-width: 50rem; */
-  }
-  .pantallasPequenias{
-    display:none !important;
-  }
-}
-
-@media screen and (max-width: 767.9px) and (min-width: 576px) {
   table{
     font-size: 1.7rem;
     /* background-color: red;
@@ -69,19 +110,80 @@ app-btn-editar, app-btn-eliminar, app-btn-agregar{
   .pantallasPequenias{
     display:none !important;
   }
+  #correo:hover ~ .botones{
+    visibility: hidden; 
+  }
 }
 
-@media screen and (max-width: 575.9px)   {
+@media screen and (max-width: 767.9px) and (min-width: 576px) {
+  table{
+    font-size: 1.4rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
+  app-btn-show{
+    display: block !important; 
+  }
+  
+  app-btn-editar, app-btn-eliminar, app-btn-agregar, app-btn-ingreso{
+    display:none !important;
+  } 
+
+  .pantallasPequenias{
+    display:none !important;
+  }  
+
+  #correo:hover ~ .botones{
+    visibility: hidden; 
+  }
+}
+
+@media screen and (max-width: 575.9px) and (min-width:510px)  {
+  table{
+    font-size: 1.4rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
+  app-btn-show{
+    display: block !important; 
+  }
+  
+  app-btn-editar, app-btn-eliminar, app-btn-agregar, app-btn-ingreso{
+    display:none !important;
+  } 
+
+  .pantallasPequenias{
+    display:none !important;
+  }  
+
+  #correo:hover ~ .botones{
+    visibility: hidden; 
+  }
+}
+
+@media screen and (max-width: 509.9px)   {
   table{
     font-size: 1.2rem;
     /* background-color: red;
     max-width: 50rem; */
   }
+
+  app-btn-show{
+    display: block !important; 
+  }
+  
+  app-btn-editar, app-btn-eliminar, app-btn-agregar, app-btn-ingreso{
+    display:none !important;
+  } 
+
   .pantallasPequenias{
     display:none !important;
-  }
-
+  }  
   .pantallasPequenias2{
     display:none !important;
-  }
+  }  
+
+
 }

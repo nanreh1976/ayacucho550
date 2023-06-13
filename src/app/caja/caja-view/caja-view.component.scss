@@ -28,3 +28,110 @@ table.dataTable {
   margin-right: 0.8em;
   border-radius: 8px 0 0 8px;
 }
+
+#fecha{
+  max-width: 200px;
+}
+
+#operacion{
+  max-width: 200px;
+}
+
+#importe{
+  max-width: 100px;
+}
+
+#textoCaja{
+  display:none;
+}
+
+@media screen and (max-width: 1199.9px) and (min-width: 992px) {
+  table{
+    font-size: 2rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
+  #izquierda{
+    font-size: 2.5rem;
+  }
+
+}
+
+@media screen and (max-width: 991.9px) and (min-width: 768px) {
+  table{
+    font-size: 1.8rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
+  #izquierda{
+    font-size: 2.3rem;
+  }
+  
+}
+
+@media screen and (max-width: 767.9px) and (min-width: 576px) {
+  table{
+    font-size: 1.8rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
+  #izquierda{
+    font-size: 2.3rem;
+  }
+  
+}
+
+@media screen and (max-width: 575.9px) and (min-width: 400px){
+  table{
+    font-size: 1.5rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
+  #derecha {
+    display: none;
+  }
+
+  #izquierda{
+    width: 100% !important;
+    font-size: 2rem;
+  }
+
+  .pantallasPequenias{
+    display: none;
+  }
+
+  #textoCaja{
+    display: block !important;
+  }
+  
+}
+
+@media screen and (max-width: 399.9px) {
+  table{
+    font-size: 1.4rem;
+    /* background-color: red;
+    max-width: 50rem; */
+  }
+
+  #derecha {
+    display: none;
+  }
+
+  #izquierda{
+    width: 100% !important;
+    font-size: 2rem;
+  }
+
+  .pantallasPequenias{
+    display: none;
+  }
+
+  #textoCaja{
+    display: block !important;
+  }
+  
+}

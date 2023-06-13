@@ -3,12 +3,11 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Patente</th>
+        <th scope="col" id="patente">Patente</th>
         <th scope="col">Ingreso</th>
-        <th scope="col">Tarifa</th>
-        <th scope="col" class="pantallasGrandes">Descripcion></th>
-        <th></th>
-        <th class="pantallasGrandes"></th>
+        <th scope="col" class="tarifa">Tarifa</th>
+        <th scope="col" class="pantallasGrandes">Descripcion></th>        
+        <th id="colBtn"></th>
       </tr>
     </thead>
 
@@ -19,27 +18,34 @@
         <td class="align-middle">
           {{ item.fechaOp.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}
         </td>
-        <td class="align-middle">{{ item.tarifa.nombre }}</td>
-        <td class="align-middle pantallasGrandes">{{ item.descripcion }}</td>       
-        <td class="align-middle pantallasGrandes">
-          <app-btn-editar class="right" (click)="msgBack('Editar', item)">
+        <td class="align-middle tarifa">{{ item.tarifa.nombre }}</td>
+        <td class="align-middle pantallasGrandes" id="descripcion">{{ item.descripcion }}</td>       
+        <td class="align-middle botones">
+          <app-btn-editar 
+          class="right" 
+          (click)="msgBack('Editar', item)"
+          class="pantallasGrandes" 
+          >
           </app-btn-editar>
-        </td>
-        <td class="align-middle pantallasGrandes">          
+           
             <app-btn-reimpresion
             class="right"
             (click)="msgBack('Reimprimir', item)"
+            class="pantallasGrandes" 
           >
-          </app-btn-reimpresion>
-        </td>
-        <td class="aling-middle pantallasPequenias">
+          </app-btn-reimpresion>       
           
-          <app-btn-editar (click)="msgBack('Editar', item)" [name]="'nada'" >
+          <app-btn-editar 
+          (click)="msgBack('Editar', item)" 
+          [name]="'nada'" 
+          class="pantallasPequenias"
+          >
           </app-btn-editar>       
         
           <app-btn-reimpresion
             (click)="msgBack('Reimprimir', item)"
-            [nombre]="'nada'"           
+            [nombre]="'nada'"   
+            class="pantallasPequenias"        
           >
           </app-btn-reimpresion>
         

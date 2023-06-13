@@ -59,9 +59,9 @@ export class TarifasViewComponent implements OnInit {
       dom: 't<"bottom"riflp><"clear">',
       language: LanguageApp.spanish_datatables,
       columnDefs: [
-        { orderable: false, targets: [6, 7] },
-        { searchable: false, targets: [6, 7] },
-        { width: '3rem', targets: 0},
+        { orderable: false, targets: [6] },
+        { searchable: false, targets: [6] },
+        /* { width: '3rem', targets: 0}, */
       ],
       responsive: true
     };
