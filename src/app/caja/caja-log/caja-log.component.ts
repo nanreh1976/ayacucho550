@@ -31,6 +31,12 @@ export class CajaLogComponent implements OnInit {
     this.dtOptions = {
       dom: 't<"bottom"riflp><"clear">',
       language: LanguageApp.spanish_datatables,
+      columnDefs: [
+        //   { orderable: false, targets: [7,8,9] },
+        // { searchable: false, targets: [ 7,8,9] },
+        { width: '3rem', targets: 0},
+      ],
+      responsive: true,
     };
   }
 

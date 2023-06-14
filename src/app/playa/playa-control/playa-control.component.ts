@@ -158,6 +158,11 @@ export class PlayaControlComponent implements OnInit {
         break;
       }
 
+      case 'Editar': {
+        this.selectCrudOp(op, item);
+        break;
+      }
+
       default: {
       //  console.log('sin operacion en case crud');
         break;

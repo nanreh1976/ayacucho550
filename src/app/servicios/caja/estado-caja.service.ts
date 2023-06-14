@@ -157,11 +157,11 @@ export class EstadoCajaService {
       userUid: userLoggedUid,
     };
   
+    let nuevaSesionId = this.angularFirestore.createId();  
+    item.sesionId = nuevaSesionId;
     this.dbFirestoreService.crearNuevaSesionCaja(nuevaSesionCaja).then(() => {
-      let nuevaSesionId = this.angularFirestore.createId();
-  
-      item.sesionId = nuevaSesionId;
-      this.cajaStorageService.getSesionOps(nuevaSesionId);
+      
+      /* this.cajaStorageService.getSesionOps(nuevaSesionId); */
       this.cajaStorageService.addItem('caja', item);
     });
   }

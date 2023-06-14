@@ -3,4 +3,13 @@
     width: 600px; 
     margin: 0 auto; 
   }
+
+.isDisabled {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+  
+.isDisabled:hover {
+    cursor: not-allowed;
+}
   

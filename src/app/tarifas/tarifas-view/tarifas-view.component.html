@@ -2,44 +2,48 @@
 
 <div class="container">
   <div style="float: right">
-    <app-btn-agregar class="right" (click)="msgBack('Agregar', [])" class="d-flex align-items-center" *ngIf="!user$.source._value.roles.user">
-    </app-btn-agregar>
+    <app-btn-ingreso class="right" (click)="msgBack('Agregar', [])" class="d-flex align-items-center" *ngIf="!user$.source._value.roles.user">
+    </app-btn-ingreso>
   </div>
 
-  <div>
-    <table datatable [dtOptions]="dtOptions" class="display table">
+  <div class="mt-5">
+    <table datatable [dtOptions]="dtOptions" class="display table mt-5">
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Categoria</th>
           <th scope="col">Nombre</th>
-          <th scope="col">Fraccion</th>
-          <th scope="col">UT</th>
+          <th scope="col" class="pantallasPequenias">Fraccion</th>
+          <th scope="col" class="pantallasPequenias">UT</th>
           <th scope="col">Valor</th>
-          <th scope="col">Tolerancia</th>
-          <th scope="col" *ngIf="!user$.source._value.roles.user"></th>
-          <th scope="col" *ngIf="!user$.source._value.roles.user"></th>
+          <th scope="col" id="texto"></th>
+          <th scope="col" id="colBtn" *ngIf="!user$.source._value.roles.user"></th>        
         </tr>
       </thead>
 
       <tbody>
         <tr *ngFor="let item of data | async ; let i = index">
-          <td class="badge" scope="row">{{ i + 1 }}</td>
-          <td>{{ item.categoria }}</td>
-          <td>{{ item.nombre }}</td>
-          <td>{{ item.fraccion }}</td>
-          <td>{{ item.unidad_tiempo }}</td>
-          <td>{{ item.valor }}</td>
-          <td>{{ item.tolerancia }}</td>
+          <td class="badge align-middle" scope="row">{{ i + 1 }}</td>
+          <td class="align-middle">{{ item.categoria }}</td>
+          <td class="align-middle">{{ item.nombre }}</td>
+          <td class="align-middle pantallasPequenias">{{ item.fraccion }}</td>
+          <td class="align-middle pantallasPequenias">{{ item.unidad_tiempo }}</td>
+          <td class="align-middle">{{ item.valor }}</td>
+          <td class="align-middle pantallasPequenias">{{ item.tolerancia }}</td>
 
-          <td>
+          <td class="d-flex align-middle botones">
             <app-btn-editar class="right" (click)="msgBack('Editar', item)" *ngIf="!user$.source._value.roles.user">
             </app-btn-editar>
-          </td>
-
-          <td>
+       
             <app-btn-eliminar class="d-flex align-items-center" (click)="msgBack('Eliminar', item)" *ngIf="!user$.source._value.roles.user">
             </app-btn-eliminar>
+
+            <app-btn-show 
+            class="align-middle"
+            (click)="msgBack('Mostrar', item)"
+            >
+
+          </app-btn-show>
           </td>
         </tr>
       </tbody>

@@ -26,15 +26,15 @@
     </div>
 
     <br />
-    <p>desea cerrarla?</p>
-    <div style="float: right">
-      <app-btn-eliminar
+    <p class="pantallasPequenias">¿Desea cerrarla?</p>
+    <div class="pantallasPequenias" style="float: right">
+      <app-btn-egreso
         class="left"
         name="Cerrar caja"
         (click)="msgBack('Cierre de Caja', [])"
         class="d-flex align-items-center"
       >
-      </app-btn-eliminar>
+      </app-btn-egreso>
     </div>
     <br>
   </div>
@@ -45,15 +45,16 @@
     <br />
     <br />
 
-    <p>La caja esta cerrada. Puede abirla para empezar a operar.</p>
-    <div style="float: right">
-      <app-btn-agregar
+    <p class="pantallasPequenias">La caja esta cerrada. Puede abirla para empezar a operar.</p>
+    <p id="textoCaja">La caja esta cerrada. Ingrese a la aplicación desde una PC de escritorio para poder abirla y empezar a operar.</p>
+    <div class="pantallasPequenias" style="float: right">
+      <app-btn-ingreso
         class="left"
         name="Abrir caja"
         (click)="msgBack('Apertura de Caja', [])"
         class="d-flex align-items-center"
       >
-      </app-btn-agregar>
+      </app-btn-ingreso>
     </div>
 
     <br>
@@ -66,61 +67,58 @@
       <div *ngIf="loading$ | async">Cargando...</div>
       <div *ngIf="noResults$ | async">Sin resultados.</div>
       <div style="display: flex; height: 100px">
-        <div style="width: 50%">
+        <div class="d-flex flex-column justify-content-evenly" style="width: 50%" id="izquierda">
           <div>
             Saldo de caja:
             {{ saldo$ | currency : "ARS" : "symbol-narrow" : "1.0-0" }}
           </div>
           <div>Usuario : {{ usuario }}</div>
         </div>
-        <div style="flex-grow: 1">
-          <div style="float: right">
-            <app-btn-agregar
+        <div style="width: 50%" class="d-lg-flex justify-content-end" id="derecha">
+          <div class="d-flex justify-content-end">
+            <app-btn-ingreso
               class="right"
               name="Ingreso $"
               (click)="msgBack('Ingreso', [])"
               class="d-flex align-items-center"
             >
-            </app-btn-agregar>
-          </div>
+            </app-btn-ingreso>
+        <!--   </div>
 
-          <!-- <div style="float: right">
-            <button (click)="navigateToClientes()">Pago Abono</button>
-          </div>
-           -->
+        
 
-           <div style="float: right">
-            <app-btn-agregar
+           <div style="float: right"> -->
+            <app-btn-ingreso
             class="right"
             name="Pago Abono"
             routerLink="/home/clientes"
             class="d-flex align-items-center"
           >
-          </app-btn-agregar>
+          </app-btn-ingreso>
       
           </div>
           
 
 
 
-          <div style="float: right">
-            <app-btn-eliminar
+          <div class="d-flex justify-content-end">
+            <app-btn-egreso
               class="right"
               name="Egreso $"
               (click)="msgBack('Egreso', [])"
               class="d-flex align-items-center"
             >
-            </app-btn-eliminar>
-          </div>
+            </app-btn-egreso>
+          <!-- </div>
 
-          <div style="float: right">
-            <app-btn-eliminar
+          <div style="float: right"> -->
+            <app-btn-egreso
               class="left"
               name="Cerrar caja"
               (click)="msgBack('Cierre de Caja', [])"
               class="d-flex align-items-center"
             >
-            </app-btn-eliminar>
+            </app-btn-egreso>
           </div>
         </div>
       </div>
@@ -130,10 +128,10 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th>fecha</th>
-              <th>Concepto</th>
-              <th>Operacion</th>
-              <th>Importe</th>
+              <th id="fecha">fecha</th>
+              <th class="pantallasPequenias">Concepto</th>
+              <th id="operacion">Operacion</th>
+              <th id="importe">Importe</th>
             </tr>
           </thead>
 
@@ -143,7 +141,7 @@
               <td>
                 {{ item.fecha.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}
               </td>
-              <td>{{ item.concepto }}</td>
+              <td class="pantallasPequenias">{{ item.concepto }}</td>
               <td
                 [class.positive]="item.operacion === 'ingreso'"
                 [class.negative]="item.operacion === 'egreso'"

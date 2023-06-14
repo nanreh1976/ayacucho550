@@ -77,6 +77,11 @@ componente: string = 'tarifas'
         this.storage.deleteItem(this.componente, item);
         break;
       }
+
+      case 'Mostrar': {
+        //NO HACE NADA, SOLO MUESTRA
+        break;
+      }
  
        default: {
       //  console.log("sin operacion en el case crud")

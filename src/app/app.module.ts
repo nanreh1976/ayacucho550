@@ -93,6 +93,9 @@ import { VehiculosFormComponent } from './vehiculos/vehiculos-form/vehiculos-for
 import { AgregarVehiculoComponent } from './vehiculos/agregar-vehiculo/agregar-vehiculo.component';
 import { EditarVehiculoComponent } from './vehiculos/editar-vehiculo/editar-vehiculo.component';
 import { ListadoVehiculosComponent } from './vehiculos/listado-vehiculos/listado-vehiculos.component';
+import { BtnShowComponent } from './shared/btn-show/btn-show.component';
+import { BtnIngresoComponent } from './shared/btn-ingreso/btn-ingreso.component';
+import { BtnEgresoComponent } from './shared/btn-egreso/btn-egreso.component';
 
 
 
@@ -162,6 +165,9 @@ import { ListadoVehiculosComponent } from './vehiculos/listado-vehiculos/listado
       AgregarVehiculoComponent,
       EditarVehiculoComponent,
       ListadoVehiculosComponent,
+      BtnShowComponent,
+      BtnIngresoComponent,
+      BtnEgresoComponent,
   ],
   imports: [
     BrowserModule,

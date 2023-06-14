@@ -5,15 +5,15 @@ import { Component, Input, OnInit } from '@angular/core';
 
   template: `
     <button
-      class="btn btn-success"
+      class="btn btn-outline-success align-middle text-center"
       style="border-radius: 10%;  margin: 10px;"
       [disabled]="disabled"
     >
-      <i
+     <!--  <i
         *ngIf="name !== 'Vehiculo'"
         class="fa fa-plus"
         style=" vertical-align: middle;"
-      ></i>
+      ></i> -->
       <i
         *ngIf="name === 'Vehiculo'"
         class="fa fa-car"
@@ -23,7 +23,12 @@ import { Component, Input, OnInit } from '@angular/core';
       {{ name || 'Agregar' }}
     </button>
   `,
-  styles: [``],
+  styles: [`
+   button{
+    width:50px;
+    height:40px;
+  }
+  `],
 })
 export class BtnAgregarComponent implements OnInit {
   @Input() name?: string;

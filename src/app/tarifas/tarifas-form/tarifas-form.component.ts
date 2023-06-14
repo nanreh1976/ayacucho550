@@ -21,6 +21,7 @@ export class TarifasFormComponent implements OnInit {
   vehiculoSeleccionado!: any;
   nombre!: any;
   nombreT!: any;
+  soloVista: boolean = false;
 
   unidadTiempo = [
     { id: 0, unidad_tiempo: 'minutos' },
@@ -81,6 +82,13 @@ export class TarifasFormComponent implements OnInit {
       case 'Eliminar': {
         this.item = this.fromParent.item;
         this.closeModal();
+        break;
+      }
+
+      case 'Mostrar': {
+        this.item = this.fromParent.item;
+        this.configureForm();
+        this.soloVista = true;
         break;
       }
       default: {

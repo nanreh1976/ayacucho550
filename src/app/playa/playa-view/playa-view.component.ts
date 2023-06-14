@@ -57,10 +57,9 @@ export class PlayaViewComponent implements OnInit {
       dom: 't<"bottom"riflp><"clear">',
       language: LanguageApp.spanish_datatables,
       columnDefs: [
-        { orderable: false, targets: [5, 6] },
-        { searchable: false, targets: [5, 6] },
-      ],
-      responsive: true,
+        { orderable: false, targets: [5] },
+        { searchable: false, targets: [5] },              
+      ],           
     }
 
   }

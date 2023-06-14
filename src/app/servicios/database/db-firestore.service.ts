@@ -144,11 +144,11 @@ export class DbFirestoreService {
 
   crearNuevaSesionCaja(nuevaSesionCaja: any) {
     let dataCollection = `/${this.coleccion}/datos/${'cajaLog'}`;
-    let nuevaSesionId = this.firestore2.createId();
+    /* let nuevaSesionId = this.firestore2.createId(); */
 
     return this.firestore2
       .collection<any>(dataCollection)
-      .doc(nuevaSesionId)
+      .doc(nuevaSesionCaja.sesionId)
       .set(nuevaSesionCaja);
   }
 

@@ -1,0 +1,14 @@
+.pantallasPequenias{
+    display:none;
+}
+
+@media screen and (max-width: 767.9px) {
+    
+    .pantallasGrandes{
+      display:none !important;
+    }
+    .pantallasPequenias{
+      display:block !important;      
+    }  
+    
+  }

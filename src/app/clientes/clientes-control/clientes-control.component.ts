@@ -99,6 +99,11 @@ export class ClientesControlComponent implements OnInit {
         break;
       }
 
+      case 'Mostrar': {
+        //NO HACE NADA, SOLO MUESTRA
+        break;
+      }
+
       default: {
         //console.log('sin operacion en case crud');
         break;

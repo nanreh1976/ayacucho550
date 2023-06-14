@@ -1,8 +1,8 @@
-<h1 class="display-1" style="text-align: center">
+<h1 class="display-1 pantallasGrandes" style="text-align: center">
   Listado de Vehiculos de Clientes
 </h1>
 
-<div class="container">
+<div class="container pantallasGrandes">
   <table datatable [dtOptions]="dtOptions" class="display table">
     <thead>
       <tr>
@@ -17,16 +17,20 @@
 
     <tbody>
       <tr *ngFor="let item of vehiculos; let i = index">
-        <td class="badge" scope="row">{{ i + 1 }}</td>
+        <td class="badge align-middle" scope="row">{{ i + 1 }}</td>
         <!-- <td>
           {{ item.Fecha.seconds * 1000 | date : "dd/MM/yyyy - hh:mmaaa" }}
         </td> -->
-        <td>{{ item.patente }}</td>
-        <td>{{ item.marca }}</td>
-        <td>{{ item.modelo }}</td>
-        <td>{{ item.color }}</td>
-        <td>{{ item.idCliente }}</td>
+        <td class="align-middle">{{ item.patente }}</td>
+        <td class="align-middle">{{ item.marca }}</td>
+        <td class="align-middle">{{ item.modelo }}</td>
+        <td class="align-middle">{{ item.color }}</td>
+        <td class="align-middle">{{ item.idCliente }}</td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<div class="pantallasPequenias">
+  <app-pagenotfound></app-pagenotfound>
 </div>

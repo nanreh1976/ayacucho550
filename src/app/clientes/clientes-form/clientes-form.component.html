@@ -5,7 +5,7 @@
 
 <ng-template #clientes>
   <div class="modal-header">
-      <h5 class="modal-title" id="modal-basic-title">{{titulo}}</h5>
+      <h5 class="modal-title" id="modal-basic-title"  *ngIf="!soloVista">{{titulo}}</h5>
       <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -18,14 +18,16 @@
                 <label for="Apellido">Apellido</label>
                 <div class="input-group">
                   <input formControlName="apellido" class="form-control" required type="text"
-                  [ngClass]="{'is-invalid':Apellido?.errors && Apellido?.touched, 'is-valid': !Apellido?.errors && !Apellido?.touched }">
+                  [ngClass]="{'is-invalid':Apellido?.errors && Apellido?.touched, 'is-valid': !Apellido?.errors && !Apellido?.touched }"
+                  [ngClass]="{'isDisabled': soloVista}">
                 </div>
               </div>
               <div class="form-group">
                 <label for="Nombre">Nombre</label>
                 <div class="input-group">
                   <input formControlName="nombre" class="form-control" required type="text"
-                  [ngClass]="{'is-invalid':Nombre?.errors && Nombre?.touched, 'is-valid': !Nombre?.errors && !Nombre?.touched }">
+                  [ngClass]="{'is-invalid':Nombre?.errors && Nombre?.touched, 'is-valid': !Nombre?.errors && !Nombre?.touched }"
+                  [ngClass]="{'isDisabled': soloVista}">
                 </div>
               </div>
 
@@ -33,14 +35,16 @@
                 <label for="Telefono">Telefono</label>
                 <div class="input-group">
                   <input formControlName="telefono" class="form-control"  type="text"
-                  [ngClass]="{'is-invalid':Telefono?.errors && Telefono?.touched, 'is-valid': !Telefono?.errors && !Telefono?.touched }">                  
+                  [ngClass]="{'is-invalid':Telefono?.errors && Telefono?.touched, 'is-valid': !Telefono?.errors && !Telefono?.touched }"
+                  [ngClass]="{'isDisabled': soloVista}">                  
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="Direccion">Direccion</label>
                 <div class="input-group">
-                  <input formControlName="direccion" class="form-control"  type="text">
+                  <input formControlName="direccion" class="form-control"  type="text"
+                  [ngClass]="{'isDisabled': soloVista}">
                 </div>
               </div>
 
@@ -48,7 +52,8 @@
                 <label for="Email">Email</label>
                 <div class="input-group">
                   <input formControlName="email" class="form-control" required type="email" placeholder="example@example.com"
-                  [ngClass]="{'is-invalid':Email?.errors && Email?.touched, 'is-valid': !Email?.errors && !Email?.touched }">
+                  [ngClass]="{'is-invalid':Email?.errors && Email?.touched, 'is-valid': !Email?.errors && !Email?.touched }"
+                  [ngClass]="{'isDisabled': soloVista}">
                   <div *ngIf="Email?.errors && Email?.touched"  class="text-danger fs-6">
                     <p *ngIf="Email?.hasError('required')">El email es requerido.</p>           
                     <p *ngIf="Email?.hasError('email')">El formato debe ser válido.</p> 
@@ -59,7 +64,8 @@
               <div class="form-group">
                 <label for="Comentario">Comentario</label>
                 <div class="input-group">
-                  <input formControlName="comentario" class="form-control" type="text">
+                  <input formControlName="comentario" class="form-control" type="text"
+                  [ngClass]="{'isDisabled': soloVista}">
                 </div>
               </div>
         
@@ -87,13 +93,14 @@
               <div class="form-group">
 
                 <div class="input-group">
-                  <input formControlName="id" class="form-control" type="hidden">
+                  <input formControlName="id" class="form-control" type="hidden"
+                  [ngClass]="{'isDisabled': soloVista}">
                 </div>
               </div>
             </form>
           </div>
-          <div class="modal-footer">
-            <button class="btn btn-success" [disabled]="editForm.invalid"(click)="guardarDatos()">
+          <div class="modal-footer" *ngIf="!soloVista">
+            <button class="btn btn-success" [disabled]="editForm.invalid"(click)="guardarDatos()" >
               {{titulo}}
             </button>
           </div>
