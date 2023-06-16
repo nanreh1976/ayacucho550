@@ -42,8 +42,8 @@ export class ClientesControlComponent implements OnInit {
     {
       const modalRef = this.modalService.open(ClientesFormComponent, {
         windowClass: 'myCustomModalClass',
-        centered: true,
-        size: 'lg',
+      /*   centered: true,
+        size: 'lg', */
       });
 
       let info = {
