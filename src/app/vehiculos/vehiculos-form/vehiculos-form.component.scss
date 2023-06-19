@@ -1,6 +1,28 @@
+table{
+  font-size:1.5rem;
+}
 
+#botones{
+  width: 130px;
+}
 
-.readonly-input {
+#abono{
+  width: 80px;
+}
+
+.botones{
+  margin-left: -10px
+}
+
+@media screen and (max-width: 767.9px) {
+  
+  .pantallasGrandes{
+    display:none !important;
+  }
+   
+}
+
+/* .readonly-input {
   background-color: #f2f2f2;
 }
     
@@ -25,7 +47,7 @@
         background-color: #d4e3e5;
       }
       .tftable td {
-        font-size: 20px;
+        font-size: 12px;
         border-width: 1px;
         padding: 8px;
         border-style: solid;
@@ -33,4 +55,6 @@
       }
       .tftable tr:hover {
         background-color: #ffffff;
-      }
+      } */
+
+      
