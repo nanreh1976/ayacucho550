@@ -1,7 +1,7 @@
 <div class="modal-header">
   <button
     type="button"
-    class="close"
+    class="close btn btn-primary"
     (click)="activeModal.dismiss('Cross click')"
   >
     <span aria-hidden="true">&times;</span>
@@ -47,6 +47,6 @@
 
       {{fromParent.modo}}
     </button>
-    <button (click)="activeModal.dismiss()">Cancelar</button>
+    <button (click)="activeModal.dismiss()" class="btn btn-danger">Cancelar</button>
   </div>
 </div>

@@ -107,8 +107,8 @@ export class CajaControlComponent implements OnInit {
     // abre el form con el modal seleccionado
     const modalRef = this.modalService.open(selectedForm, {
       windowClass: 'myCustomModalClass',
-      centered: true,
-      size: 'lg',
+      /* centered: true, */
+      /* size: 'lg', */
     });
 
     // data para usar en el modal
