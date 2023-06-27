@@ -119,15 +119,15 @@ export class CajaStorageService {
 
 // MOVER TODA LA SESION AL LOG AL CERRAR.
 
-  async moveDocs(value:string) {
-    const componenteA = 'caja';
-    const componenteB = 'cajaOps';
-    const field = 'sesionId';
+  // async moveDocs(value:string) {
+  //   const componenteA = 'caja';
+  //   const componenteB = 'cajaOps';
+  //   const field = 'sesionId';
     
 
-    await this.dbFirestoreService.moveDocsToSubcollection(componenteA, componenteB, field, value);
-    //console.log('Documents moved successfully!');
-  }
+  //   await this.dbFirestoreService.moveDocsToSubcollection(componenteA, componenteB, field, value);
+  //   //console.log('Documents moved successfully!');
+  // }
 }
   
 

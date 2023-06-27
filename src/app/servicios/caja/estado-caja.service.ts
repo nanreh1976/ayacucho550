@@ -99,7 +99,7 @@ export class EstadoCajaService {
     this.sesionCaja.cierre = nd;
 
     this.storageService.updateItem('cajaLog', this.sesionCaja)
-    this.cajaStorageService.moveDocs(this.sesionCaja.id)
+    // this.cajaStorageService.moveDocs(this.sesionCaja.id)
    // console.log("moviendo sesion ", this.sesionCaja.id)
   }
 

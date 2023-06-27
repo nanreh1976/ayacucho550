@@ -40,13 +40,13 @@ export class DbFirestoreService {
   getAllSortedToday(componente: any, campo: any, orden: any) {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Establecer la fecha al comienzo del día
-  
+
     const startOfDay = new Date(today);
     const endOfDay = new Date(today);
     endOfDay.setDate(endOfDay.getDate() + 1); // Establecer el final del día sumando un día
-  
+
     let dataCollection = `/${this.coleccion}/datos/${componente}`;
-  
+
     return this.firestore2
       .collection(dataCollection, (ref) =>
         ref
@@ -63,19 +63,27 @@ export class DbFirestoreService {
       );
   }
 
-  getAllSortedBetweenDates(componente: any, campo: any, orden: any, fechaInicio: number, fechaFin: number) {
-    const startOfDate = new Date(fechaInicio);   // viene en milisegundos
+  getAllSortedBetweenDates(
+    componente: any,
+    campo: any,
+    orden: any,
+    fechaInicio: number,
+    fechaFin: number
+  ) {
+    const startOfDate = new Date(fechaInicio); // viene en milisegundos
     const endOfDate = new Date(fechaFin);
-  
+
     let dataCollection = `/${this.coleccion}/datos/${componente}`;
-  
+
     return this.firestore2
-      .collection(dataCollection, (ref) =>
-        ref
-          .where(campo, '>=', startOfDate)
-          .where(campo, '<=', endOfDate)
-          .orderBy(campo, orden)
-          // .limit(10)
+      .collection(
+        dataCollection,
+        (ref) =>
+          ref
+            .where(campo, '>=', startOfDate)
+            .where(campo, '<=', endOfDate)
+            .orderBy(campo, orden)
+        // .limit(10)
       )
       .valueChanges({ idField: 'id' })
       .pipe(
@@ -84,12 +92,19 @@ export class DbFirestoreService {
         })
       );
   }
-  
-  getNLatestOperations(componente: string, campo: string, orden: 'asc' | 'desc', cant:number): Observable<any[]> {
+
+  getNLatestOperations(
+    componente: string,
+    campo: string,
+    orden: 'asc' | 'desc',
+    cant: number
+  ): Observable<any[]> {
     let dataCollection = `/${this.coleccion}/datos/${componente}`;
-  
+
     return this.firestore2
-      .collection(dataCollection, (ref) => ref.orderBy(campo, orden).limit(cant))
+      .collection(dataCollection, (ref) =>
+        ref.orderBy(campo, orden).limit(cant)
+      )
       .valueChanges({ idField: 'id' });
   }
 
@@ -132,8 +147,6 @@ export class DbFirestoreService {
       .valueChanges({ idField: 'id' });
   }
 
-
-  
   get(id: string) {
     const estacionamiento1DocumentReference = doc(
       this.firestore,
@@ -157,7 +170,9 @@ export class DbFirestoreService {
       this.firestore,
       `/${this.coleccion}/datos/${componente}`
     );
-    return addDoc(dataCollection, item).then(() => console.log('Ceate. Escritura en la base de datos en: ', componente));
+    return addDoc(dataCollection, item).then(() =>
+      console.log('Ceate. Escritura en la base de datos en: ', componente)
+    );
   }
 
   update(componente: string, item: any) {
@@ -166,8 +181,9 @@ export class DbFirestoreService {
       this.firestore,
       `/${this.coleccion}/datos/${componente}/${item.id}`
     );
-    return updateDoc(estacionamiento1DocumentReference, { ...item }).then(() => console.log('Update. Escritura en la base de datos en: ', componente))
-    ;
+    return updateDoc(estacionamiento1DocumentReference, { ...item }).then(() =>
+      console.log('Update. Escritura en la base de datos en: ', componente)
+    );
   }
 
   delete(componente: string, id: string) {
@@ -199,20 +215,28 @@ export class DbFirestoreService {
     }) as Observable<any[]>;
   }
 
-  async moveDocsToSubcollection(componenteA: string, componenteB: string, field: string, string: string) {
-    const collectionRef = this.firestore2.collection(`${this.coleccion}/datos/${componenteA}`);
-    const query = collectionRef.ref.where(field, '==', string);
-    const querySnapshot = await query.get();
-  
-    const batch = this.firestore2.firestore.batch();
-  
-    querySnapshot.forEach((doc) => {
-      const newDocRef = this.firestore2.collection(`${this.coleccion}/datos/${componenteB}/${doc.id}`).doc();
-      batch.set(newDocRef.ref, doc.data());
-      batch.delete(doc.ref); // deletes the original document from componenteA
-    });
-  
-    await batch.commit();
-  }
-  
+  // async moveDocsToSubcollection(
+  //   componenteA: string,
+  //   componenteB: string,
+  //   field: string,
+  //   string: string
+  // ) {
+  //   const collectionRef = this.firestore2.collection(
+  //     `${this.coleccion}/datos/${componenteA}`
+  //   );
+  //   const query = collectionRef.ref.where(field, '==', string);
+  //   const querySnapshot = await query.get();
+
+  //   const batch = this.firestore2.firestore.batch();
+
+  //   querySnapshot.forEach((doc) => {
+  //     const newDocRef = this.firestore2
+  //       .collection(`${this.coleccion}/datos/${componenteB}/${doc.id}`)
+  //       .doc();
+  //     batch.set(newDocRef.ref, doc.data());
+  //     batch.delete(doc.ref); // deletes the original document from componenteA
+  //   });
+
+  //   await batch.commit();
+  // }
 }
