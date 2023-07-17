@@ -6,7 +6,9 @@ import { AuthService } from 'src/app/servicios/autentificacion/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls:  ['../../shared/login-styles.scss']
+
+  
 })
 export class LoginComponent implements OnInit {
   constructor(private router: Router, public authService: AuthService) {}

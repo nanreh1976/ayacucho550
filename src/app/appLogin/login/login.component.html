@@ -4,7 +4,7 @@
   <div class="displayTable">
     <div class="displayTableCell">
       <div class="authBlock">
-        <h2>Bienvenido</h2>
+        <h2 style="text-align: center;">Bienvenido</h2>
 
 
         <!-- LOGIN CON MAIL / USUARIO -->
@@ -34,7 +34,7 @@
           <input
             type="button"
             class="btn btnPrimary"
-            value="Log in"
+            value="Ingresar"
             (click)="authService.SignIn(userName.value, userPassword.value)"
           />
         </div>
@@ -69,8 +69,8 @@
       <!-- REGISTRARSE -->
       <div class="redirectToLogin">
         <span
-          >Registrese<span class="redirect" routerLink="/register-user">
-            Sign Up</span
+          >Si no tiene usuario<span class="redirect" routerLink="/register-user">
+            Registrarse</span
           ></span
         >
       </div>
