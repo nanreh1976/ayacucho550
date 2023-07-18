@@ -96,6 +96,7 @@ import { ListadoVehiculosComponent } from './vehiculos/listado-vehiculos/listado
 import { BtnShowComponent } from './shared/botones/btn-show/btn-show.component';
 import { BtnIngresoComponent } from './shared/botones/btn-ingreso/btn-ingreso.component';
 import { BtnEgresoComponent } from './shared/botones/btn-egreso/btn-egreso.component';
+import { ContactoComponent } from './contacto/contacto.component';
 
 
 
@@ -168,6 +169,7 @@ import { BtnEgresoComponent } from './shared/botones/btn-egreso/btn-egreso.compo
       BtnShowComponent,
       BtnIngresoComponent,
       BtnEgresoComponent,
+      ContactoComponent,
   ],
   imports: [
     BrowserModule,

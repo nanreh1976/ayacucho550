@@ -21,6 +21,7 @@ import { PlayaControlComponent } from './playa/playa-control/playa-control.compo
 import { TarifasControlComponent } from './tarifas/tarifas-control/tarifas-control.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ListadoVehiculosComponent } from './vehiculos/listado-vehiculos/listado-vehiculos.component';
+import { ContactoComponent } from './contacto/contacto.component';
 
 // const routes: Routes = [];
 
@@ -102,6 +103,11 @@ const appRoutes: Routes = [
         component: UsuariosComponent,
         ...canActivate(redirectUnauthorizedToLogin),
         canActivate:[IsSuperAdminGuard], 
+      },
+      {
+        path: 'contacto',
+        component: ContactoComponent,
+        ...canActivate(redirectUnauthorizedToLogin),
       },
     ],
   },
