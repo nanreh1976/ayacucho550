@@ -107,7 +107,7 @@ const appRoutes: Routes = [
       {
         path: 'contacto',
         component: ContactoComponent,
-        ...canActivate(redirectUnauthorizedToLogin),
+        ...canActivate(redirectUnauthorizedToLogin), // Agregar el canActivate guard
       },
     ],
   },
