@@ -1,7 +1,11 @@
-<div class="container">
+<div *ngIf="mensajeEnviado" class="mensaje-exito">
+  ¡Mensaje enviado con éxito!
+</div>
+
+<div *ngIf="!formularioEnviado" class="container">
   <div class="row">
     <div class="card">
-      <div style="color: #080000">Contacto</div>
+        <h1 style="color: #080000" class="text-center">Contacto</h1>
       <div class="row">
         <div class="col-md-12">
           <div class="card-body">
@@ -12,7 +16,7 @@
               novalidate
             >
               <div class="p pb-3" style="color: #080000">
-                <strong>Mensajes y Sugerencias </strong>
+                <h2 style="color: #080000" class="text-center">Mensajes y sugerencias</h2>
               </div>
               <div class="row mb-3">
                 <div class="col">
@@ -91,7 +95,8 @@
               <div class="row">
                 <div class="col">
                   <button
-                    class="btn btn-primary"
+                  class="btn btn-outline-success align-middle text-center"
+      style="border-radius: 10%;  margin: 10px;"
                     type="submit"
                     (click)="
                       onSubmit(
