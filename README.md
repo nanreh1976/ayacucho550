@@ -1,5 +1,5 @@
 
-# Linkinpark
+# ParkUp
 
 App para Gestion de Estacionamientos
 
