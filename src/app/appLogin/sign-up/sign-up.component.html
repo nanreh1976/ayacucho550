@@ -1,43 +1,46 @@
-<div class="displayTable">
-  <div class="displayTableCell">
-    <div class="authBlock">
-      <h3>Sign Up</h3>
+<div class="container">
+  <app-login-header></app-login-header>
 
-      <div class="formGroup">
-        <input
-          type="email"
-          class="formControl"
-          placeholder="Email Address"
-          #userEmail
-          required
-        />
-      </div>
+  <div class="displayTable">
+    <div class="displayTableCell">
+      <div class="authBlock">
+        <h3>Registrarse</h3>
 
-      <div class="formGroup">
-        <input
-          type="password"
-          class="formControl"
-          placeholder="Password"
-          #userPwd
-          required
-        />
-      </div>
+        <div class="formGroup">
+          <input
+            type="email"
+            class="formControl"
+            placeholder="Email Address"
+            #userEmail
+            required
+          />
+        </div>
 
-      <div class="formGroup">
-        <input
-          type="button"
-          class="btn btnPrimary"
-          value="Sign Up"
-          (click)="authService.SignUp(userEmail.value, userPwd.value)"
-        />
-      </div>
+        <div class="formGroup">
+          <input
+            type="password"
+            class="formControl"
+            placeholder="Password"
+            #userPwd
+            required
+          />
+        </div>
 
-      <div class="formGroup">
-        <span class="or"><span class="orInner">O</span></span>
-      </div>
+        <div class="formGroup">
+          <input
+            type="button"
+            class="btn btnPrimary"
+            value="Sign Up"
+            (click)="authService.SignUp(userEmail.value, userPwd.value)"
+          />
+        </div>
 
-      <!-- Continue with Google -->
-      <!-- <div class="formGroup">
+        <div class="formGroup">
+          <span class="or"><span class="orInner">O</span></span>
+        </div>
+
+        <!-- Continue with Google -->
+        <!-- <div class="formGroup">
         <button
           type="button"
           class="btn googleBtn"
@@ -49,11 +52,13 @@
       </div>
     </div> -->
 
-    <div class="redirectToLogin">
-      <span
-        >Already have an account?
-        <span class="redirect" routerLink="/">Log In</span></span
-      >
+        <div class="redirectToLogin">
+          <span
+            >Ya tiene una cuenta?
+            <span class="redirect" routerLink="/">Ingresar</span></span
+          >
+        </div>
+      </div>
     </div>
   </div>
 </div>

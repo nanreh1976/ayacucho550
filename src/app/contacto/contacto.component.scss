@@ -1,0 +1,9 @@
+.mensaje-exito {
+    color: green;
+    font-weight: bold;
+    text-align: center; /* Alinea el texto horizontalmente en el centro */
+    display: flex;
+    justify-content: center; /* Alinea el contenido verticalmente en el centro */
+    align-items: center; /* Alinea el contenido horizontalmente en el centro */
+    height: 100%; /* Ajusta la altura del div al 100% para que ocupe todo el espacio disponible */
+  }

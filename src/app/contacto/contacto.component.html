@@ -1,0 +1,120 @@
+<div *ngIf="mensajeEnviado" class="mensaje-exito">
+  ¡Mensaje enviado con éxito!
+</div>
+
+<div *ngIf="!formularioEnviado" class="container">
+  <div class="row">
+    <div class="card">
+        <h1 style="color: #080000" class="text-center">Contacto</h1>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card-body">
+            <form
+              name="form"
+              (ngSubmit)="(f.form.valid); f.resetForm()"
+              #f="ngForm"
+              novalidate
+            >
+              <div class="p pb-3" style="color: #080000">
+                <h2 style="color: #080000" class="text-center">Mensajes y sugerencias</h2>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="name"
+                      #name
+                      placeholder="Nombre"
+                      [(ngModel)]="model.name"
+                      #nombre="ngModel"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && nombre.invalid
+                      }"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <div class="input-container">
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="subject"
+                      #subject
+                      placeholder="Asunto"
+                      [(ngModel)]="model.subject"
+                      #asunto="ngModel"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && asunto.invalid
+                      }"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      type="text"
+                      name="email"
+                      #email
+                      placeholder="Email"
+                      [(ngModel)]="model.email"
+                      #mail="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && mail.invalid }"
+                      pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <div class="form-group">
+                    <textarea
+                      class="form-control"
+                      name="message"
+                      #message
+                      placeholder="Mensaje"
+                      [(ngModel)]="model.message"
+                      #mensaje="ngModel"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && mensaje.invalid
+                      }"
+                      required
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button
+                  class="btn btn-outline-success align-middle text-center"
+      style="border-radius: 10%;  margin: 10px;"
+                    type="submit"
+                    (click)="
+                      onSubmit(
+                        name.value,
+                        subject.value,
+                        email.value,
+                        message.value
+                      )
+                    "
+                  >
+                    Enviar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

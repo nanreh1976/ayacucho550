@@ -25,7 +25,7 @@ import { ClientesControlComponent } from './clientes/clientes-control/clientes-c
 import { TicketEntradaComponent } from './ticket/ticket-entrada/ticket-entrada.component';
 import { NgxPrintElementModule } from 'ngx-print-element';
 import { NgxBarcode6Module } from 'ngx-barcode6';
-import { BtnReimpresionComponent } from './shared/btn-reimpresion/btn-reimpresion.component';
+import { BtnReimpresionComponent } from './shared/botones/btn-reimpresion/btn-reimpresion.component';
 import { TarifasControlComponent } from './tarifas/tarifas-control/tarifas-control.component';
 import { TarifasViewComponent } from './tarifas/tarifas-view/tarifas-view.component';
 import { TarifasFormComponent } from './tarifas/tarifas-form/tarifas-form.component';
@@ -60,9 +60,9 @@ import { LogoutComponent } from './appLogin/logout/logout.component';
 import { AuthService } from './servicios/autentificacion/auth.service';
 
 // BOTONES
-import { BtnAgregarComponent } from './shared/btn-agregar/btn-agregar.component';
-import { BtnEditarComponent } from './shared/btn-editar/btn-editar.component';
-import { BtnEliminarComponent } from './shared/btn-eliminar/btn-eliminar.component';
+import { BtnAgregarComponent } from './shared/botones/btn-agregar/btn-agregar.component';
+import { BtnEditarComponent } from './shared/botones/btn-editar/btn-editar.component';
+import { BtnEliminarComponent } from './shared/botones/btn-eliminar/btn-eliminar.component';
 import { ForgotPasswordComponent } from './appLogin/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './appLogin/verify-email/verify-email.component';
 import { SignUpComponent } from './appLogin/sign-up/sign-up.component';
@@ -83,7 +83,7 @@ import { NavbarComponent } from './home/navbar/navbar.component';
 import { HeaderComponent } from './home/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PagoAbonoComponent } from './clientes/pago-abono/pago-abono.component';
-import { BtnConsultarComponent } from './shared/btn-consultar/btn-consultar.component';
+import { BtnConsultarComponent } from './shared/botones/btn-consultar/btn-consultar.component';
 import { SesionViewComponent } from './caja/sesion-view/sesion-view.component';
 import { LimboComponent } from './limbo/limbo.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -93,9 +93,10 @@ import { VehiculosFormComponent } from './vehiculos/vehiculos-form/vehiculos-for
 import { AgregarVehiculoComponent } from './vehiculos/agregar-vehiculo/agregar-vehiculo.component';
 import { EditarVehiculoComponent } from './vehiculos/editar-vehiculo/editar-vehiculo.component';
 import { ListadoVehiculosComponent } from './vehiculos/listado-vehiculos/listado-vehiculos.component';
-import { BtnShowComponent } from './shared/btn-show/btn-show.component';
-import { BtnIngresoComponent } from './shared/btn-ingreso/btn-ingreso.component';
-import { BtnEgresoComponent } from './shared/btn-egreso/btn-egreso.component';
+import { BtnShowComponent } from './shared/botones/btn-show/btn-show.component';
+import { BtnIngresoComponent } from './shared/botones/btn-ingreso/btn-ingreso.component';
+import { BtnEgresoComponent } from './shared/botones/btn-egreso/btn-egreso.component';
+import { ContactoComponent } from './contacto/contacto.component';
 
 
 
@@ -168,6 +169,7 @@ import { BtnEgresoComponent } from './shared/btn-egreso/btn-egreso.component';
       BtnShowComponent,
       BtnIngresoComponent,
       BtnEgresoComponent,
+      ContactoComponent,
   ],
   imports: [
     BrowserModule,
