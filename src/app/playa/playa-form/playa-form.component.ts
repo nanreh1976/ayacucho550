@@ -233,7 +233,7 @@ export class PlayaFormComponent implements OnInit {
     this.fechas.fechaSalida = this.fechaService.fechaDia(this.fechaSalida);
     this.fechas.horaSalida = this.fechaService.fechaHora(this.fechaSalida);
     this.fechas.estadia = this.fechaService.pruebaCierreHora(
-      this.fechas.fechaDate
+    this.fechas.fechaDate
     );
     this.fechas.fechaSalidaDate = this.fechaSalida.toString();
     this.saldoEstadia();

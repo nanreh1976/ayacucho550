@@ -5,6 +5,6 @@ export interface Tarifas {
   categoria: string;            // tipo de tarifa
   fraccion: any;             // fraccion minima de facturacion
   unidad_tiempo: string;        // minutos, horas, dias, semanas, mes
-  valor: any;                
+  valor: any;                //monto
   tolerancia: any;           // rango de tolerancia
 }

@@ -2,6 +2,7 @@
   <h5 class="modal-title" id="modal-basic-title">{{formTitle}} Vehiculo </h5>
   <button type="button"
           class="close"
+          title="close"
           class="btn btn-primary" (click)="activeModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
   </button>
@@ -13,7 +14,7 @@
           <div class="form-group">
             <label for="Patente">Patente</label>
             <div class="input-group">
-              <input formControlName="patente" class="form-control" required type="text"
+              <input formControlName="patente" class="form-control" required type="text" placeholder="ingrese pantente"
               [ngClass]="{'is-invalid':Patente?.errors && Patente?.touched, 'is-valid': !Patente?.errors && !Patente?.touched }"
               [readonly]="sinEdicion">    
               <div *ngIf="Patente?.errors?.required && Patente?.touched" class="text-danger fs-6">
@@ -26,7 +27,7 @@
           </div>
           <div class="form-group">
             <label for="Tarifa">Tarifa</label>        
-            <select class="form-select form-select-md mb-3" (change)="changeTarifa($event)">
+            <select class="form-select form-select-md mb-3" (change)="changeTarifa($event)" title="tarifa">
               <option value={{tarifaSeleccionada}}>Elegir Tarifa</option>
               <option *ngFor="let tarifa of tarifas">
                 {{tarifa.nombre}}
@@ -36,7 +37,7 @@
           <div class="form-group">
             <label for="Descripcion">Descripcion</label>
             <div class="input-group">
-              <input formControlName="descripcion" class="form-control" required type="text">
+              <input formControlName="descripcion" class="form-control" required type="text" placeholder="descripcion">
             </div>
           </div>
           <table class="table" *ngIf='titulo==="Agregar"'>
@@ -46,11 +47,11 @@
                   <label for="ingreso">Ingreso</label>
                   <div class="input-group mb-3">
                     <span class="input-group-text ">Fecha</span>
-                    <input class="fw-bold" type="text" value="{{fechas.fechaIngreso}}" disabled>
+                    <input class="fw-bold" type="text" placeholder="ingreso" value="{{fechas.fechaIngreso}}" disabled>
                   </div>
                   <div class="input-group mb-3">
                     <span class="input-group-text">Hora</span>
-                    <input class="fw-bold" type="text" value="{{fechas.horaIngreso}} " disabled>
+                    <input class="fw-bold" type="text" placeholder="hora" value="{{fechas.horaIngreso}} " disabled>
                   </div>
                 </div>
               </td>
