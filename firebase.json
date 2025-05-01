@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/ayacucho-550",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

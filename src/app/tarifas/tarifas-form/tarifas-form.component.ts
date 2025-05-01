@@ -174,13 +174,14 @@ export class TarifasFormComponent implements OnInit {
     //segun el camino que sea (agregar/editar/eliminar)
     //en este caso, agregar y editar hacen lo mismo
     //pero te lo dejo para que veas que son caminos distintos
-    console.log('valor fraccion', this.item.valor);
+    
     switch (this.titulo) {
       case 'Agregar': {
         this.item = this.editForm.value; //guarda los valores del form en item
         this.item.unidad_tiempo = this.unidadSeleccionada; //guarda la unidad seleccionada en el item
         this.item.categoria = this.categoriaSeleccionada; //guarda la categoria seleccionada en el item
         this.item.vehiculo = this.vehiculoSeleccionado;
+        console.log('valor fraccion', this.item.valor);
         Swal.fire({
           title: '¿Desea guardar la tarifa?',
           icon: 'warning',

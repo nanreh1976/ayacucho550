@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "linkinpark": {
+    "ayacucho-550": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/linkinpark",
+            "outputPath": "dist/ayacucho-550",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -98,13 +98,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "linkinpark:build:production"
+              "browserTarget": "ayacucho-550:build:production"
             },
             "production2": {
-              "browserTarget": "linkinpark:build:production2"
+              "browserTarget": "ayacucho-550:build:production2"
             },
             "development": {
-              "browserTarget": "linkinpark:build:development"
+              "browserTarget": "ayacucho-550:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -112,7 +112,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "linkinpark:build"
+            "browserTarget": "ayacucho-550:build"
           }
         },
         "test": {
